@@ -256,11 +256,8 @@ body {
   padding: 8px 8px 2px;
   border-top: 1px solid var(--wvd-border-soft);
   color: var(--wvd-text-soft);
-  cursor: pointer;
   border-radius: 10px;
-  transition: background 160ms ease;
 }
-.wvd-user-chip:hover { background: var(--wvd-panel); }
 .wvd-user-avatar {
   display: grid;
   width: 34px;
@@ -275,7 +272,6 @@ body {
 }
 .wvd-user-chip strong { display: block; font-size: 15px; font-weight: 600; }
 .wvd-user-chip small { color: var(--wvd-muted); font-size: 12.5px; }
-.wvd-user-chip svg { color: var(--wvd-faint); }
 
 .wvd-dashboard { min-width: 0; }
 .wvd-content {
@@ -286,7 +282,6 @@ body {
 .wvd-inner { width: min(1230px, 100%); margin: 0 auto; }
 .wvd-anchor { scroll-margin-top: 26px; }
 
-.wvd-topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; padding-bottom: 22px; }
 .wvd-heading-block { min-width: 0; flex: 1 1 auto; text-align: center; }
 .wvd-heading-block h1 {
   margin: 0 0 6px;
@@ -300,15 +295,6 @@ body {
 .wvd-heading-block > p:last-child { max-width: 720px; margin: 0 auto; color: var(--wvd-muted); font-size: 15.5px; line-height: 1.6; }
 
 .wvd-page-header { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-bottom: 22px; }
-/* Back button is mobile-only: the sidebar nav is always visible on desktop, so a
-   back-to-Overview button there is redundant. Shown again in the 900px media query. */
-.wvd-back { display: none; flex: 0 0 auto; align-items: center; gap: 7px; height: 40px; padding: 0 14px; border: 1px solid var(--wvd-border); border-radius: 11px; background: var(--wvd-surface); color: var(--wvd-text-soft); font-size: 13px; font-weight: 600; cursor: pointer; transition: 160ms ease; }
-.wvd-back:hover { background: var(--wvd-panel-raised); color: var(--wvd-text); }
-.wvd-back:active { transform: translateY(1px); }
-/* Quieter variant: Growth Path is a private, low-traffic page, so its back link
-   is de-emphasized (no border/fill) instead of the bordered pill every other page uses. */
-.wvd-back.wvd-back-quiet { height: 30px; padding: 0 6px; border-color: transparent; background: transparent; color: var(--wvd-muted); }
-.wvd-back.wvd-back-quiet:hover { background: var(--wvd-panel); color: var(--wvd-text); }
 
 .wvd-menu {
   display: grid;
@@ -339,239 +325,8 @@ body {
 }
 .wvd-banner.wvd-show { display: block; }
 
-/* Overview header: the heading sits left; a compact rolling-7-day summary card sits
-   at the far right with three divided cells (this-week shipped, the delta vs last
-   week, and system-live with a shipped sparkline). Overview only. */
-.wvd-overview-header { align-items: center; gap: 22px; }
-.wvd-overview-header .wvd-heading-block { flex: 1 1 auto; text-align: left; }
-.wvd-overview-header .wvd-heading-block > p:last-child { margin: 0; max-width: 520px; }
-.wvd-week-summary { display: flex; align-items: stretch; flex-wrap: wrap; gap: 18px; flex: 0 0 auto; min-width: 0; padding: 15px 22px; border: 1px solid var(--wvd-border); border-radius: 16px; background: linear-gradient(150deg, rgb(255 255 255 / 0.03), transparent 48%), var(--wvd-panel-raised); box-shadow: var(--wvd-shadow); }
-.wvd-week-summary[hidden] { display: none; }
-.wvd-ws-cell { display: flex; align-items: center; gap: 13px; }
-.wvd-ws-divider { width: 1px; align-self: stretch; flex: 0 0 auto; background: var(--wvd-border-soft); }
-.wvd-ws-icon { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: 10px; background: var(--wvd-green-soft); color: var(--wvd-green); }
-.wvd-ws-block { display: grid; gap: 3px; }
-.wvd-ws-label { color: var(--wvd-muted); font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
-.wvd-ws-num { font-family: 'DM Serif Display', Georgia, serif; font-size: 29px; font-weight: 400; line-height: 1; letter-spacing: -0.03em; color: var(--wvd-text); }
-.wvd-ws-delta-num { display: inline-flex; align-items: center; gap: 4px; font-family: 'DM Serif Display', Georgia, serif; font-size: 24px; font-weight: 400; line-height: 1; letter-spacing: -0.03em; }
-.wvd-ws-pct { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 600; }
-.wvd-ws-delta-num.wvd-up, .wvd-ws-pct.wvd-up { color: var(--wvd-green); }
-.wvd-ws-delta-num.wvd-down, .wvd-ws-pct.wvd-down { color: var(--wvd-red); }
-.wvd-ws-delta-num.wvd-flat, .wvd-ws-pct.wvd-flat { color: var(--wvd-blue); }
-.wvd-ws-spark { display: flex; align-items: flex-end; gap: 2px; height: 18px; }
-.wvd-ws-bar { width: 4px; flex: 0 0 auto; min-height: 3px; border-radius: 1px; background: color-mix(in srgb, var(--wvd-green) 45%, var(--wvd-rich-black)); }
-.wvd-ws-bar.wvd-ws-bar-current { background: var(--wvd-green); }
-
-/* Overview metric row: a tall lead SHIPPED card (with a full weekly bar chart)
-   on the left; a FIXED card over a stacked four-count list on the right. */
-.wvd-metrics-grid { display: grid; grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr); gap: 12px; align-items: stretch; }
-.wvd-metrics-right { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.wvd-metric-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 20px 22px;
-  border: 1px solid var(--wvd-border);
-  border-radius: 14px;
-  background: linear-gradient(145deg, rgb(255 255 255 / 0.025), transparent 45%), var(--wvd-panel-raised);
-  box-shadow: var(--wvd-shadow);
-  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
-}
-.wvd-metric-card > * { position: relative; z-index: 1; }
-.wvd-metric-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--wvd-tone) 45%, var(--wvd-border)); box-shadow: 0 24px 62px rgb(0 0 0 / 0.36); }
-.wvd-metric-card::before { position: absolute; top: 0; right: 0; left: 0; z-index: 0; height: 2px; background: linear-gradient(90deg, var(--wvd-tone), transparent 82%); content: ''; }
-.wvd-metric-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.wvd-metric-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--wvd-text-soft); }
-.wvd-hero-shipped .wvd-metric-label { color: var(--wvd-green); }
-.wvd-hero-fixed .wvd-metric-label { color: var(--wvd-gold); }
-.wvd-metric-corner { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; border-radius: 50%; color: var(--wvd-tone); }
-.wvd-corner-check { border: 1.5px solid color-mix(in srgb, var(--wvd-green) 50%, transparent); color: var(--wvd-green); }
-.wvd-hero-fixed .wvd-metric-corner { color: var(--wvd-gold); }
-.wvd-metric-card > strong { margin-top: 12px; font-family: 'DM Serif Display', Georgia, serif; font-size: 44px; font-weight: 400; letter-spacing: -0.05em; line-height: 1; white-space: nowrap; color: var(--wvd-text); }
-.wvd-hero-shipped > strong { margin-top: 10px; font-size: 62px; }
-.wvd-metric-cap { margin-top: 8px; color: var(--wvd-muted); font-size: 13px; line-height: 1.45; }
-.wvd-hero-shipped { border-color: color-mix(in srgb, var(--wvd-green) 38%, var(--wvd-border)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--wvd-green) 13%, transparent), var(--wvd-shadow); }
-
-/* Shipped card: momentum line above a full weekly bar chart with a right-side axis. */
-.wvd-shipped-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--wvd-border-soft); }
-.wvd-ship-momentum { display: inline-flex; align-items: baseline; gap: 6px; font-size: 13.5px; font-weight: 600; line-height: 1.45; }
-.wvd-ship-momentum svg { flex: 0 0 auto; align-self: center; }
-.wvd-ship-momentum.wvd-up { color: var(--wvd-green); }
-.wvd-ship-momentum.wvd-down { color: var(--wvd-red); }
-.wvd-ship-momentum.wvd-flat { color: var(--wvd-blue); }
-.wvd-shipped-chart { margin-top: 18px; }
-.wvd-chart-plot { position: relative; height: 166px; }
-.wvd-chart-gridline { position: absolute; left: 0; right: 30px; height: 0; border-top: 1px dashed var(--wvd-border-soft); }
-.wvd-chart-ytick { position: absolute; right: 0; width: 26px; text-align: right; transform: translateY(50%); color: var(--wvd-faint); font-size: 10.5px; }
-.wvd-chart-bars { position: absolute; inset: 0 30px 0 0; display: flex; align-items: flex-end; gap: 6px; }
-.wvd-chart-bar { flex: 1 1 0; min-height: 3px; border-radius: 3px 3px 2px 2px; background: color-mix(in srgb, var(--wvd-green) 52%, var(--wvd-rich-black)); }
-.wvd-chart-bar.wvd-chart-bar-current { background: var(--wvd-green); }
-
-/* Fixed card: four recent weeks of fixes, each bar labelled by recency. */
-.wvd-fixed-foot { margin-top: auto; padding-top: 16px; }
-.wvd-fixed-bars { display: flex; align-items: flex-end; gap: 10px; height: 52px; }
-.wvd-fixed-bar { flex: 1 1 0; min-height: 5px; border-radius: 3px 3px 2px 2px; background: color-mix(in srgb, var(--wvd-gold) 52%, var(--wvd-rich-black)); }
-.wvd-fixed-bar.wvd-fixed-bar-current { background: var(--wvd-gold); }
-.wvd-fixed-bar.wvd-fixed-bar-zero { background: var(--wvd-rich-black); border: 1px solid var(--wvd-border-soft); }
-.wvd-fixed-bar-labels { display: flex; gap: 10px; margin-top: 8px; }
-.wvd-fixed-bar-label { flex: 1 1 0; overflow: hidden; color: var(--wvd-faint); font-size: 10px; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
-
-/* Stacked list card: four secondary counts, each a row (icon, title, number, chevron)
-   that jumps to its page. Rows share the height left under the Fixed card. */
-.wvd-metric-list { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 168px; overflow: hidden; border: 1px solid var(--wvd-border); border-radius: 14px; background: linear-gradient(145deg, rgb(255 255 255 / 0.025), transparent 45%), var(--wvd-panel-raised); box-shadow: var(--wvd-shadow); }
-.wvd-mlr { --wvd-mlr-tone: var(--wvd-green); display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 14px; flex: 1 1 0; min-height: 48px; padding: 0 18px; border: 0; border-bottom: 1px solid var(--wvd-border-soft); background: transparent; text-align: left; font: inherit; color: inherit; cursor: pointer; transition: background 160ms ease; }
-.wvd-mlr:last-child { border-bottom: 0; }
-.wvd-mlr:hover { background: var(--wvd-panel); }
-.wvd-mlr:focus-visible { outline: 2px solid var(--wvd-green); outline-offset: -2px; }
-.wvd-mlr-icon { display: grid; width: 32px; height: 32px; flex: 0 0 auto; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--wvd-mlr-tone) 14%, transparent); color: var(--wvd-mlr-tone); }
-.wvd-mlr-title { min-width: 0; overflow: hidden; color: var(--wvd-text); font-size: 14px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
-.wvd-mlr-num { font-family: 'DM Serif Display', Georgia, serif; font-size: 22px; font-weight: 400; line-height: 1; letter-spacing: -0.02em; color: var(--wvd-text); }
-.wvd-mlr-arrow { color: var(--wvd-faint); transition: color 160ms ease, transform 160ms ease; }
-.wvd-mlr:hover .wvd-mlr-arrow { color: var(--wvd-text-soft); transform: translateX(2px); }
-
-/* Overview "Needs attention" strip: shortcuts to the oldest item in Waiting on
-   Noah and the oldest open Active Priorities card. Each card carries a circular
-   arrow at the foot as the go-to affordance (the whole card is the target). */
-.wvd-attention-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 14px 20px 20px; }
-.wvd-attention-card { --wvd-attention-color: var(--wvd-blue); position: relative; display: flex; min-width: 0; flex-direction: column; gap: 7px; overflow: hidden; padding: 16px 18px 15px 20px; border: 1px solid var(--wvd-border-soft); border-radius: 12px; background: rgb(255 255 255 / 0.018); text-align: left; font: inherit; color: inherit; cursor: pointer; }
-.wvd-attention-card::before { position: absolute; top: 0; bottom: 0; left: 0; width: 3px; background: var(--wvd-attention-color); content: ''; }
-.wvd-attention-card:focus-visible { outline: 2px solid var(--wvd-green); outline-offset: 2px; }
-.wvd-attention-card.wvd-waiting-tone { --wvd-attention-color: var(--wvd-blue); }
-.wvd-attention-card.wvd-handoff-tone { --wvd-attention-color: var(--wvd-gold); }
-.wvd-attention-label { color: var(--wvd-attention-color); font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-.wvd-attention-title { color: var(--wvd-text); font-size: 15px; font-weight: 600; line-height: 1.45; }
-.wvd-attention-empty { color: var(--wvd-faint); font-size: 13.5px; line-height: 1.5; }
-.wvd-attention-foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: auto; padding-top: 8px; }
-.wvd-attention-meta { min-width: 0; color: var(--wvd-muted); font-size: 12.5px; line-height: 1.5; }
-.wvd-attention-arrow { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--wvd-attention-color) 45%, transparent); background: color-mix(in srgb, var(--wvd-attention-color) 12%, transparent); color: var(--wvd-attention-color); transition: background 160ms ease, transform 160ms ease; }
-.wvd-attention-card:hover .wvd-attention-arrow { background: color-mix(in srgb, var(--wvd-attention-color) 20%, transparent); transform: translateX(2px); }
-
-/* Weekly heatmap: Overview only. Cell intensity is quantile-based against real
-   shipped+fixed counts per day, not a fixed scale, so one outlier day doesn't wash
-   out every other cell's contrast. The grid sits left; an "at a glance" read-out
-   (strongest weekdays, legend, this-week momentum) sits right. */
-.wvd-heatmap-layout { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 26px; padding: 6px 20px 20px; align-items: start; }
-.wvd-heatmap { min-width: 0; }
-.wvd-heatmap-scroll { display: flex; flex-direction: column; gap: 4px; overflow-x: auto; padding-bottom: 2px; }
-.wvd-heat-colnums { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.wvd-heat-colnums-spacer { flex: 0 0 32px; }
-.wvd-heat-colnums-cells { display: flex; gap: 4px; }
-.wvd-heat-colnum { width: 16px; flex: 0 0 auto; color: var(--wvd-faint); font-size: 10px; font-weight: 600; text-align: center; }
-.wvd-heat-row { display: flex; align-items: center; gap: 8px; }
-.wvd-heat-row-label { flex: 0 0 32px; color: var(--wvd-faint); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
-.wvd-heat-row-cells { display: flex; gap: 4px; }
-.wvd-heat-cell { width: 16px; height: 16px; flex: 0 0 auto; border-radius: 4px; background: var(--wvd-rich-black); border: 1px solid var(--wvd-border-soft); }
-.wvd-heat-cell.wvd-heat-1 { background: color-mix(in srgb, var(--wvd-green) 25%, var(--wvd-rich-black)); border-color: transparent; }
-.wvd-heat-cell.wvd-heat-2 { background: color-mix(in srgb, var(--wvd-green) 48%, var(--wvd-rich-black)); border-color: transparent; }
-.wvd-heat-cell.wvd-heat-3 { background: color-mix(in srgb, var(--wvd-green) 70%, var(--wvd-rich-black)); border-color: transparent; }
-.wvd-heat-cell.wvd-heat-4 { background: var(--wvd-green); border-color: transparent; }
-.wvd-heat-glance { display: flex; flex-direction: column; gap: 14px; min-width: 0; padding-left: 24px; border-left: 1px solid var(--wvd-border-soft); }
-.wvd-heat-glance-head { display: flex; align-items: center; gap: 9px; color: var(--wvd-green); font-size: 13.5px; font-weight: 700; }
-.wvd-heat-glance-head svg { flex: 0 0 auto; }
-.wvd-heat-glance-text { color: var(--wvd-text-soft); font-size: 13.5px; line-height: 1.6; }
-.wvd-heatmap-legend { display: flex; align-items: center; gap: 5px; color: var(--wvd-faint); font-size: 11.5px; }
-.wvd-heatmap-legend .wvd-heat-cell { width: 13px; height: 13px; }
-.wvd-heat-glance-card { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid var(--wvd-border-soft); border-radius: 12px; background: rgb(255 255 255 / 0.018); }
-.wvd-heat-glance-ring { --wvd-glance-tone: var(--wvd-green); display: grid; width: 44px; height: 44px; flex: 0 0 auto; place-items: center; border-radius: 50%; border: 1.5px solid color-mix(in srgb, var(--wvd-glance-tone) 45%, transparent); color: var(--wvd-glance-tone); }
-.wvd-heat-glance-fig { min-width: 0; }
-.wvd-heat-glance-fig strong { font-family: 'DM Serif Display', Georgia, serif; font-size: 30px; font-weight: 400; line-height: 1; letter-spacing: -0.03em; color: var(--wvd-text); }
-.wvd-heat-glance-fig span { color: var(--wvd-muted); font-size: 12.5px; }
-.wvd-heat-glance-sub { display: block; margin-top: 4px; font-size: 12.5px; font-weight: 600; }
-.wvd-heat-glance-sub.wvd-up { color: var(--wvd-green); }
-.wvd-heat-glance-sub.wvd-down { color: var(--wvd-red); }
-.wvd-heat-glance-sub.wvd-flat { color: var(--wvd-blue); }
-
-/* KPI Monitor page: week-by-week business numbers, every figure sourced. Bar heights
-   are proportional to the metric's own recorded max; a zero week keeps a visible
-   outlined floor bar so it reads as a real zero, never as a missing record. */
-/* Trust strip: 4 reassurance pills above the metric cards (metrics tracked, verified
-   sources, weekly update, no estimates). Top-level section, same convention as
-   .wvd-metrics-grid: no self-padding, floats directly on the page background. */
-.wvd-kpi-trustbar { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
-.wvd-trust-item { display: flex; align-items: center; gap: 11px; padding: 13px 15px; border: 1px solid var(--wvd-border-soft); border-radius: 12px; background: rgb(255 255 255 / 0.018); }
-.wvd-trust-icon { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; border-radius: 8px; background: rgb(255 255 255 / 0.03); color: var(--wvd-muted); }
-.wvd-trust-copy { display: flex; min-width: 0; flex-direction: column; gap: 1px; }
-.wvd-trust-copy strong { font-family: 'DM Serif Display', Georgia, serif; font-size: 19px; font-weight: 400; line-height: 1.15; }
-.wvd-trust-copy span { overflow: hidden; color: var(--wvd-text-soft); font-size: 12.5px; font-weight: 600; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
-.wvd-trust-item-label-only .wvd-trust-copy span { color: var(--wvd-text); font-size: 13.5px; }
-.wvd-trust-icon-verified { background: var(--wvd-green-soft); color: var(--wvd-green); }
-
-.wvd-kpi-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.wvd-kpi-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.wvd-kpi-card { position: relative; display: flex; flex-direction: column; gap: 10px; overflow: hidden; padding: 17px 18px 15px; border: 1px solid var(--wvd-border); border-radius: 14px; background: linear-gradient(145deg, rgb(255 255 255 / 0.025), transparent 45%), var(--wvd-panel-raised); }
-.wvd-kpi-card::before { position: absolute; top: 0; right: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--wvd-green), transparent 82%); content: ''; }
-.wvd-kpi-card-empty::before { background: linear-gradient(90deg, var(--wvd-blue), transparent 82%); }
-/* A counter past its own start week reads red, not the neutral blue of one that has not started
-   yet, so a slipped date cannot look like a scheduled one at a glance. Declared after the -empty
-   rule because both classes are on the card and the later one has to win. */
-.wvd-kpi-card-held::before { background: linear-gradient(90deg, var(--wvd-red), transparent 82%); }
-.wvd-kpi-card-has-badge { padding-right: 54px; }
-.wvd-kpi-badge-icon { position: absolute; top: 16px; right: 16px; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid var(--wvd-border); border-radius: 50%; background: rgb(255 255 255 / 0.02); color: var(--wvd-faint); }
-.wvd-kpi-label { color: var(--wvd-text-soft); font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
-.wvd-kpi-value-row { display: flex; align-items: flex-end; gap: 12px; }
-.wvd-kpi-value { font-family: 'DM Serif Display', Georgia, serif; font-size: 38px; font-weight: 400; letter-spacing: -0.04em; line-height: 1; white-space: nowrap; }
-.wvd-kpi-value-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 2px; min-width: 0; }
-.wvd-kpi-week { color: var(--wvd-muted); font-size: 12.5px; }
-.wvd-kpi-delta { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-.wvd-kpi-delta.wvd-up { background: var(--wvd-green-soft); color: var(--wvd-green); }
-.wvd-kpi-delta.wvd-down { background: var(--wvd-red-soft); color: var(--wvd-red); }
-.wvd-kpi-delta.wvd-flat { background: var(--wvd-blue-soft); color: var(--wvd-blue); }
-.wvd-kpi-chart { display: flex; flex-direction: column; gap: 6px; }
-.wvd-kpi-bars { display: flex; align-items: flex-end; gap: 5px; height: 56px; padding-top: 2px; }
-.wvd-kpi-bar { flex: 1 1 0; max-width: 34px; min-height: 4px; border-radius: 4px 4px 2px 2px; background: color-mix(in srgb, var(--wvd-green) 55%, var(--wvd-rich-black)); }
-.wvd-kpi-bar.wvd-kpi-bar-current { background: var(--wvd-green); }
-.wvd-kpi-bar.wvd-kpi-bar-zero { background: var(--wvd-rich-black); border: 1px solid var(--wvd-border-soft); }
-.wvd-kpi-bar-labels { display: flex; gap: 5px; }
-/* Each label slot mirrors its bar's slot (flex 1 1 0, max-width 34px) so labels stay
-   aligned under their bars instead of spreading full width. Overflow is visible (not
-   clipped): a label a few px wider than its slot bleeds symmetrically rather than
-   truncating. For many-bar charts the JS thins the labels, so a bleeding label only
-   ever overlaps a blank neighbor, never another shown label. */
-.wvd-kpi-bar-label { flex: 1 1 0; max-width: 34px; min-width: 0; color: var(--wvd-faint); font-size: 10.5px; text-align: center; white-space: nowrap; }
-.wvd-kpi-bar-label-current { color: var(--wvd-text); font-weight: 700; }
-.wvd-kpi-total { align-self: flex-start; padding: 3px 9px; border: 1px solid var(--wvd-border-soft); border-radius: 999px; background: rgb(255 255 255 / 0.03); color: var(--wvd-text-soft); font-size: 12px; font-weight: 600; }
-.wvd-kpi-empty { display: flex; flex-direction: column; gap: 4px; padding: 10px 0 6px; }
-.wvd-kpi-empty strong { color: var(--wvd-faint); font-family: 'DM Serif Display', Georgia, serif; font-size: 23px; font-weight: 400; letter-spacing: -0.02em; }
-.wvd-kpi-empty span { color: var(--wvd-muted); font-size: 13px; line-height: 1.5; }
-.wvd-kpi-empty-held strong { color: var(--wvd-red); }
-.wvd-kpi-empty-held .wvd-kpi-held-age { color: var(--wvd-red); font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
-.wvd-kpi-goal { color: var(--wvd-muted); font-size: 13px; line-height: 1.5; }
-.wvd-kpi-source { margin-top: auto; color: var(--wvd-faint); font-size: 12px; line-height: 1.5; }
-/* Section divider: groups verified-now cards apart from the armed/tracking-pipeline
-   row, so Noah reads "these are real today" vs "these are counting from today" as
-   two distinct trust tiers rather than one flat grid. */
-.wvd-kpi-divider { display: flex; align-items: center; gap: 14px; margin: 22px 2px 14px; color: var(--wvd-faint); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
-.wvd-kpi-divider::before, .wvd-kpi-divider::after { flex: 1 1 auto; height: 1px; background: var(--wvd-border-soft); content: ''; }
 .wvd-kpi-caption { display: flex; align-items: flex-start; gap: 7px; margin-top: 18px; padding: 13px 18px; border: 1px solid var(--wvd-border-soft); border-radius: 12px; background: rgb(255 255 255 / 0.015); color: var(--wvd-faint); font-size: 12.5px; line-height: 1.55; }
 .wvd-kpi-caption svg { flex: 0 0 auto; margin-top: 2px; }
-
-/* Audit log (Tasha only): who signed in, when, and what they opened. Stat cards borrow the
-   KPI card classes on purpose, so the two measurement pages read as one system. auto-fit
-   keeps the stats responsive without another media query. */
-.wvd-audit-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; padding: 4px 20px 20px; }
-.wvd-audit-list { display: grid; gap: 8px; padding: 4px 20px 18px; }
-.wvd-audit-row { display: grid; gap: 6px; padding: 12px 14px; border: 1px solid var(--wvd-border-soft); border-radius: 12px; background: rgb(255 255 255 / 0.018); }
-.wvd-audit-row-head { display: flex; align-items: center; gap: 9px; }
-.wvd-audit-row-head strong { font-size: 14px; font-weight: 700; }
-.wvd-audit-dot { flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%; background: var(--wvd-faint); }
-.wvd-audit-noah .wvd-audit-dot { background: var(--wvd-green); }
-.wvd-audit-fail .wvd-audit-dot { background: var(--wvd-red); }
-.wvd-audit-fail { border-color: rgb(224 94 79 / 0.3); }
-.wvd-audit-event { color: var(--wvd-text-soft); font-size: 13px; }
-.wvd-audit-time { margin-left: auto; color: var(--wvd-muted); font-size: 12.5px; white-space: nowrap; }
-.wvd-audit-row-meta { color: var(--wvd-faint); font-size: 12.5px; line-height: 1.5; }
-/* Page chips need their OWN style. .wvd-sys-chip is a 26px circular avatar with margin-left:-6px
-   so stacked initials overlap like a team photo; real page names in it burst the circle and
-   collided into unreadable text ("PipTasha's Maµog"). These are plain wrapping pills. */
-.wvd-audit-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 3px; }
-.wvd-audit-chips-label { color: var(--wvd-faint); font-size: 10.5px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
-.wvd-audit-chip { padding: 3px 9px; border: 1px solid var(--wvd-border-soft); border-radius: 999px; background: var(--wvd-panel-hover); color: var(--wvd-text-soft); font-size: 11.5px; font-weight: 600; line-height: 1.45; white-space: nowrap; }
-.wvd-audit-empty { display: grid; gap: 7px; padding: 20px 22px; }
-.wvd-audit-empty strong { color: var(--wvd-text); font-family: 'DM Serif Display', Georgia, serif; font-size: 22px; font-weight: 400; letter-spacing: -0.02em; }
-.wvd-audit-empty span { color: var(--wvd-muted); font-size: 13.5px; line-height: 1.6; }
-.wvd-audit-empty code { padding: 1px 5px; border-radius: 5px; background: rgb(255 255 255 / 0.05); font-size: 12.5px; }
-.wvd-audit-empty button { justify-self: start; margin-top: 6px; }
 
 /* Noah's Log page (mockup redesign 2026-07-21; Recent Highlights section removed
    2026-08-04 per Tasha, the Full Daily Log timeline is the whole page now): a
@@ -676,7 +431,6 @@ body {
 .wvd-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 20px 0; }
 .wvd-panel-title { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
 .wvd-t-green { color: var(--wvd-green); }
-.wvd-t-gold { color: var(--wvd-gold); }
 .wvd-eyebrow { color: var(--wvd-green); font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
 .wvd-panel-heading h2 { margin-top: 5px; font-family: 'DM Serif Display', Georgia, serif; font-size: 21px; font-weight: 400; letter-spacing: -0.025em; }
 .wvd-panel-meta { color: var(--wvd-muted); font-size: 13px; white-space: nowrap; }
@@ -708,65 +462,6 @@ body {
 .wvd-latest-session-num { display: grid; width: 22px; height: 22px; flex: 0 0 auto; place-items: center; border-radius: 6px; background: var(--wvd-green-soft); color: var(--wvd-green); font-size: 12px; font-weight: 700; }
 .wvd-latest-session-head h3 { min-width: 0; color: var(--wvd-text); font-size: 15.5px; font-weight: 600; line-height: 1.4; }
 .wvd-latest-session-solo { padding: 16px 20px 0; color: var(--wvd-text); font-size: 15.5px; font-weight: 600; line-height: 1.4; }
-
-.wvd-handoff-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; padding: 16px 20px 20px; }
-.wvd-handoff-card { --wvd-handoff-color: var(--wvd-gold); position: relative; display: flex; min-width: 0; flex-direction: column; gap: 11px; overflow: hidden; padding: 18px 18px 16px; border: 1px solid var(--wvd-border-soft); border-radius: 14px; background: rgb(255 255 255 / 0.015); cursor: pointer; }
-.wvd-handoff-card:focus-visible { outline: 2px solid var(--wvd-green); outline-offset: 2px; }
-.wvd-handoff-card.wvd-ready { --wvd-handoff-color: var(--wvd-green); }
-.wvd-handoff-card.wvd-open { --wvd-handoff-color: var(--wvd-gold); }
-.wvd-handoff-card.wvd-in-progress { --wvd-handoff-color: var(--wvd-blue); }
-.wvd-handoff-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.wvd-handoff-title { min-width: 0; }
-.wvd-handoff-title .wvd-project-tag { color: var(--wvd-handoff-color); }
-.wvd-handoff-title h3 { margin-top: 7px; color: var(--wvd-text); font-size: 18px; font-weight: 600; line-height: 1.4; }
-.wvd-handoff-badges { display: flex; flex: 0 0 auto; align-items: center; gap: 5px; }
-.wvd-handoff-status,
-.wvd-handoff-priority { padding: 4px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; white-space: nowrap; }
-.wvd-handoff-status { background: color-mix(in srgb, var(--wvd-handoff-color) 13%, transparent); color: var(--wvd-handoff-color); }
-.wvd-handoff-priority { border: 1px solid var(--wvd-border); color: var(--wvd-muted); }
-.wvd-handoff-next { color: var(--wvd-text-soft); font-size: 13.5px; line-height: 1.6; }
-.wvd-handoff-next strong { display: block; margin-bottom: 4px; color: var(--wvd-handoff-color); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; }
-.wvd-handoff-context { color: var(--wvd-muted); font-size: 12.5px; line-height: 1.55; }
-.wvd-handoff-foot { display: grid; gap: 10px; margin-top: auto; padding-top: 4px; }
-.wvd-handoff-foot .wvd-mini-progress { margin-top: 0; }
-.wvd-handoff-foot .wvd-mini-progress-label strong { color: var(--wvd-text); font-size: 14px; }
-.wvd-handoff-foot .wvd-mini-progress-fill { background: var(--wvd-handoff-color); }
-.wvd-handoff-source { padding-top: 10px; border-top: 1px solid var(--wvd-border-soft); color: var(--wvd-faint); font-size: 11.5px; line-height: 1.45; }
-
-/* Active Priorities page: left-aligned heading + toolbar (count chip, filters, month select). */
-.wvd-ap-header .wvd-heading-block { flex: 0 1 auto; text-align: left; }
-.wvd-ap-header .wvd-heading-block > p:last-child { margin: 0; }
-.wvd-ap-toolbar { display: flex; min-width: 0; flex: 1 1 auto; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin-left: auto; }
-.wvd-ap-count { display: grid; grid-template-columns: auto auto auto; align-items: center; gap: 11px; padding: 8px 14px 8px 9px; border: 1px solid var(--wvd-border-soft); border-radius: 13px; background: var(--wvd-panel); }
-.wvd-ap-count-icon { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 9px; background: var(--wvd-green-soft); color: var(--wvd-green); }
-.wvd-ap-count strong { font-family: 'DM Serif Display', Georgia, serif; font-size: 25px; font-weight: 400; line-height: 1; }
-.wvd-ap-count-copy { display: grid; gap: 1px; }
-.wvd-ap-count-copy b { color: var(--wvd-text); font-size: 12.5px; font-weight: 600; }
-.wvd-ap-count-copy span { color: var(--wvd-muted); font-size: 11.5px; }
-.wvd-ap-select { position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 0 10px 0 12px; border: 1px solid var(--wvd-border); border-radius: 10px; background: var(--wvd-surface); color: var(--wvd-muted); font-size: 12.5px; font-weight: 600; white-space: nowrap; }
-.wvd-ap-select select { min-height: 34px; padding-right: 18px; border: 0; background: transparent; color: var(--wvd-text-soft); font-size: 12.5px; font-weight: 600; cursor: pointer; appearance: none; -webkit-appearance: none; }
-.wvd-ap-select select:focus-visible { outline: 2px solid var(--wvd-green); outline-offset: 2px; }
-.wvd-ap-select > svg { position: absolute; right: 8px; pointer-events: none; color: var(--wvd-faint); }
-.wvd-ap-title { position: relative; padding-bottom: 9px; }
-.wvd-ap-title::after { position: absolute; bottom: 0; left: 0; width: 30px; height: 2px; border-radius: 2px; background: currentColor; content: ''; }
-
-/* Recent activity: the newest session-log entries, one line each. */
-.wvd-activity-list { padding: 8px 0 0; }
-.wvd-activity-list .wvd-none { padding: 4px 20px 16px; }
-.wvd-activity-row { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: 13px; padding: 12px 20px; border-bottom: 1px solid var(--wvd-border-soft); }
-.wvd-activity-row.wvd-shipped-tone { --wvd-activity-color: var(--wvd-green); }
-.wvd-activity-row.wvd-fixed-tone { --wvd-activity-color: var(--wvd-gold); }
-.wvd-activity-row.wvd-progress-tone { --wvd-activity-color: var(--wvd-blue); }
-.wvd-activity-icon { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--wvd-activity-color) 14%, transparent); color: var(--wvd-activity-color); }
-.wvd-activity-date { color: var(--wvd-muted); font-size: 12.5px; font-weight: 600; white-space: nowrap; }
-.wvd-activity-text { min-width: 0; overflow: hidden; color: var(--wvd-text-soft); font-size: 14px; line-height: 1.5; text-overflow: ellipsis; white-space: nowrap; }
-.wvd-activity-chip { padding: 4px 9px; border-radius: 999px; background: color-mix(in srgb, var(--wvd-activity-color) 12%, transparent); color: var(--wvd-activity-color); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
-.wvd-activity-more { display: flex; width: 100%; align-items: center; justify-content: center; gap: 7px; min-height: 46px; border: 0; background: transparent; color: var(--wvd-muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: 160ms ease; }
-.wvd-activity-more:hover { color: var(--wvd-text); }
-
-/* Quiet footnotes under the Active Priorities panels. */
-.wvd-ap-footnotes { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; margin-top: 16px; padding: 0 4px; color: var(--wvd-faint); font-size: 12.5px; }
-.wvd-ap-footnotes span { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
 
 .wvd-waiting-list { display: grid; gap: 10px; padding: 14px 20px 20px; }
 .wvd-waiting-card { position: relative; overflow: hidden; border: 1px solid var(--wvd-border-soft); border-radius: 12px; background: rgb(255 255 255 / 0.018); }
@@ -850,7 +545,7 @@ body {
 .wvd-sys-foot-label { display: inline-flex; align-items: center; gap: 7px; color: var(--wvd-muted); font-size: 12px; }
 .wvd-sys-foot-label svg { color: var(--wvd-project-color); }
 .wvd-sys-foot-time { color: var(--wvd-faint); font-size: 12px; font-weight: 600; white-space: nowrap; }
-/* Retained for the detail modals (project / handoff / stage), which still use this pill. */
+/* Retained for the detail modals (project / stage), which still use this pill. */
 .wvd-status-pill { flex: 0 0 auto; padding: 4px 8px; border-radius: 999px; background: color-mix(in srgb, var(--wvd-project-color, var(--wvd-muted)) 12%, transparent); color: var(--wvd-project-color, var(--wvd-text-soft)); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; white-space: nowrap; }
 
 .wvd-score-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
@@ -874,8 +569,8 @@ body {
 .wvd-health-key-copy { color: var(--wvd-muted); font-size: 11.5px; line-height: 1.45; }
 .wvd-health-key-item:nth-child(3) .wvd-health-key-copy { color: var(--wvd-text-soft); }
 
-/* Real checklist-based progress: done vs. left item counts, used on Active Priorities
-   cards and on Systems cards that have a real "what's left" list (not every system does). */
+/* Real checklist-based progress: done vs. left item counts, used on Systems cards that
+   have a real "what's left" list (not every system does). */
 .wvd-mini-progress { margin-top: 10px; }
 .wvd-mini-progress-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; color: var(--wvd-muted); font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 .wvd-mini-progress-label strong { color: var(--wvd-text-soft); font-size: 12.5px; font-weight: 700; letter-spacing: normal; text-transform: none; }
@@ -971,17 +666,6 @@ body {
 .wvd-page-btn:hover { background: var(--wvd-panel-raised); color: var(--wvd-text); }
 .wvd-page-btn.wvd-active { border-color: var(--wvd-green); background: var(--wvd-green-soft); color: var(--wvd-green-bright); }
 
-/* --- Growth Path (private, passphrase-gated) --- */
-.wvd-lock-overlay { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; padding: 24px; background: rgb(10 10 9 / 0.94); backdrop-filter: blur(6px); }
-.wvd-lock-card { display: grid; gap: 14px; width: min(420px, 100%); padding: 26px 24px; border: 1px solid var(--wvd-border-soft); border-radius: 18px; background: linear-gradient(160deg, var(--wvd-panel), var(--wvd-surface)); box-shadow: var(--wvd-shadow); }
-.wvd-lock-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 12px; background: var(--wvd-green-soft); color: var(--wvd-green); }
-.wvd-lock-card h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 22px; font-weight: 400; letter-spacing: -0.02em; }
-.wvd-lock-card p { color: var(--wvd-muted); font-size: 13.5px; line-height: 1.6; }
-.wvd-lock-card input[type='password'] { width: 100%; padding: 11px 13px; border: 1px solid var(--wvd-border); border-radius: 10px; background: var(--wvd-rich-black); color: var(--wvd-text); font-size: 15px; }
-.wvd-lock-card input[type='password']:focus { border-color: var(--wvd-green); outline: none; }
-.wvd-lock-error { min-height: 16px; color: var(--wvd-red); font-size: 13px; }
-.wvd-lock-caption { padding: 10px 12px; border: 1px solid var(--wvd-border-soft); border-radius: 10px; background: rgb(255 255 255 / 0.02); color: var(--wvd-faint); font-size: 12px; line-height: 1.55; }
-
 /* --- Sign-in gate (Noah or Tasha) --- */
 .wvd-login-overlay { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 24px; background: var(--wvd-rich-black); }
 .wvd-login-overlay[hidden] { display: none; }
@@ -1005,55 +689,6 @@ body {
 .wvd-signout:hover { border-color: var(--wvd-border-soft); color: var(--wvd-text-soft); }
 .wvd-login-reset { border: 0; padding: 0; background: none; color: var(--wvd-faint); font-size: 12px; text-decoration: underline; cursor: pointer; justify-self: start; }
 .wvd-login-reset:hover { color: var(--wvd-text-soft); }
-.wvd-growth-empty { padding: 20px 22px; color: var(--wvd-muted); font-size: 13.5px; line-height: 1.6; }
-
-.wvd-growth-status { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; padding: 22px 22px 20px; }
-.wvd-growth-status strong { font-family: 'DM Serif Display', Georgia, serif; font-size: 46px; font-weight: 400; letter-spacing: -0.03em; color: var(--wvd-green); }
-.wvd-growth-status .wvd-growth-level { color: var(--wvd-text); font-size: 16px; font-weight: 600; }
-.wvd-growth-status .wvd-growth-since { color: var(--wvd-muted); font-size: 13px; }
-.wvd-growth-lock-btn { margin-left: auto; padding: 8px 13px; border: 1px solid var(--wvd-border); border-radius: 9px; background: var(--wvd-surface); color: var(--wvd-text-soft); font-size: 12.5px; font-weight: 600; cursor: pointer; }
-.wvd-growth-lock-btn:hover { background: var(--wvd-panel-raised); color: var(--wvd-text); }
-
-.wvd-gate-checklist { display: grid; gap: 8px; padding: 4px 20px 16px; }
-.wvd-gate-item { display: flex; align-items: flex-start; gap: 10px; padding: 11px 13px; border: 1px solid var(--wvd-border-soft); border-radius: 11px; background: rgb(255 255 255 / 0.015); }
-.wvd-gate-item svg { flex: 0 0 auto; margin-top: 1px; color: var(--wvd-gold); }
-.wvd-gate-item span { color: var(--wvd-text-soft); font-size: 13.5px; line-height: 1.55; }
-.wvd-gate-streak { display: flex; align-items: center; gap: 8px; margin: 0 20px 10px; padding: 10px 13px; border: 1px solid rgb(224 176 79 / 0.25); border-radius: 10px; background: var(--wvd-gold-soft); color: var(--wvd-gold); font-size: 13.5px; font-weight: 700; }
-.wvd-progress-bar-track { height: 10px; margin: 0 20px 16px; border-radius: 999px; background: var(--wvd-rich-black); border: 1px solid var(--wvd-border-soft); overflow: hidden; }
-.wvd-progress-bar-fill { height: 100%; min-width: 4px; border-radius: 999px; background: linear-gradient(90deg, var(--wvd-gold), var(--wvd-green)); transition: width 400ms ease; }
-.wvd-growth-window { padding: 0 20px 4px; color: var(--wvd-muted); font-size: 13px; }
-.wvd-gate-weeks { display: grid; gap: 8px; padding: 0 20px 20px; }
-.wvd-gate-week { display: grid; gap: 6px; padding: 13px 15px; border: 1px solid var(--wvd-border-soft); border-radius: 12px; background: rgb(255 255 255 / 0.018); }
-.wvd-gate-week-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.wvd-gate-week-head strong { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-.wvd-gate-week-status { padding: 3px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-.wvd-gate-week-status.wvd-clean { background: var(--wvd-green-soft); color: var(--wvd-green); }
-.wvd-gate-week-status.wvd-dirty { background: var(--wvd-red-soft); color: var(--wvd-red); }
-.wvd-gate-week-status.wvd-pending { background: var(--wvd-blue-soft); color: var(--wvd-blue); }
-.wvd-gate-week p { color: var(--wvd-muted); font-size: 13px; line-height: 1.55; }
-.wvd-gate-week p strong { color: var(--wvd-text-soft); font-weight: 600; }
-
-.wvd-ladder-list { display: grid; gap: 10px; padding: 4px 20px 20px; }
-.wvd-ladder-item { --wvd-ladder-color: var(--wvd-border); position: relative; display: flex; align-items: center; gap: 14px; padding: 14px 16px 14px 19px; overflow: hidden; border: 1px solid var(--wvd-border-soft); border-radius: 12px; background: rgb(255 255 255 / 0.015); }
-.wvd-ladder-item::before { position: absolute; top: 0; bottom: 0; left: 0; width: 3px; background: var(--wvd-ladder-color); content: ''; }
-.wvd-ladder-item.wvd-active { --wvd-ladder-color: var(--wvd-green); }
-.wvd-ladder-item.wvd-locked { --wvd-ladder-color: var(--wvd-border); }
-.wvd-ladder-item.wvd-done { --wvd-ladder-color: var(--wvd-blue); }
-.wvd-ladder-num { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: var(--wvd-panel-raised); color: var(--wvd-text-soft); font-family: 'DM Serif Display', Georgia, serif; font-size: 16px; }
-.wvd-ladder-copy { min-width: 0; flex: 1; }
-.wvd-ladder-copy h3 { color: var(--wvd-text); font-size: 15px; font-weight: 600; }
-.wvd-ladder-copy strong { color: var(--wvd-green); font-weight: 600; }
-.wvd-ladder-copy p { margin-top: 4px; color: var(--wvd-muted); font-size: 12.5px; line-height: 1.5; }
-.wvd-ladder-pill { flex: 0 0 auto; padding: 4px 9px; border-radius: 999px; background: color-mix(in srgb, var(--wvd-ladder-color) 14%, transparent); color: var(--wvd-ladder-color); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; white-space: nowrap; }
-
-.wvd-measure-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; padding: 4px 20px 20px; }
-.wvd-measure-group { min-width: 0; padding: 0 16px; border-right: 1px solid var(--wvd-border-soft); }
-.wvd-measure-group:first-child { padding-left: 0; }
-.wvd-measure-group:last-child { border-right: 0; padding-right: 0; }
-.wvd-measure-group ul { list-style: none; }
-.wvd-measure-group li { position: relative; padding: 0 0 8px 14px; color: var(--wvd-text-soft); font-size: 13px; line-height: 1.55; }
-.wvd-measure-group li:last-child { padding-bottom: 0; }
-.wvd-measure-group li::before { position: absolute; top: 7px; left: 0; width: 4px; height: 4px; border-radius: 50%; background: var(--wvd-green); content: ''; }
 
 /* --- Systems detail modal --- */
 .wvd-modal-overlay { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 24px; background: rgb(6 6 5 / 0.72); backdrop-filter: blur(6px); }
@@ -1095,25 +730,13 @@ body {
 @keyframes wvdRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes wvdPulse { 0%, 100% { box-shadow: 0 0 0 0 rgb(168 224 95 / 0.4); } 50% { box-shadow: 0 0 0 6px rgb(168 224 95 / 0); } }
 
-.wvd-metrics-grid > .wvd-metric-card, .wvd-metrics-grid > .wvd-metrics-right { animation: wvdRise 0.5s ease both; }
-.wvd-metrics-grid > :nth-child(1) { animation-delay: 0.02s; }
-.wvd-metrics-grid > :nth-child(2) { animation-delay: 0.06s; }
-#wvdBody > .wvd-section { animation: wvdRise 0.55s ease both; }
-#wvdBody > .wvd-section:nth-child(2) { animation-delay: 0.08s; }
-#wvdBody > .wvd-section:nth-child(3) { animation-delay: 0.14s; }
-#wvdBody > .wvd-section:nth-child(4) { animation-delay: 0.2s; }
-#wvdBody > .wvd-section:nth-child(5) { animation-delay: 0.26s; }
-#wvdBody > .wvd-section:nth-child(6) { animation-delay: 0.32s; }
-#wvdBody > .wvd-section:nth-child(7) { animation-delay: 0.38s; }
 #wvdSessionsBody > .wvd-section { animation: wvdRise 0.4s ease both; }
 #wvdSystemsBody > .wvd-section { animation: wvdRise 0.4s ease both; }
-#wvdKpisBody > .wvd-section { animation: wvdRise 0.4s ease both; }
 #wvdLatestBody > .wvd-section,
-#wvdHandoffsBody > .wvd-section,
 #wvdWaitingBody > .wvd-section { animation: wvdRise 0.4s ease both; }
 
-.wvd-handoff-card, .wvd-project, .wvd-attention-card { transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
-.wvd-handoff-card:hover, .wvd-project:hover, .wvd-attention-card:hover { transform: translateY(-2px); border-color: var(--wvd-border); box-shadow: 0 14px 34px rgb(0 0 0 / 0.24); }
+.wvd-project { transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+.wvd-project:hover { transform: translateY(-2px); border-color: var(--wvd-border); box-shadow: 0 14px 34px rgb(0 0 0 / 0.24); }
 .wvd-waiting-card summary { transition: background 160ms ease; }
 .wvd-waiting-card:hover summary { background: rgb(255 255 255 / 0.02); }
 
@@ -1293,22 +916,12 @@ body {
   #wvd-root .wvd-sidebar,
   #wvd-root .wvd-toast-wrap { display: none !important; }
   #wvd-root .wvd-content { height: auto; overflow: visible; padding: 0; }
-  #wvd-root .wvd-panel,
-  #wvd-root .wvd-metric-card,
-  #wvd-root .wvd-metric-list,
-  #wvd-root .wvd-handoff-card,
-  #wvd-root .wvd-project,
-  #wvd-root .wvd-session { break-inside: avoid; }
+  #wvd-root .wvd-panel, #wvd-root .wvd-project, #wvd-root .wvd-session { break-inside: avoid; }
 }
 
 @media (max-width: 1180px) {
   #wvd-root { grid-template-columns: 216px minmax(0, 1fr); }
-  #wvd-root .wvd-metrics-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
   #wvd-root .wvd-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  #wvd-root .wvd-kpi-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* Drop the trust bar to 2-up here: at 4-up in the 901-1180 band the sidebar
-     has already narrowed content enough that "Verified sources" would clip. */
-  #wvd-root .wvd-kpi-trustbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 900px) {
@@ -1320,62 +933,28 @@ body {
   #wvd-root .wvd-sidebar-close { display: grid; }
   #wvd-root .wvd-nav-scrim.wvd-show { position: absolute; inset: 0; z-index: 25; display: block; border: 0; background: rgb(0 0 0 / 0.64); }
   #wvd-root .wvd-menu { display: grid; }
-  #wvd-root .wvd-back { display: inline-flex; }
-  #wvd-root .wvd-kpi-trustbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* The week-summary card drops full-width beneath the heading; the metric row
-     becomes two heroes over a full-width list; the heatmap stacks its glance panel. */
-  #wvd-root .wvd-overview-header { flex-wrap: wrap; }
-  #wvd-root .wvd-week-summary { width: 100%; min-width: 0; }
-  #wvd-root .wvd-metrics-grid { grid-template-columns: 1fr; }
-  #wvd-root .wvd-metric-list { min-height: 0; }
-  #wvd-root .wvd-mlr { min-height: 58px; }
-  #wvd-root .wvd-heatmap-layout { grid-template-columns: 1fr; gap: 18px; }
-  #wvd-root .wvd-heat-glance { padding-left: 0; padding-top: 16px; border-left: 0; border-top: 1px solid var(--wvd-border-soft); }
 }
 
 @media (max-width: 600px) {
   #wvd-root .wvd-content { padding: 20px 14px 22px; }
-  #wvd-root .wvd-topbar { flex-wrap: wrap; gap: 14px; }
   #wvd-root .wvd-heading-block { flex-basis: 100%; }
   #wvd-root .wvd-heading-block h1 { font-size: 30px; }
   #wvd-root .wvd-heading-block > p:last-child { font-size: 13.5px; }
-  #wvd-root .wvd-metrics-grid { grid-template-columns: 1fr; }
-  #wvd-root .wvd-kpi-trustbar { grid-template-columns: 1fr; }
-  #wvd-root .wvd-kpi-grid { grid-template-columns: 1fr; }
-  #wvd-root .wvd-metric-card { padding: 16px 18px; }
-  #wvd-root .wvd-hero-shipped > strong { font-size: 52px; }
-  #wvd-root .wvd-week-summary { gap: 14px 18px; padding: 14px 16px; }
-  #wvd-root .wvd-ws-divider { display: none; }
   #wvd-root .wvd-latest-head { grid-template-columns: auto minmax(0, 1fr); }
   #wvd-root .wvd-date-badge { grid-column: 2; justify-self: start; }
   #wvd-root .wvd-latest-title h2 { overflow: visible; text-overflow: clip; white-space: normal; }
-  #wvd-root .wvd-latest-groups,
-  #wvd-root .wvd-measure-grid,
-  #wvd-root .wvd-breakdown-grid { grid-template-columns: 1fr; }
-  #wvd-root .wvd-latest-group,
-  #wvd-root .wvd-measure-group { border-right: 0; padding-left: 0; padding-right: 0; border-bottom: 1px solid var(--wvd-border-soft); padding-bottom: 12px; margin-bottom: 12px; }
-  #wvd-root .wvd-latest-group:last-child,
-  #wvd-root .wvd-measure-group:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+  #wvd-root .wvd-latest-groups, #wvd-root .wvd-breakdown-grid { grid-template-columns: 1fr; }
+  #wvd-root .wvd-latest-group { border-right: 0; padding-left: 0; padding-right: 0; border-bottom: 1px solid var(--wvd-border-soft); padding-bottom: 12px; margin-bottom: 12px; }
+  #wvd-root .wvd-latest-group:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
   #wvd-root .wvd-session-stats { flex-direction: column; align-items: stretch; gap: 16px; }
   #wvd-root .wvd-session-stat-divider { display: none; }
   #wvd-root .wvd-panel-heading { align-items: flex-start; flex-direction: column; gap: 10px; padding: 16px 16px 0; }
   #wvd-root .wvd-filter-tabs { width: 100%; overflow-x: auto; }
   #wvd-root .wvd-filter-tabs button { flex: 1; white-space: nowrap; }
   #wvd-root .wvd-health-key { grid-template-columns: 1fr; margin: 14px 16px 0; }
-  #wvd-root .wvd-projects,
-  #wvd-root .wvd-attention-grid { grid-template-columns: 1fr; }
-  #wvd-root .wvd-projects,
-  #wvd-root .wvd-handoff-list,
-  #wvd-root .wvd-waiting-list,
-  #wvd-root .wvd-attention-grid { padding: 14px 16px 17px; }
+  #wvd-root .wvd-projects { grid-template-columns: 1fr; }
+  #wvd-root .wvd-projects, #wvd-root .wvd-waiting-list { padding: 14px 16px 17px; }
   #wvd-root .wvd-session-list { padding: 6px 16px 12px; }
-  #wvd-root .wvd-handoff-top { flex-direction: column; }
-  #wvd-root .wvd-ap-toolbar { justify-content: flex-start; }
-  #wvd-root .wvd-activity-row { grid-template-columns: auto minmax(0, 1fr); row-gap: 4px; padding: 12px 16px; }
-  #wvd-root .wvd-activity-icon { grid-row: 1 / span 3; align-self: start; }
-  #wvd-root .wvd-activity-text { grid-column: 2; grid-row: 1; white-space: normal; }
-  #wvd-root .wvd-activity-date { grid-column: 2; grid-row: 2; }
-  #wvd-root .wvd-activity-chip { grid-column: 2; grid-row: 3; justify-self: start; }
   #wvd-root .wvd-waiting-card summary { grid-template-columns: 1fr; }
   #wvd-root .wvd-waiting-side { justify-content: flex-start; }
   #wvd-root .wvd-session summary { grid-template-columns: 10px minmax(0, 1fr) 18px; }
@@ -1390,11 +969,6 @@ body {
   #wvd-root .wvd-modal-card { padding: 22px 18px 20px; max-height: 88vh; }
 }
 
-@media (max-width: 380px) {
-  #wvd-root .wvd-metric-label { font-size: 11.5px; }
-  #wvd-root .wvd-metric-card > strong { font-size: 27.5px; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   #wvd-root,
   #wvd-root *,
@@ -1402,7 +976,4 @@ body {
   #wvd-root *::after,
   .wvd-modal-overlay,
   .wvd-modal-overlay * { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  #wvdBody > .wvd-section,
-  .wvd-metrics-grid > .wvd-metric-card,
-  .wvd-metrics-grid > .wvd-metrics-right { animation: none !important; }
 }
