@@ -1,923 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tasha's work log</title>
-  <meta name="description" content="What Tasha has shipped, fixed, and has in progress at Dragon Auto, logged after every work session.">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#0d0d0b">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c1c19'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23a8e05f'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    /* Tasha's public work log. Data: ./data/worklog.json, rebuilt from the private worklog after
-       every work session by work-dashboard/scripts/publish-github.mjs. Colours are the old GHL work
-       dashboard's --wvd-* tokens, kept so Noah reads the same system. */
-    :root {
-      --wvd-rich-black: #0a0a09;
-      --wvd-background: #0d0d0b;
-      --wvd-surface: #131311;
-      --wvd-panel: #161614;
-      --wvd-panel-raised: #1c1c19;
-      --wvd-panel-hover: #23231f;
-      --wvd-border: #34342f;
-      --wvd-border-soft: #262622;
-      --wvd-text: #eceae3;
-      --wvd-text-soft: #c9c8c1;
-      --wvd-muted: #97968f;
-      --wvd-green: #a8e05f;
-      --wvd-green-soft: #1d2a14;
-      --wvd-gold: #e0b04f;
-      --wvd-blue: #8cb9de;
-      --wvd-red: #e3766d;
-      --wvd-red-soft: #301b19;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Work Activity | Dragon Auto Internal Ops</title>
+    <meta name="description" content="Dragon Auto internal work activity record.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#0d0d0b">
 
-      --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
-      --font-body: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    <link rel="icon" type="image/png" sizes="48x48" href="favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-      --text-xs: 0.8125rem;
-      --text-sm: 0.875rem;
-      --text-base: 1rem;
-      --text-lg: 1.25rem;
-      --text-xl: 1.75rem;
-      --text-2xl: 2.5rem;
-
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
-      --space-5: 24px;
-      --space-6: 32px;
-      --space-7: 48px;
-      --space-8: 64px;
-
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-
-      --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
-      --z-tooltip: 20;
-      --z-skip: 30;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; }
-    body {
-      margin: 0;
-      background: var(--wvd-background);
-      color: var(--wvd-text);
-      font-family: var(--font-body);
-      font-size: var(--text-base);
-      line-height: 1.6;
-      letter-spacing: 0.01em;
-      font-kerning: normal;
-      -webkit-font-smoothing: antialiased;
-    }
-    h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
-    ul, ol { padding: 0; }
-    button, input { font: inherit; color: inherit; }
-    :focus-visible { outline: 2px solid var(--wvd-green); outline-offset: 2px; border-radius: 4px; }
-
-    .skip {
-      position: absolute;
-      left: var(--space-4);
-      top: -100px;
-      z-index: var(--z-skip);
-      padding: var(--space-2) var(--space-4);
-      border-radius: var(--radius-sm);
-      background: var(--wvd-green);
-      color: var(--wvd-rich-black);
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .skip:focus { top: var(--space-4); }
-
-    .page {
-      width: min(100% - 2 * var(--space-4), 760px);
-      margin: 0 auto;
-      padding: var(--space-7) 0 var(--space-8);
-    }
-
-    /* ---------- Masthead ---------- */
-    .masthead { display: grid; gap: var(--space-3); }
-    .masthead, .week, .log, .day, .chart, .stack { grid-template-columns: minmax(0, 1fr); }
-    .stack { display: grid; gap: var(--space-5); }
-    .stack-tight { gap: var(--space-2); }
-    .week[hidden] { display: none; }
-    .masthead-org { color: var(--wvd-muted); font-size: var(--text-sm); font-weight: 500; }
-    .masthead h1 {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: var(--text-2xl);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      text-wrap: balance;
-    }
-    .masthead-lede { max-width: 58ch; color: var(--wvd-text-soft); text-wrap: pretty; }
-    .masthead-meta { color: var(--wvd-muted); font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
-
-    /* ---------- This week ---------- */
-    .week { margin-top: var(--space-7); display: grid; gap: var(--space-5); }
-    .section-title { font-size: var(--text-lg); font-weight: 600; line-height: 1.3; }
-    .section-sub { color: var(--wvd-muted); font-size: var(--text-sm); }
-    .week-head { display: grid; gap: var(--space-1); }
-
-    .figures {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      border: 1px solid var(--wvd-border-soft);
-      border-radius: var(--radius-lg);
-      background: var(--wvd-panel);
-    }
-    .figure { display: grid; gap: var(--space-1); padding: var(--space-4) var(--space-5); }
-    .figure + .figure { border-left: 1px solid var(--wvd-border-soft); }
-    .figure-label { display: flex; align-items: center; gap: var(--space-2); color: var(--wvd-text-soft); font-size: var(--text-sm); font-weight: 500; }
-    .figure-value {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      line-height: 1.1;
-      font-variant-numeric: tabular-nums;
-    }
-    .figure-compare { color: var(--wvd-muted); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
-
-    .dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: var(--wvd-muted); }
-    .dot-shipped { background: var(--wvd-green); }
-    .dot-fixed { background: var(--wvd-gold); }
-    .dot-progress { background: var(--wvd-blue); }
-
-    /* Weekly chart: one series (shipped + fixed), so the title names it and no legend is needed. */
-    .chart { position: relative; display: grid; gap: var(--space-3); }
-    .chart-caption { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-1) var(--space-4); }
-    .chart-title { font-size: var(--text-sm); font-weight: 600; color: var(--wvd-text-soft); }
-    .chart-sub { font-size: var(--text-xs); color: var(--wvd-muted); }
-    .bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 6px;
-      height: 140px;
-      padding-top: var(--space-5);
-      border-bottom: 1px solid var(--wvd-border);
-      list-style: none;
-    }
-    .bar-col { position: relative; display: flex; flex: 1 1 0; height: 100%; min-width: 0; }
-    .bar-hit {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      cursor: default;
-    }
-    .bar {
-      width: 100%;
-      max-width: 36px;
-      height: var(--h, 0%);
-      min-height: 2px;
-      border-radius: 4px 4px 0 0;
-      background: color-mix(in srgb, var(--wvd-green) 62%, var(--wvd-background));
-      transition: background-color 150ms var(--ease-out);
-    }
-    .bar-col.is-current .bar { background: var(--wvd-green); }
-    .bar-col.is-zero .bar { background: var(--wvd-border); }
-    .bar-hit:hover .bar, .bar-hit:focus-visible .bar { background: var(--wvd-green); }
-    .bar-value {
-      position: absolute;
-      left: 50%;
-      bottom: calc(var(--h, 0%) + 4px);
-      transform: translateX(-50%);
-      color: var(--wvd-text);
-      font-size: var(--text-xs);
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-      pointer-events: none;
-    }
-    .bar-labels { display: flex; gap: 6px; list-style: none; }
-    .bar-labels li {
-      flex: 1 1 0;
-      min-width: 0;
-      color: var(--wvd-muted);
-      font-size: var(--text-xs);
-      text-align: center;
-      white-space: nowrap;
-      font-variant-numeric: tabular-nums;
-    }
-    .bar-labels li.is-current { color: var(--wvd-text); font-weight: 600; }
-    .tooltip {
-      position: absolute;
-      z-index: var(--z-tooltip);
-      padding: var(--space-2) var(--space-3);
-      border: 1px solid var(--wvd-border);
-      border-radius: var(--radius-sm);
-      background: var(--wvd-panel-raised);
-      box-shadow: 0 12px 32px rgb(0 0 0 / 0.4);
-      color: var(--wvd-text);
-      font-size: var(--text-xs);
-      line-height: 1.5;
-      white-space: nowrap;
-      pointer-events: none;
-      transform: translate(-50%, calc(-100% - 8px));
-    }
-    .tooltip strong { display: block; font-weight: 600; }
-    .tooltip[hidden] { display: none; }
-
-    .table-toggle > summary {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      min-height: 44px;
-      color: var(--wvd-text-soft);
-      font-size: var(--text-sm);
-      font-weight: 500;
-      cursor: pointer;
-      list-style: none;
-    }
-    .table-toggle > summary::-webkit-details-marker { display: none; }
-    .table-toggle > summary:hover { color: var(--wvd-text); }
-    .table-toggle > summary .chevron { margin-top: 0; }
-    .table-toggle[open] > summary .chevron { transform: rotate(180deg); }
-    .table-wrap { overflow-x: auto; }
-    .weekly-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
-    .weekly-table th, .weekly-table td { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--wvd-border-soft); text-align: right; }
-    .weekly-table th:first-child, .weekly-table td:first-child { text-align: left; }
-    .weekly-table th { color: var(--wvd-muted); font-weight: 500; }
-
-    /* ---------- Sessions ---------- */
-    .log { margin-top: var(--space-8); display: grid; gap: var(--space-4); }
-    .log-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-3) var(--space-5); }
-    .search { display: grid; gap: var(--space-1); flex: 1 1 260px; max-width: 360px; }
-    .search label { color: var(--wvd-text-soft); font-size: var(--text-sm); font-weight: 500; }
-    .search-field { position: relative; }
-    .search-field svg { position: absolute; left: var(--space-3); top: 50%; transform: translateY(-50%); color: var(--wvd-muted); pointer-events: none; }
-    .search input {
-      width: 100%;
-      min-height: 44px;
-      padding: var(--space-2) var(--space-3) var(--space-2) 40px;
-      border: 1px solid var(--wvd-border);
-      border-radius: var(--radius-md);
-      background: var(--wvd-surface);
-      font-size: var(--text-base);
-      transition: border-color 150ms var(--ease-out);
-    }
-    .search input::placeholder { color: var(--wvd-muted); }
-    .search input:hover { border-color: var(--wvd-muted); }
-    .search input:focus-visible { outline: none; border-color: var(--wvd-green); }
-    .result-line { color: var(--wvd-muted); font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
-
-    .days { display: grid; gap: var(--space-6); list-style: none; }
-    .day { display: grid; gap: var(--space-3); }
-    .day-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-1) var(--space-4); padding: 0 var(--space-1); }
-    .day-title { font-family: var(--font-display); font-weight: 400; font-size: var(--text-lg); line-height: 1.3; }
-    .day-meta { color: var(--wvd-muted); font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
-    .sessions {
-      list-style: none;
-      border: 1px solid var(--wvd-border-soft);
-      border-radius: var(--radius-lg);
-      background: var(--wvd-panel);
-      overflow: hidden;
-    }
-    .session + .session { border-top: 1px solid var(--wvd-border-soft); }
-    .session > details > summary {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 20px;
-      gap: var(--space-2) var(--space-4);
-      padding: var(--space-4) var(--space-5);
-      cursor: pointer;
-      list-style: none;
-      transition: background-color 150ms var(--ease-out);
-    }
-    .session > details > summary::-webkit-details-marker { display: none; }
-    .session > details > summary:hover { background: var(--wvd-panel-hover); }
-    .session > details > summary:focus-visible { outline-offset: -2px; border-radius: 0; }
-    .session-title { font-weight: 600; line-height: 1.45; text-wrap: pretty; }
-    .chevron { grid-column: 2; grid-row: 1; margin-top: 3px; color: var(--wvd-muted); transition: transform 200ms var(--ease-out); }
-    details[open] > summary .chevron { transform: rotate(180deg); }
-    .counts { grid-column: 1; display: flex; flex-wrap: wrap; gap: var(--space-2); }
-    .count {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 2px 10px;
-      border: 1px solid var(--wvd-border-soft);
-      border-radius: 999px;
-      background: var(--wvd-surface);
-      color: var(--wvd-text-soft);
-      font-size: var(--text-xs);
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
-    }
-    .session-body { display: grid; gap: var(--space-5); padding: var(--space-1) var(--space-5) var(--space-5); }
-    .worked-note { color: var(--wvd-muted); font-size: var(--text-sm); font-style: italic; }
-    .group { display: grid; gap: var(--space-2); }
-    .group h4 { display: flex; align-items: center; gap: var(--space-2); color: var(--wvd-text-soft); font-size: var(--text-sm); font-weight: 600; }
-    .group ul { display: grid; gap: var(--space-3); padding-left: var(--space-5); list-style: disc; }
-    .group li { max-width: 70ch; color: var(--wvd-text); text-wrap: pretty; }
-    .group li::marker { color: var(--wvd-muted); }
-    .group-context p { max-width: 70ch; color: var(--wvd-text-soft); font-size: var(--text-sm); line-height: 1.65; text-wrap: pretty; }
-    .group-context p + p { margin-top: var(--space-2); }
-
-    .more {
-      justify-self: center;
-      min-height: 44px;
-      padding: var(--space-2) var(--space-5);
-      border: 1px solid var(--wvd-border);
-      border-radius: 999px;
-      background: var(--wvd-surface);
-      color: var(--wvd-text);
-      font-size: var(--text-sm);
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 150ms var(--ease-out), border-color 150ms var(--ease-out);
-    }
-    .more:hover { background: var(--wvd-panel-raised); border-color: var(--wvd-muted); }
-    .more:active { transform: translateY(1px); }
-
-    .notice {
-      display: grid;
-      justify-items: start;
-      gap: var(--space-3);
-      padding: var(--space-5);
-      border: 1px solid var(--wvd-border-soft);
-      border-radius: var(--radius-lg);
-      background: var(--wvd-panel);
-      color: var(--wvd-text-soft);
-    }
-    .notice-error { border-color: color-mix(in srgb, var(--wvd-red) 45%, var(--wvd-border-soft)); background: var(--wvd-red-soft); }
-    .notice-error strong { color: var(--wvd-text); }
-    .notice .more { justify-self: start; }
-
-    /* Loading skeleton: visible by default, replaced once the data arrives. */
-    .skeleton { display: grid; gap: var(--space-3); }
-    .skeleton span { display: block; height: 56px; border-radius: var(--radius-md); background: var(--wvd-panel); animation: pulse 1.4s ease-in-out infinite; }
-    .skeleton span:nth-child(2) { animation-delay: 120ms; }
-    .skeleton span:nth-child(3) { animation-delay: 240ms; }
-    @keyframes pulse { 50% { background: var(--wvd-panel-raised); } }
-
-    .footer { margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--wvd-border-soft); color: var(--wvd-muted); font-size: var(--text-sm); }
-
-    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
-
-    @media (max-width: 560px) {
-      .page { padding-top: var(--space-6); }
-      .masthead h1 { font-size: 2.125rem; }
-      .figure { padding: var(--space-3) var(--space-4); }
-      .figure-value { font-size: 1.5rem; }
-      .session > details > summary { padding: var(--space-4); }
-      .session-body { padding: var(--space-1) var(--space-4) var(--space-4); }
-      .group ul { padding-left: var(--space-4); }
-      .bar-labels li:nth-child(odd):not(.is-current) { visibility: hidden; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition-duration: 0ms !important; animation: none !important; }
-    }
-  </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;500;600;700&family=Saira:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=0962a9ae5f">
+    <script src="app.js?v=e6dc694fb7" defer></script>
 </head>
+
 <body>
-  <a class="skip" href="#log">Skip to the sessions</a>
+<a href="#wvd-root" class="wvd-skip-link">Skip to dashboard</a>
+<div class="wvd-page-wrapper">
+<div id="wvd-root">
+  <aside class="wvd-sidebar" id="wvdSidebar">
+    <div class="wvd-glow" aria-hidden="true">
+      <svg viewBox="0 0 300 300" fill="none">
+        <path d="M-20 300 C 90 260, 140 200, 150 60" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
+        <path d="M-30 280 C 80 250, 120 210, 132 90" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
+        <path d="M0 310 C 110 280, 170 210, 176 40" stroke="currentColor" stroke-width="0.6" opacity="0.2"/>
+      </svg>
+    </div>
+    <div class="wvd-brand-row" id="wvdBrand">
+      <span class="wvd-brand-mark" aria-hidden="true">
+        <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+          <g stroke="var(--wvd-faint)"><path d="M12 1.5v3"/><path d="M12 19.5v3"/><path d="M1.5 12h3"/><path d="M19.5 12h3"/></g>
+          <circle cx="12" cy="12" r="6.4" stroke="var(--wvd-text)"/>
+          <path d="M6 18 18 6" stroke="var(--wvd-green)"/>
+        </svg>
+      </span>
+      <span class="wvd-brand-divider" aria-hidden="true"></span>
+      <div class="wvd-brand-lockup">
+        <strong>INTERNAL OPS</strong>
+        <span>WORK LOG</span>
+      </div>
+      <button class="wvd-sidebar-close" id="wvdSidebarClose" type="button" aria-label="Close navigation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
 
-  <div class="page">
-    <header class="masthead">
-      <p class="masthead-org">Dragon Auto · Tasha</p>
-      <h1>Work log</h1>
-      <p class="masthead-lede">What I've shipped, fixed, and have in progress, written up after every work session.</p>
-      <p class="masthead-meta" id="updated" aria-live="polite">Loading the log…</p>
-    </header>
+    <nav class="wvd-nav" aria-label="Dashboard sections">
+      <a class="wvd-active" href="#wvd-overview" data-wvd-nav><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13h6V4H4v9Zm0 7h6v-3H4v3Zm10 0h6v-9h-6v9Zm0-16v3h6V4h-6Z"/></svg><span>Overview</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-kpis" data-wvd-nav data-wvd-page="kpis"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 20v-6M12 20V4M18 20v-10M3 20h18"/></svg><span>KPIs</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-latest" data-wvd-nav data-wvd-page="latest"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Latest work</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-handoffs" data-wvd-nav data-wvd-page="handoffs"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5h6M9 9h6M9 13h4"/><path d="M7 3h10a2 2 0 0 1 2 2v16H5V5a2 2 0 0 1 2-2Z"/></svg><span>Active priorities</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-waiting" data-wvd-nav data-wvd-page="waiting"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Waiting on Noah</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-systems" data-wvd-nav data-wvd-page="systems"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/></svg><span>Systems</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-pipeline" data-wvd-nav data-wvd-page="pipeline"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="6" height="6" rx="1.5"/><rect x="16" y="4" width="6" height="6" rx="1.5"/><rect x="9" y="14" width="6" height="6" rx="1.5"/><path d="M8 7h8M12 10v4"/></svg><span>Pipeline Map</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-sessions" data-wvd-nav data-wvd-page="sessions"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14H3V6a2 2 0 0 1 2-2Z"/></svg><span>Tasha's log</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-noahlog" data-wvd-nav data-wvd-tasha-only data-wvd-page="noahlog"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z"/><path d="M9 7h7M9 11h6"/></svg><span>Noah's log</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#wvd-audit" data-wvd-nav data-wvd-tasha-only data-wvd-page="audit"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg><span>Audit log</span><svg class="wvd-nav-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+    </nav>
 
-    <main>
-      <section class="week" aria-labelledby="week-title">
-        <div class="week-head">
-          <h2 class="section-title" id="week-title">This week</h2>
-          <p class="section-sub" id="week-range"></p>
-        </div>
-        <div id="week-body">
-          <div class="skeleton" aria-hidden="true"><span></span><span></span></div>
-        </div>
-      </section>
+    <div class="wvd-publish-card">
+      <div class="wvd-sidebar-updated">
+        <span id="wvdUpdated">Loading work record</span>
+        <button class="wvd-refresh-mini" id="wvdRefresh" type="button" title="Refresh" aria-label="Refresh work record">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0 2 5M20 4v7h-7"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="wvd-source-count"><span class="wvd-status-dot"></span><span id="wvdSourceCount">Connecting to work record</span></div>
+    <div class="wvd-user-chip" id="wvdUserChip" role="button" tabindex="0" aria-label="Open Growth Path">
+      <span class="wvd-user-avatar" id="wvdUserAvatar">TN</span>
+      <span><strong id="wvdUserName">Tasha</strong><small id="wvdUserRole">Operations</small></span>
+      <svg id="wvdUserChevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <button type="button" class="wvd-signout" id="wvdSignOut" hidden>Sign out</button>
+  </aside>
 
-      <section class="log" id="log" aria-labelledby="log-title" tabindex="-1">
-        <div class="log-head">
-          <h2 class="section-title" id="log-title">Sessions</h2>
-          <div class="search">
-            <label for="search">Search the log</label>
-            <div class="search-field">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-              <input id="search" type="search" placeholder="A name, a number, a system" autocomplete="off" spellcheck="false">
-            </div>
+  <button class="wvd-nav-scrim" id="wvdScrim" type="button" aria-label="Close navigation"></button>
+
+  <main class="wvd-dashboard">
+    <div class="wvd-content" id="wvdContent">
+      <div class="wvd-inner" id="wvdOverviewPage">
+        <header class="wvd-topbar wvd-header wvd-overview-header wvd-anchor" id="wvd-overview">
+          <button class="wvd-menu" id="wvdMenu" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Work <span>Activity</span></h1>
+            <p id="wvdSubtitle">A quick snapshot of shipped work, fixed issues, and open items. Each section lives on its own page in the sidebar.</p>
           </div>
-        </div>
-        <p class="result-line" id="result-line" aria-live="polite"></p>
-        <div id="log-body">
-          <div class="skeleton" aria-hidden="true"><span></span><span></span><span></span></div>
-        </div>
-      </section>
-    </main>
+          <div class="wvd-week-summary" id="wvdWeekSummary" hidden></div>
+        </header>
 
-    <footer class="footer">
-      <p>New sessions publish on their own at the end of each work session. Times are Pacific.</p>
-      <noscript><p>This page needs JavaScript to show the log.</p></noscript>
-    </footer>
+        <div class="wvd-banner" id="wvdBanner"></div>
+        <div id="wvdBody"><div class="wvd-empty">Reading Tasha's work record.</div></div>
+        <footer class="wvd-footer" id="wvdFooter"></footer>
+      </div>
+
+      <div class="wvd-inner" id="wvdLatestPage" hidden>
+        <header class="wvd-page-header wvd-anchor" id="wvd-latest">
+          <button class="wvd-menu" id="wvdMenuLatest" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdLatestBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Latest <span>Work</span></h1>
+            <p>Everything logged on the most recent day, in full.</p>
+          </div>
+        </header>
+        <div id="wvdLatestBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdHandoffsPage" hidden>
+        <header class="wvd-page-header wvd-ap-header wvd-anchor" id="wvd-handoffs">
+          <button class="wvd-menu" id="wvdMenuHandoffs" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdHandoffsBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Active <span>Priorities</span></h1>
+            <p>Confirmed priorities Noah has handed to Tasha.</p>
+          </div>
+          <div class="wvd-ap-toolbar" id="wvdHandoffsToolbar"></div>
+        </header>
+        <div id="wvdHandoffsBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdWaitingPage" hidden>
+        <header class="wvd-page-header wvd-anchor" id="wvd-waiting">
+          <button class="wvd-menu" id="wvdMenuWaiting" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdWaitingBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Waiting <span>on Noah</span></h1>
+            <p>Open items that need Noah's action.</p>
+          </div>
+        </header>
+        <div id="wvdWaitingBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdSessionsPage" hidden>
+        <header class="wvd-page-header wvd-anchor" id="wvd-sessions">
+          <button class="wvd-menu" id="wvdMenuSessions" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdSessionsBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Tasha's <span>Log</span></h1>
+            <p>Every work session Tasha has logged, newest first.</p>
+          </div>
+        </header>
+        <div id="wvdSessionsBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdSystemsPage" hidden>
+        <header class="wvd-page-header wvd-anchor" id="wvd-systems">
+          <button class="wvd-menu" id="wvdMenuSystems" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdSystemsBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>The <span>Automations</span></h1>
+            <p>Everything running in production, plus what's in flight or blocked.</p>
+          </div>
+        </header>
+        <div id="wvdSystemsBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdPipelinePage" hidden>
+        <header class="wvd-page-header wvd-anchor" id="wvd-pipeline">
+          <button class="wvd-menu" id="wvdMenuPipeline" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdPipelineBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Pipeline <span>Map</span></h1>
+            <p>How a Rockclear lead moves, which robots touch it at every step, and the rules that keep deals alive.</p>
+          </div>
+        </header>
+        <div id="wvdPipelineBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdKpisPage" hidden>
+        <header class="wvd-page-header wvd-anchor" id="wvd-kpis">
+          <button class="wvd-menu" id="wvdMenuKpis" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdKpisBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>KPI <span>Monitor</span></h1>
+            <p>Business results tracked week by week. Every figure names its source, and nothing here is estimated.</p>
+          </div>
+        </header>
+        <div id="wvdKpisBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdNoahLogPage" hidden>
+        <header class="wvd-page-header wvd-anchor" id="wvd-noahlog">
+          <button class="wvd-menu" id="wvdMenuNoahLog" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdNoahLogBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Noah's <span>Log</span></h1>
+            <p>A daily record of what Noah is building, fixing, and improving across systems, automations, web, and sales.</p>
+          </div>
+        </header>
+        <div id="wvdNoahLogBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdAuditPage" hidden>
+        <header class="wvd-page-header wvd-anchor" id="wvd-audit">
+          <button class="wvd-menu" id="wvdMenuAudit" type="button" aria-label="Open navigation">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="wvd-back" id="wvdAuditBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Audit <span>Log</span></h1>
+            <p>Who opened this dashboard, when, and which pages they read. Your own visits are never recorded. Times are stamped by the log itself, never by the visitor's browser.</p>
+          </div>
+        </header>
+        <div id="wvdAuditBody"></div>
+      </div>
+
+      <div class="wvd-inner" id="wvdGrowthPage" hidden>
+        <header class="wvd-page-header wvd-anchor">
+          <button class="wvd-back wvd-back-quiet" id="wvdGrowthBack" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Overview</span>
+          </button>
+          <div class="wvd-heading-block">
+            <h1>Growth <span>Path</span></h1>
+          </div>
+        </header>
+        <div id="wvdGrowthBody" style="position: relative;">
+          <div id="wvdGrowthContent"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</div><!-- /#wvd-root -->
+</div><!-- /.wvd-page-wrapper -->
+
+<!-- Outside .wvd-page-wrapper on purpose: that wrapper's transform (for the 100vw breakout)
+     creates a containing block for position:fixed descendants, which broke this modal's
+     centering to the whole scrollable page instead of the viewport. Matches .wvd-toast-wrap. -->
+<div class="wvd-modal-overlay" id="wvdProjectModalOverlay" hidden>
+  <div class="wvd-modal-card" id="wvdProjectModalCard" role="dialog" aria-modal="true" aria-labelledby="wvdProjectModalTitle">
+    <button type="button" class="wvd-modal-close" id="wvdProjectModalClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="wvdProjectModalBody"></div>
   </div>
+</div>
 
-  <script>
-  (function () {
-    'use strict';
+<!-- Sign-in gate. Outside .wvd-page-wrapper for the same reason as the modal above:
+     that wrapper's transform becomes the containing block for any position:fixed child. -->
+<div class="wvd-login-overlay" id="wvdLoginOverlay">
+  <div class="wvd-login-card" role="dialog" aria-modal="true" aria-labelledby="wvdLoginTitle">
+    <div class="wvd-login-brand">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <span>Internal ops</span>
+    </div>
+    <h2 id="wvdLoginTitle">Who is signing in?</h2>
+    <p class="wvd-login-copy">Pick your name, then enter your password.</p>
+    <div class="wvd-login-who" role="group" aria-label="Choose who is signing in">
+      <button type="button" id="wvdLoginAsNoah" aria-pressed="false"><strong>Noah</strong></button>
+      <button type="button" id="wvdLoginAsTasha" aria-pressed="false"><strong>Tasha</strong></button>
+    </div>
+    <div class="wvd-login-field">
+      <label for="wvdLoginPass" id="wvdLoginPassLabel">Password</label>
+      <input type="password" id="wvdLoginPass" placeholder="Pick a name first" autocomplete="off" spellcheck="false" disabled>
+    </div>
+    <div class="wvd-login-error" id="wvdLoginError" role="alert"></div>
+    <button type="button" class="wvd-btn wvd-primary" id="wvdLoginSubmit" disabled>Sign in</button>
+    <button type="button" class="wvd-login-reset" id="wvdLoginReset" hidden>Forgot your passphrase? Start fresh</button>
+  </div>
+</div>
 
-    var DATA_URL = './data/worklog.json';
-    var DAYS_PER_PAGE = 30;
-    var TZ = 'America/Los_Angeles';
-    var WEEKS_IN_CHART = 12;
-    var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
-
-    var state = { sessions: [], query: '', daysShown: DAYS_PER_PAGE, updated: '' };
-
-    var byId = function (id) { return document.getElementById(id); };
-
-    function node(tag, className, text) {
-      var el = document.createElement(tag);
-      if (className) el.className = className;
-      if (text !== undefined && text !== null) el.textContent = text;
-      return el;
-    }
-
-    function dot(kind) {
-      var el = node('span', 'dot dot-' + kind);
-      el.setAttribute('aria-hidden', 'true');
-      return el;
-    }
-
-    function chevron() {
-      var ns = 'http://www.w3.org/2000/svg';
-      var svg = document.createElementNS(ns, 'svg');
-      svg.setAttribute('class', 'chevron');
-      svg.setAttribute('width', '20');
-      svg.setAttribute('height', '20');
-      svg.setAttribute('viewBox', '0 0 24 24');
-      svg.setAttribute('fill', 'none');
-      svg.setAttribute('stroke', 'currentColor');
-      svg.setAttribute('stroke-width', '2');
-      svg.setAttribute('stroke-linecap', 'round');
-      svg.setAttribute('stroke-linejoin', 'round');
-      svg.setAttribute('aria-hidden', 'true');
-      var path = document.createElementNS(ns, 'path');
-      path.setAttribute('d', 'M6 9l6 6 6-6');
-      svg.appendChild(path);
-      return svg;
-    }
-
-    /* ---------- Dates (all session dates are Pacific calendar days) ---------- */
-
-    function parseDay(s) {
-      var p = s.split('-');
-      return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]), 12);
-    }
-    function dayKey(d) {
-      var m = String(d.getMonth() + 1).padStart(2, '0');
-      var day = String(d.getDate()).padStart(2, '0');
-      return d.getFullYear() + '-' + m + '-' + day;
-    }
-    function addDays(key, n) {
-      var d = parseDay(key);
-      d.setDate(d.getDate() + n);
-      return dayKey(d);
-    }
-    function mondayOf(key) {
-      var d = parseDay(key);
-      d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
-      return dayKey(d);
-    }
-    function pacificToday() {
-      var parts = new Intl.DateTimeFormat('en-US', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
-      var get = function (type) { return parts.filter(function (p) { return p.type === type; })[0].value; };
-      return get('year') + '-' + get('month') + '-' + get('day');
-    }
-
-    var fmtDay = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-    var fmtDayYear = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
-    var fmtMonthDay = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
-    var fmtNumeric = new Intl.DateTimeFormat('en-US', { month: 'numeric', day: 'numeric' });
-    var fmtUpdated = new Intl.DateTimeFormat('en-US', { timeZone: TZ, month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
-
-    function dayLabel(key, latestYear) {
-      var d = parseDay(key);
-      return (d.getFullYear() === latestYear ? fmtDay : fmtDayYear).format(d);
-    }
-
-    function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
-
-    /* ---------- Data ---------- */
-
-    function cleanList(v) {
-      return (Array.isArray(v) ? v : []).map(function (x) { return String(x == null ? '' : x).trim(); }).filter(Boolean);
-    }
-
-    function normalize(json) {
-      var list = json && Array.isArray(json.sessions) ? json.sessions : null;
-      if (!list) throw new Error('the data file has no session list');
-      var sessions = [];
-      list.forEach(function (raw, i) {
-        var date = String(raw && raw.date || '').trim();
-        var title = String(raw && raw.title || '').trim();
-        if (!DAY_RE.test(date) || !title) return;
-        var s = {
-          date: date,
-          title: title,
-          shipped: cleanList(raw.shipped),
-          fixed: cleanList(raw.fixed),
-          inProgress: cleanList(raw.inProgress),
-          notes: String(raw.notes || '').trim(),
-          worked: DAY_RE.test(String(raw.worked || '')) ? raw.worked : '',
-          order: i
-        };
-        s.hay = [s.title].concat(s.shipped, s.fixed, s.inProgress, [s.notes]).join('\n').toLowerCase();
-        sessions.push(s);
-      });
-      sessions.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : a.order - b.order; });
-      return sessions;
-    }
-
-    /* ---------- This week + weekly chart ---------- */
-
-    function weeklyTotals(sessions) {
-      var weeks = {};
-      sessions.forEach(function (s) {
-        var k = mondayOf(s.date);
-        var w = weeks[k] || (weeks[k] = { sessions: 0, shipped: 0, fixed: 0 });
-        w.sessions += 1;
-        w.shipped += s.shipped.length;
-        w.fixed += s.fixed.length;
-      });
-      return weeks;
-    }
-
-    function renderWeek() {
-      var body = byId('week-body');
-      var range = byId('week-range');
-      if (!body) return;
-      var weeks = weeklyTotals(state.sessions);
-      var thisMonday = mondayOf(pacificToday());
-      var lastMonday = addDays(thisMonday, -7);
-      var empty = { sessions: 0, shipped: 0, fixed: 0 };
-      var cur = weeks[thisMonday] || empty;
-      var prev = weeks[lastMonday] || empty;
-
-      if (range) range.textContent = fmtMonthDay.format(parseDay(thisMonday)) + ' to ' + fmtMonthDay.format(parseDay(addDays(thisMonday, 6))) + ', Monday to Sunday';
-
-      body.textContent = '';
-      var wrap = node('div', 'stack');
-
-      var figures = node('div', 'figures');
-      [
-        { label: 'Shipped', kind: 'shipped', value: cur.shipped, before: prev.shipped },
-        { label: 'Fixed', kind: 'fixed', value: cur.fixed, before: prev.fixed },
-        { label: 'Sessions', kind: null, value: cur.sessions, before: prev.sessions }
-      ].forEach(function (f) {
-        var fig = node('div', 'figure');
-        var label = node('p', 'figure-label');
-        if (f.kind) label.appendChild(dot(f.kind));
-        label.appendChild(document.createTextNode(f.label));
-        fig.appendChild(label);
-        fig.appendChild(node('p', 'figure-value', String(f.value)));
-        fig.appendChild(node('p', 'figure-compare', f.before + ' last week'));
-        figures.appendChild(fig);
-      });
-      wrap.appendChild(figures);
-      wrap.appendChild(buildChart(weeks, thisMonday));
-      body.appendChild(wrap);
-    }
-
-    function buildChart(weeks, thisMonday) {
-      var cols = [];
-      for (var i = WEEKS_IN_CHART - 1; i >= 0; i--) {
-        var key = addDays(thisMonday, -7 * i);
-        var w = weeks[key] || { sessions: 0, shipped: 0, fixed: 0 };
-        cols.push({ key: key, sessions: w.sessions, shipped: w.shipped, fixed: w.fixed, total: w.shipped + w.fixed, current: i === 0 });
-      }
-      var max = Math.max.apply(null, cols.map(function (c) { return c.total; }).concat([1]));
-
-      var outer = node('div', 'stack stack-tight');
-
-      var fig = node('figure', 'chart');
-      var cap = node('figcaption', 'chart-caption');
-      cap.appendChild(node('span', 'chart-title', 'Shipped and fixed per week'));
-      cap.appendChild(node('span', 'chart-sub', 'Last ' + WEEKS_IN_CHART + ' weeks · hover or tap a bar for the split'));
-      fig.appendChild(cap);
-
-      var bars = node('ul', 'bars');
-      var labels = node('ul', 'bar-labels');
-      labels.setAttribute('aria-hidden', 'true');
-      var tip = node('div', 'tooltip');
-      tip.setAttribute('role', 'tooltip');
-      tip.id = 'chart-tip';
-      tip.hidden = true;
-
-      cols.forEach(function (c) {
-        var weekName = c.current ? 'This week' : 'Week of ' + fmtMonthDay.format(parseDay(c.key));
-        var li = node('li', 'bar-col' + (c.current ? ' is-current' : '') + (c.total === 0 ? ' is-zero' : ''));
-        var pct = c.total === 0 ? 0 : Math.max(2, Math.round((c.total / max) * 100));
-        li.style.setProperty('--h', pct + '%');
-        var hit = node('button', 'bar-hit');
-        hit.type = 'button';
-        hit.setAttribute('aria-label', weekName + ': ' + c.shipped + ' shipped, ' + c.fixed + ' fixed, ' + plural(c.sessions, 'session', 'sessions'));
-        hit.setAttribute('aria-describedby', 'chart-tip');
-        hit.appendChild(node('span', 'bar'));
-        li.appendChild(hit);
-        if (c.current) {
-          var v = node('span', 'bar-value', String(c.total));
-          v.setAttribute('aria-hidden', 'true');
-          li.appendChild(v);
-        }
-        var show = function () {
-          tip.textContent = '';
-          tip.appendChild(node('strong', null, weekName));
-          tip.appendChild(document.createTextNode(c.shipped + ' shipped · ' + c.fixed + ' fixed · ' + plural(c.sessions, 'session', 'sessions')));
-          tip.hidden = false;
-          var figRect = fig.getBoundingClientRect();
-          var barEl = hit.firstChild;
-          var r = barEl.getBoundingClientRect();
-          var half = tip.offsetWidth / 2;
-          var x = r.left - figRect.left + r.width / 2;
-          x = Math.min(Math.max(x, half), figRect.width - half);
-          tip.style.left = x + 'px';
-          tip.style.top = (r.top - figRect.top) + 'px';
-        };
-        var hide = function () { tip.hidden = true; };
-        hit.addEventListener('mouseenter', show);
-        hit.addEventListener('focus', show);
-        hit.addEventListener('mouseleave', hide);
-        hit.addEventListener('blur', hide);
-        bars.appendChild(li);
-
-        var lab = node('li', c.current ? 'is-current' : '', c.current ? 'Now' : fmtNumeric.format(parseDay(c.key)));
-        labels.appendChild(lab);
-      });
-
-      fig.appendChild(bars);
-      fig.appendChild(labels);
-      fig.appendChild(tip);
-      outer.appendChild(fig);
-
-      var toggle = node('details', 'table-toggle');
-      var tsum = node('summary', null, 'Weekly numbers as a table');
-      tsum.appendChild(chevron());
-      toggle.appendChild(tsum);
-      var table = node('table', 'weekly-table');
-      var thead = node('thead');
-      var hr = node('tr');
-      ['Week of', 'Sessions', 'Shipped', 'Fixed'].forEach(function (h) {
-        var th = node('th', null, h);
-        th.scope = 'col';
-        hr.appendChild(th);
-      });
-      thead.appendChild(hr);
-      table.appendChild(thead);
-      var tbody = node('tbody');
-      cols.slice().reverse().forEach(function (c) {
-        var tr = node('tr');
-        tr.appendChild(node('td', null, fmtMonthDay.format(parseDay(c.key)) + (c.current ? ' (this week)' : '')));
-        tr.appendChild(node('td', null, String(c.sessions)));
-        tr.appendChild(node('td', null, String(c.shipped)));
-        tr.appendChild(node('td', null, String(c.fixed)));
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody);
-      var tableWrap = node('div', 'table-wrap');
-      tableWrap.appendChild(table);
-      toggle.appendChild(tableWrap);
-      outer.appendChild(toggle);
-      return outer;
-    }
-
-    /* ---------- Session list ---------- */
-
-    function countChip(kind, n, word) {
-      var chip = node('span', 'count');
-      chip.appendChild(dot(kind));
-      chip.appendChild(document.createTextNode(n + ' ' + word));
-      return chip;
-    }
-
-    function group(kind, label, items) {
-      var sec = node('section', 'group');
-      var h = node('h4');
-      h.appendChild(dot(kind));
-      h.appendChild(document.createTextNode(label));
-      sec.appendChild(h);
-      var ul = node('ul');
-      items.forEach(function (t) { ul.appendChild(node('li', null, t)); });
-      sec.appendChild(ul);
-      return sec;
-    }
-
-    function sessionItem(s, open) {
-      var li = node('li', 'session');
-      var det = node('details');
-      if (open) det.open = true;
-      var sum = node('summary');
-      sum.appendChild(node('span', 'session-title', s.title));
-      sum.appendChild(chevron());
-      var counts = node('span', 'counts');
-      if (s.shipped.length) counts.appendChild(countChip('shipped', s.shipped.length, 'shipped'));
-      if (s.fixed.length) counts.appendChild(countChip('fixed', s.fixed.length, 'fixed'));
-      if (s.inProgress.length) counts.appendChild(countChip('progress', s.inProgress.length, 'in progress'));
-      if (counts.childNodes.length) sum.appendChild(counts);
-      det.appendChild(sum);
-
-      var body = node('div', 'session-body');
-      if (s.worked && s.worked !== s.date) {
-        body.appendChild(node('p', 'worked-note', 'Work done on ' + fmtMonthDay.format(parseDay(s.worked)) + ', logged on ' + fmtMonthDay.format(parseDay(s.date)) + '.'));
-      }
-      if (s.shipped.length) body.appendChild(group('shipped', 'Shipped', s.shipped));
-      if (s.fixed.length) body.appendChild(group('fixed', 'Fixed', s.fixed));
-      if (s.inProgress.length) body.appendChild(group('progress', 'In progress', s.inProgress));
-      if (s.notes) {
-        var ctx = node('section', 'group group-context');
-        ctx.appendChild(node('h4', null, 'Context'));
-        s.notes.split(/\n\s*\n/).forEach(function (p) { if (p.trim()) ctx.appendChild(node('p', null, p.trim())); });
-        body.appendChild(ctx);
-      }
-      if (!body.childNodes.length) body.appendChild(node('p', 'worked-note', 'Nothing logged in this session.'));
-      det.appendChild(body);
-      li.appendChild(det);
-      return li;
-    }
-
-    function renderLog() {
-      var body = byId('log-body');
-      var line = byId('result-line');
-      if (!body) return;
-      var q = state.query.trim().toLowerCase();
-      var list = q ? state.sessions.filter(function (s) { return s.hay.indexOf(q) !== -1; }) : state.sessions;
-
-      if (line) {
-        line.textContent = q
-          ? plural(list.length, 'session mentions', 'sessions mention') + ' “' + state.query.trim() + '”'
-          : plural(list.length, 'session', 'sessions') + ', newest first';
-      }
-
-      body.textContent = '';
-      if (!list.length) {
-        var none = node('div', 'notice');
-        none.appendChild(node('p', null, 'Nothing in the log mentions “' + state.query.trim() + '”. Try a shorter word or a number.'));
-        var clear = node('button', 'more', 'Clear the search');
-        clear.type = 'button';
-        clear.addEventListener('click', function () {
-          var input = byId('search');
-          if (input) { input.value = ''; input.focus(); }
-          state.query = '';
-          state.daysShown = DAYS_PER_PAGE;
-          renderLog();
-        });
-        none.appendChild(clear);
-        body.appendChild(none);
-        return;
-      }
-
-      var days = [];
-      var byDay = {};
-      list.forEach(function (s) {
-        if (!byDay[s.date]) { byDay[s.date] = []; days.push(s.date); }
-        byDay[s.date].push(s);
-      });
-      var latestYear = parseDay(state.sessions[0].date).getFullYear();
-      var shown = days.slice(0, state.daysShown);
-
-      var ol = node('ol', 'days');
-      shown.forEach(function (key, di) {
-        var items = byDay[key];
-        var shipped = 0, fixed = 0;
-        items.forEach(function (s) { shipped += s.shipped.length; fixed += s.fixed.length; });
-        var li = node('li', 'day');
-        var head = node('div', 'day-head');
-        var h3 = node('h3', 'day-title');
-        var t = node('time', null, dayLabel(key, latestYear));
-        t.dateTime = key;
-        h3.appendChild(t);
-        head.appendChild(h3);
-        head.appendChild(node('p', 'day-meta', plural(items.length, 'session', 'sessions') + ' · ' + shipped + ' shipped · ' + fixed + ' fixed'));
-        li.appendChild(head);
-        var ul = node('ul', 'sessions');
-        items.forEach(function (s, si) {
-          // The newest session opens by itself; a search opens every match so the hit is visible.
-          ul.appendChild(sessionItem(s, q ? true : di === 0 && si === 0));
-        });
-        li.appendChild(ul);
-        ol.appendChild(li);
-      });
-      body.appendChild(ol);
-
-      var remaining = days.length - shown.length;
-      if (remaining > 0) {
-        var more = node('button', 'more', 'Show ' + Math.min(remaining, DAYS_PER_PAGE) + ' older days');
-        more.type = 'button';
-        more.style.marginTop = 'var(--space-6)';
-        more.addEventListener('click', function () {
-          state.daysShown += DAYS_PER_PAGE;
-          renderLog();
-        });
-        var holder = node('div');
-        holder.style.display = 'grid';
-        holder.appendChild(more);
-        body.appendChild(holder);
-      }
-    }
-
-    function renderMeta() {
-      var el = byId('updated');
-      if (!el) return;
-      var parts = [];
-      if (state.updated) {
-        var d = new Date(state.updated);
-        if (!isNaN(d)) parts.push('Updated ' + fmtUpdated.format(d) + ' PT');
-      }
-      if (state.sessions.length) {
-        var oldest = state.sessions[state.sessions.length - 1].date;
-        parts.push(plural(state.sessions.length, 'session', 'sessions') + ' since ' + fmtMonthDay.format(parseDay(oldest)));
-      }
-      el.textContent = parts.join(' · ');
-    }
-
-    function showError(reason) {
-      var meta = byId('updated');
-      if (meta) meta.textContent = '';
-      var weekSection = document.querySelector('.week');
-      if (weekSection) weekSection.hidden = true;
-      var line = byId('result-line');
-      if (line) line.textContent = '';
-      var body = byId('log-body');
-      if (!body) return;
-      body.textContent = '';
-      var box = node('div', 'notice notice-error');
-      box.setAttribute('role', 'alert');
-      var p = node('p');
-      p.appendChild(node('strong', null, 'The log didn’t load. '));
-      p.appendChild(document.createTextNode('(' + reason + ') Check your connection, then try again.'));
-      box.appendChild(p);
-      var retry = node('button', 'more', 'Try again');
-      retry.type = 'button';
-      retry.addEventListener('click', load);
-      box.appendChild(retry);
-      body.appendChild(box);
-    }
-
-    function load() {
-      var body = byId('log-body');
-      if (body) {
-        body.textContent = '';
-        var sk = node('div', 'skeleton');
-        sk.setAttribute('aria-hidden', 'true');
-        sk.appendChild(node('span'));
-        sk.appendChild(node('span'));
-        sk.appendChild(node('span'));
-        body.appendChild(sk);
-      }
-      fetch(DATA_URL, { cache: 'no-cache' })
-        .then(function (res) {
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          return res.json();
-        })
-        .then(function (json) {
-          state.sessions = normalize(json);
-          state.updated = json.updated || '';
-          if (!state.sessions.length) throw new Error('the log has no sessions yet');
-          var weekSection = document.querySelector('.week');
-          if (weekSection) weekSection.hidden = false;
-          renderMeta();
-          renderWeek();
-          renderLog();
-        })
-        .catch(function (err) {
-          showError(err && err.message ? err.message : 'unknown error');
-        });
-    }
-
-    var input = byId('search');
-    if (input) {
-      var timer = null;
-      input.addEventListener('input', function () {
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          state.query = input.value;
-          state.daysShown = DAYS_PER_PAGE;
-          if (state.sessions.length) renderLog();
-        }, 150);
-      });
-      input.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && input.value) {
-          input.value = '';
-          state.query = '';
-          state.daysShown = DAYS_PER_PAGE;
-          if (state.sessions.length) renderLog();
-        }
-      });
-    }
-
-    load();
-  })();
-  </script>
+<div class="wvd-toast-wrap" id="wvdToastWrap"></div>
 </body>
+
 </html>
