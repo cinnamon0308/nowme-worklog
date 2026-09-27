@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-27T13:06:11.393Z",
+  "updated": "2026-09-27T13:10:16.514Z",
   "projects": [
     {
       "id": "cloud-run-status",
@@ -567,11 +567,11 @@
       "id": "work-dashboard",
       "name": "Work Visibility Dashboard",
       "status": "IN_PROGRESS",
-      "summary": "Internal work log, published at dashboard.nowme.cloud from a public GitHub repository that holds session entries only. The GHL page is being retired.",
+      "summary": "Internal work dashboard, live on GitHub Pages at dashboard.nowme.cloud and republished automatically after every work session. Private sections travel only inside the encrypted vault.",
       "blockedOn": null,
       "progress": {
         "stage": "nearly-done",
-        "reason": "The page is live on GitHub and new sessions publish themselves; pointing dashboard.nowme.cloud at GitHub instead of GHL is the step left."
+        "reason": "The full dashboard is live on GitHub and publishes itself; the https certificate and the one-time vault key setup are the steps left."
       },
       "detail": {
         "goal": "Give Noah an always-current view of what Tasha builds and fixes, without needing GHL or Obsidian access, this page itself.",
@@ -1235,20 +1235,21 @@
   "sessions": [
     {
       "date": "2026-09-27",
-      "title": "Moved the work log to its own page at dashboard.nowme.cloud, built so the private parts of the log can never be published",
+      "title": "Moved the full work dashboard to dashboard.nowme.cloud, the address Noah already uses, and it now updates itself after every session",
       "shipped": [
-        "Built a new work log page that shows every session grouped by day, with shipped, fixed, and in-progress counts, this week against last week, and a 12-week chart. It opens in any browser with no login and was checked on screens from 320 to 1280 pixels wide with no sideways scrolling.",
-        "Built the publish step that copies only the session entries into the page's data file after each work session and pushes it to GitHub, so the page keeps itself current. All 242 sessions back to July 2 are in the first copy.",
-        "Took down the Notion setup from earlier today once GitHub was chosen instead: removed its automatic push, its saved keys, and its commands, and archived its files so none of that work is lost."
+        "Moved the whole dashboard off GHL onto its own site at dashboard.nowme.cloud, the address Noah already had. Every page looks exactly as before: checked side by side against the old version on the same data, and on screens from phone to desktop with no sideways scrolling.",
+        "Split the 5,236-line page into its page, styles, and code, and pointed it at its own data file, so it no longer depends on the old Google Cloud endpoint to load.",
+        "Built the automatic publish that replaces the manual Publish button and passcode: at the end of each work session the dashboard's data is rebuilt, the private sections are sealed, and the change goes live on its own.",
+        "Took down the Notion setup from earlier today once GitHub was chosen instead, and archived its files so none of that work is lost."
       ],
       "fixed": [
-        "Kept the log file's private sections off the public site for good. The page reads a separate copy built from a fixed list of allowed fields, the publish step refuses to run if anything else gets in, and a test on the real file found none of the 79 private passages checked anywhere in the published history.",
-        "Caught a layout bug before it went live: on a phone, the weekly figures and chart ran past the right edge of the screen. Fixed it and re-checked every screen width."
+        "Kept the dashboard's private sections unreadable on the new public site: they only ever ship inside the encrypted vault, every new vault is opened again to check it before it goes out, and a test across every publish found none of the 79 private passages checked anywhere in the site's history.",
+        "Took the tab icon off GHL's servers, where it was a 518 KB image, and cut it to 5 KB inside the site, so the dashboard keeps working after GHL is gone."
       ],
       "inProgress": [
-        "Switching dashboard.nowme.cloud from the old GHL page to the new one. GitHub is set up and serving it; one DNS record change finishes the move, and Noah's link stays the same."
+        "Finishing the switch: the secure https address turns on once GitHub issues the certificate, and the private sections start updating automatically after a one-time key setup on Tasha's Mac."
       ],
-      "notes": "Tested offline before anything went live: 20 checks on the publish step against throwaway git repositories, 19 checks on the page in a simulated browser, and real-browser screenshots at four screen widths."
+      "notes": "Tested before going live: 28 checks on the publish step, 23 on the site's sign-in and data handling in a simulated browser, and 14 on the encryption matching between the site and the publish step, plus real-browser screenshots at three screen widths."
     },
     {
       "date": "2026-09-27",
