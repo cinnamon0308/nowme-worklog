@@ -1,6 +1,6 @@
-# nowme.cloud work log
+# dashboard.nowme.cloud
 
-The page at [dashboard.nowme.cloud](https://dashboard.nowme.cloud): Tasha's record of what she shipped, fixed, and has in progress at Dragon Auto.
+Tasha's work dashboard for Dragon Auto, served by GitHub Pages.
 
-- `index.html` is the whole page. It loads `data/worklog.json` and draws everything in the browser.
-- `data/worklog.json` is rebuilt at the end of each work session and holds session entries only: date, title, shipped, fixed, in progress, and notes.
+- `index.html`, `style.css`, `app.js` are the dashboard. After editing `style.css` or `app.js`, change its `?v=` value in `index.html` so browsers fetch the new copy instead of a cached one.
+- `worklog.json` is the data, rebuilt at the end of each work session. Growth Path, Noah's Log, and the audit key travel only inside `privateVault`, encrypted; everything else in the file is public.
