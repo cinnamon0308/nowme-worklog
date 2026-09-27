@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-27T12:06:05.875197+00:00",
+  "updated": "2026-09-27T12:32:28.412153+00:00",
   "sessionCount": 243,
   "sessions": [
     {
       "date": "2026-09-27",
-      "title": "Moved the work log to its own page at nowme.cloud, built so the private parts of the log can never be published",
+      "title": "Moved the work log to its own page at dashboard.nowme.cloud, built so the private parts of the log can never be published",
       "shipped": [
         "Built a new work log page that shows every session grouped by day, with shipped, fixed, and in-progress counts, this week against last week, and a 12-week chart. It opens in any browser with no login and was checked on screens from 320 to 1280 pixels wide with no sideways scrolling.",
         "Built the publish step that copies only the session entries into the page's data file after each work session and pushes it to GitHub, so the page keeps itself current. All 242 sessions back to July 2 are in the first copy.",
@@ -15,7 +15,7 @@
         "Caught a layout bug before it went live: on a phone, the weekly figures and chart ran past the right edge of the screen. Fixed it and re-checked every screen width."
       ],
       "inProgress": [
-        "Connecting nowme.cloud to the page. The GitHub repository, the domain settings, and the automatic publish after each session go live once GitHub sign-in is set up on this Mac."
+        "Switching dashboard.nowme.cloud from the old GHL page to the new one. GitHub is set up and serving it; one DNS record change finishes the move, and Noah's link stays the same."
       ],
       "notes": "Tested offline before anything went live: 20 checks on the publish step against throwaway git repositories, 19 checks on the page in a simulated browser, and real-browser screenshots at four screen widths."
     },
