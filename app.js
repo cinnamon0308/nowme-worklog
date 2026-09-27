@@ -14,32 +14,19 @@
      holding a credential worth stealing. Reading needs `auditKey`, which travels only inside
      the encrypted privateVault, so knowing this URL tells him nothing.
 
-     Empty string means "not connected yet": every beacon becomes a no-op and the page says so
-     instead of failing. Paste the /exec URL from Deploy -> New deployment -> Web app. */
+     The dashboard only writes here; Tasha reads the rows in the Sheet itself. Empty string
+     means "not connected": every beacon becomes a no-op. Paste the /exec URL from
+     Deploy -> New deployment -> Web app. */
   const AUDIT_URL = 'https://script.google.com/macros/s/AKfycbxSKl6dpE5Oxv1Fe-iE-TsJz4ch1RtAPhqjIrZaHqMDiTNxv9f4g41g2rUw5Kxz_-Ff/exec';
   const CACHE_KEY = 'wvd-lastgood-v1';
   const $ = (id) => document.getElementById(id);
   const esc = (value) => String(value == null ? '' : value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
   const icons = {
-    streak: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3 4 4.5 4 8a4 4 0 0 1-8 0c0-1 .5-2 1-2.5C9 9 9 7 12 2Z"/><path d="M8.5 14a3.5 3.5 0 0 0 7 0c0-1.5-1-2.5-1.5-3"/></svg>',
     shipped: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>',
     fixed: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m14.7 6.3 3-3a5 5 0 0 1-6.4 6.4l-6.6 6.6a2.1 2.1 0 0 0 3 3l6.6-6.6a5 5 0 0 0 6.4-6.4l-3 3-3-3Z"/></svg>',
-    systems: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/></svg>',
-    handoff: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5h6M9 9h6M9 13h4"/><path d="M7 3h10a2 2 0 0 1 2 2v16H5V5a2 2 0 0 1 2-2Z"/></svg>',
-    waiting: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h12M6 22h12M8 2v4a4 4 0 0 0 2 3.5L12 11l2-1.5A4 4 0 0 0 16 6V2M8 22v-4a4 4 0 0 1 2-3.5l2-1.5 2 1.5a4 4 0 0 1 2 3.5v4"/></svg>',
-    truck: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h1a1 1 0 0 0 1-1v-3.34a1 1 0 0 0-.29-.7l-2.67-2.67a1 1 0 0 0-.7-.29H14v8h1"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="17.5" cy="17.5" r="1.5"/></svg>',
-    calendar: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>',
     note: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg>',
-    clock: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-    info: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>',
-    chevronDown: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
-    barChart: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 20v-6M12 20V4M18 20v-10M3 20h18"/></svg>',
-    checkShield: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>',
-    ban: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg>',
-    target: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none"/></svg>',
-    dollarCircle: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M14.5 9.3c0-1-1.2-1.8-2.6-1.8s-2.6.8-2.6 1.8 1.2 1.5 2.6 1.8 2.6.8 2.6 1.9-1.2 1.8-2.6 1.8-2.6-.8-2.6-1.8"/></svg>'
+    info: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>'
   };
-  const KPI_BADGE_ICON_KEY = { 'revived-closed-won': 'target', 'recovered-revenue': 'dollarCircle' };
 
   function lsGet(key) { try { return window.localStorage.getItem(key); } catch (error) { return null; } }
   function lsSet(key, value) { try { window.localStorage.setItem(key, value); } catch (error) { /* Private mode can block storage. */ } }
@@ -97,11 +84,10 @@
 
   let data = null;
   let projectFilter = 'all';
-  let currentPage = 'overview';
+  /* The page every visit opens on, and where a sign-out lands. */
+  const HOME_PAGE = 'latest';
+  let currentPage = HOME_PAGE;
   let sessionsPage = 1;
-  let handoffFilter = 'all';
-  let handoffAssigned = 'all';
-  let handoffSort = 'default';
   let nlogDayMode = 'default';
   const SESSIONS_PER_PAGE = 10;
   const commandRegistry = [];
@@ -122,7 +108,7 @@
   const VAULT_KEY_SESSION = 'wvd-vault-key';
   const VAULT_SALT_SESSION = 'wvd-vault-salt';
   const PRIVATE_FIELDS = ['growthPath', 'noahLog', 'auditKey'];
-  const TASHA_ONLY_PAGES = { noahlog: true, growth: true, audit: true };
+  const TASHA_ONLY_PAGES = { noahlog: true };
 
   let role = null;          // 'noah' | 'tasha' | null before sign-in
   let vaultRawKey = null;   // Uint8Array, only ever set for Tasha
@@ -243,7 +229,6 @@
       const nameEl = $('wvdUserName');
       const roleEl = $('wvdUserRole');
       const avatarEl = $('wvdUserAvatar');
-      const chevronEl = $('wvdUserChevron');
       if (nameEl) nameEl.textContent = tasha ? 'Tasha' : 'Noah';
       // Noah's chip carries his name only: Tasha cut the role line under it, same call she
       // made on the sign-in tiles. Hidden as well as blanked so the chip keeps its vertical
@@ -253,25 +238,13 @@
         roleEl.style.display = tasha ? '' : 'none';
       }
       if (avatarEl) avatarEl.textContent = tasha ? 'TN' : 'NS';
-      // The chevron promises "there is more behind this"; only true for Tasha.
-      if (chevronEl) chevronEl.style.display = tasha ? '' : 'none';
-      if (tasha) {
-        chip.setAttribute('role', 'button');
-        chip.setAttribute('tabindex', '0');
-        chip.setAttribute('aria-label', 'Open Growth Path');
-        chip.style.cursor = '';
-      } else {
-        chip.removeAttribute('role');
-        chip.removeAttribute('tabindex');
-        chip.setAttribute('aria-label', 'Signed in as Noah');
-        chip.style.cursor = 'default';
-      }
+      chip.setAttribute('aria-label', 'Signed in as ' + (tasha ? 'Tasha' : 'Noah'));
     }
 
     const signOutBtn = $('wvdSignOut');
     if (signOutBtn) signOutBtn.hidden = !role;
 
-    if (!tasha && TASHA_ONLY_PAGES[currentPage]) goToPage('overview');
+    if (!tasha && TASHA_ONLY_PAGES[currentPage]) goToPage(HOME_PAGE);
   }
 
   function showLoginOverlay() {
@@ -310,7 +283,7 @@
     const copyEl = document.querySelector('.wvd-login-copy');
     if (copyEl) {
       copyEl.textContent = isRestart
-        ? 'This replaces your passphrase in this browser only. Growth Path and the private log stay empty until the vault is sealed again with it (npm run vault:setup on your Mac).'
+        ? 'This replaces your passphrase in this browser only. Noah’s Log stays empty until the vault is sealed again with it (npm run vault:setup on your Mac).'
         : 'First time set-up: create your passphrase. It becomes the key to your private pages, so make it long. Four unrelated words work well.';
     }
     const submit = $('wvdLoginSubmit');
@@ -454,29 +427,22 @@
     sessionDrop(VAULT_KEY_SESSION);
     sessionDrop(VAULT_SALT_SESSION);
     mergePrivateIntoData();
-    const growthTarget = $('wvdGrowthContent');
-    if (growthTarget) growthTarget.innerHTML = '';
     const noahLogTarget = $('wvdNoahLogBody');
     if (noahLogTarget) noahLogTarget.innerHTML = '';
-    const auditTarget = $('wvdAuditBody');
-    if (auditTarget) auditTarget.innerHTML = '';
-    auditRows = null;
-    auditState = 'idle';
-    auditFetchedAt = 0;
-    auditTotal = 0;
     /* The visit identity has to end with the visit. Left in place, the next sign-in in this tab
-       reused the same session id, so auditVisits() folded two people into one visit and kept the
+       reused the same session id, so the log folded two people into one visit and kept the
        FIRST one's role: Tasha signs out, Noah signs in, and the log calls his visit hers. The
        page-seen map has to go too, or his page opens are silently dropped as already-logged. */
     auditSessionId = '';
     sessionDrop(AUDIT_SESSION_KEY);
     Object.keys(auditPagesSeen).forEach((key) => { delete auditPagesSeen[key]; });
-    // Reset to Overview directly: showPage() would early-return when already there.
-    currentPage = 'overview';
+    // Reset to the home page directly: showPage() would early-return when already there.
+    currentPage = HOME_PAGE;
     Object.keys(PAGE_IDS).forEach((key) => {
       const page = $(PAGE_IDS[key]);
-      if (page) page.hidden = key !== 'overview';
+      if (page) page.hidden = key !== HOME_PAGE;
     });
+    markNavActive(HOME_PAGE);
     applyRoleVisibility();
     showLoginOverlay();
   }
@@ -510,51 +476,23 @@
   }
 
   const PAGE_IDS = {
-    overview: 'wvdOverviewPage',
-    kpis: 'wvdKpisPage',
     latest: 'wvdLatestPage',
-    handoffs: 'wvdHandoffsPage',
     waiting: 'wvdWaitingPage',
     systems: 'wvdSystemsPage',
     pipeline: 'wvdPipelinePage',
     sessions: 'wvdSessionsPage',
-    noahlog: 'wvdNoahLogPage',
-    audit: 'wvdAuditPage',
-    growth: 'wvdGrowthPage'
+    noahlog: 'wvdNoahLogPage'
   };
-
-  // The Active Priorities footer promises a 30-second auto-refresh. The timer only
-  // exists while that page is open - an always-on interval would pin the event loop
-  // (hanging the jsdom smoke test) and poll pointlessly from every other page. A tick
-  // is skipped, not queued, when focus is inside a control the re-render would replace.
-  let handoffsRefreshTimer = null;
-  function syncHandoffsAutoRefresh() {
-    if (currentPage === 'handoffs' && data) {
-      if (handoffsRefreshTimer !== null) return;
-      handoffsRefreshTimer = setInterval(() => {
-        if (document.hidden) return;
-        const active = document.activeElement;
-        if (active && active.closest && active.closest('#wvdHandoffsBody, #wvdHandoffsToolbar')) return;
-        load(false, true);
-      }, 30000);
-    } else if (handoffsRefreshTimer !== null) {
-      clearInterval(handoffsRefreshTimer);
-      handoffsRefreshTimer = null;
-    }
-  }
 
   function showPage(name) {
     if (!(name in PAGE_IDS) || name === currentPage) return;
     // Hard stop: a private page must never open for Noah, whatever calls this.
     if (TASHA_ONLY_PAGES[name] && !isTasha()) return;
-    if (currentPage === 'growth') resetGrowthOnLeave();
     currentPage = name;
     if (!auditPagesSeen[name]) {
       auditPagesSeen[name] = true;
       logAccess('page', { page: name });
     }
-    if (name === 'audit') loadAuditLog(false);
-    syncHandoffsAutoRefresh();
     Object.keys(PAGE_IDS).forEach((key) => {
       const page = $(PAGE_IDS[key]);
       if (page) page.hidden = key !== name;
@@ -590,221 +528,6 @@
     area.remove();
   }
 
-  function metricCard(icon, label, value, detail, tone, opts) {
-    opts = opts || {};
-    const isCount = /^\d+$/.test(String(value));
-    const strong = isCount
-      ? '<strong data-wvd-count="' + esc(value) + '">0</strong>'
-      : '<strong>' + esc(value) + '</strong>';
-    return '<article class="wvd-metric-card' + (opts.hero ? ' wvd-metric-hero' : '') + '" style="--wvd-tone:' + tone + '"><div class="wvd-metric-label"><span class="wvd-metric-icon">' + icon + '</span>' + esc(label) + '</div>' + strong + '<span class="wvd-metric-cap">' + esc(detail) + '</span>' + (opts.foot || '') + '</article>';
-  }
-  function countShipped(sessions, fromDaysAgo, toDaysAgo) {
-    return sessions.reduce((total, session) => {
-      const age = daysSince(session.date);
-      if (age === null || age < fromDaysAgo || age >= toDaysAgo) return total;
-      return total + (session.shipped || []).length;
-    }, 0);
-  }
-  function pickOldest(items, dateField) {
-    let winner = null;
-    let winnerAge = -1;
-    items.forEach((item) => {
-      const age = daysSince(item[dateField]);
-      if (age !== null && age > winnerAge) { winnerAge = age; winner = item; }
-    });
-    return winner;
-  }
-  function isoWeekKey(date) {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const day = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - day);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    const week = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-    return d.getUTCFullYear() * 100 + week;
-  }
-  /* `statWeeks` is sessionStats.weeks: the per-week tally left behind when entries older than the
-     14-day retention window are deleted (scripts/prune-sessions.mjs). Without it the streak would
-     read 2 forever, because there is never more than a fortnight of entries in the file. A tallied
-     week with zero sessions is NOT a streak week, so the `> 0` test is load-bearing. */
-  function weekStreak(sessions, statWeeks) {
-    const weeks = new Set();
-    let latest = null;
-    sessions.forEach((session) => {
-      const raw = String(session.date);
-      const d = new Date(raw.length === 10 ? raw + 'T12:00:00' : raw);
-      if (isNaN(d)) return;
-      weeks.add(isoWeekKey(d));
-      if (!latest || d > latest) latest = d;
-    });
-    (statWeeks || []).forEach((week) => {
-      if (!week || !week.weekOf || !(Number(week.sessions) > 0)) return;
-      const d = new Date(String(week.weekOf) + 'T12:00:00');
-      if (isNaN(d)) return;
-      weeks.add(isoWeekKey(d));
-      if (!latest || d > latest) latest = d;
-    });
-    if (!latest) return 0;
-    const cursor = new Date(latest.getTime());
-    let streak = 0;
-    while (weeks.has(isoWeekKey(cursor))) {
-      streak += 1;
-      cursor.setDate(cursor.getDate() - 7);
-    }
-    return streak;
-  }
-  /* The momentum line compares the last 7 days against days 7-13. Retention keeps ages 0-13, so in
-     steady state that second window is exactly covered. It is NOT covered right after the log is
-     restarted (2026-08-23) or after a manual trim, and then countShipped() returns a real-looking 0
-     for a week that actually shipped 79. Noah cross-foots this line, so an uncomparable window has
-     to say so instead of printing a false jump. A true zero week still reads as zero: the rollup is
-     what separates "nothing shipped" from "the entries are no longer here". */
-  function priorWindowInLog(sessions, statWeeks) {
-    if (countShipped(sessions || [], 7, 14) > 0) return true;
-    const liveWeeks = {};
-    (sessions || []).forEach((session) => {
-      const d = new Date(String(session.date).slice(0, 10) + 'T12:00:00');
-      if (!isNaN(d)) liveWeeks[isoWeekMondayKey(d)] = true;
-    });
-    const covering = [13, 7].map((back) => {
-      const d = new Date();
-      d.setDate(d.getDate() - back);
-      return isoWeekMondayKey(d);
-    });
-    return !covering.some((key) => !liveWeeks[key] &&
-      (statWeeks || []).some((week) => week && week.weekOf === key && Number(week.shipped) > 0));
-  }
-  function trendArrow(dir) {
-    const path = dir === 'up' ? 'M12 19V5M5 12l7-7 7 7' : 'M12 5v14M5 12l7 7 7-7';
-    return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="' + path + '"/></svg>';
-  }
-  /* momentumChip() removed 2026-07-30. It was unreferenced (the Shipped card uses
-     shipMomentumHtml below) and it carried the same "this week" wording that made the header
-     irreconcilable with the chart, so leaving it in place was an invitation to reintroduce the
-     defect the moment someone reused it. */
-  // Shipped hero card foot: the momentum line, styled as plain colored text
-  // (no pill) so it reads as a caption inside the card.
-  /* These two numbers are ROLLING 7-DAY windows (countShipped(0,7) and countShipped(7,14)),
-     not calendar weeks. The bar charts beside them bucket by calendar ISO week. Both are
-     legitimate, but calling the rolling window "this week" made the header irreconcilable with
-     the chart under it: Noah cross-footed them on 2026-07-30 and found that no definition on the
-     page yields the header's pair. The arithmetic is the fair one (two equal seven-day spans, so
-     a mid-week partial is never scored against a finished week) — it was only ever the wording
-     that lied. So the label names the window, and the maths is left alone. */
-  function shipMomentumHtml(now, prev, priorKnown) {
-    if (priorKnown === false) {
-      return '<span class="wvd-ship-momentum wvd-flat">' + now + ' shipped in the last 7 days. The week before that is outside the log\'s 14-day window, so there is nothing here to compare it against.</span>';
-    }
-    if (now > prev) return '<span class="wvd-ship-momentum wvd-up">' + trendArrow('up') + now + ' shipped in the last 7 days, up from ' + prev + ' in the 7 before</span>';
-    if (now < prev) return '<span class="wvd-ship-momentum wvd-down">' + trendArrow('down') + now + ' shipped in the last 7 days, down from ' + prev + ' in the 7 before</span>';
-    if (now > 0) return '<span class="wvd-ship-momentum wvd-flat">' + now + ' shipped in the last 7 days, even with the 7 before</span>';
-    return '<span class="wvd-ship-momentum wvd-flat">No shipped work logged in the last 7 days</span>';
-  }
-  // Continuous week-over-week series of a chosen per-session count (shipped, fixed).
-  // Interior weeks with no work fill in as 0 so a sparkline/bar chart never hides a gap.
-  function weeklyCountSeries(sessions, pick) {
-    const byWeek = {};
-    (sessions || []).forEach((session) => {
-      const raw = String(session.date);
-      const d = new Date(raw.length === 10 ? raw + 'T12:00:00' : raw);
-      if (isNaN(d)) return;
-      const key = isoWeekMondayKey(d);
-      byWeek[key] = (byWeek[key] || 0) + pick(session);
-    });
-    const keys = Object.keys(byWeek).sort();
-    if (!keys.length) return [];
-    const series = [];
-    const cursor = new Date(keys[0] + 'T12:00:00');
-    const end = new Date(keys[keys.length - 1] + 'T12:00:00');
-    while (cursor <= end) {
-      const key = toDateKey(cursor);
-      series.push({ weekOf: key, value: byWeek[key] || 0 });
-      cursor.setDate(cursor.getDate() + 7);
-    }
-    return series;
-  }
-  // Per-ISO-week totals of a chosen per-session count, keyed by that week's Monday.
-  function weeklyBuckets(sessions, pick) {
-    const buckets = {};
-    (sessions || []).forEach((session) => {
-      const raw = String(session.date);
-      const d = new Date(raw.length === 10 ? raw + 'T12:00:00' : raw);
-      if (isNaN(d)) return;
-      const key = isoWeekMondayKey(d);
-      buckets[key] = (buckets[key] || 0) + pick(session);
-    });
-    return buckets;
-  }
-  /* Retained entries always win for the weeks they cover; the rollup only fills weeks the log no
-     longer holds. That precedence matters both ways: a live week must never be overwritten by a
-     stale tally, and a deleted week must never render as a real zero. */
-  function mergeWeekly(buckets, statWeeks, field) {
-    const out = Object.assign({}, buckets);
-    (statWeeks || []).forEach((week) => {
-      if (!week || !week.weekOf) return;
-      if (Object.prototype.hasOwnProperty.call(out, week.weekOf)) return;
-      out[week.weekOf] = Number(week[field]) || 0;
-    });
-    return out;
-  }
-  // Header summary card: three divided cells - shipped in the last 7 days (with a truck),
-  // the signed delta against the 7 days before that with a percent, and system-live with a
-  // shipped sparkline. `now` and `prev` are rolling 7-day counts, so the labels say so; the
-  // sparkline beside them is calendar-week bucketed, which is why the two must not share a word.
-  function weekSummaryHtml(now, prev, shipped12, live, priorKnown) {
-    const delta = now - prev;
-    const dir = delta > 0 ? 'up' : delta < 0 ? 'down' : 'flat';
-    const deltaStr = (delta > 0 ? '+' : '') + delta;
-    const pct = prev > 0 ? Math.round((delta / prev) * 100) : null;
-    const arrow = dir === 'flat' ? '' : trendArrow(dir === 'up' ? 'up' : 'down');
-    const pctInner = pct === null ? 'new' : arrow + Math.abs(pct) + '%';
-    const spark = (shipped12 || []).slice(-8);
-    const sparkMax = spark.reduce((peak, week) => Math.max(peak, Number(week.value) || 0), 0);
-    const sparkHtml = spark.length
-      ? '<div class="wvd-ws-spark" aria-hidden="true">' + spark.map((week, index) => {
-          const value = Number(week.value) || 0;
-          const height = sparkMax > 0 ? Math.max(12, Math.round((value / sparkMax) * 100)) : 12;
-          return '<span class="wvd-ws-bar' + (index === spark.length - 1 ? ' wvd-ws-bar-current' : '') + '" style="height:' + height + '%"></span>';
-        }).join('') + '</div>'
-      : '';
-    /* No comparable prior window means no delta cell at all. An empty cell, a dash, or a "new"
-       badge would each still hold the slot where a comparison belongs and invite one. */
-    const deltaCell = priorKnown === false ? '' :
-      '<div class="wvd-ws-divider" aria-hidden="true"></div>' +
-      '<div class="wvd-ws-cell"><div class="wvd-ws-block">' +
-        '<strong class="wvd-ws-delta-num wvd-' + dir + '">' + arrow + esc(deltaStr) + '</strong>' +
-        '<span class="wvd-ws-label">vs the 7 before</span>' +
-        '<span class="wvd-ws-pct wvd-' + dir + '">' + pctInner + '</span>' +
-      '</div></div>';
-    return '<div class="wvd-ws-cell">' +
-        '<span class="wvd-ws-icon" aria-hidden="true">' + icons.truck + '</span>' +
-        '<div class="wvd-ws-block"><span class="wvd-ws-label">Shipped, last 7 days</span><span class="wvd-ws-num">' + now + '</span></div>' +
-      '</div>' +
-      deltaCell +
-      '<div class="wvd-ws-divider" aria-hidden="true"></div>' +
-      '<div class="wvd-ws-cell"><div class="wvd-ws-block">' +
-        sparkHtml +
-        '<span class="wvd-ws-label">System live</span><span class="wvd-ws-num">' + live + '</span>' +
-      '</div></div>';
-  }
-  function animateCounts() {
-    const nodes = document.querySelectorAll('#wvdBody [data-wvd-count], #wvdSessionsBody [data-wvd-count]');
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const canAnimate = !reduce && typeof window.requestAnimationFrame === 'function' && window.performance && typeof window.performance.now === 'function';
-    nodes.forEach((node) => {
-      const target = parseInt(node.getAttribute('data-wvd-count'), 10);
-      if (isNaN(target)) return;
-      if (!canAnimate || target === 0) { node.textContent = String(target); return; }
-      const duration = 750;
-      const start = window.performance.now();
-      const tick = (now) => {
-        const p = Math.min(1, (now - start) / duration);
-        node.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
-        if (p < 1) window.requestAnimationFrame(tick);
-        else node.textContent = String(target);
-      };
-      window.requestAnimationFrame(tick);
-    });
-  }
   function latestGroup(className, label, items) {
     const list = items && items.length ? '<ul>' + items.map((item) => '<li>' + esc(item) + '</li>').join('') + '</ul>' : '<p class="wvd-none">Nothing logged in this category.</p>';
     return '<div class="wvd-latest-group ' + className + '"><div class="wvd-group-label">' + label + '</div>' + list + '</div>';
@@ -881,218 +604,6 @@
       '</div>';
   }
 
-  function toDateKey(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return y + '-' + m + '-' + d;
-  }
-  // KPI Monitor page. Stored metrics come from worklog.json's optional `kpis` object
-  // (every one carries a human-readable source; a metric with no recorded weeks renders
-  // a "not tracked yet" state, never a fabricated zero). The ship-rate metric is the
-  // one exception to "stored": it is computed here from sessions[] so it can never
-  // drift from the session log it summarizes.
-  function isoWeekMondayKey(date) {
-    const copy = new Date(date.getTime());
-    const day = copy.getDay() || 7;
-    copy.setDate(copy.getDate() - (day - 1));
-    return toDateKey(copy);
-  }
-  function weeklyOutcomeSeries(sessions, statWeeks) {
-    const byWeek = {};
-    (sessions || []).forEach((session) => {
-      const raw = String(session.date);
-      const d = new Date(raw.length === 10 ? raw + 'T12:00:00' : raw);
-      if (isNaN(d)) return;
-      const key = isoWeekMondayKey(d);
-      byWeek[key] = (byWeek[key] || 0) + sessionCount(session);
-    });
-    // Weeks whose entries the retention rule deleted, from the rollup. Live weeks are not touched.
-    (statWeeks || []).forEach((week) => {
-      if (!week || !week.weekOf) return;
-      if (Object.prototype.hasOwnProperty.call(byWeek, week.weekOf)) return;
-      byWeek[week.weekOf] = Number(week.outcomes) || 0;
-    });
-    const keys = Object.keys(byWeek).sort();
-    if (!keys.length) return [];
-    const series = [];
-    const cursor = new Date(keys[0] + 'T12:00:00');
-    const end = new Date(keys[keys.length - 1] + 'T12:00:00');
-    while (cursor <= end) {
-      const key = toDateKey(cursor);
-      series.push({ weekOf: key, value: byWeek[key] || 0 });
-      cursor.setDate(cursor.getDate() + 7);
-    }
-    return series;
-  }
-  // Mon-Sun breakdown of the CURRENT week only, used for the ship-rate card's bars
-  // (its headline number/delta still come from the real multi-week series). A day
-  // that hasn't arrived yet renders as a real, honest zero - "0 so far" - never a
-  // guessed value; the tooltip says "Has not happened yet" so it reads as unknown
-  // future, not a measured empty day.
-  function dailyBreakdownForCurrentWeek(sessions) {
-    const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const monday = new Date(isoWeekMondayKey(new Date()) + 'T12:00:00');
-    const todayKey = toDateKey(new Date());
-    const byDate = {};
-    (sessions || []).forEach((session) => {
-      const raw = String(session.date);
-      const d = new Date(raw.length === 10 ? raw + 'T12:00:00' : raw);
-      if (isNaN(d)) return;
-      const key = toDateKey(d);
-      byDate[key] = (byDate[key] || 0) + sessionCount(session);
-    });
-    return dayLabels.map((label, i) => {
-      const cellDate = new Date(monday.getTime());
-      cellDate.setDate(cellDate.getDate() + i);
-      const key = toDateKey(cellDate);
-      const isFuture = key > todayKey;
-      const isToday = key === todayKey;
-      const value = byDate[key] || 0;
-      return {
-        label: label,
-        value: value,
-        current: isToday,
-        note: isFuture ? 'Has not happened yet' : (value ? undefined : 'No outcomes logged')
-      };
-    });
-  }
-  function fmtKpiValue(value, unit) {
-    // A malformed/missing value must never masquerade as a real 0 (the page's
-    // core rule). A genuine 0 (the number, or "0") is fine and common; but
-    // undefined, null, "", or a typo'd string renders as a visible "n/a" marker
-    // so a broken worklog entry reads as broken, not as a real zero result.
-    if (value === null || value === undefined || value === '') return 'n/a';
-    const n = Number(value);
-    if (isNaN(n)) return 'n/a';
-    const formatted = n.toLocaleString('en-US');
-    if (unit === 'usd') return '$' + formatted;
-    if (unit === 'percent') return formatted + '%';
-    return formatted;
-  }
-  function fmtWeekLabel(weekOf) {
-    const d = new Date(String(weekOf) + 'T12:00:00');
-    return isNaN(d) ? String(weekOf) : 'Week of ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  }
-  /* Some metrics are recorded monthly, not weekly: the Campaign Performance Tracker's KPIs tab is
-     a monthly rollup, and rendering its July column as "Week of Jul 1" would put a wrong word on
-     a right number. A metric carrying period:'month' keys its rows by the first of the month and
-     is labelled, compared, and charted by month everywhere below. Default stays weekly, so every
-     existing metric is untouched. */
-  function isMonthly(metric) { return metric && metric.period === 'month'; }
-  function fmtPeriodLabel(periodStart, period) {
-    const d = new Date(String(periodStart) + 'T12:00:00');
-    if (isNaN(d)) return String(periodStart);
-    if (period === 'month') return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    return 'Week of ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  }
-  function fmtPeriodShort(periodStart, period) {
-    const d = new Date(String(periodStart) + 'T12:00:00');
-    if (isNaN(d)) return String(periodStart);
-    if (period === 'month') return d.toLocaleDateString('en-US', { month: 'short' });
-    return fmtDate(periodStart);
-  }
-  function monthKeyOf(date) {
-    return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
-  }
-  function kpiDeltaHtml(weekly, unit, direction, period) {
-    if (weekly.length < 2) return '';
-    const latestWeek = weekly[weekly.length - 1];
-    const priorWeek = weekly[weekly.length - 2];
-    const monthly = period === 'month';
-    // A period that is still running must not be scored against a finished one: on a
-    // Monday morning "2 vs 123 last week" reads as a collapse when the week is
-    // hours old, and the same is true of a month on its 2nd. Say so instead of comparing.
-    if (monthly
-      ? String(latestWeek.weekOf).slice(0, 7) === monthKeyOf(new Date())
-      : latestWeek.weekOf === isoWeekMondayKey(new Date())) {
-      return '<span class="wvd-kpi-delta wvd-flat">' + (monthly ? 'month in progress' : 'week in progress') + '</span>';
-    }
-    // Only call it "prior week"/"prior month" when the two entries really are adjacent.
-    // If the data has a gap (a skipped period), name the real date being compared
-    // against instead of implying an adjacency that isn't there.
-    const dLatest = new Date(String(latestWeek.weekOf) + 'T12:00:00');
-    const dPrior = new Date(String(priorWeek.weekOf) + 'T12:00:00');
-    const gapDays = Math.round((dLatest - dPrior) / 86400000);
-    const contiguous = !isNaN(dLatest) && !isNaN(dPrior) && (monthly ? gapDays >= 28 && gapDays <= 31 : gapDays === 7);
-    const unitWord = monthly ? 'month' : 'week';
-    const priorPhrase = contiguous ? 'prior ' + unitWord : fmtPeriodShort(priorWeek.weekOf, period);
-    const evenPhrase = contiguous ? 'last ' + unitWord : fmtPeriodShort(priorWeek.weekOf, period);
-    const now = Number(latestWeek.value) || 0;
-    const prev = Number(priorWeek.value) || 0;
-    if (now === prev) return '<span class="wvd-kpi-delta wvd-flat">even with ' + esc(evenPhrase) + '</span>';
-    const rising = now > prev;
-    let cls = 'wvd-flat';
-    if (direction === 'up') cls = rising ? 'wvd-up' : 'wvd-down';
-    else if (direction === 'down') cls = rising ? 'wvd-down' : 'wvd-up';
-    return '<span class="wvd-kpi-delta ' + cls + '">' + trendArrow(rising ? 'up' : 'down') + fmtKpiValue(Math.abs(now - prev), unit) + ' vs ' + esc(priorPhrase) + '</span>';
-  }
-  function kpiBarsHtml(bars, unit) {
-    const max = bars.reduce((peak, bar) => Math.max(peak, Number(bar.value) || 0), 0);
-    const barsHtml = bars.map((bar) => {
-      const value = Number(bar.value) || 0;
-      const pct = max > 0 ? Math.max(8, Math.round((value / max) * 100)) : 8;
-      const tip = bar.label + ': ' + fmtKpiValue(value, unit) + (bar.note ? ' · ' + bar.note : '');
-      return '<span class="wvd-kpi-bar' + (value === 0 ? ' wvd-kpi-bar-zero' : '') + (bar.current ? ' wvd-kpi-bar-current' : '') + '" style="height:' + pct + '%" title="' + esc(tip) + '"></span>';
-    }).join('');
-    // When there are many bars, a label under every one would collide/clip at
-    // tablet and phone widths, so thin them: always keep the first, the current,
-    // and an evenly-spaced few, blanking the rest (their value still shows on
-    // hover). Small charts (<= 7 bars, the common case) keep every label.
-    const many = bars.length > 7;
-    const step = many ? Math.ceil(bars.length / 5) : 1;
-    const labelsHtml = bars.map((bar, i) => {
-      const show = !many || i === 0 || i === bars.length - 1 || bar.current || i % step === 0;
-      return '<span class="wvd-kpi-bar-label' + (bar.current ? ' wvd-kpi-bar-label-current' : '') + '">' + (show ? esc(bar.label) : '') + '</span>';
-    }).join('');
-    return '<div class="wvd-kpi-chart"><div class="wvd-kpi-bars" role="img" aria-label="Trend across ' + bars.length + ' recorded periods">' + barsHtml + '</div><div class="wvd-kpi-bar-labels">' + labelsHtml + '</div></div>';
-  }
-  function kpiCardHtml(metric) {
-    const weekly = (metric.weekly || []).slice().sort((a, b) => String(a.weekOf).localeCompare(String(b.weekOf)));
-    const unit = metric.unit || 'count';
-    const badgeKey = KPI_BADGE_ICON_KEY[metric.id];
-    const badgeIcon = badgeKey ? icons[badgeKey] : null;
-    let body;
-    /* An armed counter whose start week has already finished is not "starting soon", it is late.
-       Noah cross-footed exactly this on 2026-07-30: both money cards still read "Counting starts
-       the week of Jul 20" ten days after that week ended, which renders a slipped date as an
-       on-schedule one. A start week that has fully passed now renders as not started, ages itself
-       in days so the wait is visible instead of frozen, and names what it is held on. A card with
-       no reason recorded says that plainly rather than looking merely pending — a gate that is off
-       must never look healthy. Inside its own start week a missing figure is not late, it is not
-       yet due, so that case keeps the original copy. */
-    const startAge = metric.startedWeekOf ? daysSince(metric.startedWeekOf) : null;
-    const overdue = !weekly.length && startAge !== null && startAge >= 7;
-    if (!weekly.length) {
-      body = overdue
-        ? '<div class="wvd-kpi-empty wvd-kpi-empty-held"><strong>Not started</strong>' +
-          '<span class="wvd-kpi-held-age">' + startAge + (startAge === 1 ? ' day' : ' days') +
-          ' past its ' + esc(fmtDate(metric.startedWeekOf)) + ' start</span><span>' +
-          (metric.heldOn ? 'Held on: ' + esc(metric.heldOn) : 'No reason recorded for the delay.') + '</span></div>'
-        : '<div class="wvd-kpi-empty"><strong>Not tracked yet</strong><span>' +
-          (metric.startedWeekOf ? 'Counting starts the week of ' + esc(fmtDate(metric.startedWeekOf)) + '.' : 'No verified number has been recorded yet.') + '</span></div>';
-    } else {
-      const latest = weekly[weekly.length - 1];
-      const total = weekly.reduce((sum, week) => sum + (Number(week.value) || 0), 0);
-      // Weekly cards keep their 10-bar cap; monthly ones take 12 so a full year fits.
-      const barCap = isMonthly(metric) ? 12 : 10;
-      const chartBars = metric.chartBars || weekly.slice(-barCap).map((week, index, arr) => ({ label: fmtPeriodShort(week.weekOf, metric.period), value: week.value, note: week.note, current: index === arr.length - 1 }));
-      body = '<div class="wvd-kpi-value-row"><strong class="wvd-kpi-value">' + fmtKpiValue(latest.value, unit) + '</strong>' +
-        '<div class="wvd-kpi-value-meta"><span class="wvd-kpi-week">' + esc(fmtPeriodLabel(latest.weekOf, metric.period)) + '</span>' + kpiDeltaHtml(weekly, unit, metric.direction, metric.period) + '</div></div>' +
-        kpiBarsHtml(chartBars, unit) +
-        (metric.cumulativeLabel ? '<span class="wvd-kpi-total">' + fmtKpiValue(total, unit) + ' ' + esc(metric.cumulativeLabel) + '</span>' : '');
-    }
-    return '<article class="wvd-kpi-card' + (weekly.length ? '' : ' wvd-kpi-card-empty') + (overdue ? ' wvd-kpi-card-held' : '') + (badgeIcon ? ' wvd-kpi-card-has-badge' : '') + '">' +
-      (badgeIcon ? '<span class="wvd-kpi-badge-icon" aria-hidden="true">' + badgeIcon + '</span>' : '') +
-      '<div class="wvd-kpi-label">' + esc(metric.label || '') + '</div>' + body +
-      (metric.goal ? '<p class="wvd-kpi-goal">Goal: ' + esc(metric.goal) + '</p>' : '') +
-      (metric.source ? '<p class="wvd-kpi-source">Source: ' + esc(metric.source) + '</p>' : '') +
-      '</article>';
-  }
-  function kpiTrustPill(icon, value, label, labelOnly, iconTone) {
-    return '<div class="wvd-trust-item' + (labelOnly ? ' wvd-trust-item-label-only' : '') + '"><span class="wvd-trust-icon' + (iconTone ? ' wvd-trust-icon-' + iconTone : '') + '">' + icon + '</span><div class="wvd-trust-copy">' +
-      (value != null ? '<strong>' + esc(value) + '</strong>' : '') + '<span>' + esc(label) + '</span></div></div>';
-  }
   // ---- Noah's Log page (mockup redesign 2026-07-21) ----
   // The Recent Highlights card grid was removed 2026-08-04 per Tasha: the Full
   // Daily Log timeline is the whole page now. noahLog.highlights still travels
@@ -1229,23 +740,12 @@
       feed +
       '<p class="wvd-kpi-caption">' + icons.info + '<span>' + esc(caption) + '</span></p></section>';
   }
-  /* ==================== AUDIT LOG (Tasha only) ====================
+  /* ==================== ACCESS LOG (write-only) ====================
      One row per visit, posted to Tasha's endpoint. The write is fire-and-forget in `no-cors`
      mode: Apps Script answers a POST with a redirect a cross-origin reader cannot follow, and
      more importantly a sign-in must never wait on, or fail because of, a logging call. */
-  let auditRows = null;
-  let auditState = 'idle';        // idle | loading | ready | error | unset | nokey
-  let auditError = '';
-  let auditFetchedAt = 0;
-  let auditTotal = 0;             // rows in the whole Sheet, so a truncated window says so
   let auditSessionId = '';
   const auditPagesSeen = {};
-
-  const AUDIT_PAGE_LABEL = {
-    overview: 'Overview', kpis: 'KPIs', latest: 'Latest work', handoffs: 'Active priorities',
-    waiting: 'Waiting on Noah', systems: 'Systems', pipeline: 'Pipeline Map',
-    sessions: "Tasha's log", noahlog: "Noah's log", growth: 'Growth Path', audit: 'Audit log'
-  };
 
   /* One id per TAB, which has to mean surviving a reload: the id lives in sessionStorage, not
      just in this closure. Held only in a module variable it was reborn on every page load, so a
@@ -1325,307 +825,12 @@
     } catch (error) { /* same */ }
   }
 
-  async function loadAuditLog(force) {
-    if (!isTasha()) return;
-    if (!AUDIT_URL) { auditState = 'unset'; renderAuditLog(); return; }
-    const readKey = privateData && privateData.auditKey;
-    if (!readKey) { auditState = 'nokey'; renderAuditLog(); return; }
-    // Refresh must be able to break a wedged read. Without the `force` exemption a request that
-    // never settles leaves auditState at 'loading' forever and kills the only way back.
-    if (auditState === 'loading' && !force) return;
-    if (!force && auditState === 'ready' && (Date.now() - auditFetchedAt) < 60000) { renderAuditLog(); return; }
-    auditState = 'loading';
-    renderAuditLog();
-    let readTimeout = 0;
-    try {
-      // A read with no ceiling can hang the page's only path to the log, so give up after 20s.
-      const controller = (typeof AbortController === 'function') ? new AbortController() : null;
-      if (controller) readTimeout = setTimeout(() => { try { controller.abort(); } catch (error) { /* already done */ } }, 20000);
-      const url = AUDIT_URL + '?k=' + encodeURIComponent(readKey) + '&t=' + Date.now();
-      const response = await fetch(url, controller ? { cache: 'no-store', signal: controller.signal } : { cache: 'no-store' });
-      // Read as text first. A web app whose deployment predates the code answers with an
-      // HTML error page, and response.json() turns that into "Unexpected token '<'", which
-      // sends you hunting the read key instead of the deployment. Name the real fix.
-      const text = await response.text();
-      let body = null;
-      try { body = JSON.parse(text); } catch (parseError) { body = null; }
-      if (body === null) {
-        throw new Error(/doGet|function not found/i.test(text)
-          ? 'the URL is live but serves no doGet. In the Sheet: Extensions → Apps Script, confirm the code is there, then Deploy → Manage deployments → edit → New version. Editing the code alone does not change what /exec serves.'
-          : 'the endpoint answered with something that is not JSON (HTTP ' + response.status + '), so it is probably not deployed as a web app yet.');
-      }
-      if (body.ok !== true) {
-        // The endpoint wraps its own exceptions as {ok:false,error:'...'}, so a script-side
-        // failure (a mangled constant, a Sheet permission, a quota) states itself here rather
-        // than masquerading as a key mismatch. 'no' is its deliberate silence on a bad key.
-        throw new Error(body.error && body.error !== 'no'
-          ? 'the endpoint reported: ' + body.error
-          : 'the log refused that read key. Check that READ_KEY in Code.gs matches the key in your vault.');
-      }
-      /* The read key travelled in a query string, so the full URL is sitting in this page's
-         resource-timing buffer, where any other script on the GHL page could read it back out.
-         Drop the buffer the moment the request is done. Not airtight against a script polling
-         continuously, which is why the endpoint's own answer to a stolen key is still just rows
-         and never anything that can be changed. */
-      try {
-        if (window.performance && typeof performance.clearResourceTimings === 'function') performance.clearResourceTimings();
-      } catch (error) { /* nothing to clean up */ }
-      // Signed out while this was in flight: do not repopulate what signOut() just wiped.
-      if (!isTasha()) { auditState = 'idle'; return; }
-      auditRows = Array.isArray(body.rows) ? body.rows : [];
-      auditTotal = Number(body.total) > 0 ? Number(body.total) : auditRows.length;
-      auditFetchedAt = Date.now();
-      auditState = 'ready';
-      auditError = '';
-    } catch (error) {
-      auditState = 'error';
-      auditError = (error && error.name === 'AbortError')
-        ? 'the log did not answer within 20 seconds. Try again, and check the Apps Script deployment if it keeps timing out.'
-        : ((error && error.message) ? error.message : 'could not reach the log');
-    } finally {
-      if (readTimeout) clearTimeout(readTimeout);
-    }
-    renderAuditLog();
-  }
-
-  /* Rows collapse into visits, keyed by tab session: "times he entered" means sessions that
-     started with a password, not page loads. A wrong password never joins a session; it is its
-     own event, because there is no visit to attach it to. */
-  function auditVisits(rows) {
-    const order = [];
-    const bySession = {};
-    rows.forEach((row) => {
-      const at = new Date(row.at).getTime();
-      if (isNaN(at)) return;
-      const who = row.role || 'unknown';
-      if (row.event === 'wrong-password') {
-        order.push({ kind: 'fail', role: who, at: at, last: at, device: row.device, browser: row.browser, pages: [] });
-        return;
-      }
-      const id = row.session || ('loose-' + at);
-      if (!bySession[id]) {
-        bySession[id] = { kind: 'visit', role: who, at: at, last: at, entered: false, resumed: false,
-          device: row.device || '', browser: row.browser || '', pages: [] };
-        order.push(bySession[id]);
-      }
-      const visit = bySession[id];
-      if (at < visit.at) visit.at = at;
-      if (at > visit.last) visit.last = at;
-      if (row.event === 'signin') visit.entered = true;
-      if (row.event === 'resume') visit.resumed = true;
-      if (row.event === 'page' && row.page && visit.pages.indexOf(row.page) === -1) visit.pages.push(row.page);
-      if (!visit.device && row.device) visit.device = row.device;
-      if (!visit.browser && row.browser) visit.browser = row.browser;
-    });
-    return order.sort((a, b) => b.at - a.at);
-  }
-
-  function auditStatCard(label, value, meta) {
-    return '<div class="wvd-kpi-card"><span class="wvd-kpi-label">' + esc(label) + '</span>' +
-      '<div class="wvd-kpi-value-row"><span class="wvd-kpi-value">' + esc(value) + '</span></div>' +
-      (meta ? '<div class="wvd-kpi-week">' + esc(meta) + '</div>' : '') + '</div>';
-  }
-
-  function auditEmptyCard(title, bodyHtml) {
-    return '<section class="wvd-section wvd-panel"><div class="wvd-audit-empty"><strong>' + esc(title) +
-      '</strong><span>' + bodyHtml + '</span></div></section>';
-  }
-
-  function auditRowHtml(item) {
-    const iso = new Date(item.at).toISOString();
-    const time = new Date(item.at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-    // 'Unknown password' is only true of a failed attempt. A visit row with an unrecognised role
-    // is someone the log could not name, not a bad password, and must not read as one.
-    const who = item.role === 'noah' ? 'Noah'
-      : item.role === 'tasha' ? 'You'
-      : (item.kind === 'fail' ? 'Unknown password' : 'Someone unidentified');
-    const meta = [item.device, item.browser].filter(Boolean).join(' · ');
-    if (item.kind === 'fail') {
-      return '<article class="wvd-audit-row wvd-audit-fail"><div class="wvd-audit-row-head"><span class="wvd-audit-dot"></span>' +
-        '<strong>' + esc(who) + '</strong><span class="wvd-audit-event">wrong password</span>' +
-        '<span class="wvd-audit-time">' + esc(time) + '</span></div>' +
-        (meta ? '<div class="wvd-audit-row-meta">' + esc(meta) + '</div>' : '') + '</article>';
-    }
-    const minutes = Math.round((item.last - item.at) / 60000);
-    const chips = item.pages.map((page) => '<span class="wvd-audit-chip">' + esc(AUDIT_PAGE_LABEL[page] || page) + '</span>').join('');
-    return '<article class="wvd-audit-row' + (item.role === 'noah' ? ' wvd-audit-noah' : '') + '">' +
-      '<div class="wvd-audit-row-head"><span class="wvd-audit-dot"></span><strong>' + esc(who) + '</strong>' +
-      '<span class="wvd-audit-event">' + (item.entered ? 'signed in' : item.resumed ? 'came back to an open tab' : 'opened the page') + '</span>' +
-      '<span class="wvd-audit-time">' + esc(time) + ' · ' + esc(agoShort(iso)) + '</span></div>' +
-      '<div class="wvd-audit-row-meta">' + esc(meta || 'device not reported') +
-      (minutes >= 1 ? esc(' · open ' + minutes + ' min') : '') + '</div>' +
-      (chips ? '<div class="wvd-audit-chips"><span class="wvd-audit-chips-label">Opened</span>' + chips + '</div>' : '') + '</article>';
-  }
-
-  function buildAuditHtml() {
-    if (auditState === 'unset') {
-      return auditEmptyCard('Not connected yet',
-        'The log needs one endpoint of your own, off Noah&rsquo;s infrastructure: a Google Sheet in your Drive with ' +
-        '<code>scripts/audit-log/Code.gs</code> deployed in front of it. Send Claude the <code>/exec</code> URL and ' +
-        'this page starts filling in. Nothing is being recorded until then.');
-    }
-    if (auditState === 'nokey') {
-      return auditEmptyCard('One publish away',
-        'The read key rides inside your encrypted vault, and the live copy does not carry it yet. ' +
-        'It arrives with the next publish from your Mac; reopen this page after that.');
-    }
-    if (auditState === 'loading' && !auditRows) {
-      return auditEmptyCard('Reading the log', 'One moment.');
-    }
-    if (auditState === 'error') {
-      return auditEmptyCard('Could not read the log',
-        esc(auditError) + '<button type="button" class="wvd-btn" id="wvdAuditRetry">Try again</button>');
-    }
-    const rows = auditRows || [];
-    /* Her own rows are dropped here as well as at the write, because the Sheet still holds every
-       row logged under her name before 2026-08-02 and none of them belong on a page about his
-       visits. Filtering before the counts means "since" and the list agree with each other. */
-    const visits = auditVisits(rows).filter((item) => item.role !== 'tasha');
-    if (!visits.length) {
-      return auditEmptyCard('Nothing recorded yet',
-        'The first sign-in after the new page goes live in GHL shows up here. Your own visits are ' +
-        'never recorded, so everything this page shows is his.');
-    }
-
-    const noahVisits = visits.filter((item) => item.kind === 'visit' && item.role === 'noah');
-    const noahEntries = noahVisits.filter((item) => item.entered);
-    const noahReturns = noahVisits.filter((item) => item.entered === false);
-    const noahFails = visits.filter((item) => item.kind === 'fail' && item.role === 'noah');
-    /* "Last time he opened it" means exactly that: his newest visit of any kind. Reading only
-       fresh sign-ins made the card go stale whenever his latest activity was a returned tab.
-       Both dates come from `visits`, whose timestamps auditVisits() already validated, so a
-       single malformed cell in the Sheet can no longer throw here and blank the whole page. */
-    const lastSeen = noahVisits[0] || null;
-    const oldest = visits.length ? visits[visits.length - 1] : null;
-    const sinceLabel = oldest ? 'since ' + fmtDate(new Date(oldest.at).toISOString()) : '';
-
-    let html = '<section class="wvd-section wvd-panel"><div class="wvd-panel-heading"><div>' +
-      '<p class="wvd-eyebrow">Who opened this dashboard</p><h2>Noah&rsquo;s visits</h2></div>' +
-      '<button type="button" class="wvd-refresh-mini" id="wvdAuditRefresh" title="Refresh the log" aria-label="Refresh the log">' +
-      '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0 2 5M20 4v7h-7"/></svg>' +
-      '</button></div><div class="wvd-audit-stats">' +
-      auditStatCard('Times Noah signed in', String(noahEntries.length), sinceLabel) +
-      auditStatCard('Last time he opened it',
-        lastSeen ? agoShort(new Date(lastSeen.at).toISOString()) : 'never',
-        lastSeen
-          ? fmtDateTime(new Date(lastSeen.at).toISOString()) + (lastSeen.entered ? '' : ', returning to an open tab')
-          : 'nothing recorded yet') +
-      auditStatCard('Wrong password tries', String(noahFails.length),
-        noahFails.length ? 'most recent ' + agoShort(new Date(noahFails[0].at).toISOString()) : 'none so far') +
-      '</div>' +
-      (noahReturns.length ? '<div class="wvd-kpi-goal" style="padding: 0 20px 18px;">Plus ' + noahReturns.length +
-        ' return' + (noahReturns.length === 1 ? '' : 's') + ' to a tab he already had open, counted separately from a fresh sign-in.</div>' : '') +
-      '</section>';
-
-    /* No Noah/You/Everyone tabs any more: with her rows never written, two of the three led
-       nowhere and the third was the whole list. What is left is every entry the log holds. */
-    html += '<section class="wvd-section wvd-panel"><div class="wvd-panel-heading">' +
-      '<span class="wvd-panel-title wvd-t-green">Every entry</span></div>';
-
-    let lastDay = '';
-    html += '<div class="wvd-audit-list">';
-    visits.forEach((item) => {
-      const iso = new Date(item.at).toISOString();
-      const dayKey = new Date(item.at).toDateString();
-      if (dayKey !== lastDay) {
-        lastDay = dayKey;
-        html += '<div class="wvd-kpi-divider">' + esc(fmtWeekday(iso)) + ' · ' + esc(fmtDate(iso)) + '</div>';
-      }
-      html += auditRowHtml(item);
-    });
-    html += '</div></section>';
-
-    html += '<div class="wvd-kpi-caption">Times come from the log itself, not from the visitor&rsquo;s clock, so a row ' +
-      'cannot be back-dated. A beacon blocked by an ad blocker or lost to a dropped connection leaves no row at all, ' +
-      'which makes this a floor on his visits rather than a guarantee.' +
-      // Writes are open by necessity, so a flood of junk rows could push real visits out of the
-      // returned window. Saying the window is partial keeps a truncated count from reading as total.
-      (auditTotal > rows.length
-        ? ' Showing the most recent ' + rows.length + ' of ' + auditTotal + ' rows; the counts above cover this window only, and the Sheet still holds every row.'
-        : '') +
-      '</div>';
-    return html;
-  }
-
-  function renderAuditLog() {
-    const target = $('wvdAuditBody');
-    if (!target) return;
-    // Same rule as Noah's Log: if this is not Tasha, the page holds nothing at all.
-    if (!isTasha()) { target.innerHTML = ''; return; }
-    /* The rows come from a spreadsheet a human can type into, so this markup is built from data
-       that is not fully under the page's control. A throw in here used to leave the tab stuck on
-       whatever it last rendered, with no retry: contain it and say so instead. */
-    try {
-      target.innerHTML = buildAuditHtml();
-    } catch (error) {
-      target.innerHTML = auditEmptyCard('Could not read the log',
-        'One of the rows in the Sheet could not be read (' + esc(error && error.message ? error.message : 'unknown error') +
-        '). Check the log Sheet for an edited or half-written row, then ' +
-        '<button type="button" class="wvd-btn" id="wvdAuditRetry">try again</button>');
-    }
-  }
-
   function renderNoahLog() {
     const el = $('wvdNoahLogBody');
     if (!el) return;
     // Noah never gets this markup in his DOM at all, not merely hidden by CSS.
     if (!isTasha()) { el.innerHTML = ''; return; }
     if (data) el.innerHTML = buildNoahLogHtml(data.noahLog);
-  }
-
-  function buildKpisHtml(kpis, sessions, statWeeks) {
-    const shipMetric = {
-      id: 'ship-rate',
-      label: 'Outcomes shipped per week',
-      unit: 'count',
-      direction: 'up',
-      goal: 'Steady weekly output, the same shipped-plus-fixed count Tasha\'s Log records.',
-      source: 'Computed live from Tasha\'s Log, never entered by hand.',
-      weekly: weeklyOutcomeSeries(sessions, statWeeks),
-      chartBars: dailyBreakdownForCurrentWeek(sessions)
-    };
-    const allStored = (kpis && Array.isArray(kpis.metrics)) ? kpis.metrics.filter((metric) => metric && metric.label) : [];
-    /* Cards carrying group:'tracker' come from Kaizen Studio's Campaign Performance Tracker rather
-       than from Tasha's own work, so they get their own labelled band instead of sitting in the
-       same grid. Mixing them would imply one owner for numbers with two very different provenances,
-       and these are monthly where everything above is weekly. */
-    const tracker = allStored.filter((metric) => metric.group === 'tracker' && (metric.weekly || []).length);
-    const stored = allStored.filter((metric) => metric.group !== 'tracker');
-    const populated = stored.filter((metric) => (metric.weekly || []).length);
-    const armed = stored.filter((metric) => !(metric.weekly || []).length);
-    // The trust pill must not overclaim: it counts metrics with REAL data (the
-    // populated stored metrics, the tracker rollups, plus the always-live ship-rate
-    // card), never the armed "Not tracked yet" counters, since claiming "N tracked"
-    // next to a "No estimates" badge while some cards read "Not tracked yet" would
-    // be the exact overclaim this page exists to avoid.
-    const liveCount = populated.length + tracker.length + 1;
-    const caption = (kpis && kpis.caption)
-      ? kpis.caption
-      : 'Numbers update when the worklog is published. Every metric names its source; anything without a verified number says so instead of guessing.';
-
-    const trustbar = '<div class="wvd-kpi-trustbar">' +
-      kpiTrustPill(icons.barChart, liveCount, liveCount === 1 ? 'metric live' : 'metrics live') +
-      kpiTrustPill(icons.checkShield, null, 'Verified sources', true, 'verified') +
-      kpiTrustPill(icons.calendar, null, 'Weekly update', true) +
-      kpiTrustPill(icons.ban, null, 'No estimates', true) +
-      '</div>';
-    const populatedGrid = '<div class="wvd-kpi-grid">' + populated.map(kpiCardHtml).join('') + '</div>';
-    const divider = '<div class="wvd-kpi-divider"><span>Tracking pipeline</span></div>';
-    const pipelineGrid = '<div class="wvd-kpi-grid wvd-kpi-grid-3">' + [shipMetric].concat(armed).map(kpiCardHtml).join('') + '</div>';
-    /* The divider names the owner and the window in the label itself, so nobody has to open a card
-       to learn these are the agency's monthly numbers for ad leads rather than Tasha's weekly ones
-       for the whole business. The eight dollar rows of that tab are deliberately absent: the file
-       behind this page answers without a password, so publishing them would put company revenue on
-       an open URL. They land once that endpoint authenticates. */
-    const trackerBlock = tracker.length
-      ? '<div class="wvd-kpi-divider"><span>Ad funnel · Kaizen Studio tracker · monthly</span></div>' +
-        '<div class="wvd-kpi-grid wvd-kpi-grid-3">' + tracker.map(kpiCardHtml).join('') + '</div>' +
-        '<p class="wvd-kpi-caption">' + icons.info + '<span>Copied from the Campaign Performance Tracker 2026 KPIs tab, the same sheet the monthly ROAS figures come from. Counts and rates only: the eight cost and revenue rows are held back until the data behind this page sits behind a password.</span></p>'
-      : '';
-
-    return '<section class="wvd-section wvd-anchor" id="wvd-kpis-panel">' +
-      trustbar + populatedGrid + divider + pipelineGrid + trackerBlock +
-      '<p class="wvd-kpi-caption">' + icons.info + '<span>' + esc(caption) + '</span></p></section>';
   }
 
   function healthMeta(band) {
@@ -1790,21 +995,7 @@
       (project.blockedOn ? '<div class="wvd-modal-section"><div class="wvd-body-label" style="color:var(--wvd-red)">Blocked on</div><p class="wvd-modal-text">' + esc(project.blockedOn) + '</p></div>' : '') +
       (detail.sources && detail.sources.length ? '<div class="wvd-modal-section"><div class="wvd-body-label" style="color:var(--wvd-faint)">Source</div><p class="wvd-modal-text" style="color:var(--wvd-faint)">' + esc(detail.sources.join('; ')) + '</p></div>' : '');
   }
-  function buildHandoffModalHtml(handoff) {
-    const status = String(handoff.status || 'OPEN');
-    const detail = handoff.detail || {};
-    const percent = checklistPercent(detail.whatWasDone, detail.whatsLeft);
-    return '<div class="wvd-modal-top"><h2 id="wvdProjectModalTitle">' + esc(handoff.title) + '</h2><span class="wvd-status-pill">' + esc(status) + '</span></div>' +
-      '<p class="wvd-modal-summary">' + esc(handoff.project || 'Dragon Auto') + ' · Assigned ' + esc(fmtDate(handoff.assigned)) + '</p>' +
-      miniProgressHtml(percent, { label: 'Progress', caption: 'Based on checklist items done vs. left, not effort-weighted.' }) +
-      (detail.background ? '<div class="wvd-modal-section"><div class="wvd-body-label">Background</div><p class="wvd-modal-text">' + esc(detail.background) + '</p></div>' : '') +
-      '<div class="wvd-modal-section"><div class="wvd-body-label">What was done</div>' + detailList(detail.whatWasDone, 'Nothing logged yet.') + '</div>' +
-      '<div class="wvd-modal-section"><div class="wvd-body-label">What\'s left</div>' + detailList(detail.whatsLeft, 'Nothing outstanding right now.') + '</div>' +
-      (detail.openQuestions && detail.openQuestions.length ? '<div class="wvd-modal-section wvd-urgent"><div class="wvd-body-label">Open questions</div>' + detailList(detail.openQuestions, '') + '</div>' : '') +
-      (detail.sources && detail.sources.length ? '<div class="wvd-modal-section"><div class="wvd-body-label" style="color:var(--wvd-faint)">Source</div><p class="wvd-modal-text" style="color:var(--wvd-faint)">' + esc(detail.sources.join('; ')) + '</p></div>' : '');
-  }
   let currentProjects = [];
-  let currentHandoffs = [];
   let lastFocusedProjectEl = null;
   function openDetailModal(bodyHtml) {
     if ($('wvdProjectModalOverlay').hidden) lastFocusedProjectEl = document.activeElement;
@@ -1818,11 +1009,6 @@
     if (!project) return;
     openDetailModal(buildProjectModalHtml(project));
   }
-  function openHandoffModal(index) {
-    const handoff = currentHandoffs[index];
-    if (!handoff) return;
-    openDetailModal(buildHandoffModalHtml(handoff));
-  }
   function closeProjectModal() {
     $('wvdProjectModalOverlay').hidden = true;
     $('wvdProjectModalBody').innerHTML = '';
@@ -1830,91 +1016,10 @@
     if (lastFocusedProjectEl && typeof lastFocusedProjectEl.focus === 'function') lastFocusedProjectEl.focus();
   }
 
-  function growthStatusLabel(status) {
-    if (status === 'active') return 'ACTIVE';
-    if (status === 'done') return 'DONE';
-    return 'LOCKED';
-  }
-  function growthWeekStatus(clean) {
-    if (clean === true || clean === 'clean') return { cls: 'wvd-clean', label: 'Clean' };
-    if (clean === false || clean === 'dirty') return { cls: 'wvd-dirty', label: 'Dirty' };
-    return { cls: 'wvd-pending', label: 'Pending' };
-  }
-  function buildGrowthHtml(growthPath) {
-    if (!growthPath) return '<div class="wvd-empty">No Growth Path data has been published yet.</div>';
-    const levels = growthPath.levels || [];
-    const currentLevelData = levels.find((level) => level.level === growthPath.currentLevel);
-    const gate = growthPath.activeGate || {};
-    const weeks = Array.isArray(gate.weeks) ? gate.weeks : [];
-    const nextLevel = levels.find((level) => level.level === gate.toLevel);
-
-    let html = '<section class="wvd-section wvd-panel"><div class="wvd-growth-status"><strong>' + esc(growthPath.baseCompensation || '') + '</strong><span class="wvd-growth-level">Level ' + esc(growthPath.currentLevel) + (currentLevelData ? ' — ' + esc(currentLevelData.title) : '') + '</span>' +
-      (growthPath.levelSince ? '<span class="wvd-growth-since">Active since ' + esc(fmtDate(growthPath.levelSince)) + '</span>' : '') +
-      '<button type="button" class="wvd-growth-lock-btn" id="wvdGrowthLockBtn">Hide this page</button>' +
-      '</div>' +
-      (growthPath.levelSince && gate.windowDays ? '<div class="wvd-growth-window">Day ' + esc(daysSince(growthPath.levelSince) + 1) + ' of the ' + esc(gate.windowDays) + '-day evaluation window</div>' : '') +
-      '</section>';
-
-    if (nextLevel) {
-      const criteria = Array.isArray(currentLevelData && currentLevelData.gateCriteria) ? currentLevelData.gateCriteria : [];
-      const target = Number(gate.streakTarget) || 0;
-      const current = Number(gate.currentStreak) || 0;
-      const pct = target > 0 ? Math.min(100, Math.round((current / target) * 100)) : 0;
-      html += '<section class="wvd-section wvd-panel"><div class="wvd-panel-heading"><div><p class="wvd-eyebrow">Active gate</p><h2>Gate to Level ' + esc(gate.toLevel) + ' — ' + esc(nextLevel.title) + ' (' + esc(nextLevel.compensation) + ')</h2></div></div>' +
-        '<div class="wvd-gate-checklist">' + criteria.map((item) => '<div class="wvd-gate-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>' + esc(item) + '</span></div>').join('') + '</div>' +
-        '<div class="wvd-gate-streak"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c1 3 4 4.5 4 8a4 4 0 0 1-8 0c0-1 .5-2 1-2.5C9 9 9 7 12 2Z"/></svg>' + esc(current) + ' of ' + esc(target) + ' clean weeks (' + pct + '%)</div>' +
-        '<div class="wvd-progress-bar-track"><div class="wvd-progress-bar-fill" style="width:' + pct + '%"></div></div>' +
-        '<div class="wvd-gate-weeks">' + (weeks.length ? weeks.map((week) => {
-          const status = growthWeekStatus(week.clean);
-          return '<div class="wvd-gate-week"><div class="wvd-gate-week-head"><strong>Week of ' + esc(fmtDate(week.weekOf)) + '</strong><span class="wvd-gate-week-status ' + status.cls + '">' + status.label + '</span></div>' +
-            '<p><strong>KPI report:</strong> ' + esc(week.kpiShipped || '') + '</p>' +
-            '<p><strong>Breakages:</strong> ' + esc(week.breakages || '') + '</p>' +
-            '<p><strong>Dry-run stalls:</strong> ' + esc(week.dryRunStalls || '') + '</p></div>';
-        }).join('') : '<div class="wvd-none">No weeks logged yet.</div>') + '</div>' +
-        '</section>';
-    }
-
-    const measurement = growthPath.measurement || {};
-    if (measurement.trackedMetrics || measurement.bonuses || measurement.logistics) {
-      html += '<section class="wvd-section wvd-panel"><div class="wvd-panel-heading"><span class="wvd-panel-title wvd-t-gold">How you\'re measured</span></div><div class="wvd-measure-grid">' +
-        '<div class="wvd-measure-group"><div class="wvd-group-label" style="color:var(--wvd-blue)">Tracked metrics</div><ul>' + (measurement.trackedMetrics || []).map((item) => '<li>' + esc(item) + '</li>').join('') + '</ul></div>' +
-        '<div class="wvd-measure-group"><div class="wvd-group-label" style="color:var(--wvd-gold)">Bonuses</div><ul>' + (measurement.bonuses || []).map((item) => '<li>' + esc(item) + '</li>').join('') + '</ul></div>' +
-        '<div class="wvd-measure-group"><div class="wvd-group-label" style="color:var(--wvd-green)">Logistics</div><ul>' + (measurement.logistics || []).map((item) => '<li>' + esc(item) + '</li>').join('') + '</ul></div>' +
-        '</div></section>';
-    }
-
-    html += '<section class="wvd-section wvd-panel"><div class="wvd-panel-heading"><span class="wvd-panel-title wvd-t-green">The ladder</span><span class="wvd-panel-meta">' + levels.length + ' levels</span></div><div class="wvd-ladder-list">' +
-      levels.map((level) => '<article class="wvd-ladder-item wvd-' + esc(level.status) + '"><span class="wvd-ladder-num">' + esc(level.level) + '</span><div class="wvd-ladder-copy"><h3>' + esc(level.title) + ' — <strong>' + esc(level.compensation) + '</strong></h3><p>' + esc(level.gate) + '</p></div><span class="wvd-ladder-pill">' + growthStatusLabel(level.status) + '</span></article>').join('') +
-      '</div></section>';
-
-    return html;
-  }
-
   async function sha256Hex(text) {
     const encoded = new TextEncoder().encode(text);
     const digest = await crypto.subtle.digest('SHA-256', encoded);
     return Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, '0')).join('');
-  }
-
-  function growthContentHtml() {
-    if (!isTasha()) return '';
-    return data && data.growthPath
-      ? buildGrowthHtml(data.growthPath)
-      : '<section class="wvd-section wvd-panel"><p class="wvd-growth-empty">No Growth Path data is in the live record yet. It fills in with the next publish from your Mac.</p></section>';
-  }
-
-  // Growth Path has no passphrase of its own any more: signing in as Tasha already proved the
-  // passphrase by decrypting the vault, so a second prompt would ask for the same secret twice.
-  function openGrowthPage() {
-    if (!isTasha()) return;
-    showPage('growth');
-    const growthTarget = $('wvdGrowthContent');
-    if (growthTarget) growthTarget.innerHTML = growthContentHtml();
-  }
-  // Leaving the page wipes the rendered numbers out of the DOM rather than just hiding them.
-  function resetGrowthOnLeave() {
-    const growthTarget = $('wvdGrowthContent');
-    if (growthTarget) growthTarget.innerHTML = '';
   }
 
   /* ================= PIPELINE MAP DATA (edit content here only) ================= */
@@ -2490,134 +1595,10 @@
   function render() {
     if (!data) return;
     const allSessions = data.sessions || [];
-    const recent = allSessions.filter((session) => {
-      const age = daysSince(session.date);
-      return age !== null && age <= 30;
-    });
-    const shipped = recent.reduce((total, session) => total + (session.shipped || []).length, 0);
-    const fixed = recent.reduce((total, session) => total + (session.fixed || []).length, 0);
-    /* "System live" must agree with the cards. It counted status === 'LIVE' with no health check,
-       so a system whose own card reads AT RISK was still counted as live: on 2026-07-30 the tile
-       said 7 while only 6 were healthy. sysStatus() already owns that distinction, so reuse it
-       rather than writing the rule a second place where the two can drift apart. */
-    const liveProjects = (data.projects || []).filter((project) => String(project.status || '').toUpperCase() === 'LIVE');
-    const atRiskLive = liveProjects.filter((project) => sysStatus(project).atrisk).length;
-    const live = liveProjects.length - atRiskLive;
-    const handoffs = (data.noahHandoffs || []).filter((handoff) => !['DONE', 'COMPLETE'].includes(String(handoff.status || '').toUpperCase()));
     const waitingItems = data.waitingOnNoah || [];
     const waiting = waitingItems.length;
     const sessions = allSessions.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
     const latestDay = groupSessionsByDate(sessions)[0] || null;
-
-    /* Two different windows on purpose, and they must never be labelled the same way. These two
-       are ROLLING 7-day counts, which is why the header reads "last 7 days"; the bar charts below
-       bucket by calendar ISO week. The old comment here claimed both were ISO-week bucketed, which
-       is how the header ended up irreconcilable with the chart beside it. */
-    const shippedLast7 = countShipped(recent, 0, 7);
-    const shippedPrior7 = countShipped(allSessions, 7, 14);
-    /* Tasha's Log holds 14 days by standing rule (2026-08-23), so anything charting more than a
-       fortnight reads the per-week rollup for the older weeks. See scripts/prune-sessions.mjs. */
-    const statWeeks = (data.sessionStats && Array.isArray(data.sessionStats.weeks)) ? data.sessionStats.weeks : [];
-    const streak = weekStreak(allSessions, statWeeks);
-    // The weekly charts on the Shipped and Fixed cards, bucketed by ISO week from the log.
-    const thisMonday = new Date(isoWeekMondayKey(new Date()) + 'T12:00:00');
-    const shipBuckets = mergeWeekly(weeklyBuckets(allSessions, (session) => (session.shipped || []).length), statWeeks, 'shipped');
-    const fixBuckets = mergeWeekly(weeklyBuckets(allSessions, (session) => (session.fixed || []).length), statWeeks, 'fixed');
-    const shipped12 = [];
-    for (let i = 11; i >= 0; i -= 1) {
-      const wk = new Date(thisMonday.getTime());
-      wk.setDate(wk.getDate() - i * 7);
-      const key = toDateKey(wk);
-      shipped12.push({ weekOf: key, value: shipBuckets[key] || 0 });
-    }
-    const fixed4 = [4, 3, 2, 1].map((back) => {
-      const wk = new Date(thisMonday.getTime());
-      wk.setDate(wk.getDate() - back * 7);
-      const key = toDateKey(wk);
-      return { label: back === 1 ? 'Last week' : back + ' weeks ago', value: fixBuckets[key] || 0 };
-    });
-    const priorKnown = priorWindowInLog(allSessions, statWeeks);
-    const weekSummary = weekSummaryHtml(shippedLast7, shippedPrior7, shipped12, live, priorKnown);
-
-    // Shipped card: full weekly bar chart with a right-side value axis.
-    const shipMax = shipped12.reduce((peak, week) => Math.max(peak, Number(week.value) || 0), 0);
-    const shipMaxTick = Math.max(10, Math.ceil(shipMax / 10) * 10);
-    const shipStep = shipMaxTick <= 30 ? 10 : shipMaxTick <= 80 ? 20 : 50;
-    let shipAxisHtml = '';
-    for (let t = 0; t <= shipMaxTick; t += shipStep) {
-      const pct = (t / shipMaxTick) * 100;
-      shipAxisHtml += '<div class="wvd-chart-gridline" style="bottom:' + pct + '%"></div><span class="wvd-chart-ytick" style="bottom:' + pct + '%">' + t + '</span>';
-    }
-    const shipBarsHtml = shipped12.map((week, index) => {
-      const value = Number(week.value) || 0;
-      const height = shipMaxTick > 0 ? Math.max(2, Math.round((value / shipMaxTick) * 100)) : 2;
-      return '<span class="wvd-chart-bar' + (index === shipped12.length - 1 ? ' wvd-chart-bar-current' : '') + '" style="height:' + height + '%" title="' + esc(fmtDate(week.weekOf) + ': ' + value + ' shipped') + '"></span>';
-    }).join('');
-    const shippedChart = '<div class="wvd-shipped-chart"><div class="wvd-chart-plot">' + shipAxisHtml + '<div class="wvd-chart-bars" role="img" aria-label="Shipped outcomes over the last 12 weeks">' + shipBarsHtml + '</div></div></div>';
-
-    // Fixed card: four recent weeks of fixes, each bar labelled by recency.
-    const fixMax = fixed4.reduce((peak, week) => Math.max(peak, Number(week.value) || 0), 0);
-    const fixBarsHtml = fixed4.map((week, index) => {
-      const value = Number(week.value) || 0;
-      const height = fixMax > 0 ? Math.max(6, Math.round((value / fixMax) * 100)) : 6;
-      return '<span class="wvd-fixed-bar' + (value === 0 ? ' wvd-fixed-bar-zero' : '') + (index === fixed4.length - 1 ? ' wvd-fixed-bar-current' : '') + '" style="height:' + height + '%" title="' + esc(week.label + ': ' + value + (value === 1 ? ' fix' : ' fixes')) + '"></span>';
-    }).join('');
-    const fixLabelsHtml = fixed4.map((week) => '<span class="wvd-fixed-bar-label">' + esc(week.label) + '</span>').join('');
-
-    // Stacked list card: the four secondary counts, each jumping to its own page.
-    const listChevron = '<svg class="wvd-mlr-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>';
-    const listRow = (tone, icon, num, title, goto) =>
-      '<button type="button" class="wvd-mlr" style="--wvd-mlr-tone:' + tone + '" data-wvd-goto="' + goto + '" aria-label="' + esc(title) + ': ' + num + '">' +
-        '<span class="wvd-mlr-icon" aria-hidden="true">' + icon + '</span>' +
-        '<span class="wvd-mlr-title">' + esc(title) + '</span>' +
-        '<span class="wvd-mlr-num" data-wvd-count="' + num + '">0</span>' +
-        listChevron +
-      '</button>';
-
-    const shippedCheck = '<span class="wvd-metric-corner wvd-corner-check" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';
-    const metricsHtml = '<section class="wvd-metrics-grid" aria-label="Work summary">' +
-      '<article class="wvd-metric-card wvd-metric-hero wvd-hero-shipped" style="--wvd-tone:var(--wvd-green)">' +
-        '<div class="wvd-metric-head"><span class="wvd-metric-label">Shipped</span>' + shippedCheck + '</div>' +
-        '<strong data-wvd-count="' + shipped + '">0</strong>' +
-        '<span class="wvd-metric-cap">completed outcomes in the last 30 days</span>' +
-        '<div class="wvd-shipped-foot">' + shipMomentumHtml(shippedLast7, shippedPrior7, priorKnown) + '</div>' +
-        shippedChart +
-      '</article>' +
-      '<div class="wvd-metrics-right">' +
-        '<article class="wvd-metric-card wvd-metric-hero wvd-hero-fixed" style="--wvd-tone:var(--wvd-gold)">' +
-          '<div class="wvd-metric-head"><span class="wvd-metric-label">Fixed</span><span class="wvd-metric-corner" aria-hidden="true">' + icons.fixed + '</span></div>' +
-          '<strong data-wvd-count="' + fixed + '">0</strong>' +
-          '<span class="wvd-metric-cap">issues resolved in 30 days</span>' +
-          '<div class="wvd-fixed-foot"><div class="wvd-fixed-bars" role="img" aria-label="Fixes over the last four weeks">' + fixBarsHtml + '</div><div class="wvd-fixed-bar-labels">' + fixLabelsHtml + '</div></div>' +
-        '</article>' +
-        '<div class="wvd-metric-list">' +
-          listRow('var(--wvd-green)', icons.systems, live, 'System live', 'systems') +
-          listRow('var(--wvd-gold)', icons.streak, streak, 'Shipping streak', 'sessions') +
-          listRow('var(--wvd-gold)', icons.handoff, handoffs.length, 'Active priorities', 'handoffs') +
-          listRow('var(--wvd-blue)', icons.waiting, waiting, 'Needs Noah', 'waiting') +
-        '</div>' +
-      '</div>' +
-      '</section>';
-
-    const attentionArrow = '<span class="wvd-attention-arrow" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
-    const oldestWaiting = pickOldest(waitingItems, 'since');
-    const oldestHandoff = pickOldest(handoffs, 'assigned');
-    const waitingTitle = waitingItems.length
-      ? '<div class="wvd-attention-title">' + esc(oldestWaiting.item) + '</div>'
-      : '<div class="wvd-attention-empty">Nothing is waiting on Noah right now.</div>';
-    const waitingMeta = waitingItems.length
-      ? daysSince(oldestWaiting.since) + 'd waiting' + (waitingItems.length > 1 ? ' · +' + (waitingItems.length - 1) + ' more' : '')
-      : '';
-    const handoffTitle = handoffs.length
-      ? '<div class="wvd-attention-title">' + esc(oldestHandoff.title) + '</div>'
-      : '<div class="wvd-attention-empty">No open assignments from Noah.</div>';
-    const handoffMeta = handoffs.length
-      ? 'Assigned ' + esc(fmtDate(oldestHandoff.assigned)) + (handoffs.length > 1 ? ' · +' + (handoffs.length - 1) + ' more open' : '')
-      : '';
-    const attentionHtml = '<section class="wvd-section wvd-panel wvd-anchor"><div class="wvd-panel-heading"><span class="wvd-panel-title wvd-t-gold">Needs attention</span></div><div class="wvd-attention-grid">' +
-      '<button type="button" class="wvd-attention-card wvd-waiting-tone" data-wvd-goto="waiting"><span class="wvd-attention-label">Waiting on Noah</span>' + waitingTitle + '<div class="wvd-attention-foot"><span class="wvd-attention-meta">' + waitingMeta + '</span>' + attentionArrow + '</div></button>' +
-      '<button type="button" class="wvd-attention-card wvd-handoff-tone" data-wvd-goto="handoffs"><span class="wvd-attention-label">Active priorities</span>' + handoffTitle + '<div class="wvd-attention-foot"><span class="wvd-attention-meta">' + handoffMeta + '</span>' + attentionArrow + '</div></button>' +
-      '</div></section>';
 
     let latestHtml = '';
     if (latestDay) {
@@ -2651,102 +1632,6 @@
     } else {
       latestHtml = '<div class="wvd-empty">No work sessions have been logged yet.</div>';
     }
-
-    const handoffMonthKey = (handoff) => String(handoff.assigned || '').slice(0, 7);
-    const monthLabel = (key) => {
-      const date = new Date(key + '-15T12:00:00');
-      return isNaN(date) ? key : date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    };
-    const assignedMonths = [];
-    handoffs.forEach((handoff) => {
-      const key = handoffMonthKey(handoff);
-      if (key && assignedMonths.indexOf(key) === -1) assignedMonths.push(key);
-    });
-    assignedMonths.sort().reverse();
-    if (handoffAssigned !== 'all' && assignedMonths.indexOf(handoffAssigned) === -1) handoffAssigned = 'all';
-    const handoffPercent = (handoff) => { const detail = handoff.detail || {}; return checklistPercent(detail.whatWasDone, detail.whatsLeft); };
-    const priorityRank = (handoff) => ({ HIGH: 0, MEDIUM: 1, LOW: 2 }[String(handoff.priority || '').toUpperCase()] !== undefined ? { HIGH: 0, MEDIUM: 1, LOW: 2 }[String(handoff.priority || '').toUpperCase()] : 3);
-    let visibleHandoffs = handoffs.filter((handoff) => handoffAssigned === 'all' || handoffMonthKey(handoff) === handoffAssigned);
-    if (handoffFilter === 'high' || handoffFilter === 'medium') {
-      visibleHandoffs = visibleHandoffs.filter((handoff) => String(handoff.priority || '').toUpperCase() === handoffFilter.toUpperCase());
-    } else if (handoffFilter === 'inprogress') {
-      visibleHandoffs = visibleHandoffs.filter((handoff) => String(handoff.status || '').toUpperCase() === 'IN PROGRESS');
-    }
-    if (handoffSort === 'oldest') visibleHandoffs.sort((a, b) => String(a.assigned || '').localeCompare(String(b.assigned || '')));
-    else if (handoffSort === 'newest') visibleHandoffs.sort((a, b) => String(b.assigned || '').localeCompare(String(a.assigned || '')));
-    else if (handoffSort === 'priority') visibleHandoffs.sort((a, b) => priorityRank(a) - priorityRank(b));
-    else if (handoffSort === 'progress') visibleHandoffs.sort((a, b) => {
-      const pa = handoffPercent(a); const pb = handoffPercent(b);
-      return (pb === null ? -1 : pb) - (pa === null ? -1 : pa);
-    });
-
-    const readyCount = handoffs.filter((handoff) => String(handoff.status || '').toUpperCase() === 'READY').length;
-    const handoffFilterDefs = [
-      { key: 'all', label: 'All' },
-      { key: 'high', label: 'High' },
-      { key: 'medium', label: 'Medium' },
-      { key: 'inprogress', label: 'In progress' }
-    ];
-    let handoffsToolbarHtml = '';
-    if (handoffs.length) {
-      handoffsToolbarHtml = '<div class="wvd-ap-count"><span class="wvd-ap-count-icon">' + icons.handoff + '</span><strong>' + handoffs.length + '</strong><span class="wvd-ap-count-copy"><b>Open ' + (handoffs.length === 1 ? 'priority' : 'priorities') + '</b><span>' + readyCount + ' ready to work</span></span></div>' +
-        '<div class="wvd-filter-tabs" aria-label="Filter priorities">' + handoffFilterDefs.map((filter) => '<button type="button" data-wvd-hfilter="' + filter.key + '" class="' + (handoffFilter === filter.key ? 'wvd-selected' : '') + '">' + filter.label + '</button>').join('') + '</div>' +
-        (assignedMonths.length > 1 ? '<label class="wvd-ap-select">Assigned:<select id="wvdHandoffAssigned" aria-label="Filter by month assigned"><option value="all"' + (handoffAssigned === 'all' ? ' selected' : '') + '>All</option>' + assignedMonths.map((key) => '<option value="' + key + '"' + (handoffAssigned === key ? ' selected' : '') + '>' + esc(monthLabel(key)) + '</option>').join('') + '</select>' + icons.chevronDown + '</label>' : '');
-    }
-
-    const handoffSortDefs = [
-      { key: 'default', label: 'Default' },
-      { key: 'priority', label: 'Priority' },
-      { key: 'progress', label: 'Progress' },
-      { key: 'newest', label: 'Newest assigned' },
-      { key: 'oldest', label: 'Oldest assigned' }
-    ];
-    let handoffsHtml = '<section class="wvd-section wvd-panel wvd-anchor" id="wvd-handoffs-panel"><div class="wvd-panel-heading"><span class="wvd-panel-title wvd-t-green wvd-ap-title">Active priorities</span>' +
-      (handoffs.length > 1
-        ? '<label class="wvd-ap-select">Sort by:<select id="wvdHandoffSort" aria-label="Sort priorities">' + handoffSortDefs.map((option) => '<option value="' + option.key + '"' + (handoffSort === option.key ? ' selected' : '') + '>' + option.label + '</option>').join('') + '</select>' + icons.chevronDown + '</label>'
-        : '<span class="wvd-panel-meta">' + handoffs.length + ' open ' + (handoffs.length === 1 ? 'priority' : 'priorities') + '</span>') +
-      '</div>';
-    currentHandoffs = visibleHandoffs;
-    if (visibleHandoffs.length) {
-      handoffsHtml += '<div class="wvd-handoff-list">' + visibleHandoffs.map((handoff, index) => {
-        const status = String(handoff.status || 'OPEN');
-        const statusClass = status.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-        const percent = handoffPercent(handoff);
-        return '<article class="wvd-handoff-card wvd-' + statusClass + '" data-wvd-handoff-index="' + index + '" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open details for ' + esc(handoff.title) + '"><div class="wvd-handoff-top"><div class="wvd-handoff-title"><div class="wvd-project-tag">' + esc(handoff.project || 'Dragon Auto') + ' · Assigned ' + esc(fmtDate(handoff.assigned)) + '</div><h3>' + esc(handoff.title) + '</h3></div><div class="wvd-handoff-badges"><span class="wvd-handoff-priority">' + esc(handoff.priority || 'OPEN') + '</span><span class="wvd-handoff-status">' + esc(status) + '</span></div></div>' +
-          (handoff.next ? '<p class="wvd-handoff-next"><strong>Next action</strong>' + esc(handoff.next) + '</p>' : '') +
-          (handoff.context ? '<p class="wvd-handoff-context">' + esc(handoff.context) + '</p>' : '') +
-          '<div class="wvd-handoff-foot">' + miniProgressHtml(percent, { label: 'Progress' }) +
-          (handoff.source ? '<p class="wvd-handoff-source">Source: ' + esc(handoff.source) + '</p>' : '') + '</div></article>';
-      }).join('') + '</div>';
-    } else if (handoffs.length) {
-      handoffsHtml += '<div class="wvd-handoff-list"><div class="wvd-none">No open priorities match this filter. Pick All to see everything.</div></div>';
-    } else {
-      handoffsHtml += '<div class="wvd-handoff-list"><div class="wvd-none">No open assignments from Noah are recorded.</div></div>';
-    }
-    handoffsHtml += '</section>';
-
-    const recentActivity = allSessions
-      .map((session, index) => ({ session, index }))
-      .sort((a, b) => String(b.session.date).localeCompare(String(a.session.date)) || b.index - a.index)
-      .slice(0, 5);
-    handoffsHtml += '<section class="wvd-section wvd-panel"><div class="wvd-panel-heading"><span class="wvd-panel-title wvd-t-gold wvd-ap-title">Recent activity</span><span class="wvd-panel-meta">from Tasha\'s Log</span></div>';
-    if (recentActivity.length) {
-      handoffsHtml += '<div class="wvd-activity-list">' + recentActivity.map((entry) => {
-        const session = entry.session;
-        const shippedCount = (session.shipped || []).length;
-        const fixedCount = (session.fixed || []).length;
-        let tone = 'wvd-progress-tone';
-        let rowIcon = icons.clock;
-        let chip = 'In progress';
-        if (shippedCount) { tone = 'wvd-shipped-tone'; rowIcon = icons.shipped; chip = shippedCount + ' shipped'; }
-        else if (fixedCount) { tone = 'wvd-fixed-tone'; rowIcon = icons.fixed; chip = fixedCount + ' fixed'; }
-        return '<div class="wvd-activity-row ' + tone + '"><span class="wvd-activity-icon">' + rowIcon + '</span><span class="wvd-activity-date">' + esc(fmtDate(session.date)) + '</span><span class="wvd-activity-text">' + esc(session.title || 'Work session') + '</span><span class="wvd-activity-chip">' + esc(chip) + '</span></div>';
-      }).join('') + '</div>';
-    } else {
-      handoffsHtml += '<div class="wvd-activity-list"><div class="wvd-none">No sessions logged yet.</div></div>';
-    }
-    handoffsHtml += '<button type="button" class="wvd-activity-more" data-wvd-goto="sessions">View full history ' + icons.chevronDown + '</button></section>';
-    handoffsHtml += '<div class="wvd-ap-footnotes"><span>' + icons.info + ' Assignments come from Noah. When in doubt, check the latest daily note.</span><span>Auto-refreshes every 30 seconds<span class="wvd-status-dot"></span></span></div>';
 
     let waitingHtml = '<section class="wvd-section wvd-panel wvd-anchor" id="wvd-waiting-panel"><div class="wvd-panel-heading"><div><p class="wvd-eyebrow">Action queue</p><h2>Waiting on Noah</h2></div><span class="wvd-panel-meta">' + waiting + ' open ' + (waiting === 1 ? 'item' : 'items') + '</span></div>';
     if (waiting) {
@@ -2847,25 +1732,11 @@
       sessionsHtml += '</div>' + paginationHtml(sessionsPage, totalSessionPages) + '</section>';
     }
 
-    $('wvdBody').innerHTML = metricsHtml + attentionHtml;
-    const weekSummaryEl = $('wvdWeekSummary');
-    if (weekSummaryEl) { weekSummaryEl.innerHTML = weekSummary; weekSummaryEl.hidden = false; }
     $('wvdLatestBody').innerHTML = latestHtml;
-    $('wvdHandoffsBody').innerHTML = handoffsHtml;
-    const handoffsToolbarTarget = $('wvdHandoffsToolbar');
-    if (handoffsToolbarTarget) handoffsToolbarTarget.innerHTML = handoffsToolbarHtml;
     $('wvdWaitingBody').innerHTML = waitingHtml;
     $('wvdSessionsBody').innerHTML = sessionsHtml;
     $('wvdSystemsBody').innerHTML = systemsHtml;
-    $('wvdKpisBody').innerHTML = buildKpisHtml(data.kpis, allSessions, statWeeks);
     renderNoahLog();
-    const growthTarget = $('wvdGrowthContent');
-    // Only refresh the growth DOM when the page is open; a background render would wipe
-    // half-typed input in the tools card.
-    if (growthTarget && currentPage === 'growth') {
-      growthTarget.innerHTML = growthContentHtml();
-    }
-    animateCounts();
     /* Relative first, exact time in the tooltip. "Updated 6:20 PM" cannot tell you whether that is
        ten minutes or ten hours old without doing the arithmetic yourself, which is exactly how a
        two-hour-stale stamp went unnoticed. "Updated 2h ago" answers the only question this line is
@@ -2878,7 +1749,6 @@
     }
     $('wvdSourceCount').textContent = (data.projects || []).length + ' systems tracked';
     $('wvdFooter').innerHTML = '<span>' + icons.shipped + ' Dragon Auto internal record, maintained by Tasha</span><span>Published automatically at the end of each work session</span>';
-    syncHandoffsAutoRefresh();
   }
 
   async function load(manual, silent) {
@@ -2921,7 +1791,7 @@
   }
 
   function showLoadError() {
-    $('wvdBody').innerHTML = '<div class="wvd-empty"><div>The work record could not be loaded.<br><button type="button" id="wvdRetry">Try again</button></div></div>';
+    $('wvdLatestBody').innerHTML = '<div class="wvd-empty"><div>The work record could not be loaded.<br><button type="button" id="wvdRetry">Try again</button></div></div>';
     $('wvdUpdated').textContent = 'Offline';
     const retry = $('wvdRetry');
     if (retry) retry.addEventListener('click', () => load(true));
@@ -2950,25 +1820,13 @@
       render();
       return;
     }
-    const handoffFilterButton = event.target.closest('[data-wvd-hfilter]');
-    if (handoffFilterButton) {
-      handoffFilter = handoffFilterButton.getAttribute('data-wvd-hfilter') || 'all';
-      render();
-      return;
-    }
-    const gotoButton = event.target.closest('[data-wvd-goto]');
-    if (gotoButton) { goToPage(gotoButton.getAttribute('data-wvd-goto')); return; }
     const projectCard = event.target.closest('[data-wvd-project-index]');
-    if (projectCard) { openProjectModal(Number(projectCard.getAttribute('data-wvd-project-index'))); return; }
-    const handoffCard = event.target.closest('[data-wvd-handoff-index]');
-    if (handoffCard) openHandoffModal(Number(handoffCard.getAttribute('data-wvd-handoff-index')));
+    if (projectCard) openProjectModal(Number(projectCard.getAttribute('data-wvd-project-index')));
   }
   function handleGridKeydown(event) {
     if (event.key !== 'Enter' && event.key !== ' ') return;
     const projectCard = event.target.closest('[data-wvd-project-index]');
-    if (projectCard) { event.preventDefault(); openProjectModal(Number(projectCard.getAttribute('data-wvd-project-index'))); return; }
-    const handoffCard = event.target.closest('[data-wvd-handoff-index]');
-    if (handoffCard) { event.preventDefault(); openHandoffModal(Number(handoffCard.getAttribute('data-wvd-handoff-index'))); }
+    if (projectCard) { event.preventDefault(); openProjectModal(Number(projectCard.getAttribute('data-wvd-project-index'))); }
   }
   function handleSessionsPageClick(event) {
     const navButton = event.target.closest('[data-wvd-page-nav]');
@@ -2993,30 +1851,6 @@
     systemsBodyEl.addEventListener('click', handleGridClick);
     systemsBodyEl.addEventListener('keydown', handleGridKeydown);
   }
-  function handleHandoffControlChange(event) {
-    const control = event.target;
-    if (!control || !control.id) return;
-    if (control.id === 'wvdHandoffAssigned') { handoffAssigned = control.value; render(); }
-    else if (control.id === 'wvdHandoffSort') { handoffSort = control.value; render(); }
-  }
-  const handoffsBodyEl = $('wvdHandoffsBody');
-  if (handoffsBodyEl) {
-    handoffsBodyEl.addEventListener('click', handleGridClick);
-    handoffsBodyEl.addEventListener('keydown', handleGridKeydown);
-    handoffsBodyEl.addEventListener('change', handleHandoffControlChange);
-  }
-  const handoffsToolbarEl = $('wvdHandoffsToolbar');
-  if (handoffsToolbarEl) {
-    handoffsToolbarEl.addEventListener('click', handleGridClick);
-    handoffsToolbarEl.addEventListener('change', handleHandoffControlChange);
-  }
-  const overviewBodyEl = $('wvdBody');
-  if (overviewBodyEl) {
-    overviewBodyEl.addEventListener('click', (event) => {
-      const gotoButton = event.target.closest('[data-wvd-goto]');
-      if (gotoButton) goToPage(gotoButton.getAttribute('data-wvd-goto'));
-    });
-  }
   const projectModalOverlay = $('wvdProjectModalOverlay');
   const projectModalClose = $('wvdProjectModalClose');
   if (projectModalClose) projectModalClose.addEventListener('click', closeProjectModal);
@@ -3026,71 +1860,33 @@
     });
   }
 
+  function markNavActive(name) {
+    document.querySelectorAll('[data-wvd-nav]').forEach((item) => {
+      item.classList.toggle('wvd-active', item.getAttribute('data-wvd-page') === name);
+    });
+  }
   function goToPage(name) {
-    document.querySelectorAll('[data-wvd-nav]').forEach((item) => item.classList.remove('wvd-active'));
-    const link = name === 'overview'
-      ? document.querySelector('a[data-wvd-nav][href="#wvd-overview"]')
-      : document.querySelector('a[data-wvd-nav][data-wvd-page="' + name + '"]');
-    if (link) link.classList.add('wvd-active');
+    markNavActive(name);
     showPage(name);
   }
-  function goToOverview() { goToPage('overview'); }
 
   document.querySelectorAll('[data-wvd-nav]').forEach((link) => {
     link.addEventListener('click', (event) => {
-      document.querySelectorAll('[data-wvd-nav]').forEach((item) => item.classList.remove('wvd-active'));
-      link.classList.add('wvd-active');
-      const targetPage = link.getAttribute('data-wvd-page');
-      if (targetPage) {
-        event.preventDefault();
-        showPage(targetPage);
-      } else {
-        showPage('overview');
-      }
+      event.preventDefault();
+      goToPage(link.getAttribute('data-wvd-page'));
       setSidebar(false);
     });
   });
   const menuSessions = $('wvdMenuSessions');
   if (menuSessions) menuSessions.addEventListener('click', () => setSidebar(true));
-  const sessionsBack = $('wvdSessionsBack');
-  if (sessionsBack) sessionsBack.addEventListener('click', goToOverview);
   const menuSystems = $('wvdMenuSystems');
   if (menuSystems) menuSystems.addEventListener('click', () => setSidebar(true));
-  const systemsBack = $('wvdSystemsBack');
-  if (systemsBack) systemsBack.addEventListener('click', goToOverview);
-  const menuKpis = $('wvdMenuKpis');
-  if (menuKpis) menuKpis.addEventListener('click', () => setSidebar(true));
-  const kpisBack = $('wvdKpisBack');
-  if (kpisBack) kpisBack.addEventListener('click', goToOverview);
   const menuLatest = $('wvdMenuLatest');
   if (menuLatest) menuLatest.addEventListener('click', () => setSidebar(true));
-  const latestBack = $('wvdLatestBack');
-  if (latestBack) latestBack.addEventListener('click', goToOverview);
-  const menuHandoffs = $('wvdMenuHandoffs');
-  if (menuHandoffs) menuHandoffs.addEventListener('click', () => setSidebar(true));
-  const handoffsBack = $('wvdHandoffsBack');
-  if (handoffsBack) handoffsBack.addEventListener('click', goToOverview);
   const menuWaiting = $('wvdMenuWaiting');
   if (menuWaiting) menuWaiting.addEventListener('click', () => setSidebar(true));
-  const waitingBack = $('wvdWaitingBack');
-  if (waitingBack) waitingBack.addEventListener('click', goToOverview);
-  const growthBack = $('wvdGrowthBack');
-  if (growthBack) growthBack.addEventListener('click', goToOverview);
-  const menuAudit = $('wvdMenuAudit');
-  if (menuAudit) menuAudit.addEventListener('click', () => setSidebar(true));
-  const auditBack = $('wvdAuditBack');
-  if (auditBack) auditBack.addEventListener('click', goToOverview);
-  const auditBodyEl = $('wvdAuditBody');
-  if (auditBodyEl) {
-    // Delegated: the whole body is replaced on every render, buttons included.
-    auditBodyEl.addEventListener('click', (event) => {
-      if (event.target.closest('#wvdAuditRefresh') || event.target.closest('#wvdAuditRetry')) loadAuditLog(true);
-    });
-  }
   const menuNoahLog = $('wvdMenuNoahLog');
   if (menuNoahLog) menuNoahLog.addEventListener('click', () => setSidebar(true));
-  const noahLogBack = $('wvdNoahLogBack');
-  if (noahLogBack) noahLogBack.addEventListener('click', goToOverview);
   const noahLogBodyEl = $('wvdNoahLogBody');
   if (noahLogBodyEl) {
     noahLogBodyEl.addEventListener('click', function (event) {
@@ -3101,8 +1897,6 @@
 
   const menuPipeline = $('wvdMenuPipeline');
   if (menuPipeline) menuPipeline.addEventListener('click', () => setSidebar(true));
-  const pipelineBack = $('wvdPipelineBack');
-  if (pipelineBack) pipelineBack.addEventListener('click', goToOverview);
   const pipelineBodyEl = $('wvdPipelineBody');
   if (pipelineBodyEl) {
     pipelineBodyEl.addEventListener('click', (event) => {
@@ -3131,20 +1925,6 @@
     });
   }
 
-  const userChip = $('wvdUserChip');
-  if (userChip) {
-    userChip.addEventListener('click', () => { setSidebar(false); openGrowthPage(); });
-    userChip.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSidebar(false); openGrowthPage(); }
-    });
-  }
-  const growthContentEl = $('wvdGrowthContent');
-  if (growthContentEl) {
-    growthContentEl.addEventListener('click', (event) => {
-      if (event.target.closest('#wvdGrowthLockBtn')) goToPage('overview');
-    });
-  }
-
   // Sign-in wiring. Enter must never bubble as an implicit submit: inside GHL this markup
   // sits inside GHL's own <form>, and a stray submit reloads the page mid-sign-in.
   const loginNoahBtn = $('wvdLoginAsNoah');
@@ -3163,7 +1943,6 @@
   if (loginResetLink) loginResetLink.addEventListener('click', () => enterCreateMode(true));
   const signOutControl = $('wvdSignOut');
   if (signOutControl) signOutControl.addEventListener('click', signOut);
-  $('wvdMenu').addEventListener('click', () => setSidebar(true));
   $('wvdSidebarClose').addEventListener('click', () => setSidebar(false));
   $('wvdScrim').addEventListener('click', () => setSidebar(false));
   $('wvdRefresh').addEventListener('click', () => load(true));
