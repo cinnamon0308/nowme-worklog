@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-27T14:38:48.690Z",
+  "updated": "2026-09-28T03:09:25.957Z",
   "projects": [
     {
       "id": "cloud-run-status",
@@ -566,13 +566,10 @@
     {
       "id": "work-dashboard",
       "name": "Work Visibility Dashboard",
-      "status": "IN_PROGRESS",
-      "summary": "Internal work dashboard, live on GitHub Pages at dashboard.nowme.cloud and republished automatically after every work session. Private sections travel only inside the encrypted vault.",
+      "status": "LIVE",
+      "summary": "Internal work dashboard, live on GitHub Pages at https://dashboard.nowme.cloud and republished automatically after every work session. Private sections travel only inside the encrypted vault.",
       "blockedOn": null,
-      "progress": {
-        "stage": "nearly-done",
-        "reason": "The full dashboard is live on GitHub and publishes itself; the https certificate and the one-time vault key setup are the steps left."
-      },
+      "progress": null,
       "detail": {
         "goal": "Give Noah an always-current view of what Tasha builds and fixes, without needing GHL or Obsidian access, this page itself.",
         "whatWasDone": [
@@ -740,11 +737,11 @@
       ],
       "fixed": [
         "Kept the dashboard's private sections unreadable on the new public site: they only ever ship inside the encrypted vault, every new vault is opened again to check it before it goes out, and a test across every publish found none of the 79 private passages checked anywhere in the site's history.",
-        "Took the tab icon off GHL's servers, where it was a 518 KB image, and cut it to 5 KB inside the site, so the dashboard keeps working after GHL is gone."
+        "Took the tab icon off GHL's servers, where it was a 518 KB image, and cut it to 5 KB inside the site, so the dashboard keeps working after GHL is gone.",
+        "Got the secure https address working at 8:08 PM PT. GitHub had held on to the old GHL address for most of the day, so its first certificate request failed without saying so, and anyone whose phone or laptop had already switched over got a 'connection is not private' warning. Re-requested it once GitHub saw the new address: approved in under a minute, the plain http address now forwards to https, and the certificate renews before it runs out on December 27.",
+        "Set up the one-time key on Tasha's Mac, checked against the live encrypted vault before it was saved, so the private sections now re-seal on their own at every publish instead of carrying the last copy forward."
       ],
-      "inProgress": [
-        "Finishing the switch: the secure https address turns on once GitHub issues the certificate, and the private sections start updating automatically after a one-time key setup on Tasha's Mac."
-      ],
+      "inProgress": [],
       "notes": "Tested before going live: 28 checks on the publish step, 23 on the site's sign-in and data handling in a simulated browser, and 14 on the encryption matching between the site and the publish step, plus real-browser screenshots at three screen widths."
     },
     {
