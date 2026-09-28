@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-28T03:09:25.957Z",
+  "updated": "2026-09-28T03:20:25.410Z",
   "projects": [
     {
       "id": "cloud-run-status",
@@ -712,6 +712,18 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-09-27",
+      "title": "3 of the 20 September system fixes are done: the nurture emails carry Noah's FAQ, the mystery card-mover is solved, and the call-sheet rules match his 9/23 fix",
+      "shipped": [],
+      "fixed": [
+        "Fix 9, done 9/25: re-selected the three Nurture Sequence email steps Noah flagged on 9/12 (E1 \"Who We Are\", E5 \"Why Not PPF\", and E6 \"Close Your File\"), so every lead who enters the six-email sequence now gets the dragonauto.net/faq link instead of the July copy. His library edit had reached nobody for 13 days, because a workflow step keeps its own copy of the email.",
+        "Fix 11, done 9/25: solved the unknown \"Integration\" that moved 5 cards in 18 seconds at 10:02 PM on 9/10. It was Tasha's own refund cleanup that night, and its PeelClear branch filed Palwinder Harika and Sebastien Perez-Vargas into the stage the April launch email watches. That email is now off (Draft), so no refunded customer can be invited to buy PeelClear again, and the 13 contacts that landed in New Lead at 4:11 AM on 9/12 are closed on the same answer.",
+        "Fix 14, done 9/25: brought the call-sheet rule file, the check run before any sheet goes out, up to Noah's 9/23 version: 75 leads, a warning banner when AI is down, and no sheet older than one workday re-posted. The old local copies are marked do-not-deploy, so nobody approves a sheet against outdated rules or undoes his fix by putting an old copy live."
+      ],
+      "inProgress": [],
+      "notes": "From the 20-item fix list built from Noah's September daily notes on 9/24. Each fix has its own 9/25 entry in this log with the full details. The other 17 are still open."
+    },
     {
       "date": "2026-09-27",
       "title": "Cut the dashboard from 8 pages to 5, taking down the KPI page whose newest figure was from mid-July",
