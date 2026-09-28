@@ -1,7 +1,19 @@
 {
   "version": 1,
-  "updated": "2026-09-28T19:44:12.256Z",
+  "updated": "2026-09-28T20:54:26.142Z",
   "projects": [
+    {
+      "id": "ga4-conversion-loop",
+      "name": "GA4 Lead Tracking",
+      "status": "BLOCKED",
+      "summary": "GA4 counts website visits but not which visit became a lead: 1,684 sessions and 0 leads recorded from 8/08 to 9/06. The site now tags every quiz link (9/06), and both GoHighLevel workflows that report leads and bookings back to GA4 are built as drafts (9/28).",
+      "blockedOn": "Noah's deploy of the quiz receiver fix, which saves the three GA4 fields the quiz already collects. Tasha also has to save the GA4 key as a GoHighLevel custom value. Then both workflows get published and one test quiz proves it end to end.",
+      "progress": {
+        "stage": "nearly-done",
+        "reason": "Site tagging live since 9/06; both workflows built and read back 9/28; receiver fix written and waiting on one deploy."
+      },
+      "detail": "Workflows 'GA4 > generate_lead (quiz sign-up)' (quiz tag added, wait 2 minutes, only if a GA4 id is on the contact) and 'GA4 > booking (Urable service booked)' (same Service-field signal as the existing Urable booking workflow). Each sends one event to GA4's Measurement Protocol through a Custom Webhook, at one cent per send. Nothing customer-facing."
+    },
     {
       "id": "cloud-run-status",
       "name": "Cloud Run Evidence",
@@ -709,9 +721,39 @@
           "code": "F=\"$HOME/Documents/Dragon Auto Synced/Projects/ai-urable-proposal/launchd/install-cadence-digest-alarm.sh\"\nif [ \"$(shasum -a 256 \"$F\" 2>/dev/null | cut -d' ' -f1)\" = \"41f0315051dd2418a4c22b45795b42cce76bf734bcb876c9cb65d551bf7ef0b2\" ]; then /bin/zsh \"$F\"; else echo \"FAILED: send Tasha this output. The installer is not on this Mac yet, or it changed. Open Obsidian, wait a minute, then paste this again.\"; ls -la \"$F\"; fi"
         }
       ]
+    },
+    {
+      "item": "Give Claude the quiz receiver GA4 file Tasha sent",
+      "project": "GA4 Lead Tracking",
+      "since": "2026-09-28",
+      "impact": "GA4 recorded 1,684 website visits and zero leads from 8/08 to 9/06, so no report can say which page or ad produced a customer. The quiz already collects each visitor's GA4 id, but the quiz receiver drops it before it reaches GoHighLevel. This adds the three fields, and it ships inside the 9/28 email fix you already have staged, so it is one deploy.",
+      "whatToDo": [
+        "Download noah-quiz-receiver-ga-fields.md from Tasha's Discord message.",
+        "Drag it into Claude and say: claude do this, tasha sent this. It edits the staged receiver, runs the tests, and deploys it together with the 9/28 email fix.",
+        "Send Tasha the line Claude gives you at the end. It starts with DONE or FAILED."
+      ],
+      "commands": [
+        {
+          "label": "Check whether it is already done (read-only, safe to run any time)",
+          "code": "F=$(find \"$HOME/deploy-staging/quiz-lead-receiver-email422-20260928\" -name quiz_lead_receiver_main.py 2>/dev/null | head -1)\nif [ -z \"$F\" ]; then echo \"FAILED: send Tasha this output. The staged quiz receiver folder is not on this Mac.\"\nelif [ \"$(grep -c -e 6458MqU4YjnYebrzMGqP -e 0zIgKZKMg7QDyyYyr4PJ -e znfWwXGxMWOYrpqOoD4T \"$F\")\" -ge 3 ]; then echo \"DONE: the staged quiz receiver saves the three GA4 fields ($F). Tell Tasha whether it is deployed.\"\nelse echo \"NOT YET: the staged quiz receiver does not save the GA4 fields. Hand Claude the file from Tasha.\"; fi"
+        }
+      ]
     }
   ],
   "sessions": [
+    {
+      "date": "2026-09-28",
+      "title": "Built both GA4 lead-tracking workflows and caught that they would have reported nothing: the quiz receiver drops the tracking ids",
+      "shipped": [],
+      "fixed": [
+        "Found why GA4 still records zero leads after Noah's 9/06 site fix. The quiz collects each visitor's GA4 id (Perspective holds it for 5 of the last 8 sign-ups), but the quiz receiver never saves it into GoHighLevel. All 3 quiz contacts checked had the field blank, and the receiver's own log wrote 11 fields on the newest quiz with none of the GA4 ones. The two workflows on the card would have sent GA4 nothing."
+      ],
+      "inProgress": [
+        "Built both GA4 workflows in GoHighLevel's workflow builder, the step Noah's browser agent could not click into. One tells GA4 when a quiz sign-up becomes a lead, the other when that customer books through Urable. Both are saved as drafts and checked against the exact settings GoHighLevel stored. Neither can text or email anyone.",
+        "Wrote the receiver fix (three fields) as a file for Noah's Claude. It rides the 9/28 email fix he already has staged, so one deploy covers both. Once it is live and the GA4 key is saved in GoHighLevel, GA4 can finally say which page and which channel produced each lead. It could not do that on any of the 1,684 visits from 8/08 to 9/06."
+      ],
+      "notes": "Two deliberate changes from the July plan: the lead workflow starts from the quiz tag instead of 'contact created', because returning customers and missed-callers never trigger 'created', and the GA4 key sits in a GoHighLevel custom value instead of plain text in the workflow URL. Build notes are in the vault under notes/Projects/ga4-conversion-loop."
+    },
     {
       "date": "2026-09-28",
       "title": "Moved 20 quoted customers out of Manual Quote Required, so Sean's call sheet stops telling him they never got a quote",
