@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-29T20:35:15.121Z",
+  "updated": "2026-09-29T20:46:59.133Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -755,6 +755,36 @@
           "A stuck card:pending tag on a contact would block that contact's next card."
         ]
       }
+    },
+    {
+      "id": "dnd-comeback",
+      "name": "Closed-Lead Comeback (Fix 8)",
+      "status": "IN_PROGRESS",
+      "summary": "The 9/07 cleanup put a block on 1,045 closed leads (1,068 people carry one of our block notes once the 9/07 blast and the 9/07 and 9/15 declines are counted), and Noah's rule is that it comes off when they message us. Only the quiz form does that on its own (since 9/17). Texts, calls, email, and other forms leave it on, so four people who came back through forms had to be unblocked by hand, and two of them, Johnny Li and Gary Griffin, were hidden from Sean until then. On 9/29 both workflows were built as drafts, which cannot act on anyone until published: one lifts only our own block, gives Sean a task, and puts their card in Proposal Sent - Engaged; the other holds opt-outs and the 35-person review list for Tasha.",
+      "blockedOn": null,
+      "progress": {
+        "stage": "underway",
+        "reason": "Both workflows built and checked 9/29; nobody tagged and nothing published. Next is widening the opt-out list, a phone test on Tasha's own contact, then tagging the 1,016 people (981 to unblock, 35 held for Tasha)."
+      },
+      "detail": {
+        "goal": "Anyone in the four lift groups reaches Sean again within minutes of messaging us, while any recognizable opt-out keeps its block.",
+        "whatWasDone": [
+          "2026-09-25: sorted all 1,068 people carrying our 9/07 and 9/15 block notes by which channels are safe to lift: 981 in four lift groups, 35 for a person to read first, and 52 left alone.",
+          "2026-09-29: re-checked the sort against a fresh pull of 23,933 contacts and found it unchanged, then built both workflows as drafts that cannot run until published, re-reading the lift's steps in the builder and checking the hold's layout."
+        ],
+        "whatsLeft": [
+          "Tag only Tasha's own contact the 9/07 way, publish both workflows, and test from her phone with a normal text and a 'stop' text, then delete the test card and Sean's test task.",
+          "Decide whether to tag anyway or ask Noah first, since tagging the 1,016 should add at least 1,016 rows to the old 'Master Lead Spreadsheet - Leadgentic' Google Sheet.",
+          "Tag the 1,016 people, reading every contact back after its write, then watch the first real comeback."
+        ],
+        "needsImprovement": [
+          "The opt-out filter holds 18 phrases and only knows those spellings, so an opt-out in other words, or typed with a phone's curly apostrophe ('don’t text'), would be unblocked after 3 minutes. Widen it before anyone is tagged."
+        ],
+        "watchFor": [
+          "The Vehicle Estimation - Rockclear workflow can move a brand-new comeback card into Manual Quote Required when it cannot read the car description; reopened cards never trigger it.",
+          "The call sheet treats a card as fresh for 7 days only when the person has never been dialed, so a comeback we called before the cleanup will not get that lane."
+        ]
+      }
     }
   ],
   "waitingOnNoah": [
@@ -830,6 +860,27 @@
       "notes": "Full method, counts, held cards, and restore path are in the vault under notes/Projects/zero-value-backfill-2026-09-29. Prices follow the 35% everyday ladder from lib/pricing.py; seven Tesla Model 3 and Y cards took the $1,095 and $1,195 holds. The Estimated Value custom field was left alone on purpose."
     },
     {
+      "date": "2026-09-29",
+      "title": "Built the two draft workflows that will unblock any of 981 closed leads who writes back, and found the automation that refiles new cards into Manual Quote Required",
+      "shipped": [
+        "Built the two GoHighLevel workflows for fix 8 as drafts, which cannot touch anyone until I publish them. Once published, when one of the 981 people our 9/07 cleanup blocked replies, calls, or sends a form, 'DND 9/07 comeback: lift and reopen' will wait 3 minutes, lift only the channels our cleanup blocked, give Sean a task with what they wrote (blank for a call or form), and move their Rockclear card to Proposal Sent - Engaged, or make one if they have none. A card that is Booked, Won, or waiting on a future date stays put; any other card is reopened into Engaged, Lost and Disqualified included. A closed lead who writes back then reaches Sean within minutes. Until now, four people who came back through forms had to be unblocked by hand, and two of them, Johnny Li and Gary Griffin, were hidden from Sean until then.",
+        "Built the safety half, 'DND 9/07 comeback: hold for Tasha'. It catches a reply containing one of 18 opt-out phrases (stop, unsubscribe, wrong number, and 15 more), any contact from the 35 people I set aside on 9/25 for a person to read first, and a block that changed some other way, such as a texted STOP. For any of those the block stays on and I get the task instead of Sean.",
+        "Re-checked the 9/25 sort against a fresh pull of all 23,933 contacts before building the card steps: the same 1,068 people carry our cleanup block notes (1,062 from 9/07, 6 from the 9/15 declines), split the same way. None of the 981 to be unblocked holds a Won card, and none has written, called, or emailed since 9/07. Nobody is waiting behind the block today; the workflows protect the next person who comes back.",
+        "Opened the lift's steps one by one in the builder after saving (Sean's task, the channels each group lifts, the Rockclear card search, and the three-stage guard) and checked the hold's full layout. GoHighLevel's own check passed both, warning only that the new tags don't exist yet. Nobody carries the tag that lets either one act, so neither can reach a customer.",
+        "Set comeback cards to land in Proposal Sent - Engaged instead of Awaiting Engagement, the stage in Noah's 9/17 plan, because Sean's live call sheet labels Awaiting Engagement 'Quote sent, no open/reply yet' and gives it a lower tier, which is wrong for someone who just wrote to us."
+      ],
+      "fixed": [
+        "Found the automation behind the 9/22 refiling, when 30 of 35 new cards were pulled into Manual Quote Required: the published 'Vehicle Estimation - Rockclear' workflow runs on every new Rockclear card, waits 12 seconds, tries to price the car from its description, and when it cannot read it, moves the card there (about 20 seconds after each card was made on 9/22). That is the cause behind fix 7 on the September list. The workflow is unchanged, so fix 7 is still open, and a brand-new comeback card can land in that stage too.",
+        "Found why a reply to a text we send from a script never moves the customer's card: 'lead replied > engage stage' only runs on replies to two specific workflows, and the honest last text went out from a script. That is why Junel Lirio's reply left the card in place until someone moved it by hand on 9/28. This is the part of fix 5 that the new reply-card workflow does not cover, since that one skips anyone who already has a card. Nothing is changed yet."
+      ],
+      "inProgress": [
+        "Next, once I give the go: tag only my own contact the way the 9/07 cleanup did, publish both workflows, and test from my phone with a normal text and a 'stop' text. Then delete the test card and Sean's test task, and tag the 1,016 people (the 981 to unblock plus the 35 held for me), reading every contact back after its write.",
+        "Before the bulk tag: 'Workflow - Master Spreadsheet' writes a row to the old 'Master Lead Spreadsheet - Leadgentic' Google Sheet on every contact change, with no filter, so tagging the 1,016 should add at least 1,016 rows there. No customer sees that sheet; whether to tag anyway or ask Noah first is my next call.",
+        "The opt-out filter only knows the spellings on its list, so an opt-out in other words, or typed with a phone's curly apostrophe ('don’t text'), would reach the lift and be unblocked after 3 minutes. Sean's task would show what they wrote. The list needs widening before anyone is tagged."
+      ],
+      "notes": "GoHighLevel workflow ids, both unpublished drafts: lift and reopen (fa74ec8a), hold for Tasha (5b2d24c1). Plan, findings, and both designs are in the vault under notes/Projects/pipeline-redesign/2026-09-25-fix8-dnd-comeback-plan. Nothing changed for any customer: no contact was tagged, no block was lifted or added, no card changed stage, and nothing was sent."
+    },
+    {
       "date": "2026-09-28",
       "title": "Built both GA4 lead-tracking workflows and caught that they would have reported nothing: the quiz receiver drops the tracking ids",
       "shipped": [],
@@ -856,6 +907,26 @@
         "45 cards in the two stages still have no quote that reached the customer. 13 have the quotes Noah's session built overnight, waiting on his yes; 2 need the car model; 1 bounced; 29 have nothing in Urable (7 were priced by text, DM or call, 10 never told us their car, 3 are past customers who need a person, 3 asked for services we don't offer)."
       ],
       "notes": "Read-only check first, then the moves on Tasha's go at 12:39 PM Pacific. The list, the move plan and the backup are in the vault under pipeline-redesign/2026-09-28-prequote-quote-check."
+    },
+    {
+      "date": "2026-09-28",
+      "title": "Put the September jobs handed to me from Noah on one checklist: 51 still open, 7 done (one by Noah), 3 no longer needed",
+      "shipped": [
+        "Built one checklist page for the jobs handed to me this month, from my 9/09, 9/15 to 9/16, and 9/24 lists plus the five new jobs Noah's 9/28 review of my month names as next for me. Jobs that appeared on more than one list were folded into one card, and with the done, no-longer-needed, and Noah-only ones taken out, 51 open jobs remain in seven sections. A tick on the page is saved, so it is still there the next time the page is opened.",
+        "Put the five jobs about people who asked us to stop at the top, because each one closes a way someone who told us to stop can still get a call, text, or email. Sorted every job under four filters (Ready, To build, Check first, Waits on Noah), so the 15 I can start today show under one.",
+        "Moved the 12 jobs only Noah can do into their own section at the bottom: the lead receiver deploy, both ad accounts, the follow-up texts queued for 196 people, the 13 built quotes, the Perspective key, and seven more. Only 3 of the 51 on my list wait on him, and each names what it needs from him.",
+        "Added a section on the sweep Noah queued on 9/28 to find leftover work in his own Claude sessions, which I cannot see, and in his vault. It had not run when I built the page. It drops anything already on my 9/09, 9/15 to 9/16, and 9/24 lists, so apart from the five jobs from his review, whatever it finds should be new."
+      ],
+      "fixed": [
+        "Took 3 items off the old lists that no longer need doing: the 10 AM requote was a one-time Saturday batch; Noah's 9/07 rule already answers whether the block on closed leads was deliberate; and his 9/09 item on a last day for Sean's week is settled, since Sean has worked fixed hours since 9/23 (11 AM to 6 PM Pacific, Monday to Friday).",
+        "Counted what was already finished before listing it: 3 of 41 ticked on the 9/09 page, 3 of 20 on the 9/24 page, and Noah's 9/28 block on Sebastian Nikcevic and Ernesto Deleon, so nothing already ticked or recorded as done shows up as open."
+      ],
+      "inProgress": [
+        "5 jobs are marked Check first because they are the likeliest to be done already: the page was built from my log and Noah's notes, not a live read of GoHighLevel, Urable, or Google Cloud.",
+        "The page is a snapshot from 11:52 AM on 9/28 and fell behind within a day. That afternoon both GA4 workflows were built as drafts, and that session found the card's premise wrong: the quiz receiver drops the GA ids, so publishing waits on the GA4 key in GoHighLevel and Noah's receiver fix. On 9/29, 259 of the $0 deals got their quote values (76 still read $0), the reply and missed-call card workflows went live, both fix 8 workflows were built as drafts, and the causes behind fixes 5 and 7 were found. Noah's own 9/29 sessions loaded the 13 quote sends, armed the rest of the honest last text, cut email 5's PeelClear paragraph (the builder swap is now mine), and found 152 old leads who gave a callback timeline. I still have to update those cards.",
+        "Two jobs are missing from the page and need adding: moving the scheduled jobs off Noah's MacBook into cloud Routines (from the 8/22 call, and his M31 item on the 9/24 list), and the 9/09 job of giving the queued follow-up drafts their verdicts."
+      ],
+      "notes": "Page (private to Tasha): https://claude.ai/artifact/5nhJgdY1SiKZUT3yDhNuaa. Built from the 9/09 Off Noah's Plate page and Noah's September page from 9/24 with their saved ticks, the 9/15 to 9/16 September Repair Queue, my September log through 9/27, Noah's 9/28 review, and his notes as of that morning."
     },
     {
       "date": "2026-09-27",
