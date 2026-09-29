@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-29T19:50:23.420Z",
+  "updated": "2026-09-29T20:35:15.121Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -728,6 +728,33 @@
           "The Estimated Value custom field is the booking-page list-price ladder and never matches the card value. Do not reconcile it."
         ]
       }
+    },
+    {
+      "id": "reply-call-cards",
+      "name": "Reply and Missed-Call Cards",
+      "status": "IN_PROGRESS",
+      "summary": "Sean's call sheet only sees people with an open card, and 602 people had written or called with none. Two card-only workflows went live on 9/29: a reply from someone with no card opens one at Awaiting Engagement, and a missed call or voicemail from someone with no card opens one at New Lead plus a call-back task for Sean. The old inbound-call workflow could not do this: its create step has no name, so 73 of 85 attempts since August failed for callers saved as a phone number. Expect about 3 reply cards and 1 to 2 call cards a day. Neither workflow sends anything.",
+      "blockedOn": "Nothing. The live triggers have not fired yet, so the first real reply and the first real voicemail still have to be watched.",
+      "health": {
+        "band": "watch",
+        "reason": "Every step passed on internal test contacts, but no real customer has triggered either workflow yet, and the backfill of the people already waiting is not done."
+      },
+      "detail": {
+        "goal": "Make every real reply and every missed call land on Sean's board as a card, so no one who reached out is invisible to the call sheet.",
+        "whatWasDone": [
+          "2026-09-29: read the old workflows' run logs to find the empty-name failure, built both new workflows, and tested them on internal test contacts with real actions.",
+          "Both skip opted-out people, paid customers, junk and long-term-nurture contacts, and never touch someone who already has a card of any status."
+        ],
+        "needsImprovement": [
+          "Watch the first real reply and the first real voicemail in each workflow's Execution logs.",
+          "Build a vetted one-time list for the 602 and the 210 who already wrote, and decide how many go on Sean's sheet per day.",
+          "People whose card sits in Lost - Ghost, Lost - Declined or Disqualified still go unseen when they write back; only the honest-last-text group is covered."
+        ],
+        "watchFor": [
+          "A caller who now has a card no longer gets the old missed-call text on their next missed call.",
+          "A stuck card:pending tag on a contact would block that contact's next card."
+        ]
+      }
     }
   ],
   "waitingOnNoah": [
@@ -767,6 +794,24 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-09-29",
+      "title": "Every reply and missed call now opens a card, after finding that 73 of 85 missed callers since August never got one",
+      "shipped": [
+        "Built and published two workflows that only make cards and tasks. One opens a Rockclear card at Awaiting Engagement, assigned to Sean, when someone with no card writes in. The other opens a New Lead card plus a \"call back within 60 minutes\" task for Sean when a call goes unanswered or to voicemail. Neither can send a text or an email. This is Noah's 9/17 plan, aimed at the 602 people with a conversation and no card and the 44 of 45 callers since 8/01 who were never called back.",
+        "Tested both with real actions on internal test contacts and read every result back: the card, its owner, the task and the tags all landed, each of the four skip rules (opted out, paid customer, junk, long-term nurture) stopped where it should, and a contact who already had a lost card was left untouched. That last check is why Andrew Sweeney's Lost - Ghost card stays where Noah wants it."
+      ],
+      "fixed": [
+        "Found why the old inbound-call workflow never made cards. Its Create Opportunity step has no name, so GoHighLevel rejected it for every caller saved only as a phone number. In its run log, 73 of 85 attempts since August 1 failed that way and only 12 named callers got a card. It also fires only on unanswered rings, so 355 voicemails never entered it. It sends the missed-call text and email, so I left it alone and the new workflow runs beside it.",
+        "Stopped the new workflows from doubling up. A one-run lock tag makes a photo plus a text, or three redials, produce one card, and a 2-minute wait lets a texted STOP land before any card is made."
+      ],
+      "inProgress": [
+        "The live triggers have not fired yet: no customer wrote or called in the first 10 minutes after publishing. Both workflows' Execution logs tab is where the first real runs show up.",
+        "No backfill was run on purpose. The 602, and the 210 who already wrote with no card, need a vetted list first, because bulk-made cards land at the top of Sean's sheet and crowd it out.",
+        "Two things differ from the plan. GoHighLevel's Add task has no minutes option, so the task is due the moment it is created and titled 60 minutes. And the vehicle-estimate workflow still moves most new cards into Manual Quote Required, which the call sheet reads, so they still reach Sean."
+      ],
+      "notes": "Workflows: Reply > open a card if they have none (de683ea9) and Missed call > open a card + callback task (230c63ca). Full record, rules, test evidence and rollback are in the vault under notes/Projects/reply-and-call-cards. To turn either off, flip its Draft/Publish switch."
+    },
     {
       "date": "2026-09-29",
       "title": "Put a price on 259 Rockclear deals that read $0, lifting the working-stage total from $400,175 to $774,630",
