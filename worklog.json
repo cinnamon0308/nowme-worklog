@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-29T18:17:38.979Z",
+  "updated": "2026-09-29T19:50:23.420Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -702,6 +702,32 @@
         "needsImprovement": "Echo can only answer half the weekend, and the limit is missing inputs rather than writing quality. Of 27 actionable leads: 6 asked about a price nobody had quoted them, 4 asked for PPF which the shop does not do, 3 needed scheduling. The parked Quote Unblocker feeds the first group and the existing capacity report covers the third, and either does more for coverage than any prose improvement. Missed calls remain out of scope and are the bigger cohort. There is no expiry mechanism, no circuit breaker and no ledger-enforced idempotency on send, because nothing can send — all three have to be built with the send path, not after it.",
         "watchFor": "Noise and double-texting, unchanged and still how this fails.\n\nNever let anything compute a price. Three numbers on one proposal all look correct and only invoice.total is what the customer was quoted; the discount label itself is off by three points on at least one live proposal. Any change that sums, subtracts or applies a percentage reintroduces an $825 error. And a right price for the wrong car is still a wrong price — a Corvette question against a Model Y proposal produced the Model Y's number.\n\nDo-not-contact is per channel. Of six weekend opt-outs, all six were blocked on text and five had email, calls and WhatsApp open, so a cross-channel reply would have reached someone who wrote STOP. Replying only on the channel they used is what makes that safe, so it is a guard and not a preference.\n\nRead what the customer typed, not what is in the thread. Our own marketing arrives labelled inbound and byte-identical to what we sent. iPhone tapbacks arrive as inbound and are our own words quoted back. Inbound email arrives with no body at all. And most inbound email is a reply to a nurture send with our whole newsletter quoted underneath, asking about something unrelated — that shape was discarding real questions until 9/02.\n\nA similarity score cannot gate a draft. 'Customer wants to rent a car' — never offered, never answered — scores 75% on the reranker, one point below a genuine reschedule. Whether the retrieved exemplar is the same KIND of message is checkable; how similar it is, is not.\n\nInstagram closes after 7 days, and a draft approved after the window shuts is rejected outright. This has already happened once, approved nine hours late.\n\nOn Discord specifically: server permissions are not enough, a channel-level override kept every channel unreadable until the bot was added to the channel's own permission list, and the failure is a silent 403 with no error anywhere."
       }
+    },
+    {
+      "id": "card-values",
+      "name": "Deal Card Values",
+      "status": "IN_PROGRESS",
+      "summary": "Rockclear deals with no dollar value hid a third of the pipeline. On 9/29 a live pull found 336 open working-stage deals at $0; 259 now carry the price from their own Urable quote and the working stages read $774,630, up from $400,175. 76 remain: 30 in Manual Quote Required (correct), 4 held for a stage decision, 42 with no quote linked. The cause is still live: the pricing step only runs when the card is created, and the Facebook form creates it first.",
+      "blockedOn": "The ten-line fix that fills a blank value on an existing card. It is Noah's deploy and no staged copy exists yet.",
+      "health": {
+        "band": "watch",
+        "reason": "The backfill is complete and every write was read back, but new $0 cards keep arriving until the fix ships, so the count climbs again from today."
+      },
+      "detail": {
+        "goal": "Make every open working-stage deal carry the price of its own quote, so the pipeline total Noah forecasts from is not short by a third.",
+        "whatWasDone": [
+          "2026-09-29: pulled all 2,987 Rockclear deals, read 264 linked Urable quotes, and wrote 259 verified values (backup first, 3-card test write, then the rest).",
+          "Sale-era quotes were repriced to the everyday ladder; quotes already at everyday prices kept their total."
+        ],
+        "needsImprovement": [
+          "Write and stage the fill-blanks branch for opp_guard_sweep, behind its own flag, dry-run first, and hand Noah the deploy as a paste block.",
+          "Decide the stage for the 4 held cards (three accepted quotes, one declined).",
+          "Add a daily check that names any open working-stage deal at $0 with a quote linked, so the gap cannot regrow unseen."
+        ],
+        "watchFor": [
+          "The Estimated Value custom field is the booking-page list-price ladder and never matches the card value. Do not reconcile it."
+        ]
+      }
     }
   ],
   "waitingOnNoah": [
@@ -741,6 +767,23 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-09-29",
+      "title": "Put a price on 259 Rockclear deals that read $0, lifting the working-stage total from $400,175 to $774,630",
+      "shipped": [
+        "Wrote a value onto 259 open Rockclear deals that showed $0, so Awaiting Engagement and the two Proposal Sent stages now add up to $774,630 instead of $400,175. Every price comes from that customer's own Urable quote. 122 of those quotes went out during the 50% sale, so I repriced them to today's everyday rate, which adds $39,090 over their sale totals. The other 137 already sat at everyday prices and keep what they were quoted. Every card was read back after the write, and none changed stage, status, or contact tags.",
+        "Filed the full record so the batch can be undone: a backup of all 260 cards taken before the first write (every one was $0), a log line per write, and the scripts. Restoring a card is one field per card."
+      ],
+      "fixed": [
+        "Caught that the 9/16 list of 200 had gone stale before anything was written. The $0 count had grown from 264 to 336 in two weeks, and 20 of the cards I filled belonged to quotes sent in the last two days, so I rebuilt the list from a live pull of all 2,987 Rockclear deals. One card had already moved out of the working stages and was skipped.",
+        "Held back 4 cards worth $8,095 in quotes: three quotes the customer already accepted and one declined. Those deals sit in the wrong stage, and a price on a mis-filed card would have hidden that until someone hunted for it."
+      ],
+      "inProgress": [
+        "76 deals still read $0. 30 are in Manual Quote Required, where $0 is right because nothing has been quoted. 4 are the held cards above. 42 have no quote linked at all, which is a separate misfiling problem and not something a price can fix.",
+        "New $0 cards will keep arriving until the price-fill fix ships. The Facebook form creates the card before the pricing step runs, and the pricing step skips any card that already exists. The fix is about ten lines and is Noah's deploy, but I found no staged copy of it, so it still has to be written."
+      ],
+      "notes": "Full method, counts, held cards, and restore path are in the vault under notes/Projects/zero-value-backfill-2026-09-29. Prices follow the 35% everyday ladder from lib/pricing.py; seven Tesla Model 3 and Y cards took the $1,095 and $1,195 holds. The Estimated Value custom field was left alone on purpose."
+    },
     {
       "date": "2026-09-28",
       "title": "Built both GA4 lead-tracking workflows and caught that they would have reported nothing: the quiz receiver drops the tracking ids",
