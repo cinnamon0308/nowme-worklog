@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-30T18:57:13.275Z",
+  "updated": "2026-09-30T20:45:46.128Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -787,6 +787,36 @@
           "The call sheet treats a card as fresh for 7 days only when the person has never been dialed, so a comeback we called before the cleanup will not get that lane."
         ]
       }
+    },
+    {
+      "id": "old-stage-sort",
+      "name": "Old-Pipeline Sort (M64)",
+      "status": "IN_PROGRESS",
+      "summary": "Noah's 9/29 list of 1,086 parked leads (old Dragon Auto pipeline plus Waiting on a future date) was checked against live GoHighLevel and Urable on 9/30, read-only. 125 people need a person first, 173 more need a look, and 366 of his 577 planned close-outs are clean. 3 people who asked us to stop are not blocked on any channel.",
+      "blockedOn": "Two decisions: whether the close may set status to lost, which our own protocol forbids because of the Abandoned Automation workflow (Draft since 8/03), and who blocks the three people who asked us to stop. Noah's approvals for the close-outs and the callbacks are also still open on his side.",
+      "health": {
+        "band": "watch",
+        "reason": "Step 1 is verified (11 of 11 checks) and nothing has been written. The pile is untouched since 9/29, so the risk is someone closing it in bulk before the 125 holds are read."
+      },
+      "detail": {
+        "goal": "Sort the old-stage leads so nobody dials, closes or blocks a person on a stale label: paying customers and open jobs stay, people owed an answer get one, people who asked us to stop are blocked, and the rest close cleanly or come back on their date.",
+        "whatWasDone": [
+          "2026-09-30: matched all 1,086 people to live GoHighLevel (contact, every card, every message and call) and to Urable customers, payments, jobs and proposals. 11 of 11 controls pass, including three named cases from Noah's notes.",
+          "2026-09-30: produced the hold list (125), the look-first list (173) and a sortable page with a plain-words reason for each person."
+        ],
+        "needsImprovement": [
+          "Hand-check the 125 holds and the 11 people with a recent unanswered message.",
+          "Hand-check a random sample of the 366 clean close-outs and the 173 look-first ones before any write.",
+          "Close through Noah's script: test mode, then a canary of 5 to 10 cards read back after two minutes, then the rest.",
+          "Decide what happens to the 284 people with nothing staged.",
+          "Send Noah a per-person list before he approves anything."
+        ],
+        "watchFor": [
+          "Noah's model cannot hear calls without transcripts: 340 people talked with us by phone (most over six months ago) and his file shows many of them as silent.",
+          "Open Urable payment requests ($50,110 across 24 people) may be stale; check that the job happened before anyone chases money.",
+          "Do not repeat the 9/07 bulk close: it also set do-not-contact."
+        ]
+      }
     }
   ],
   "waitingOnNoah": [
@@ -826,6 +856,26 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-09-30",
+      "title": "Checked Noah's 1,086 parked leads against live records before anyone closes them: 125 need a person first, and 3 who asked us to stop are not blocked",
+      "shipped": [
+        "Checked everyone on Noah's 9/29 list of parked leads against live GoHighLevel and Urable, read-only (about 4,300 reads, nothing written anywhere). Of the 577 he would close, 366 are clean, 173 need a look, and 38 should not be closed yet. Of his 181 callbacks, 138 are clean and 43 are held.",
+        "Found the people a bulk close would have hurt: 19 paying customers (7 more may have paid), 30 booked or scheduled (22 of them on his close list, all in the old Scheduled stage), 16 open Urable jobs, and 24 people with $50,110 in open payment requests that someone should check against the jobs.",
+        "Found 3 people who asked us to stop in writing with nothing blocking them: two on Noah's close list, one on his callback list. Closing or calling them repeats the gap we closed for two customers on 9/28.",
+        "Built one sortable page of all 1,086 people with the reason for each in plain words, a hold list of 125 and a look-first list of 173, plus the method and the 11 checks it had to pass."
+      ],
+      "fixed": [
+        "Caught my own first pass finding zero paying customers: Urable names a customer by a long path on payments and jobs and by a short id on the customer list, so the join matched nothing. A check that the paying-customer count could not be zero stopped the report; I fixed the join and wrote the trap into the audit skill.",
+        "Checked Noah's model flags against the live threads. Of his 40 owed-reply rows, 18 already had a person text or call afterward, and only 11 people have a recent unanswered message (he had flagged 3 of them). Another 99 unanswered messages are over six months old and are look-first, not urgent.",
+        "Stopped two alarms of mine before reporting them: 'talked by phone' flagged a third of the pile until I split recent from old (none of the close-list people within three months, median about a year), and I dropped a 'short call' flag that only meant a voicemail."
+      ],
+      "inProgress": [
+        "Nothing has been closed, blocked or moved. Next: hand-check the flagged rows and a sample of the clean closes, then a canary close. Two decisions wait: whether the close may set status to lost (our own rule says never) and who blocks the three people who asked us to stop.",
+        "284 people have nothing staged and no hold. Someone has to decide dial, bring back, or close for each."
+      ],
+      "notes": "Data is a snapshot from 9/30 about 1 PM Pacific. Method, definitions and limits are in the README of my audit folder. 733 old calls have no transcript, so a long call shows as talked, not what was said."
+    },
     {
       "date": "2026-09-30",
       "title": "Made sure my next call-sheet deploy cannot undo Noah's callback fix, and confirmed the fix ran in Wednesday's 6 AM sheet",
