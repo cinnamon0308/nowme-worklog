@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-30T20:45:46.128Z",
+  "updated": "2026-09-30T21:04:09.918Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -170,15 +170,16 @@
       "id": "call-sheet",
       "name": "Daily Call Sheet",
       "status": "LIVE",
-      "summary": "September 30 PT: Wednesday's 6 AM run was the first with Noah's 9/29 callback fix. It found 31 open callback tasks and finished with no blocks and one routine warning. Tasha's deploy copies now match both his 9/23 and 9/29 versions, so a deploy from her side cannot undo either.",
+      "summary": "September 30 PT: the first check of the automatic list found all 6 mornings since 9/23 posted 75 leads, Sean's week matches Noah's 6:45 AM report on dials, long conversations and inbound calls, and the seven sorting mistakes in my hand-build script are fixed. Wednesday's 6 AM run was the first with Noah's 9/29 callback fix: 31 open callback tasks, no blocks, one routine warning. My deploy copies match both his 9/23 and 9/29 versions, so a deploy from my side cannot undo either.",
       "blockedOn": "A decision on running the July 30 overlay procedure to put the missing rescue step, the PPF rule and the unreadable-ring fix onto the live engine; until then the hand-build carries those rules by hand. The rebuilt opt-out fix (rebuilt again 9/30 on Noah's 9/29 version) waits on its side-by-side comparison and Tasha's sign-off.",
       "health": {
         "band": "watch",
-        "reason": "Posting on its own every weekday since 9/23 with one routine warning: 68 to 71 leads sit in the protected follow-up block against a soft cap of 15, so the follow-up backlog is growing. The rebuilt opt-out fix is not deployed yet, and the live engine still lacks the PPF rule and the unreadable-ring fix."
+        "reason": "Posting on its own every weekday since 9/23. The follow-up block held 68, 68, 71, 69 and 63 leads against a soft cap of 15 (flat, not growing), so Sean's list carries the amber warning banner every morning. Monday 9/28 ran without AI ranking because the AI account ran out of credit. The live engine still lacks the PPF rule and the unreadable-ring fix, treats three polite ways of saying no as callable, and the rebuilt opt-out fix is not deployed yet."
       },
       "detail": {
         "goal": "Give Sean a ready-to-work call list every morning, ranked by real intent, so he always knows who to call first without pulling it by hand.",
         "whatWasDone": [
+          "09-30 PT: checked the automatic list for its first week from the system's own log (6 of 6 mornings posted 75 leads; 9/21 and 9/22 had been blocked), counted Sean's week (dials 48, 48, 47, 60, 39; matches Noah's 6:45 report), joined 31 payments ($31,779.63) to who had called or texted the payer, fixed the seven sorting mistakes test-first and replayed 1,518 real records (28 changed, nobody newly blocked), and ran the same phrases through the live code.",
           "09-30 PT: copied Noah's 9/29 callback fix into both of Tasha's deploy copies, rebuilt the opt-out package on his newest version under its own fingerprint, and marked the 9/25 package do-not-deploy. Proved first that his written change matches the running version to the byte, then checked both results against an independent merge. All 455 of his checks pass on the package, his 50-check callback test now runs in the repo suite, and 212 engine and 358 delivery checks pass. Wednesday's 6 AM run, the first with the fix, found 31 open callback tasks and had no blocks. Nothing deployed.",
           "09-25 PT: matched Tasha's deploy copies to Noah's live 9/23 version (revision 00034-sem) line by line: 75 leads, AI-down as a warning, no re-post of a sheet older than one workday, #alarms, and the tasks-read crash fix. Fixed the deploy script's 15-minute timeout (live is 30) and its settings wipe, and rebuilt the 9/09 opt-out fix on the new version. 211 engine and 358 delivery checks pass.",
           "09-16 PT: hand-built 50 verified calls from a complete 2,583-opportunity board, 11,283-contact conversation inventory, 23,738-contact consent read, and current Urable customers, jobs, proposals, and payments. Mark Renzo Sagnep and Abdul Aziz take the first two slots because their exact current jobs carry failed or past-due payment requests; 18 genuinely fresh leads follow, then 5 customers still owed a sales answer, 12 first-call proposal readers, and 13 one-attempt floor top-ups. Final live reread: 50 of 50, zero errors. Nothing was posted or changed in the CRM.",
@@ -210,6 +211,7 @@
           "08-31: hand-built the Monday sheet for the fifth time and re-tested Friday's 50 one by one instead of carrying them over. 46 of them had had no contact since Thursday and 15 came off under the three-chase rule. The engine's own run was mechanically clean (10,959 conversations swept to exhaustion, 340 threads enriched, both current financing rescues at ranks 1 and 2) and still blocked its post: 118 of 120 rows keyword-scored, and 183 conversion-critical leads for 120 slots, published as a capacity incident. Two bugs in the hand-reading tool were caught before publication: GoHighLevel stamps a staff id on inbound calls, which inflated Friday's dial count from 5 to 13, and bare product names cannot be used as an 'our copy' fingerprint."
         ],
         "needsImprovement": [
+          "Check each morning's 75 names, not only the counts: the names exist only as Discord attachments, so the per-row check for opt-outs, already-answered leads and PPF requests is waiting on six saved files.",
           "The shared hand-build dialable check accepts 0000000000 because it validates digit length but not placeholder patterns. The September 16 sheet builder now blocks that number, but the shared classifier needs the same guard before the next build.",
           "The deployed engine reads a customer's questions only from typed messages. Anything said out loud on a recorded call produces no question, no owed flag, and drops the lead to the bottom lane, which is how 61 real conversations went missing.",
           "Deploy the rebased consent-search patch (stamp bba971c9f70d, built on Noah's 9/29 version) once the side-by-side comparison and Tasha's sign-off are done, then read the first 6 AM run's [consent-sweep] line (ok:true, about 48 pages, about 550 dnd_true) and [callback sweep] line (about 31 open callback tasks), and confirm B16 stayed quiet. Then decide the two recorded open items: the 37 leads with a stale master do-not-call flag, and the hand build's stricter treatment of that flag.",
@@ -223,6 +225,7 @@
           "Patch the hand-build sorting script for the three gaps the September 23 owed recheck found: count \"this month\" and \"please advise on the status\" as a customer asking, count a sent Rocklear quote as Rocklear interest, and look past a paid booking to an unanswered message about a second car."
         ],
         "watchFor": [
+          "Read the post line in the function's log, not the HTTP status: a blocked morning also returns 200, which is what 9/21 and 9/22 did. The AI account has now run dry three times since 8/24.",
           "A customer who rings and gets no answer produces a call with no transcript. The deployed engine still reads that as history it cannot trust and parks the lead, so the people trying hardest to reach us are the ones most likely to be missing from the cron’s sheet.",
           "September 16 now has 50 verified calls. The final 25 are visibly separated as 12 first-call coverage records and 13 one-attempt floor top-ups; every one has a valid phone, complete thread evidence, an exact Urable identity, a pending proposal, and no current job or payment. Three live-stage contacts and four Booked contacts remain held for review. Do not describe the local file as published.",
           "Deploy smoke via the script's gcloud call hits a 300s client timeout on a cold run and exits 1 AFTER a healthy deploy; re-verify with curl (rc 0 + stamped sha), don't re-deploy.",
@@ -856,6 +859,33 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-09-30",
+      "title": "Checked the automatic call sheet for its first full week: 6 of 6 mornings posted, Sean's counts match Noah's own 6:45 report, and the seven sorting mistakes are fixed",
+      "shipped": [
+        "Checked Sean's automatic list for its first full week from the system's own log instead of its green status: all 6 mornings since 9/23 posted 75 leads, and every reading sweep that logged (5 of 6) finished the whole conversation list (11,464 of 11,464 on 9/30). The same log showed 9/21 and 9/22 had been blocked with an old list re-posted, which a green status alone would not have shown.",
+        "Counted Sean's week from every conversation that moved (485 of 485 read, no errors) and checked it against Noah's own 6:45 AM report: dials (48, 48, 47, 60, 39), conversations over two minutes (11, 9, 5, 11, 2) and inbound calls (13, 15, 19, 16, 14) agree on all five days. A second pull reaching back to 9/21 matched message for message. The 50-dial floor was met on 1 of 5 days (Monday, 60).",
+        "Found what landed after the calls: 31 payments since 9/23 totaling $31,779.63. 10 of them ($12,140.00) arrived within a day after Sean called or texted the customer and 7 ($8,275.00) within an hour, including a $2,275.00 deposit on 9/24 after four calls, and $1,347.50 from the quiz lead who had no pipeline card until I found him on 9/23.",
+        "Counted the rest of the team in the same numbers: Jenn or Noah had touched the payer in the prior 3 days for 26 of the 30 payments I could match ($28,055.25), Jenn without Sean for 12 ($12,445.00), and 14 payments ($13,482.13) came in over the weekend with nobody on the phones.",
+        "Fixed all seven misreadings in the call-sheet sorting script from my 9/23 list, each one test-first (30 new tests, 66 in total), then replayed the real 9/23 data: 28 of 1,518 people changed and nobody was newly blocked. A customer who wrote 'take me off the schedule' for a trip is no longer read as a 'stop', and the callback Sean promised that person is owed again.",
+        "Ran the same phrases through the live call sheet's own code (downloaded and fingerprint-checked, unchanged): it handles a plain 'take me off your list' and 'not interested anymore', but treats three polite ways of saying no as callable, blocks 'take me off your schedule', and lets 'take me off the appointment reminders' through. Only 2 of 23,953 contacts carry a text STOP it would miss today, and 1 of them sits in the lead pool."
+      ],
+      "fixed": [
+        "Corrected my own 9/23 notes after reading the actual threads: one person's open question is a price nobody answered (not a timing one), one person was never owed a reply, and two I expected to clear are still owed because of two missed calls, which only a two-minute call clears.",
+        "Removed a 'following up on' rule of mine after the replay showed it reviving an 88-day-old message, and dropped a claim I had written that one reply filter was causing false flags, because testing it moved 3 of 1,518 people.",
+        "Corrected the dashboard's line that Sean's follow-up backlog is growing: the block read 68, 68, 71, 69 and 63 against a cap of 15, which is flat."
+      ],
+      "inProgress": [
+        "Checking what Sean actually saw each morning is not done. The 75 names per day exist only as Discord attachments (cloud storage refuses my account and the log keeps counts, not names). Once I have the six files I can check every row for opt-outs, leads already answered and PPF requests, and see whether the same follow-ups repeat each day.",
+        "Wednesday 9/30 is counted only through 1:21 PM PT and needs a re-run after 6 PM.",
+        "Three rules still need a ruling before I change them: whether a booked visit answers a price question, whether a person's text reply should clear two missed inbound calls, and whether the PPF rule should apply to every lead it does not cover."
+      ],
+      "notes": [
+        "Monday 9/28's list was ranked without the AI scorer because the AI account ran out of credit, and it was topped up before 9/29's run. A working day costs about $1.30, and this is the third time it has run dry since 8/24. Auto-reload is already on Noah's own list.",
+        "Sean's list has carried the amber warning banner every morning since 9/23 because the follow-up block warning never clears. Raising the cap or making it informational is Noah's call.",
+        "The phrases the live call sheet misses belong in the pending opt-out fix's next update, and nothing has been sent to Noah. Nothing was changed in GoHighLevel, Urable or Discord, and nothing was deployed."
+      ]
+    },
     {
       "date": "2026-09-30",
       "title": "Checked Noah's 1,086 parked leads against live records before anyone closes them: 125 need a person first, and 3 who asked us to stop are not blocked",
