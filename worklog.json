@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-30T21:04:09.918Z",
+  "updated": "2026-09-30T21:06:50.885Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -174,7 +174,7 @@
       "blockedOn": "A decision on running the July 30 overlay procedure to put the missing rescue step, the PPF rule and the unreadable-ring fix onto the live engine; until then the hand-build carries those rules by hand. The rebuilt opt-out fix (rebuilt again 9/30 on Noah's 9/29 version) waits on its side-by-side comparison and Tasha's sign-off.",
       "health": {
         "band": "watch",
-        "reason": "Posting on its own every weekday since 9/23. The follow-up block held 68, 68, 71, 69 and 63 leads against a soft cap of 15 (flat, not growing), so Sean's list carries the amber warning banner every morning. Monday 9/28 ran without AI ranking because the AI account ran out of credit. The live engine still lacks the PPF rule and the unreadable-ring fix, treats three polite ways of saying no as callable, and the rebuilt opt-out fix is not deployed yet."
+        "reason": "Posting on its own every weekday since 9/23. The follow-up block held 68, 68, 71, 69 and 63 leads against a soft cap of 15 (flat, not growing), so every morning's post is marked degraded. Monday 9/28 ran without AI ranking because the AI account ran out of credit. The live engine still lacks the PPF rule and the unreadable-ring fix, treats three polite ways of saying no as callable, and the rebuilt opt-out fix is not deployed yet."
       },
       "detail": {
         "goal": "Give Sean a ready-to-work call list every morning, ranked by real intent, so he always knows who to call first without pulling it by hand.",
@@ -863,10 +863,10 @@
       "date": "2026-09-30",
       "title": "Checked the automatic call sheet for its first full week: 6 of 6 mornings posted, Sean's counts match Noah's own 6:45 report, and the seven sorting mistakes are fixed",
       "shipped": [
-        "Checked Sean's automatic list for its first full week from the system's own log instead of its green status: all 6 mornings since 9/23 posted 75 leads, and every reading sweep that logged (5 of 6) finished the whole conversation list (11,464 of 11,464 on 9/30). The same log showed 9/21 and 9/22 had been blocked with an old list re-posted, which a green status alone would not have shown.",
+        "Checked Sean's automatic list for its first full week from the system's own log instead of its green status: all 6 mornings since 9/23 posted 75 leads, and every sweep that logged (5 of 6) reached the end of the conversation list (11,464 of 11,464 on 9/30). The same log showed 9/21 and 9/22 had been blocked with an old list re-posted, which a green status alone would not have shown.",
         "Counted Sean's week from every conversation that moved (485 of 485 read, no errors) and checked it against Noah's own 6:45 AM report: dials (48, 48, 47, 60, 39), conversations over two minutes (11, 9, 5, 11, 2) and inbound calls (13, 15, 19, 16, 14) agree on all five days. A second pull reaching back to 9/21 matched message for message. The 50-dial floor was met on 1 of 5 days (Monday, 60).",
-        "Found what landed after the calls: 31 payments since 9/23 totaling $31,779.63. 10 of them ($12,140.00) arrived within a day after Sean called or texted the customer and 7 ($8,275.00) within an hour, including a $2,275.00 deposit on 9/24 after four calls, and $1,347.50 from the quiz lead who had no pipeline card until I found him on 9/23.",
-        "Counted the rest of the team in the same numbers: Jenn or Noah had touched the payer in the prior 3 days for 26 of the 30 payments I could match ($28,055.25), Jenn without Sean for 12 ($12,445.00), and 14 payments ($13,482.13) came in over the weekend with nobody on the phones.",
+        "Found what landed after the calls: 31 payments since 9/23 totaling $31,779.63. 10 of them ($12,140.00) arrived within a day after Sean called or texted the customer and 7 ($8,275.00) within an hour, including a $2,275.00 payment on 9/24 after four calls, and $1,347.50 from the quiz lead with no pipeline card whom I put at #1 on 9/23. A payment can be a deposit or a balance.",
+        "Counted the whole team in the same numbers: Sean, Jenn or Noah had touched the payer in the prior 3 days for 26 of the 30 payments I could match ($28,055.25), Jenn without Sean for 12 ($12,445.00), and 14 payments ($13,482.13) came in over the weekend, when Sean is off.",
         "Fixed all seven misreadings in the call-sheet sorting script from my 9/23 list, each one test-first (30 new tests, 66 in total), then replayed the real 9/23 data: 28 of 1,518 people changed and nobody was newly blocked. A customer who wrote 'take me off the schedule' for a trip is no longer read as a 'stop', and the callback Sean promised that person is owed again.",
         "Ran the same phrases through the live call sheet's own code (downloaded and fingerprint-checked, unchanged): it handles a plain 'take me off your list' and 'not interested anymore', but treats three polite ways of saying no as callable, blocks 'take me off your schedule', and lets 'take me off the appointment reminders' through. Only 2 of 23,953 contacts carry a text STOP it would miss today, and 1 of them sits in the lead pool."
       ],
@@ -882,7 +882,7 @@
       ],
       "notes": [
         "Monday 9/28's list was ranked without the AI scorer because the AI account ran out of credit, and it was topped up before 9/29's run. A working day costs about $1.30, and this is the third time it has run dry since 8/24. Auto-reload is already on Noah's own list.",
-        "Sean's list has carried the amber warning banner every morning since 9/23 because the follow-up block warning never clears. Raising the cap or making it informational is Noah's call.",
+        "Every morning since 9/23 the system has posted Sean's list as 'degraded' because the follow-up block warning never clears (the contract says that adds an amber banner; I have not seen the sheet itself). Raising the cap or making the warning informational is Noah's call.",
         "The phrases the live call sheet misses belong in the pending opt-out fix's next update, and nothing has been sent to Noah. Nothing was changed in GoHighLevel, Urable or Discord, and nothing was deployed."
       ]
     },
