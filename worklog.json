@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-01T19:44:20.018Z",
+  "updated": "2026-10-01T20:53:42.063Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -170,7 +170,7 @@
       "id": "call-sheet",
       "name": "Daily Call Sheet",
       "status": "LIVE",
-      "summary": "September 30 PT: the first check of the automatic list found all 6 mornings since 9/23 posted 75 leads, Sean's week matches Noah's 6:45 AM report on dials, long conversations and inbound calls, and the seven sorting mistakes in my hand-build script are fixed. Wednesday's 6 AM run was the first with Noah's 9/29 callback fix: 31 open callback tasks, no blocks, one routine warning. My deploy copies match both his 9/23 and 9/29 versions, so a deploy from my side cannot undo either.",
+      "summary": "October 1 PT: found why the same leads sit on the automatic list every morning (54 of 75 seats on 9/30 were held by leads the list can never drop) and moved or closed 36 of them, all checked. September 30 PT: the first check of the automatic list found all 6 mornings since 9/23 posted 75 leads, Sean's week matches Noah's 6:45 AM report on dials, long conversations and inbound calls, and the seven sorting mistakes in my hand-build script are fixed. Wednesday's 6 AM run was the first with Noah's 9/29 callback fix: 31 open callback tasks, no blocks, one routine warning. My deploy copies match both his 9/23 and 9/29 versions, so a deploy from my side cannot undo either.",
       "blockedOn": "A decision on running the July 30 overlay procedure to put the missing rescue step, the PPF rule and the unreadable-ring fix onto the live engine; until then the hand-build carries those rules by hand. The rebuilt opt-out fix (rebuilt again 9/30 on Noah's 9/29 version) waits on its side-by-side comparison and Tasha's sign-off.",
       "health": {
         "band": "watch",
@@ -908,6 +908,22 @@
         "Still no size row for the Audi Q6 e-tron (held at a Sedan guess) or an International Harvester Scout (no message at all)."
       ],
       "notes": "Nothing deployed, written to GHL or Urable, or sent to a customer. Live revision 00091 is the 9/29 key-swap restart of the 9/17 code."
+    },
+    {
+      "date": "2026-10-01",
+      "title": "Freed about 25 of the seats that kept the same leads on Sean's call sheet every morning",
+      "fixed": [
+        "Moved 29 cards to the stage their own messages point to: 10 people who texted STOP and 3 who said no in writing went to Lost Declined, 7 who never answered 4 to 10 calls and texts went to Lost Ghost, 4 that were not leads (another shop's Instagram chat, a lender's sales pitch, an auto-reply, an Instagram comment) went to Disqualified, and Andrew Huy Lam, a paying repeat customer with a job booked for 10/10, went to Booked. All 36 changes checked after writing, and again a minute later.",
+        "Closed 6 callback reminders that were 1 to 86 days overdue, including one for a man who texted STOP on 9/29, and moved Johnson Kan's to 10/19 because his car still has not arrived. Each overdue reminder was putting its lead on Sean's list every morning."
+      ],
+      "shipped": [
+        "Found why the same people come back daily. The automatic list must keep certain leads even after three unanswered calls, and four kinds never run out: every card in Manual Quote Required, a rescue tag nothing removes, an overdue callback reminder, and any customer text (even \"Ok\") for 30 days. Noah's 9/30 check had 54 of the 75 seats held this way."
+      ],
+      "inProgress": [
+        "13 people are still waiting on an answer and keep their seats until someone replies, including Javier (\"I never heard back or received any quotes\") and Aaron Mok, who picked his layers on 9/27 and has had no call or text.",
+        "New reply cards keep landing in Manual Quote Required (13 of the 15 added since 9/28), so each one takes a permanent seat. Next step: a filter in the Vehicle Estimation workflow so it skips them."
+      ],
+      "notes": "Stage changes only: no status, tag, or message was written by this batch. Restore file and per-change log are in the vault note."
     },
     {
       "date": "2026-09-30",
