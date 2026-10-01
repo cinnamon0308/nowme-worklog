@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-01T19:29:34.524Z",
+  "updated": "2026-10-01T19:42:06.811Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -861,17 +861,19 @@
   "sessions": [
     {
       "date": "2026-10-02",
-      "title": "Checked Noah's next quote-system deploy against my matcher fixes: most are already live, and two gaps would ship with it",
+      "title": "Checked Noah's next quote-system deploy against my matcher fixes, and wrote the fix for the one that would still file a Marine Blue Tesla as a boat",
       "shipped": [
         "Downloaded the live quote system's code and replayed 2,572 real customer car descriptions through it and through the newer size table Noah's next deploy (approvals M1) will carry. 52 change: 16 start getting an automatic quote instead of waiting for a person (Chevy Trax, Subaru Uncharted, GMC Acadia, Saab 9-5, BMW 840 and others), and 35 move to the size Noah ruled (M4, M440i, M8, Scat Pack, GT500 to Exotic).",
-        "Confirmed the six 9/04 parser fixes have been live since 9/05: a '2019 hondaaccord sport' now prices as a Honda Accord, not a $300-higher Range Rover Sport, and a 'Scion xB' or 'BMW iX3' matches its own row. Noah's own 203 matcher tests pass on the new table; the live code fails 11, all of them size rows."
+        "Confirmed the six 9/04 parser fixes have been live since 9/05: a '2019 hondaaccord sport' now prices as a Honda Accord, not a $300-higher Range Rover Sport, and a 'Scion xB' or 'BMW iX3' matches its own row. Noah's own 203 matcher tests pass on the new table; the live code fails 11, all of them size rows.",
+        "Wrote the one-line fix so a paint color with 'marine' in it no longer files a car as a boat, with six test cases. Tested on a copy of the live code: Noah's tests give the same results as before plus the six new cases passing, and of 2,572 real customer descriptions it changes exactly one, Justin Wiguna's Marine Blue Model Y. Handed to Noah as a file for his Claude to put in the code before the deploy is built.",
+        "Added both gaps and the SLK size question to the deploy's card on Noah's approvals page, along with the three code files the combined deploy has to carry besides the size table."
       ],
       "fixed": [],
       "inProgress": [
-        "Two gaps the deploy would still ship. Any car whose color has 'marine' in it (a Tesla Model Y in Marine Blue) is still filed as a boat, so it never gets a quote. And Noah's 9/25 ruling moved only the SLK 300 to Sedan, so five other Mercedes SLK spellings that auto-quote today would wait for a person. Both told to Noah with the SLK size question.",
+        "Waiting on Noah: give the marine fix file to his Claude before the combined deploy is built, and say whether every Mercedes SLK is sedan size or only the SLK 300. Until he answers, five SLK spellings that auto-quote today would wait for a person after the deploy.",
         "Still no size row for the Audi Q6 e-tron (held at a Sedan guess) or an International Harvester Scout (no message at all)."
       ],
-      "notes": "Read-only: nothing deployed, written to GHL or Urable, or sent to a customer. Live revision 00091 is the 9/29 key-swap restart of the 9/17 code."
+      "notes": "Nothing deployed, written to GHL or Urable, or sent to a customer. Live revision 00091 is the 9/29 key-swap restart of the 9/17 code."
     },
     {
       "date": "2026-09-30",
