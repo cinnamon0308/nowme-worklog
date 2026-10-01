@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-01T19:42:06.811Z",
+  "updated": "2026-10-01T19:44:20.018Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -431,11 +431,10 @@
       "id": "reengage",
       "name": "Re-Engage Cleanup + Rescue",
       "status": "IN_PROGRESS",
-      "summary": "Re-measured live on September 15: the stage holds 445 open opportunities carrying $477,115, the largest single pot of money in the pipeline. Typical deal has sat there 78 days and was created 159 days ago; 132 have no owner and 303 are tagged nurture-complete, meaning the robot finished talking to them and nothing else happened. The entry guard is live, but the stage still has no exit.",
-      "blockedOn": "Approval to repair the triage job's failure boundary and to define the first payer-, job-, consent-, callback-, and future-date-filtered rescue cohort. No bulk restage is proposed.",
+      "summary": "Re-measured live on October 1: the stage holds 443 open deals carrying $463,130, the largest single pot of money in the pipeline. The typical deal has sat there 94 days; 128 have no owner and 292 are tagged as having finished the nurture emails, meaning the robot finished talking to them and nothing else happened. The entry guard is live and flagged 9 of this week's 10 arrivals, but the stage still has no exit.",
       "progress": {
         "stage": "underway",
-        "reason": "The prevention guard is live, but the weekly recovery process is not reliable and 468 records still need segmented, evidence-based handling."
+        "reason": "The entry guard is live and the Monday rescue report was fixed on 10/01, but 443 deals still need sorting one by one, with evidence. No bulk move is planned."
       },
       "detail": {
         "goal": "Stop leads from silently piling back into Re-Engage unworked, and rescue the ones that got stuck there by mistake.",
@@ -443,9 +442,7 @@
           "09-15: full-pipeline audit put a verified number on the stage for the first time: 445 open, $477,115, median 78 days parked, 132 unassigned. Previous figure of 468 was stale.",
           "63-lead rescue executed 07-13: 10 callback tasks and 1 service-recovery task created, 52 leads deliberately left parked.",
           "Refill source narrowed to Sean's call-wrap routine.",
-          "07-16: read the full message history and call notes on the affected leads. Tauqueer, Sriharsha, and M.Rod all received the same final nurture message immediately before moving to Re-Engage, which pointed at the nurture workflow as the mover. DISPROVEN LATER: opening that workflow on 07-17 showed it has no step that moves a card at all, and the audit log on 07-31 named a person. The message and the move arrived together because the same human sent one and then did the other.",
           "Corrected the Roberto Rivera evidence finding: two internal notes repeated the same June 25 call and were mistakenly treated as independent corroboration. The quoted promise was Sean's statement, while the written GHL thread shows no customer response completing the package or add-on selection.",
-          "WITHDRAWN: this entry claimed the 'nurture sequence finished' workflow moves cards without checking their stage. It does not move cards. Its full contents are six emails and one tag, snapshotted 07-17. The separate cadence transition-none defect is real and unrelated.",
           "07-19: shipped the automation that replaces the weekly manual rescue. A new Monday 7 AM cloud job reads the daily watchdog, pulls the message history for every flagged lead, and posts a ready-to-approve package to Discord with the exact fix list attached; verified live against real data (21 leads triaged, 18 actions proposed, including all 10 fresh victims routed back to their correct stages). Tasha's job shrinks from a half-day audit to reading one Monday post.",
           "07-19: confirmed the leak is still costing us: 10 actively-worked leads (8 of them hot or engaged buyers) were dragged into the dead-end stage on 07-17/18 alone, all during Sean's afternoon call window. The Monday package already carries their restore proposals.",
           "07-19: wrote the Entry Guard workflow spec (tags and tasks any anomalous entrant within seconds) and the message for Noah to send Sean, so the two human unlocks are copy-paste ready.",
@@ -464,7 +461,8 @@
           "07-31: cleared the dead callbacks. All 17 accounted for: 7 closed, 5 re-dated to Monday morning, 4 held for a decision. Every close was checked by reading the customer's own messages first, because the robot's reason for closing one is always just 'we sent the goodbye text' and it never looks at whether the customer wrote back. That blind spot is what put Zahak Babakarkhel on the close list after five polite replies. He is now re-dated to Monday instead of closed.",
           "08-01: found that closing a dead callback does not actually clear it. All seven closed the day before came straight back on the morning report under the other complaint, because the tag saying 'a callback is scheduled' was still on them. The count read 11, not the 4 predicted. Taught the safe tool to remove a tag, which it could never do before, tested it on a throwaway contact first, then took 10 stale tags off. Overdue callbacks went 17 to 11 to 2, and the two left are the two that should be.",
           "09-09: the Monday triage post was rewritten in plain English (what this is, counts, types, one spaced block per lead with the fix in words) and deployed as revision reengage-auto-triage-00007-gag; first real post Sep 14, 7:00 AM.",
-          "09-25: the Monday triage failed on 9/14 and 9/21, three attempts each ending in a 403 refusal, with no alert to anyone. The last good run was 9/07, so the plain-English post deployed 9/09 has never gone out."
+          "09-25: the Monday triage failed on 9/14 and 9/21, three attempts each ending in a 403 refusal, with no alert to anyone. The last good run was 9/07, so the plain-English post deployed 9/09 has never gone out.",
+          "10-01: found why the Monday report failed on 9/14, 9/21, and 9/28. It judged every lead and then Discord refused the post, so three weekly rescue lists were thrown away, and the crash alarm was refused the same way. Noah had fixed this exact refusal on 8/17; the 9/10 plain-English deploy came from an older copy of the code and undid it. Put his fix back, made any future refusal save the week's list to the server log, and deployed revision 00008."
         ],
         "needsImprovement": [
           "Telling Sean the rule did not change his behaviour. He got it directly on 07-21 and moved five more leads on 07-28 and 07-29. Worth finding out why before saying it a third time: he may simply have nowhere to put a lead he has finished calling that is still waiting on a price, in which case the rule asks him to keep a call list that never gets shorter, and that is our design problem, not his compliance problem.",
@@ -473,7 +471,8 @@
           "Roberto Rivera's June 25 call outcome remains unverified, and there may be two records for him. No invoice or stage move on the current summaries.",
           "The rescue robot cannot be trusted to judge a finished conversation. Its evidence for closing someone out is only ever our own last message, never the customer's reply, so a customer who answered and a customer who ignored us look identical in the report. Reading the actual messages is the only way to tell them apart, and that has to stay a human step until the robot is taught to look at replies.",
           "The list of overdue callbacks is not only dead leads. It is also where live deals go to be forgotten, which is how a customer with an invoice out sat there for three weeks. It must never be cleared in bulk.",
-          "The weekly robot closes a dead callback but never removes the tag behind it, so every lead it ever closes comes back the next morning as a fresh problem and lands in the manual-review pile forever. It is a small fix, deliberately held until after Monday's run so that run stays a clean test of the crash repairs."
+          "The weekly robot closes a dead callback but never removes the tag behind it, so every lead it ever closes comes back the next morning as a fresh problem and lands in the manual-review pile forever. It is a small fix, deliberately held until after Monday's run so that run stays a clean test of the crash repairs.",
+          "Two copies of this code exist, Tasha's repo and Noah's vault, and nothing compares them before a deploy. That is how the 9/10 deploy undid Noah's 8/17 fix, and nobody noticed for three weeks."
         ],
         "watchFor": [
           "The guard takes minutes, not seconds, and the delay varies: 6m35s on its first fire, under a minute on the second. The morning check allows 60 minutes before calling a guard broken, so there is room, but do not shrink that window without re-measuring.",
@@ -483,13 +482,13 @@
           "Tag searches are eventually consistent: right after a tag is written /contacts/search returned 0, and 1 twenty seconds later. Any count of a tag taken by search should be re-checked before concluding it is unused."
         ],
         "whatsLeft": [
-          "Find and fix the 403 that has stopped every Monday triage run since the 9/09 redeploy, then confirm the next Monday post lands in Discord.",
+          "Monday 10/05 at 7 AM PT: check that the first automatic report since 9/07 lands in Discord on its own, then work through its list.",
+          "Noah copies the fixed file into his vault (on his Waiting list), so a deploy from his copy cannot undo the fix again.",
           "Read the audit log on the seven remaining leads and note which stage each came from. They cluster into five sittings, so it is five lookups rather than seven: Jul 22 around 6 AM (Joe Belluomini, Patrick Ho), Jul 23 around 11:20 AM (Deepak Kinni), Jul 25 between 9:55 and 10:45 AM (Jojo Josy, David Hong), Jul 28 around 8 AM (Darren Wright), Jul 29 around 9:26 AM (C H A R A N T EJ B). Those times are in the log's own clock, which showed as JST.",
           "Get Noah to send Sean the stage rule himself. The original finding said it should come from him so it lands; it came from Tasha instead and did not. Message is written and ready to paste.",
           "Decide Patrick Ho and Joe Belluomini once their audit-log entries are read. Patrick's own tags disagree with each other about where he came from, and Joe has paid a deposit and is sitting in a dead-end stage.",
           "Name a campaign owner and launch date for the 40 parked Group A leads.",
           "Review Roberto Rivera's June 25 recording for a customer-attributed confirmation, and resolve whether the stylized-name record is the same person. Invoice only after confirmation.",
-          "Watch Monday 08-03 at 7 AM PT. It is now a real test of the retry and enrichment fixes rather than a deadline.",
           "Give Maria Nguyen a callback date. She is waiting on a car to arrive and told us to reach out when it does, but the reminder was never actually scheduled, so nothing will surface her.",
           "After Monday's run, teach the weekly robot to remove the tag when it closes a callback. Roughly four lines; the plan builder already accepts it."
         ],
@@ -501,7 +500,8 @@
           "reengage-restore-2026-07-30.md",
           "reengage-mover-reconfirmed-2026-07-31.md",
           "reengage-mover-identified-2026-07-17.md",
-          "zombie-callback-cleanup-2026-07-31.md"
+          "zombie-callback-cleanup-2026-07-31.md",
+          "triage-discord-403-2026-10-01.md"
         ]
       }
     },
@@ -856,9 +856,43 @@
           "code": "F=$(find \"$HOME/deploy-staging/quiz-lead-receiver-email422-20260928\" -name quiz_lead_receiver_main.py 2>/dev/null | head -1)\nif [ -z \"$F\" ]; then echo \"FAILED: send Tasha this output. The staged quiz receiver folder is not on this Mac.\"\nelif [ \"$(grep -c -e 6458MqU4YjnYebrzMGqP -e 0zIgKZKMg7QDyyYyr4PJ -e znfWwXGxMWOYrpqOoD4T \"$F\")\" -ge 3 ]; then echo \"DONE: the staged quiz receiver saves the three GA4 fields ($F). Tell Tasha whether it is deployed.\"\nelse echo \"NOT YET: the staged quiz receiver does not save the GA4 fields. Hand Claude the file from Tasha.\"; fi"
         }
       ]
+    },
+    {
+      "item": "Give Claude the Re-Engage triage file Tasha sent",
+      "project": "Re-Engage Cleanup + Rescue",
+      "since": "2026-10-01",
+      "impact": "Your vault still has the 8/17 copy of the Monday Re-Engage report. It has your User-Agent fix, but not the plain-English post or the new logging that keeps the week's list when a post fails. A deploy from that folder would undo both. This copies the live file into your vault so both copies match. It deploys nothing and changes nothing in GHL.",
+      "whatToDo": [
+        "Download noah-claude-reengage-triage-copy.md from Tasha's Discord message.",
+        "Drag it into Claude and say: claude do this, tasha sent this. It takes under a minute.",
+        "Send Tasha the line Claude gives you at the end. It starts with DONE or FAILED."
+      ],
+      "commands": [
+        {
+          "label": "The same copy as a Terminal paste, if you would rather not use Claude (safe to run twice)",
+          "code": "T=\"$HOME/Documents/Dragon Auto Synced/Projects/ai-urable-proposal/cloud-functions/reengage-auto-triage/reengage_auto_triage.py\"\nOLD=d6882c2ce5e1a353a10cea248384a12f38423070122e9708e89b5a554c63da6e\nNEW=39853b7a0e6c4f137a8d557270aeb46466148637d8fd29ebce913994d5a0d170\nW=\"$(mktemp -d)\"\nCUR=\"$(shasum -a 256 \"$T\" 2>/dev/null | cut -d' ' -f1)\"\nif [ \"$CUR\" = \"$NEW\" ]; then\n  echo \"DONE: tell Tasha: triage vault copy was already up to date (${NEW:0:12})\"\nelif [ \"$CUR\" != \"$OLD\" ]; then\n  echo \"FAILED: send Tasha this output. Vault copy hash is ${CUR:-missing}, expected $OLD. Nothing was changed.\"\nelse\n  TOKEN=\"$(gcloud auth print-access-token)\"\n  URL=\"$(curl -s -X POST \"https://cloudfunctions.googleapis.com/v2/projects/dragon-auto-automations/locations/us-west1/functions/reengage-auto-triage:generateDownloadUrl\" -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\" -d '{}' | python3 -c \"import json,sys; print(json.load(sys.stdin).get('downloadUrl',''))\")\"\n  if [ -z \"$URL\" ]; then\n    echo \"FAILED: send Tasha this output. Could not get the live bundle download link. Nothing was changed.\"\n  elif ! curl -s -o \"$W/bundle.zip\" \"$URL\" || ! unzip -q -o \"$W/bundle.zip\" -d \"$W/src\"; then\n    echo \"FAILED: send Tasha this output. Could not download or unzip the live bundle. Nothing was changed.\"\n  elif [ \"$(shasum -a 256 \"$W/src/reengage_auto_triage.py\" | cut -d' ' -f1)\" != \"$NEW\" ]; then\n    echo \"FAILED: send Tasha this output. Live file hash is $(shasum -a 256 \"$W/src/reengage_auto_triage.py\" | cut -d' ' -f1), expected $NEW. Nothing was changed.\"\n  else\n    mkdir -p \"$HOME/.dragon-backups\"\n    cp -p \"$T\" \"$HOME/.dragon-backups/reengage_auto_triage.py.pre-20261001\"\n    cp \"$W/src/reengage_auto_triage.py\" \"$T.new\" && mv \"$T.new\" \"$T\"\n    if [ \"$(shasum -a 256 \"$T\" | cut -d' ' -f1)\" = \"$NEW\" ]; then\n      echo \"DONE: tell Tasha: triage vault copy updated to ${NEW:0:12}, old file kept in ~/.dragon-backups\"\n    else\n      echo \"FAILED: send Tasha this output. The copy did not verify. The old file is in ~/.dragon-backups/reengage_auto_triage.py.pre-20261001\"\n    fi\n  fi\nfi\nrm -rf \"$W\""
+        }
+      ]
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-02",
+      "title": "Fixed the Monday Re-Engage report that threw away its lead list three weeks running",
+      "shipped": [
+        "Traced it to two copies of the code. Noah fixed this exact refusal on 8/17, and my 9/10 plain-English deploy was built from the older copy without his fix, so it undid it. Put his fix back with the same value and deployed it on 10/01; the deploy's own dry run judged 7 leads and suggested 6 fixes.",
+        "Added a safety net: if Discord ever refuses again, the reason and the full week's list go into the server log instead of disappearing. 3 new tests check the real request; 44 of 44 pass, and the new test fails when the fix is taken out.",
+        "Re-counted the stage live: 443 open deals worth $463,130, a typical wait of 94 days, and 128 with no owner. 10 leads arrived this week and the entry guard flagged 9 of them."
+      ],
+      "fixed": [
+        "Found why the Monday Re-Engage report failed on 9/14, 9/21, and 9/28: it judged every parked lead, then Discord refused the post (error 1010, Discord's block on Python's default ID tag), so three weekly rescue lists were thrown away. The crash alarm posts the same way, so it was refused too and nobody was told."
+      ],
+      "inProgress": [
+        "The first automatic post since 9/07 is due Monday 10/05 at 7 AM PT.",
+        "Wrote Noah a file that copies the fixed code into his vault, so a deploy from his copy cannot undo it again. Tested it four ways on a copy of his folder layout."
+      ],
+      "notes": "Read-only on GHL: nothing moved, tagged, or messaged. The live code matches the committed fix byte for byte."
+    },
     {
       "date": "2026-10-02",
       "title": "Checked Noah's next quote-system deploy against my matcher fixes, and wrote the fix for the one that would still file a Marine Blue Tesla as a boat",
