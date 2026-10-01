@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-01T20:53:42.063Z",
+  "updated": "2026-10-01T21:06:03.640Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -877,7 +877,7 @@
   ],
   "sessions": [
     {
-      "date": "2026-10-02",
+      "date": "2026-10-01",
       "title": "Fixed the Monday Re-Engage report that threw away its lead list three weeks running",
       "shipped": [
         "Traced it to two copies of the code. Noah fixed this exact refusal on 8/17, and my 9/10 plain-English deploy was built from the older copy without his fix, so it undid it. Put his fix back with the same value and deployed it on 10/01; the deploy's own dry run judged 7 leads and suggested 6 fixes.",
@@ -894,7 +894,7 @@
       "notes": "Read-only on GHL: nothing moved, tagged, or messaged. The live code matches the committed fix byte for byte."
     },
     {
-      "date": "2026-10-02",
+      "date": "2026-10-01",
       "title": "Checked Noah's next quote-system deploy against my matcher fixes, and wrote the fix for the one that would still file a Marine Blue Tesla as a boat",
       "shipped": [
         "Downloaded the live quote system's code and replayed 2,572 real customer car descriptions through it and through the newer size table Noah's next deploy (approvals M1) will carry. 52 change: 16 start getting an automatic quote instead of waiting for a person (Chevy Trax, Subaru Uncharted, GMC Acadia, Saab 9-5, BMW 840 and others), and 35 move to the size Noah ruled (M4, M440i, M8, Scat Pack, GT500 to Exotic).",
