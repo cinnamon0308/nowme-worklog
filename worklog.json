@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-01T21:45:57.832Z",
+  "updated": "2026-10-01T22:06:05.350Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -878,7 +878,7 @@
       "item": "Give Claude the missed-call responder file Tasha sent",
       "project": "Missed-Call Responder",
       "since": "2026-10-01",
-      "impact": "The live missed-call responder stopped paying Claude for replies it never sends (it runs every 5 minutes in test mode). Noah's vault copy is still the old file, so any deploy from it brings that cost back. This copies the live file into the vault after a hash check. Nothing deploys, nothing in GHL changes, and nobody gets a message.",
+      "impact": "Sent on Discord 10/01. The live missed-call responder stopped paying Claude for replies it never sends (it runs every 5 minutes in test mode). Noah's vault copy is still the old file, so any deploy from it brings that cost back. This copies the live file into the vault after a hash check. Nothing deploys, nothing in GHL changes, and nobody gets a message.",
       "whatToDo": [
         "Download noah-claude-missed-call-dryrun.md from Tasha's Discord message.",
         "Drag it into Claude and say: claude do this, tasha sent this. It takes under a minute and changes one file.",
@@ -904,9 +904,9 @@
         "The responder runs every 5 minutes in test mode, and it was paying Claude for a reply to every missed call it saw, throwing the reply away, then paying again for the same call on the next sweep. Found in my 10/01 review of every scheduled automation."
       ],
       "inProgress": [
-        "Wrote Noah a file that copies the fixed code into his vault, so a deploy from his copy can't bring the paid drafting back. Tested it three ways on a copy of his folder layout: it updates the old file, says so on a re-run, and refuses a file it doesn't recognize."
+        "Sent Noah the file on Discord (10/01, about 3 PM PT) that copies the fixed code into his vault, so a deploy from his copy can't bring the paid drafting back. Tested it three ways on a copy of his folder layout: it updates the old file, says so on a re-run, and refuses a file it doesn't recognize. Waiting on the DONE line from his Claude."
       ],
-      "notes": "Nothing was texted, tagged, or written in GHL. 4 offline tests pass on the new code, and the old code fails the no-Claude test, so the test really catches the problem. The other half of that review item (the KPI post undercounting quietly) is still open."
+      "notes": "Nothing was texted, tagged, or written in GHL. Noah's 9/30 switch of quote lookups to Urable's official API is untouched: same setting and same key, checked before and after, and every dry-run sweep still uses it. Those dry-run drafts were never written to any log, so the 7/07 plan to read them each morning never had anything to read; turning them off hides nothing. 4 offline tests pass on the new code, and the old code fails the no-Claude test, so the test really catches the problem. The other half of that review item (the KPI post undercounting quietly) is still open."
     },
     {
       "date": "2026-10-01",
