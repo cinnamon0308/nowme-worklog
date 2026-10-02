@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-02T16:45:17.878Z",
+  "updated": "2026-10-02T20:45:11.922Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -893,6 +893,22 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-02",
+      "title": "Made three live automations ignore any request to loosen them from their web address",
+      "shipped": [
+        "Changed the follow-up orchestrator, the missed-call responder, and the Urable proposal poll so a request to their web address can only make a run safer. Whether each one sends or only rehearses now depends on how it was deployed and on nothing typed into an address. Deployed 10/02 one at a time: missed-call-responder-00007-pow, then urable-open-poll-00042-muh, then cadence-orchestrator-00073-qin, which sends texts, last and in the quiet gap between its runs. Each service was checked against its own before state: same settings, same secrets, same access list, and the live code identical to the tested file in all of its 363, 564, and 630 files except the one I changed.",
+        "Wrote 27 checks before touching the code. On the old code 48 of their cases failed, each one an address arming a service; on the new code all 27 pass. Then watched the live runs: the missed-call responder and the poll returned 200 on every scheduled run after the deploy (the poll on both its 5-minute and 30-minute lanes), and the orchestrator's first full run on its new revision came back 200 after 13 minutes.",
+        "Wrote and tested the file that copies the change into Noah's copies of two of the files, so a deploy from his vault cannot undo it. In five test cases it updated only what it should and refused, changing nothing, whenever his files or the live files were not what it expected."
+      ],
+      "fixed": [
+        "A wrong test call from a script could have overridden the safe settings on all three services. Only accounts with access to our project can call them, so nothing was open to the public, and no scheduled run ever used those options, so normal behavior did not change."
+      ],
+      "inProgress": [
+        "The file for Noah's vault is written but not sent yet. Until he runs it, a deploy of the orchestrator or the missed-call responder from his vault would bring the old behavior back without any error."
+      ],
+      "notes": "Rollback for each service is one command, and the previous revision is kept. My testing made no GHL calls and sent nothing to customers. I did not test the unsafe direction against a live service; the proof is that the live code is byte for byte the tested file, plus the scheduled runs."
+    },
     {
       "date": "2026-10-02",
       "title": "Shut off two old Mac jobs: a nightly report that never published and an alarm that fired every workday",
