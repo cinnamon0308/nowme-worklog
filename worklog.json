@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-02T16:33:50.039Z",
+  "updated": "2026-10-02T16:45:17.878Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -899,15 +899,16 @@
       "shipped": [
         "Shut off the nightly pipeline report that has run on my Mac since April. All 161 runs in its log (April 20 to October 2) pulled lead data from GHL and built the report, then stopped at the Cloudflare upload step because the Mac could not find the upload tool, so it never published anything. I checked the Mac's schedules and the dashboard files for anything that reads its output and found nothing live, so switching it off loses nothing and my Mac stops pulling GHL every night for it.",
         "The call-sheet miss alarm is off too. It fired on all 15 of its weekday runs from 9/14 to 10/02. Fourteen said no sheet file existed yet at 5:45 AM PT, and the other, on 9/23, called a correct 67 KB sheet I had built broken, because its 100 KB size floor dates from when sheets ran about 550 KB. The alarm only looks for a file on my Mac, and the day's sheet now comes from the 6 AM Google Cloud post.",
-        "Both jobs are unloaded from the Mac's scheduler and marked disabled, so a restart or login won't bring them back. The job files stay on disk, so either one can be switched back on with two commands."
+        "Both jobs are unloaded from the Mac's scheduler and marked disabled, so a restart or login won't bring them back. The job files stay on disk, so either one can be switched back on with two commands.",
+        "Locked the old audit's saved GHL key file to owner-only access and tested the key with one read-only GHL call. Nothing uses the key now, so retiring it in GHL is the one step left, and I found no other copy of it in the folders and settings the two jobs touch."
       ],
       "fixed": [
         "The miss alarm could not pass anymore: 15 alarms in 15 workdays meant a real missed sheet would have looked the same as every other morning."
       ],
       "inProgress": [
-        "Still open on this item: checking whether the GHL key the old nightly report used is still live and retiring it if nothing else needs it, and deciding whether the 6 AM Discord post needs a did-it-post check of its own."
+        "Still open on this item: retiring the old audit's GHL key in GHL after checking nothing else uses it, and deciding whether the 6 AM Discord post needs a did-it-post check of its own."
       ],
-      "notes": "Nothing in GHL, Discord, or Google Cloud was touched. The counts come from the two jobs' own log files. Both jobs are switched off, not deleted."
+      "notes": "Nothing was written in GHL, Discord, or Google Cloud: the only GHL call was a read-only list of pipelines. The counts come from the two jobs' own log files. Both jobs are switched off, not deleted."
     },
     {
       "date": "2026-10-01",
