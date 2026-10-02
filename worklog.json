@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-02T20:45:11.922Z",
+  "updated": "2026-10-02T22:06:15.960Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -925,6 +925,24 @@
         "Still open on this item: retiring the old audit's GHL key in GHL after checking nothing else uses it, and deciding whether the 6 AM Discord post needs a did-it-post check of its own."
       ],
       "notes": "Nothing was written in GHL, Discord, or Google Cloud: the only GHL call was a read-only list of pipelines. The counts come from the two jobs' own log files. Both jobs are switched off, not deleted."
+    },
+    {
+      "date": "2026-10-02",
+      "title": "Rebuilt the interview that scopes a job so one message asks every open question, and set up Reddit and YouTube research that already read 5 Rocklear threads",
+      "shipped": [
+        "Rebuilt the interview I run before building anything on the grilling method in Matt Pocock's public skills collection. One message now asks every question that does not depend on an unanswered one, each numbered with a recommended answer under it, so I can reply \"5 yes, 6 no\" in one line, and it confirms the decisions with me before it builds. Five test runs with fresh agents changed it: questions are saved to a file before they are sent, so a dropped session loses nothing, and the reading it does before round 1 fell from 39 file reads (about 20 minutes) in one run to 9 reads (about 4 minutes) in the final run, which opened with 3 questions.",
+        "Added a one-command handoff that writes a short document a fresh session can pick up where the last one stopped. In testing, a made-up conversation containing a fake API key, a webhook link, and a customer's phone number produced a document with none of the three, and a second fresh agent that read only the document ran its checks and knew the next step without any background.",
+        "Set up YouTube and Reddit research on my Mac with no logins and no accounts. First uses: pulled the full transcript (2,063 words) of Dragon Auto's own Icon Rocklear Quality Control video, and read 5 Reddit threads about Rocklear, with the praise and the complaints saved in notes with a link for every point, so Noah's Rocklear SEO pages can answer what detailers actually say.",
+        "Narrowed the research tool's own instructions before using it. As shipped they would have sent every link I paste, GHL contact pages included, to an outside reader service. In testing a GHL contact link was refused, and an ordinary article still went to the normal reader."
+      ],
+      "fixed": [
+        "The research tool stamped a February 2024 Reddit thread with an October 2024 date, because its search results carry made-up dates. The instructions now take the date from the page itself.",
+        "The transcript step failed on videos whose caption file has a different name than it expected. It no longer does."
+      ],
+      "inProgress": [
+        "The copy of the interview that claude.ai keeps on its own side is still the old version. It changes only if I re-upload it there."
+      ],
+      "notes": "No GHL calls were made and no customer was messaged. The privacy tests used made-up details. I left Noah's own copy of the interview alone, since it asks one question at a time on purpose. Everything I overwrote has a backup."
     },
     {
       "date": "2026-10-01",
