@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-05T20:02:09.433Z",
+  "updated": "2026-10-05T20:43:30.485Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -908,6 +908,23 @@
   "sessions": [
     {
       "date": "2026-10-05",
+      "title": "Found why quiz leads fall to #49 on Sean's sheet after one call, and one live lead stuck in a dead stage",
+      "shipped": [
+        "Checked the 14 people who took the quiz from 9/29 to 10/05 in GoHighLevel. All 14 exist and carry the quiz tag, 10 have an open card in a stage the sheet reads, and 3 are paid and correctly off the cold-call list. The last one has a live conversation, but his only card sits in the Lost (Ghost) stage, so the sheet cannot see him.",
+        "Ran the live call-sheet code offline on those 14 plus the 16 older quiz leads Noah measured on the 10/05 sheet. It reproduced his result: the five weekend leads on top, and the five he found at #49 to #66. After the calls on 10/05 those leads fall out of the top block, because the sheet treats a lead as fresh only until its first call attempt, even a voicemail.",
+        "Counted the competition for the 10 seats the sheet reserves for quiz leads: 15 of the 27 leads I replayed qualify for tomorrow, and 36 quiz-tagged cards sit in the five stages the sheet reads. The sheet keeps no record of who it leaves out, so three leads that pass every rule were still absent on 10/05.",
+        "Found that the sheet reads most voicemail greetings as answered calls. Of 10 calls on eight quiz leads, 8 counted as answered, and 6 of those are voicemail or call-screening greetings. That is why called leads still read 'never called' and the three-strikes rule never fires for them.",
+        "Built the move that brings the hidden lead back to a card the sheet reads, as a dry run: one card, backed up, nothing written."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "I have not moved the hidden lead's card yet; the dry run waits for my go.",
+        "How long a quiz lead keeps its place near the top after a call is Noah's rule (his 7/22 note says 'not called a single time yet'). No GoHighLevel change can lift these leads on tomorrow's sheet, so the fix is an engine change he deploys or a list for Sean. I am taking him the numbers before anything changes."
+      ],
+      "notes": "Everything was read-only: nothing was written to GoHighLevel and no customer was contacted. The replay turns the AI scoring off, so the order inside the quiz lane is not reproduced, and an as-of view uses each card's current stage. Two of Noah's eleven missing names could not be matched in the quiz ledger."
+    },
+    {
+      "date": "2026-10-05",
       "title": "Traced 56 refused quiz posts to two old Perspective webhooks with no key; every quiz still arrived",
       "shipped": [
         "Sorted every request the quiz receiver got in the last week (85, from 9/29 to 10/05) by how it carried the key. All 56 refused posts carried no key, none carried a wrong one, and the 29 accepted posts all used one key. That rules out a second sender holding a wrong key.",
@@ -917,8 +934,7 @@
       ],
       "fixed": [],
       "inProgress": [
-        "The refusals stop when the two old 'New Lead' webhook entries are deleted from the quiz funnels in Perspective. That waits on Noah's OK (approvals S18). A day after they are gone I rerun the checker, and refused posts should read 0.",
-        "I have not yet checked that each of the 14 people behind the week's quizzes has a card in GoHighLevel. That is the last check the audit asked for."
+        "The refusals stop when the two old 'New Lead' webhook entries are deleted from the quiz funnels in Perspective. That waits on Noah's OK (approvals S18). A day after they are gone I rerun the checker, and refused posts should read 0."
       ],
       "notes": "Nothing outside my own files was changed: no customer was contacted, and nothing in GoHighLevel, Perspective, or Google Cloud was touched. I did not open Perspective's webhook screen, so that the two old entries still exist rests on Noah's 9/23 and 9/28 notes plus the pattern in the log. The audit counted 28 accepted posts and the log shows 29; the refused count of 56 matches exactly."
     },
