@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-06T17:35:25.805Z",
+  "updated": "2026-10-06T17:46:05.642Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -597,7 +597,8 @@
           "07-31: closed Noah's own audit of this page. Three of his four findings were already live; the two money cards were still showing a start date 11 days past, and now report as not started, age themselves in days, and name what they are held on. 15 new checks guard that wording, each tested by restoring the bug.",
           "08-01: made the pipeline map derive each stage's robot roster from what the robots themselves declare, removing the second hand-edited copy that the stage cards and robot counts were reading from. Added the Re-Engage entry guard and the weekday KPI report, corrected ten stale or wrong statements on the map (who moves Booked and Won, the real follow-up clock, three robot statuses, the unverified 90-day review ask, the watchdog's own check count), and surfaced a leak nobody had written down: a ghost who replies with a question gets a quiet tag and nothing else.",
           "08-26: Noah's Log was printing one word a day for six days; the note reader and the page were both still built for his old daily-note layout. Both fixed, and the test that should have caught it is running again.",
-          "09-27: cut the dashboard to 5 pages (Latest work, Waiting on Noah, Systems, Pipeline Map, Tasha's log) and made Latest work the opening page; the KPI page came down because its newest figure was from the week of July 13."
+          "09-27: cut the dashboard to 5 pages (Latest work, Waiting on Noah, Systems, Pipeline Map, Tasha's log) and made Latest work the opening page; the KPI page came down because its newest figure was from the week of July 13.",
+          "10-06: removed five customer phone numbers from the public page and made every publish strip phone numbers and emails, refusing to publish one it cannot clean. 21 new checks guard it."
         ],
         "needsImprovement": [
           "No fixed finish line; this tool keeps growing as new needs come up."
@@ -889,6 +890,23 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-06",
+      "title": "Took five customer phone numbers off the public work log, and publishing now strips them on its own",
+      "shipped": [
+        "Found five customers' phone numbers inside call-sheet notes on dashboard.nowme.cloud, where anyone with the link could read them, and replaced each one with \"[phone removed]\". The notes still read the same, and the clean page went live on 10/06.",
+        "Made the publisher remove phone numbers and email addresses by itself on every run, and refuse to publish at all if one sits somewhere it cannot clean. A number quoted in a future call-sheet note can no longer reach the page.",
+        "Added a lock on the site's code folder that stops any hand-made change carrying a phone number or email before it is saved, so the page has the same protection when someone edits it directly.",
+        "21 new automated checks cover the cleanup, the refusal, and the lock. All 48 publishing checks pass, plus the 26 page checks and 14 vault checks."
+      ],
+      "fixed": [
+        "Caught two problems in the new cleanup before it touched real data: a refusal message that would have printed the full number it was blocking, and a file-permission slip that would have left the work log file, which holds private sections, readable by other accounts on the Mac."
+      ],
+      "inProgress": [
+        "Clearing the site's older saved versions is the last step. The steps are written and the patterns were checked against every saved version; it needs one deliberate run and a cache purge request to GitHub."
+      ],
+      "notes": []
+    },
     {
       "date": "2026-10-06",
       "title": "Confirmed Noah's 10/06 follow-up bot update kept every earlier fix, and closed his missed-call copy",
