@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-05T20:43:30.485Z",
+  "updated": "2026-10-06T01:13:51.028Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -914,14 +914,14 @@
         "Ran the live call-sheet code offline on those 14 plus the 16 older quiz leads Noah measured on the 10/05 sheet. It reproduced his result: the five weekend leads on top, and the five he found at #49 to #66. After the calls on 10/05 those leads fall out of the top block, because the sheet treats a lead as fresh only until its first call attempt, even a voicemail.",
         "Counted the competition for the 10 seats the sheet reserves for quiz leads: 15 of the 27 leads I replayed qualify for tomorrow, and 36 quiz-tagged cards sit in the five stages the sheet reads. The sheet keeps no record of who it leaves out, so three leads that pass every rule were still absent on 10/05.",
         "Found that the sheet reads most voicemail greetings as answered calls. Of 10 calls on eight quiz leads, 8 counted as answered, and 6 of those are voicemail or call-screening greetings. That is why called leads still read 'never called' and the three-strikes rule never fires for them.",
-        "Built the move that brings the hidden lead back to a card the sheet reads, as a dry run: one card, backed up, nothing written."
+        "Moved the hidden lead's card out of the Lost (Ghost) stage into Engaged at 6:11 PM PT, so the sheet can see him again. He texted us back on 10/01 and rang the shop twice, and no one had followed up. It was one card, backed up first and read back after, with its status untouched, and nothing was sent to him."
       ],
       "fixed": [],
       "inProgress": [
-        "I have not moved the hidden lead's card yet; the dry run waits for my go.",
+        "Engaged restarts his follow-up clock. It queues drafts for approval and sends nothing by itself, and if he stays silent the system tags him for ghosting again around 10/08.",
         "How long a quiz lead keeps its place near the top after a call is Noah's rule (his 7/22 note says 'not called a single time yet'). No GoHighLevel change can lift these leads on tomorrow's sheet, so the fix is an engine change he deploys or a list for Sean. I am taking him the numbers before anything changes."
       ],
-      "notes": "Everything was read-only: nothing was written to GoHighLevel and no customer was contacted. The replay turns the AI scoring off, so the order inside the quiz lane is not reproduced, and an as-of view uses each card's current stage. Two of Noah's eleven missing names could not be matched in the quiz ledger."
+      "notes": "One stage move on one card was the only write to GoHighLevel, and no customer was contacted. The replay turns the AI scoring off, so the order inside the quiz lane is not reproduced, and an as-of view uses each card's current stage. Two of Noah's eleven missing names could not be matched in the quiz ledger."
     },
     {
       "date": "2026-10-05",
