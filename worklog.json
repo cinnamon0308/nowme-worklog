@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-06T01:32:41.362Z",
+  "updated": "2026-10-06T02:34:29.098Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -613,11 +613,11 @@
       "id": "dead-lead-revival",
       "name": "Dead Lead Revival",
       "status": "IN_PROGRESS",
-      "summary": "Every lead written off in Rockclear's three dead stages, pulled and ranked by how likely it is to come back. 1,035 leads, $595,772 in quoted value that stopped being called. 603 are worth a phone call and are queued in 13 waves of 50; 268 get a bulk email; 164 are held out because there is no legal channel left or they already bought from us. Aug 3: the Lost - Ghost stage got its own live roster page, all 383 names ($415,610 quoted) with GHL links, search, and band filters, so working the list needs no spreadsheet gymnastics. The tracker scores itself: revive rate, dollars recovered, touches per revive, and which original Facebook ad produces leads that come back. Aug 9: the 19 leads already rescued into the new Waiting stage ($23,575) each got a dated reminder task assigned to Sean, and the 15 leftover ghost tags that could have re-buried them were removed, dry-run first, every write verified. Oct 5: a fresh read of all 637 Lost (Ghost) cards and their full histories found 17 people who came back wanting to buy after being written off ($18,700 on their cards); the list is ready for Sean.",
+      "summary": "Every lead written off in Rockclear's three dead stages, pulled and ranked by how likely it is to come back. 1,035 leads, $595,772 in quoted value that stopped being called. 603 are worth a phone call and are queued in 13 waves of 50; 268 get a bulk email; 164 are held out because there is no legal channel left or they already bought from us. Aug 3: the Lost - Ghost stage got its own live roster page, all 383 names ($415,610 quoted) with GHL links, search, and band filters, so working the list needs no spreadsheet gymnastics. The tracker scores itself: revive rate, dollars recovered, touches per revive, and which original Facebook ad produces leads that come back. Aug 9: the 19 leads already rescued into the new Waiting stage ($23,575) each got a dated reminder task assigned to Sean, and the 15 leftover ghost tags that could have re-buried them were removed, dry-run first, every write verified. Oct 5: a fresh read of all 637 Lost (Ghost) cards, both sides of every thread, found 21 people who reached back out after being written off; the team had already replied to 17 of them, and none of those has written back since.",
       "blockedOn": "None",
       "progress": {
         "stage": "underway",
-        "reason": "Oct 5: 17 written-off leads who came back wanting to buy are listed with links, nothing moved yet. Wave 1 outreach still not started."
+        "reason": "Oct 5: nobody in Lost (Ghost) is waiting on a reply from us; one July email with no recorded reply is flagged. Wave 1 outreach still not started."
       },
       "health": {
         "band": "healthy",
@@ -908,18 +908,16 @@
   "sessions": [
     {
       "date": "2026-10-05",
-      "title": "Found 17 written-off leads who came back wanting to buy, parked where no one calls them",
+      "title": "Checked all 637 written-off leads for anyone reaching back out: the team had already replied to them",
       "shipped": [
-        "Read all 637 cards in the Lost (Ghost) stage and the full text, email, and call history behind each one to find who reached out to us between July 5 and October 5. 79 did, and 21 of them did it after their card had already been written off.",
-        "Read those 21 conversations by hand, both sides. 17 came back wanting to buy, worth $18,700 on their cards: one asking about rock chip protection on 9/23, one saying they were still interested and wanted the exact price, one out of the country until 9/10 who said they would get back to us, two who called and left voicemails, and seven who said yes to the 8/25 sale text.",
-        "Found why they stalled. 16 of the 17 got a reply from Sean, Jenn, or Noah, most within the hour, and then nothing more, because the daily call sheet never reads that stage. The seven who said yes to the sale text got a fresh proposal and then no follow-up for five to six weeks, and one customer's 8/25 text was never answered.",
-        "Caught two more who reached out just before being written off and never got a real answer (a 7/26 email asking for a polish and coating price, and a returned call on 9/29), plus one paying customer whose old duplicate card still sits in the stage."
+        "Read every card in the Lost (Ghost) stage, 637 leads, with the full text, email, and call history on both sides, to find anyone who reached out between July 5 and October 5. 79 did, and 21 of them wrote or called after their card had already moved to Lost (Ghost).",
+        "Sean, Jenn, or Noah replied to 17 of those 21 after their last message, most within the hour, with a fresh proposal, a price, or an answer to the question. None of the 17 has written back since, so the next move is theirs, not ours.",
+        "Of the other four, one is a paying customer whose old July card was left behind after the job finished on 9/29, one said we are top of mind for later, one said they would be back from abroad on 9/10 and reach out then, and one complained that the 8/25 sale text arrived twice.",
+        "Flagged one open question from before the move: a 7/26 email asking for a polish and coating price that shows no reply in GoHighLevel."
       ],
       "fixed": [],
-      "inProgress": [
-        "Nothing was moved or sent. Next is deciding whether the 17 go back into a stage Sean's sheet reads or onto a hand list for him; the list with GoHighLevel links is ready."
-      ],
-      "notes": "Read-only: no card moved, no tag added, and no customer contacted. Calls counted at any outcome, including missed rings and voicemails. Left out our own emails that GoHighLevel marks as incoming, reactions, and auto-replies."
+      "inProgress": [],
+      "notes": "Read-only: no card moved, no tag added, and no customer contacted. Corrected the same evening: the first version of this entry said the team had stopped following up with these leads, and that was wrong."
     },
     {
       "date": "2026-10-05",
