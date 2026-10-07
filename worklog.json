@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-07T03:35:37.298Z",
+  "updated": "2026-10-07T03:45:26.856Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -898,13 +898,14 @@
         "Raised the time the 30-minute Urable safety sweeps may run from 240 to 540 seconds. Three sweeps on 10/01 (2:30, 5:30, and 6:00 AM) were cut off at exactly 240 seconds after already spending their share of the daily GoHighLevel allowance, and 11 runs this week went past 200 seconds.",
         "Raised the 5:45 AM spam-caller cleanup's clock from 300 to 540 seconds. Its 10/01 run took 354 seconds, so Google's scheduler marked it failed while the cleanup was still working, and 10/03 came within 7 seconds of the same.",
         "Read a week of real run times before changing anything: the 5-minute quote lane never took longer than 15 seconds across 2,058 runs, so its clock was left alone.",
-        "Compared the poller's settings before and after the change: only the time limit moved. The code, all 52 settings, and the keys are identical, and the first quote-lane run on the new setting (8:35 PM) answered OK in under 2 seconds."
+        "Compared the poller's settings before and after the change: only the time limit moved. The code, all 52 settings, and the keys are identical, and the first quote-lane run on the new setting (8:35 PM) answered OK in under 2 seconds.",
+        "Changed both Urable poller deploy scripts in the working deploy copy to 540 seconds, for the poller's own limit and for the sweeps clock, so a redeploy from that copy can no longer quietly bring back the 240-second cut-off. Nothing live was redeployed for this; the scripts only matter the next time the poller ships."
       ],
       "fixed": [],
       "inProgress": [
         "Watching a full week of runs: these two items close on the fix list once no sweep is cut off and no cleanup is marked failed through 10/13."
       ],
-      "notes": "Also ticked the 6:30 AM call-sheet check (F12) as done on the October fix list. Noah's poller deploy script still sets 240 seconds by default, so running it without the 540-second setting would undo the poller change."
+      "notes": "Also ticked the 6:30 AM call-sheet check (F12) as done on the October fix list. The working deploy copy of the poller scripts now uses 540 seconds. Noah's own copy of the same two scripts still sets 240 seconds, so a deploy from his folder would undo the poller change until it gets the same edit."
     },
     {
       "date": "2026-10-06",
