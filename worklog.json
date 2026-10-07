@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-07T02:46:56.060Z",
+  "updated": "2026-10-07T03:01:21.553Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -170,7 +170,7 @@
       "id": "call-sheet",
       "name": "Daily Call Sheet",
       "status": "LIVE",
-      "summary": "October 1 PT: found why the same leads sit on the automatic list every morning (54 of 75 seats on 9/30 were held by leads the list can never drop) and moved or closed 36 of them, all checked. September 30 PT: the first check of the automatic list found all 6 mornings since 9/23 posted 75 leads, Sean's week matches Noah's 6:45 AM report on dials, long conversations and inbound calls, and the seven sorting mistakes in my hand-build script are fixed. Wednesday's 6 AM run was the first with Noah's 9/29 callback fix: 31 open callback tasks, no blocks, one routine warning. My deploy copies match both his 9/23 and 9/29 versions, so a deploy from my side cannot undo either.",
+      "summary": "October 6 PT: a separate 6:30 AM check now posts one line to #alarms if the morning's sheet did not go out, 4.5 hours before Sean starts; it was proved on the stored 10/05 and 10/06 sheets and one test alarm. October 1 PT: found why the same leads sit on the automatic list every morning (54 of 75 seats on 9/30 were held by leads the list can never drop) and moved or closed 36 of them, all checked. September 30 PT: the first check of the automatic list found all 6 mornings since 9/23 posted 75 leads, Sean's week matches Noah's 6:45 AM report on dials, long conversations and inbound calls, and the seven sorting mistakes in my hand-build script are fixed. Wednesday's 6 AM run was the first with Noah's 9/29 callback fix: 31 open callback tasks, no blocks, one routine warning. My deploy copies match both his 9/23 and 9/29 versions, so a deploy from my side cannot undo either.",
       "blockedOn": "A decision on running the July 30 overlay procedure to put the missing rescue step, the PPF rule and the unreadable-ring fix onto the live engine; until then the hand-build carries those rules by hand. The rebuilt opt-out fix (rebuilt again 9/30 on Noah's 9/29 version) waits on its side-by-side comparison and Tasha's sign-off.",
       "health": {
         "band": "watch",
@@ -179,6 +179,7 @@
       "detail": {
         "goal": "Give Sean a ready-to-work call list every morning, ranked by real intent, so he always knows who to call first without pulling it by hand.",
         "whatWasDone": [
+          "10-06 PT: built and deployed the 6:30 AM post check (fix list F12): it looks for the copy of the sheet the 6 AM run saves only after Discord accepts the post, and alarms in #alarms when it is missing. Verified live on 10/04, 10/05 and 10/06 before the weekday clock was switched on, plus one test alarm; 27 automated checks.",
           "09-30 PT: checked the automatic list for its first week from the system's own log (6 of 6 mornings posted 75 leads; 9/21 and 9/22 had been blocked), counted Sean's week (dials 48, 48, 47, 60, 39; matches Noah's 6:45 report), joined 31 payments ($31,779.63) to who had called or texted the payer, fixed the seven sorting mistakes test-first and replayed 1,518 real records (28 changed, nobody newly blocked), and ran the same phrases through the live code.",
           "09-30 PT: copied Noah's 9/29 callback fix into both of Tasha's deploy copies, rebuilt the opt-out package on his newest version under its own fingerprint, and marked the 9/25 package do-not-deploy. Proved first that his written change matches the running version to the byte, then checked both results against an independent merge. All 455 of his checks pass on the package, his 50-check callback test now runs in the repo suite, and 212 engine and 358 delivery checks pass. Wednesday's 6 AM run, the first with the fix, found 31 open callback tasks and had no blocks. Nothing deployed.",
           "09-25 PT: matched Tasha's deploy copies to Noah's live 9/23 version (revision 00034-sem) line by line: 75 leads, AI-down as a warning, no re-post of a sheet older than one workday, #alarms, and the tasks-read crash fix. Fixed the deploy script's 15-minute timeout (live is 30) and its settings wipe, and rebuilt the 9/09 opt-out fix on the new version. 211 engine and 358 delivery checks pass.",
@@ -890,6 +891,21 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-06",
+      "title": "A missed 6 AM call sheet now raises an alarm in #alarms by 6:30, 4.5 hours before Sean starts",
+      "shipped": [
+        "Built a separate check that runs at 6:30 AM Pacific every weekday and looks for that morning's call sheet. If the sheet is missing, one line goes to #alarms, which leaves 4.5 hours to rebuild it or hand Sean the previous one before his 11:00 AM start. Nothing had watched the 6 AM post since the old Mac alarm was retired on 10/02.",
+        "The check reads the copy of the sheet that the 6 AM run saves only after Discord accepts the post, so it catches a run that never started, a crash, a failed post, and a blocked morning alike. I confirmed that behavior in the code Google Cloud is actually running before relying on it.",
+        "Proved it on live data before turning the clock on: it found the stored 10/05 and 10/06 sheets, reported Sunday 10/04 as missing without posting, and one test alarm reached #alarms. The [TEST] line there at 7:57 PM on 10/06 was this test, not a real miss.",
+        "27 automated checks cover a found sheet, a missing one, a store it cannot read, weekends, test runs, and a failed Discord post. The deploy refuses to start the clock unless the live check can see a stored sheet, so a broken watchdog can never post to #alarms every morning."
+      ],
+      "fixed": [
+        "Caught a wrong explanation in the first version before any real morning ran: checking an old date borrowed the 6 AM job's latest run and said a Sunday had \"answered OK\". The fixed version says that day's result is no longer readable, or that no sheet runs on weekends. The alarm itself was never affected."
+      ],
+      "inProgress": [],
+      "notes": "Read-only everywhere except that one #alarms line: no GoHighLevel writes, nothing posted to #sales, and the 6 AM call sheet itself was not touched. The last six mornings (9/29 to 10/06) all posted between 6:09 and 6:15 AM, so a normal morning stays silent. First real check: Wednesday 10/07 at 6:30 AM PT."
+    },
     {
       "date": "2026-10-06",
       "title": "Took five customer phone numbers off the public work log, and publishing now strips them on its own",
