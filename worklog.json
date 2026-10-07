@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-06T17:46:05.642Z",
+  "updated": "2026-10-07T02:46:56.060Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -897,13 +897,15 @@
         "Found five customers' phone numbers inside call-sheet notes on dashboard.nowme.cloud, where anyone with the link could read them, and replaced each one with \"[phone removed]\". The notes still read the same, and the clean page went live on 10/06.",
         "Made the publisher remove phone numbers and email addresses by itself on every run, and refuse to publish at all if one sits somewhere it cannot clean. A number quoted in a future call-sheet note can no longer reach the page.",
         "Added a lock on the site's code folder that stops any hand-made change carrying a phone number or email before it is saved, so the page has the same protection when someone edits it directly.",
+        "Rewrote all 46 saved versions in the site's history so none of them holds a customer phone number or email, and proved the live page did not change by a single byte. A full backup stayed on this Mac until the change was confirmed.",
+        "Cleaned the old dashboard feed from before the GitHub move, which was still serving the same five numbers to anyone. Only the six mentions changed; its encrypted section came through untouched.",
         "21 new automated checks cover the cleanup, the refusal, and the lock. All 48 publishing checks pass, plus the 26 page checks and 14 vault checks."
       ],
       "fixed": [
         "Caught two problems in the new cleanup before it touched real data: a refusal message that would have printed the full number it was blocking, and a file-permission slip that would have left the work log file, which holds private sections, readable by other accounts on the Mac."
       ],
       "inProgress": [
-        "Clearing the site's older saved versions is the last step. The steps are written and the patterns were checked against every saved version; it needs one deliberate run and a cache purge request to GitHub."
+        "One request to GitHub to clear its cache of the old versions is the last step; the request is written and ready to send."
       ],
       "notes": []
     },
