@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-08T06:22:41.416Z",
+  "updated": "2026-10-08T06:51:59.172Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -630,11 +630,11 @@
       "id": "payment-sync",
       "name": "Deposit Lane (M151)",
       "status": "IN_PROGRESS",
-      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function with 38 passing tests, plus the 6:15 AM check C25 (12 tests). Not switched on: it plans and writes nothing until the dry-run week is done.",
-      "blockedOn": "GoHighLevel setup is done (10/07). Next: deploy in plan-only mode for a week, then the reviewed backfill since June. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
+      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function (42 passing tests) plus the 6:15 AM check C25 (12 tests). Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done.",
+      "blockedOn": "Plan-only week started 10/07. Next: the reviewed backfill since June, then arming it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
       "health": {
         "band": "on-track",
-        "reason": "Code and tests done 10/07; the remaining steps are setup and a supervised rollout, not unknowns."
+        "reason": "Running in the cloud in plan-only mode since 10/07; what's left is a supervised rollout, not unknowns."
       },
       "detail": "Replaces the 7/21 payment sync, which was never wired in. The lane never writes card status or owner, never moves a card out of Booked, Won, or a Lost stage, and never adds the urable-deposit-paid tag, whose workflow sends its own email. The backward half stays done from 08-02: 24 cards hand-verified and moved, $48,340 of collected money in Won. Still open from then: Jenn confirming two paid deposits whose Urable jobs were draft quotes are on the calendar, and 4 duplicate contacts to merge in the GHL UI."
     },
@@ -893,7 +893,7 @@
   "sessions": [
     {
       "date": "2026-10-07",
-      "title": "Built and tested the system that turns every paid deposit into a Booked card within 30 minutes (not switched on yet)",
+      "title": "Built, tested, and started the system that turns every paid deposit into a Booked card within 30 minutes (plan-only for its first week)",
       "shipped": [
         "Planned the deposit lane from Noah's M151 item: every paid Rocklear deposit in Urable becomes a Booked card for that car, at the full job price, within 30 minutes, or a #alarms line plus a GoHighLevel task for Jenn when it can't. The cases behind it: a $932.88 deposit from 9/26 sat with no CRM record for 8 days, and 15 deposits with $13,212 due at pickup went days without a call or text.",
         "Built the lane and 38 tests that run it against copies of the real cases: a payer with no CRM record, two cars sharing one card, a deposit with no install date, a paid-in-full customer left in Engaged at $0, and a card that a GoHighLevel workflow drags back to Manual Quote Required. All 38 pass. It writes nothing until it is switched on.",
@@ -902,16 +902,18 @@
         "Drafted the short 'deposit received, we'll set your date' email for deposits with no install date. It stays a draft until Noah approves the wording.",
         "Ran it against every real deposit paid since June, reading only: 51 open Rocklear jobs with $55,555 collected. It would give 7 cars their own Booked card, correct 5 card values to the full job price, and open 21 tasks for Jenn for deposits with no install date ($17,115 due at pickup). Everyone who paid since June is already in GoHighLevel.",
         "Set up GoHighLevel for it without touching any customer card: added the 4 card fields it writes (Urable job, deposit paid, quoted total, install date), and changed the Vehicle Estimation workflow so a card filed straight into Booked is never pulled back into Manual Quote Required. GoHighLevel can't filter that workflow on 'is not Booked', so it now runs from 7 triggers, one per working stage, checked against a backup before and after.",
-        "Built the 'deposit received, we'll set your date' email as a draft workflow on the needs-install-date tag. It stays off until Noah approves the wording."
+        "Built the 'deposit received, we'll set your date' email as a draft workflow on the needs-install-date tag. It stays off until Noah approves the wording.",
+        "Started it in the cloud in plan-only mode Wednesday night (10/07, 11:41 PM PT). It now checks every paid Urable deposit every 10 minutes and rechecks the last 30 days at 5:45 AM, and it writes nothing during its test week. The first scheduled check ran clean at 11:50 PM. It is saved on its own branch, apart from the unfinished call-sheet work, so it can be switched off or armed with one command.",
+        "Its first check caught a live deposit: $1,072.50 paid 10/7 on a $2,145 job, with the card still in Manual Quote Required and no install date in Urable. Once it is armed, cards like that go to Booked at the full job price and Jenn gets a task to set the date."
       ],
       "fixed": [
         "Caught three problems in that run before anything went live: a maintenance wash filed under the Rocklear category would have become a $30 Booked card, a two-car customer would have gotten two identical tasks, and a cancelled customer still shows as paid in Urable because the refund was made outside it. All three are fixed or held out of the backfill, with 42 passing tests."
       ],
       "inProgress": [
         "Urable was down from 6:10 to about 7:50 PM PT ('Bandwidth Quota Exceeded' on its own hosting); the poller rode it out on its backup path.",
-        "Next: a week of plan-only runs in the cloud, then a reviewed backfill of deposits since June."
+        "Plan-only week running since 10/07. Next: a reviewed backfill of deposits since June, then arming it."
       ],
-      "notes": "Nothing in GoHighLevel, Urable, or Discord was changed; every check against them was a read. Noah has a page with his two calls on it."
+      "notes": "No customer card or contact was touched, and no email or text went out. The GoHighLevel changes were the 4 new card fields, the Vehicle Estimation triggers, and one draft workflow; every other check was a read. Noah has a page with his two calls on it."
     },
     {
       "date": "2026-10-06",
