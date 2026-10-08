@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-08T06:51:59.172Z",
+  "updated": "2026-10-08T06:57:45.591Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -903,6 +903,7 @@
         "Ran it against every real deposit paid since June, reading only: 51 open Rocklear jobs with $55,555 collected. It would give 7 cars their own Booked card, correct 5 card values to the full job price, and open 21 tasks for Jenn for deposits with no install date ($17,115 due at pickup). Everyone who paid since June is already in GoHighLevel.",
         "Set up GoHighLevel for it without touching any customer card: added the 4 card fields it writes (Urable job, deposit paid, quoted total, install date), and changed the Vehicle Estimation workflow so a card filed straight into Booked is never pulled back into Manual Quote Required. GoHighLevel can't filter that workflow on 'is not Booked', so it now runs from 7 triggers, one per working stage, checked against a backup before and after.",
         "Built the 'deposit received, we'll set your date' email as a draft workflow on the needs-install-date tag. It stays off until Noah approves the wording.",
+        "Kept Noah's existing welcome email exactly as it is: nothing replaces it or turns it off. It stays the main onboarding email and still sends on its own once a card is in Booked with a future install date. The new 'Deposit received, date pending' draft is only a safety net for deposits with no install date yet (the needs-install-date tag), so those customers don't hear nothing while Jenn puts their drop-off date into Urable. Once the date is in, Noah's regular welcome goes out as normal.",
         "Started it in the cloud in plan-only mode Wednesday night (10/07, 11:41 PM PT). It now checks every paid Urable deposit every 10 minutes and rechecks the last 30 days at 5:45 AM, and it writes nothing during its test week. The first scheduled check ran clean at 11:50 PM. It is saved on its own branch, apart from the unfinished call-sheet work, so it can be switched off or armed with one command.",
         "Its first check caught a live deposit: $1,072.50 paid 10/7 on a $2,145 job, with the card still in Manual Quote Required and no install date in Urable. Once it is armed, cards like that go to Booked at the full job price and Jenn gets a task to set the date."
       ],
@@ -913,7 +914,7 @@
         "Urable was down from 6:10 to about 7:50 PM PT ('Bandwidth Quota Exceeded' on its own hosting); the poller rode it out on its backup path.",
         "Plan-only week running since 10/07. Next: a reviewed backfill of deposits since June, then arming it."
       ],
-      "notes": "No customer card or contact was touched, and no email or text went out. The GoHighLevel changes were the 4 new card fields, the Vehicle Estimation triggers, and one draft workflow; every other check was a read. Noah has a page with his two calls on it."
+      "notes": "No customer card or contact was touched, and no email or text went out. The GoHighLevel changes were the 4 new card fields, the Vehicle Estimation triggers, and one draft workflow; every other check was a read. Noah has a page with his two calls on it. Files for Noah: the M151 decision page with his two calls, https://claude.ai/artifact/NbB8RBVf2BXsYB2ZHiL29j ; the October takeover audit where M151 is item 1, https://claude.ai/artifact/WNTf6opUhiU3mfFwS2jS6T ; the technical blueprint (a copy of Tasha's 2026-10-07-m151-deposit-lane-blueprint.md), https://claude.ai/artifact/H8JoxTsXV2RRtjtEU6ojhp ; the GoHighLevel setup evidence, with before-and-after workflow backups and changes.jsonl listing every change, in audit-runs/2026-10-07-m151-ghl-prereqs on Tasha's Mac; the code, scripts/deposit-lane/ (42 tests passing) and scripts/deposit_reconcile.py (the C25 6:15 AM check, 12 tests passing), on branch feat/m151-deposit-lane, commit 3d51c47. Live Urable dry run: 51 open Rocklear jobs checked, $55,555 collected, 0 live writes."
     },
     {
       "date": "2026-10-06",
