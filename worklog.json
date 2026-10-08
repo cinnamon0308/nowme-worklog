@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-08T19:21:55.265Z",
+  "updated": "2026-10-08T22:58:43.308Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -630,13 +630,13 @@
       "id": "payment-sync",
       "name": "Deposit Lane (M151)",
       "status": "IN_PROGRESS",
-      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function (52 passing tests) plus the 6:15 AM check C25 (12 tests). Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done.",
+      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function (66 passing tests) plus the 6:15 AM check C25 (12 tests). Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it also tags paid customers 'deposit-paid' (never removed, because Noah's sweeps use it to stop chasing) and 'paid-in-full' once the job total is paid.",
       "blockedOn": "Plan-only week started 10/07. Next: the reviewed backfill since June, then arming it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
       "health": {
         "band": "on-track",
         "reason": "Running in the cloud in plan-only mode since 10/07; what's left is a supervised rollout, not unknowns."
       },
-      "detail": "Replaces the 7/21 payment sync, which was never wired in. The lane never writes card status or owner, never moves a card out of Booked, Won, or a Lost stage, and never adds the urable-deposit-paid tag, whose workflow sends its own email. The backward half stays done from 08-02: 24 cards hand-verified and moved, $48,340 of collected money in Won. Still open from then: Jenn confirming two paid deposits whose Urable jobs were draft quotes are on the calendar, and 4 duplicate contacts to merge in the GHL UI."
+      "detail": "Replaces the 7/21 payment sync, which was never wired in. The lane never writes card status or owner, never moves a card out of Booked, Won, or a Lost stage, never adds the urable-deposit-paid tag, whose workflow sends its own email, and never removes deposit-paid or paid-in-full. The backward half stays done from 08-02: 24 cards hand-verified and moved, $48,340 of collected money in Won. Still open from then: Jenn confirming two paid deposits whose Urable jobs were draft quotes are on the calendar, and 4 duplicate contacts to merge in the GHL UI."
     },
     {
       "id": "quiz-nurture-enroll",
@@ -891,6 +891,21 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-08",
+      "title": "Paid customers now carry plain 'deposit-paid' and 'paid-in-full' tags the sales team can read, without reopening Noah's chase sequences",
+      "shipped": [
+        "Gave the deposit lane a plain tag rule for the sales team: every paid customer gets 'deposit-paid', a job paid to its full price also gets 'paid-in-full', and the internal intake tag 'needs-manual-classification-rocklear' comes off as soon as a payment is verified. Sean and Jenn can read payment state on a contact without decoding plumbing tags.",
+        "Caught a collision before writing any code: 'deposit-paid' is already Noah's stop-chasing signal. His orchestrator adds it, and three of his sweeps (nurture-stop, quiz-sweep, stranded-leads) skip anyone carrying it. Stripping it on full payment, as first proposed, would have put customers who had just paid in full back into the chase texts and emails. The lane now adds it and never removes it.",
+        "Read all 120 GoHighLevel workflows (76 published) before adding the two tags: nothing fires on 'paid-in-full' or on 'deposit-paid'. Two published workflows skip anyone with 'deposit-paid' when opening cards for missed calls and replies, so a paid customer who texts back won't get a duplicate card.",
+        "Added 14 tests that pin the tag rules (66 lane tests now, plus the repo's other 242 tests, all passing) and redeployed the lane in plan-only mode as revision deposit-lane-00003-guf. Job #5808 already carried 'deposit-paid' from Noah's orchestrator, so its first plan under the new code correctly adds only 'needs-install-date'."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Plan-only week continues; the reviewed backfill since June and arming the lane are next."
+      ],
+      "notes": "No customer card, contact, or tag was written; the lane is still plan-only and the GoHighLevel check was read-only. Code: scripts/deposit-lane/ on branch feat/m151-deposit-lane, commit 5716b37. Workflow scan evidence: audit-runs/2026-10-09-m151-tag-contract on Tasha's Mac. The blueprint's tag table now carries the contract."
+    },
     {
       "date": "2026-10-07",
       "title": "Built, tested, and started the system that turns every paid deposit into a Booked card within 30 minutes (plan-only for its first week)",
