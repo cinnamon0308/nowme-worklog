@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-09T01:12:07.397Z",
+  "updated": "2026-10-09T19:36:54.674Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -630,7 +630,7 @@
       "id": "payment-sync",
       "name": "Deposit Lane (M151)",
       "status": "IN_PROGRESS",
-      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/09 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. 139 lane tests.",
+      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/09 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. 195 lane tests.",
       "blockedOn": "Plan-only week started 10/07. Next: the reviewed backfill since June, then arming the deposit side, then reading the refund plans before arming refunds. Job #5773 needs cancelling (and its refund recording) in Urable before the lane can see it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
       "health": {
         "band": "on-track",
@@ -891,6 +891,23 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-09",
+      "title": "Shift staff now get one clear Discord post per deposit problem in a new Deposit Lane channel, and #alarms is back to lane failures only",
+      "shipped": [
+        "Connected the deposit lane to a new Deposit Lane channel in the Dragon Auto Discord. Every problem a person on shift has to fix now posts as one card with the job number, customer, car, what was paid, the balance, what went wrong, and the action needed, marked yellow for a missing install date and red for anything that needs a review. The copy names no staff, so whoever is on shift can act on it.",
+        "Added an alert for a paid deposit with no install date, which before raised no alert at all: it posts once, next to its GHL task. Red items (no GHL contact, two matching contacts, a card in a Lost stage, no phone, and each refund case that needs a person) repeat once a day until someone settles them.",
+        "Moved customer problems out of #alarms, so a real lane outage no longer hides among daily customer items. If the new channel ever fails, the same alert lands in #alarms instead of getting lost.",
+        "Put three independent reviewers on the build: 13 findings, 10 confirmed and fixed, including an error path that could have written the webhook's secret token into the logs. 195 tests pass. Redeployed in plan-only mode as revision deposit-lane-00005-zap and sent one test post, which landed in the channel at 12:35 PM PT."
+      ],
+      "fixed": [
+        "Closed the same token leak on the existing #alarms webhook: a Discord error now names the setting, never the address that carries the token."
+      ],
+      "inProgress": [
+        "Real posts start when the lane is armed. Until then each post it would make is a log line with no customer name, and the channel holds only the test post."
+      ],
+      "notes": "The webhook address lives only in Google Secret Manager. No customer card, contact, or tag was written, and the only Discord message sent was the one approved test post."
+    },
     {
       "date": "2026-10-08",
       "title": "Refunded deposits now close themselves in GHL once Urable shows the money went back, and anything uncertain waits for Jenn instead of guessing",
