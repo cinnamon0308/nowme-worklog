@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-09T19:36:54.674Z",
+  "updated": "2026-10-09T23:32:19.940Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -630,13 +630,13 @@
       "id": "payment-sync",
       "name": "Deposit Lane (M151)",
       "status": "IN_PROGRESS",
-      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/09 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. 195 lane tests.",
-      "blockedOn": "Plan-only week started 10/07. Next: the reviewed backfill since June, then arming the deposit side, then reading the refund plans before arming refunds. Job #5773 needs cancelling (and its refund recording) in Urable before the lane can see it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
+      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/08 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. 195 lane tests.",
+      "blockedOn": "Plan-only week started 10/07: 254 runs and 0 writes through 10/09, 4:10 PM PT. Next: the reviewed backfill since June, then arming the deposit side, then reading the refund plans before arming refunds. Job #5773 needs cancelling (and its refund recording) in Urable before the lane can see it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
       "health": {
         "band": "on-track",
         "reason": "Running in the cloud in plan-only mode since 10/07; what's left is a supervised rollout, not unknowns."
       },
-      "detail": "Replaces the 7/21 payment sync, which was never wired in. The lane never writes status or owner on an existing card, never changes a card's value on the refund path, never adds the urable-deposit-paid tag (its workflow sends its own email), and never adds do-not-disturb or nurture tags. The paid side never removes 'deposit-paid' or 'paid-in-full'; only the refund side does, and only after Urable shows the refund. The backward half stays done from 08-02: 24 cards hand-verified and moved, $48,340 of collected money in Won. Still open from then: Jenn confirming two paid deposits whose Urable jobs were draft quotes are on the calendar, and 4 duplicate contacts to merge in the GHL UI."
+      "detail": "Replaces the 7/21 payment sync, which was never wired in. The lane never writes status or owner on an existing card, never changes a card's value on the refund path, never adds the urable-deposit-paid tag (its workflow sends its own email), and never adds do-not-disturb or nurture tags. The paid side never removes 'deposit-paid' or 'paid-in-full'; only the refund side does, and only after Urable shows the refund. The backward half stays done from 08-02: 24 cards hand-verified and moved, $48,340 of collected money in Won. Still open from then: Jenn confirming two paid deposits whose Urable jobs were draft quotes are on the calendar, and 4 duplicate contacts to merge in the GHL UI. Full record, evidence, and read-only checks: https://claude.ai/artifact/H8JoxTsXV2RRtjtEU6ojhp ."
     },
     {
       "id": "quiz-nurture-enroll",
@@ -893,6 +893,23 @@
   "sessions": [
     {
       "date": "2026-10-09",
+      "title": "Noah's Claude can now check every M151 claim without asking Tasha: live status, evidence, and read-only commands on one page",
+      "shipped": [
+        "Rebuilt the M151 blueprint page for Noah and his Claude: a Read this first section (where the lane stands, what it never touches, his two calls, how to roll it back), the evidence behind every number, and 10 copy-paste read-only commands that reproduce them from Noah's own login.",
+        "Checked the lane's whole plan-only week against Cloud Logging: 254 runs from Wednesday 11:41 PM to Friday 4:10 PM PT and 0 writes, with each of the 5 deployed versions logging the exact code fingerprint of its commit, so the code Noah can download is the code that was reviewed and tested (195 tests). 10 runs stopped safely during a second Urable outage Thursday morning.",
+        "Listed the 7 jobs the lane would have filed, so the payoff is concrete: of 6 paid Rocklear jobs in 40 hours, 3 cards sat outside Booked at payment time, 1 car had no card at all, and a Porsche Macan deposit from Wednesday (job #5808) still had no install date on Friday. Two of the cards were fixed outside the lane within hours.",
+        "Brought Noah's M151 decision page up to date with the refunds, payment tags, and Deposit Lane channel, and fixed a line that had become wrong (a refunded deposit's card now does leave Booked). His two decision buttons and saved answers were left exactly as they were."
+      ],
+      "fixed": [
+        "Corrected the blueprint's dates: the payment tags and refund handling were built Thursday 10/08 PT, not 10/09 as written, because the Mac runs on Japan time. The commit and deploy times confirm it."
+      ],
+      "inProgress": [
+        "Until the lane is armed, its failures show only in Cloud Logging: its #alarms line arms with the lane, and the 6:15 AM check waits on the C24 commit."
+      ],
+      "notes": "Pages: the blueprint, https://claude.ai/artifact/H8JoxTsXV2RRtjtEU6ojhp , and Noah's decision page, https://claude.ai/artifact/NbB8RBVf2BXsYB2ZHiL29j . Every check was a read; nothing in GoHighLevel, Urable, Discord, or the lane was changed."
+    },
+    {
+      "date": "2026-10-09",
       "title": "Shift staff now get one clear Discord post per deposit problem in a new Deposit Lane channel, and #alarms is back to lane failures only",
       "shipped": [
         "Connected the deposit lane to a new Deposit Lane channel in the Dragon Auto Discord. Every problem a person on shift has to fix now posts as one card with the job number, customer, car, what was paid, the balance, what went wrong, and the action needed, marked yellow for a missing install date and red for anything that needs a review. The copy names no staff, so whoever is on shift can act on it.",
@@ -906,7 +923,7 @@
       "inProgress": [
         "Real posts start when the lane is armed. Until then each post it would make is a log line with no customer name, and the channel holds only the test post."
       ],
-      "notes": "The webhook address lives only in Google Secret Manager. No customer card, contact, or tag was written, and the only Discord message sent was the one approved test post."
+      "notes": "The webhook address lives only in Google Secret Manager. No customer card, contact, or tag was written, and the only Discord message sent was the one approved test post. Code: commit cc44042, live as revision deposit-lane-00005-zap. Evidence and read-only checks: the blueprint, https://claude.ai/artifact/H8JoxTsXV2RRtjtEU6ojhp ."
     },
     {
       "date": "2026-10-08",
@@ -922,7 +939,7 @@
       "inProgress": [
         "Refund plans are now readable in Cloud Logging during the plan-only week. Arming refund writes is its own deploy flag, used only after the deposit side is live and the refund plans have been read."
       ],
-      "notes": "No customer card, contact, or tag was written; the lane is still plan-only. Job #5773 stays invisible to the lane until it is cancelled or its refund is recorded in Urable."
+      "notes": "No customer card, contact, or tag was written; the lane is still plan-only. Job #5773 stays invisible to the lane until it is cancelled or its refund is recorded in Urable. Code: commit 95c0751, live as revision deposit-lane-00004-mih. Decision record, refund rules, and evidence: the blueprint, https://claude.ai/artifact/H8JoxTsXV2RRtjtEU6ojhp ."
     },
     {
       "date": "2026-10-08",
@@ -937,7 +954,7 @@
       "inProgress": [
         "Plan-only week continues; the reviewed backfill since June and arming the lane are next."
       ],
-      "notes": "No customer card, contact, or tag was written; the lane is still plan-only and the GoHighLevel check was read-only. Code: scripts/deposit-lane/ on branch feat/m151-deposit-lane, commit 5716b37. Workflow scan evidence: audit-runs/2026-10-09-m151-tag-contract on Tasha's Mac. The blueprint's tag table now carries the contract."
+      "notes": "No customer card, contact, or tag was written; the lane is still plan-only and the GoHighLevel check was read-only. Code: scripts/deposit-lane/ on branch feat/m151-deposit-lane, commit 5716b37, live as revision deposit-lane-00003-guf. The workflow scan results are in the blueprint's Evidence section, https://claude.ai/artifact/H8JoxTsXV2RRtjtEU6ojhp , and its tag table carries the contract."
     },
     {
       "date": "2026-10-07",
@@ -963,7 +980,7 @@
         "Urable was down from 6:10 to about 7:50 PM PT ('Bandwidth Quota Exceeded' on its own hosting); the poller rode it out on its backup path.",
         "Plan-only week running since 10/07. Next: a reviewed backfill of deposits since June, then arming it."
       ],
-      "notes": "No customer card or contact was touched, and no email or text went out. The GoHighLevel changes were the 4 new card fields, the Vehicle Estimation triggers, and one draft workflow; every other check was a read. Noah has a page with his two calls on it. Files for Noah: the M151 decision page with his two calls, https://claude.ai/artifact/NbB8RBVf2BXsYB2ZHiL29j ; the October takeover audit where M151 is item 1, https://claude.ai/artifact/WNTf6opUhiU3mfFwS2jS6T ; the technical blueprint (a copy of Tasha's 2026-10-07-m151-deposit-lane-blueprint.md), https://claude.ai/artifact/H8JoxTsXV2RRtjtEU6ojhp ; the GoHighLevel setup evidence, with before-and-after workflow backups and changes.jsonl listing every change, in audit-runs/2026-10-07-m151-ghl-prereqs on Tasha's Mac; the code, scripts/deposit-lane/ (42 tests passing) and scripts/deposit_reconcile.py (the C25 6:15 AM check, 12 tests passing), on branch feat/m151-deposit-lane, commit 3d51c47. Live Urable dry run: 51 open Rocklear jobs checked, $55,555 collected, 0 live writes."
+      "notes": "No customer card or contact was touched, and no email or text went out. The GoHighLevel changes were the 4 new card fields, the Vehicle Estimation triggers, and one draft workflow; every other check was a read. Noah has a page with his two calls on it. Files for Noah: the M151 decision page with his two calls, https://claude.ai/artifact/NbB8RBVf2BXsYB2ZHiL29j ; the October takeover audit where M151 is item 1, https://claude.ai/artifact/WNTf6opUhiU3mfFwS2jS6T ; the technical blueprint, https://claude.ai/artifact/H8JoxTsXV2RRtjtEU6ojhp , whose Evidence section lists each GoHighLevel change with its ID and rollback (Tasha keeps the before-and-after workflow backups and the change log); the code, scripts/deposit-lane/ (42 tests passing) and scripts/deposit_reconcile.py (the C25 6:15 AM check, 12 tests passing), on branch feat/m151-deposit-lane, commit 3d51c47. Live Urable dry run: 51 open Rocklear jobs checked, $55,555 collected, 0 live writes."
     },
     {
       "date": "2026-10-06",
