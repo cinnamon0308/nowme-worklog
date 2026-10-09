@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-08T22:58:43.308Z",
+  "updated": "2026-10-09T01:12:07.397Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -630,13 +630,13 @@
       "id": "payment-sync",
       "name": "Deposit Lane (M151)",
       "status": "IN_PROGRESS",
-      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function (66 passing tests) plus the 6:15 AM check C25 (12 tests). Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it also tags paid customers 'deposit-paid' (never removed, because Noah's sweeps use it to stop chasing) and 'paid-in-full' once the job total is paid.",
-      "blockedOn": "Plan-only week started 10/07. Next: the reviewed backfill since June, then arming it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
+      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/09 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. 139 lane tests.",
+      "blockedOn": "Plan-only week started 10/07. Next: the reviewed backfill since June, then arming the deposit side, then reading the refund plans before arming refunds. Job #5773 needs cancelling (and its refund recording) in Urable before the lane can see it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
       "health": {
         "band": "on-track",
         "reason": "Running in the cloud in plan-only mode since 10/07; what's left is a supervised rollout, not unknowns."
       },
-      "detail": "Replaces the 7/21 payment sync, which was never wired in. The lane never writes card status or owner, never moves a card out of Booked, Won, or a Lost stage, never adds the urable-deposit-paid tag, whose workflow sends its own email, and never removes deposit-paid or paid-in-full. The backward half stays done from 08-02: 24 cards hand-verified and moved, $48,340 of collected money in Won. Still open from then: Jenn confirming two paid deposits whose Urable jobs were draft quotes are on the calendar, and 4 duplicate contacts to merge in the GHL UI."
+      "detail": "Replaces the 7/21 payment sync, which was never wired in. The lane never writes status or owner on an existing card, never changes a card's value on the refund path, never adds the urable-deposit-paid tag (its workflow sends its own email), and never adds do-not-disturb or nurture tags. The paid side never removes 'deposit-paid' or 'paid-in-full'; only the refund side does, and only after Urable shows the refund. The backward half stays done from 08-02: 24 cards hand-verified and moved, $48,340 of collected money in Won. Still open from then: Jenn confirming two paid deposits whose Urable jobs were draft quotes are on the calendar, and 4 duplicate contacts to merge in the GHL UI."
     },
     {
       "id": "quiz-nurture-enroll",
@@ -891,6 +891,22 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-08",
+      "title": "Refunded deposits now close themselves in GHL once Urable shows the money went back, and anything uncertain waits for Jenn instead of guessing",
+      "shipped": [
+        "Taught the deposit lane to watch Urable for refunds and cancellations on every 10-minute run. When Urable shows a deposit refunded in full, the lane moves that job's card to Lost - Declined, sets Deposit Amount Paid to $0, and swaps 'deposit-paid' for 'deposit-refunded': the same cleanup Noah's refund script does by hand on his Mac, minus the status and do-not-disturb writes. A refunded customer stops reading as booked money and stops landing on paid-customer lists.",
+        "Built in the stops Noah's refund script uses, so the CRM never says 'refunded' while a customer is still out the money. A cancel with money still paid in Urable, a partial refund, a $0 job that is still scheduled or already finished (a payment moved to Affirm looks exactly like a refund), other paid work on the same person, and two matching contacts each get one #alarms line and one task for Jenn, with no card or tag touched. Noah's two hold customers are left alone entirely.",
+        "Put two rounds of independent review on the build: 48 findings checked by skeptics, 37 held up and are fixed. One would have stripped 'paid-in-full' from a customer who paid at pickup through Affirm. 139 lane tests pass, and the 66 tests from before still pass unchanged against the new code.",
+        "Redeployed the lane in plan-only mode as revision deposit-lane-00004-mih, with a separate switch for refunds, so arming the deposit side later does not arm refund writes with it. Its first run found 0 refunds or cancels since go-live on 10/07. A read-only check back to 9/26 found 3, including job #5771, whose card already sits in Lost - Declined but whose contact still carries 'deposit-paid': a stale tag the lane clears once armed.",
+        "Checked job #5773, the deposit Noah refunded outside Urable on 10/06. Urable still shows it scheduled and paid, so no refund rule can fire on it and the lane correctly does nothing. Once someone cancels it in Urable, the lane flags it to Jenn as cancelled with money still paid; once the refund is recorded there, the cleanup runs on its own."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Refund plans are now readable in Cloud Logging during the plan-only week. Arming refund writes is its own deploy flag, used only after the deposit side is live and the refund plans have been read."
+      ],
+      "notes": "No customer card, contact, or tag was written; the lane is still plan-only. Job #5773 stays invisible to the lane until it is cancelled or its refund is recorded in Urable."
+    },
     {
       "date": "2026-10-08",
       "title": "Paid customers now carry plain 'deposit-paid' and 'paid-in-full' tags the sales team can read, without reopening Noah's chase sequences",
