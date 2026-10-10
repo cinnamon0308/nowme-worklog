@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-10T00:10:09.214Z",
+  "updated": "2026-10-10T00:45:07.663Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -630,8 +630,8 @@
       "id": "payment-sync",
       "name": "Deposit Lane (M151)",
       "status": "IN_PROGRESS",
-      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/08 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. 195 lane tests.",
-      "blockedOn": "Plan-only week started 10/07: 254 runs and 0 writes through 10/09, 4:10 PM PT. Next: the reviewed backfill since June, then arming the deposit side, then reading the refund plans before arming refunds. Job #5773 needs cancelling (and its refund recording) in Urable before the lane can see it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
+      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/08 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. Since 10/09 the payment read pages back to the last good run instead of a fixed 500 records, a payment stuck at $0 on its job becomes person work after an hour, and a card in Won before its job is done goes back to open in Booked (Noah's 9/29 rule); a one-time cleanup found 17 such cards today, 5 ready to move. 221 lane tests and 13 cleanup tests.",
+      "blockedOn": "Plan-only week started 10/07: 254 runs and 0 writes through 10/09, 4:10 PM PT. Next: commit and redeploy the 10/09 patches, review and canary the 17-card Won cleanup, the reviewed backfill since June, then arming the deposit side, then reading the refund plans before arming refunds. Job #5773 needs cancelling (and its refund recording) in Urable before the lane can see it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
       "health": {
         "band": "on-track",
         "reason": "Running in the cloud in plan-only mode since 10/07; what's left is a supervised rollout, not unknowns."
@@ -891,6 +891,22 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-09",
+      "title": "Deposit lane now reads every payment since its last good run and sends early-Won deposit cards back to Booked; 17 found today",
+      "shipped": [
+        "Checked the M151 deposit lane against the five takeover-audit requirements and patched the three that fell short. The payment read no longer stops at a fixed 500 records: it pages back to the last good run (a deposit request can be paid up to 71 days after it is created), and if it ever can't reach that far it posts to #alarms instead of silently missing a deposit.",
+        "Closed two ways a paid deposit could sit unseen: a payment Urable marks paid while the job still shows $0 now becomes a Deposit Lane post and a task for Jenn after an hour, and waiting jobs now rotate so none can sit behind the same 50 forever. The no-contact alert already held: post, task for Jenn, daily repost until fixed.",
+        "Applied Noah's 9/29 rule (Booked = deposit paid, Won = done and paid in full) inside the lane: a card tied to the job that sits in Won before the job is done now goes back to open in Booked at the job total, once per card, and the 6:15 AM check counts any early Won card as a miss.",
+        "Built the one-time cleanup for the deposit-only Won backlog from Noah's 9/19 audit: dry run first, an approve list, a 3-card canary, backups, and a read-back that stops on the first surprise. A read-only run against live data found 17 Won cards on unfinished jobs today (26 on 9/19): 5 ready to move and 12 that need a look first. 16 of the 17 sit in the Booked column but are marked won, so GHL counts them as won while Urable still shows the job open.",
+        "Proved the fixes with 234 lane and cleanup tests plus 13 for the morning check, then broke each fix on purpose 8 times to confirm the tests catch it."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Nothing is committed or deployed; the lane stays in plan-only mode. Next: review the 5 moves (4 have had no install date since late August, so confirm those cars weren't already done off the books), run the 3-card canary, then commit and redeploy."
+      ],
+      "notes": "Every check against live data was a read; nothing in GoHighLevel, Urable, Discord, or the lane was changed."
+    },
     {
       "date": "2026-10-09",
       "title": "Noah's Claude can now check every M151 claim without asking Tasha: live status, evidence, and read-only commands on one page",
