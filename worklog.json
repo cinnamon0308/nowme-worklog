@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-12T21:09:07.901Z",
+  "updated": "2026-10-12T21:17:17.430Z",
   "projects": [
     {
       "id": "ga4-conversion-loop",
@@ -889,6 +889,23 @@
         "Tell Tasha when they are gone. She reruns the log check a day later, and refused posts should read 0."
       ],
       "commands": []
+    },
+    {
+      "item": "Accept Tasha's GitHub invite so your Claude can read her work log",
+      "project": "Work Visibility Dashboard",
+      "since": "2026-10-12",
+      "impact": "On the 10/11 call you asked for the repo link so your Claude can see what Tasha builds without opening this dashboard. The link is https://github.com/nathasia-afk/dragon-auto-worklog, a private repo on Tasha's Dragon Auto GitHub account, and every work session she finishes now lands there in the same update as this page. Your GitHub account (noah-dragon-auto) has an invite waiting. Until it is accepted the repo stays closed to you, and GitHub drops an unaccepted invite on 10/19.",
+      "whatToDo": [
+        "On the Mac (gh has been signed in there since the 10/11 call), copy the block below into Claude and say: claude do this, tasha sent this. It accepts the invite and reads the latest update. It changes nothing else and is safe to run twice.",
+        "Send Tasha the line it ends with. It starts with DONE or FAILED.",
+        "After DONE, your Claude can read worklog.json in that repo any time: sessions lists each work session newest first, projects has each system's status, and waitingOnNoah is this list. The privateVault field is encrypted on purpose, so leave it alone."
+      ],
+      "commands": [
+        {
+          "label": "Accept the invite and check access (run on the Mac, safe to run twice)",
+          "code": "ME=$(gh api user --jq .login 2>/dev/null); echo \"GitHub account on this Mac: ${ME:-not signed in}\"\nID=$(gh api user/repository_invitations --jq '.[] | select(.repository.full_name==\"nathasia-afk/dragon-auto-worklog\") | .id' 2>/dev/null)\nif [ -n \"$ID\" ]; then if gh api --method PATCH \"user/repository_invitations/$ID\" >/dev/null 2>&1; then echo \"Accepted Tasha's invite.\"; else echo \"Could not accept the invite.\"; fi; fi\nif LATEST=$(gh api repos/nathasia-afk/dragon-auto-worklog/commits/main --jq '.commit.committer.date + \"  \" + .commit.message' 2>/dev/null); then echo \"Latest update: $LATEST\"; echo \"DONE: tell Tasha: Noah's Claude can read dragon-auto-worklog.\"; else echo \"FAILED: send Tasha this output. Signed in as ${ME:-nobody}; the repo is not readable yet.\"; fi"
+        }
+      ]
     }
   ],
   "sessions": [
@@ -899,13 +916,14 @@
         "Set up the company GitHub copy Noah asked for on the 10/11 call: a private repo, nathasia-afk/dragon-auto-worklog, on Tasha's Dragon Auto account. Every publish now pushes the same update to the dashboard and to this repo, so Noah's Claude can read each work session without opening the dashboard.",
         "Copied the full history across in the first push: all 10 site files, both repos on the same latest update (1079e98). Before anything went out, a scan of all 77 past file versions found no customer phone numbers or emails, and the private sections stay encrypted exactly as they are on the dashboard.",
         "Made a missed copy impossible to overlook: if the company push fails, the account is signed out, or the repo link goes missing, the dashboard still updates, then the run reports FAILED with a Mac notification and the next run catches the copy up. A run with nothing new makes no network call at all.",
-        "Proved it with 60 automated publish checks (12 new), run against a stand-in company repo and stand-in GitHub sign-ins so the real accounts were never touched, then ran the real publish twice: the first push, then a clean 'up to date'."
+        "Proved it with 60 automated publish checks (12 new), run against a stand-in company repo and stand-in GitHub sign-ins so the real accounts were never touched, then ran the real publish twice: the first push, then a clean 'up to date'.",
+        "Invited Noah's GitHub account (noah-dragon-auto) to the repo and put the link, plus the one block his Claude runs to accept it, on a Waiting on Noah card here, so his Claude's regular read of this dashboard picks it up. Tested the block both ways first: it reports DONE with access and FAILED without (the first draft reported DONE either way and was fixed)."
       ],
       "fixed": [
         "Caught a silent failure before it shipped: on this Mac, GitHub's normal sign-in only hands out the account currently in use, so a plain second push would have gone out as the wrong account and been refused. The company push now asks for the company account by name, checked against GitHub before the first real push."
       ],
       "inProgress": [
-        "Next: give Noah's GitHub account read access to the repo and send him the link, which settles item 1 on his 10/11 meeting page."
+        "Waiting on Noah to accept the repo invite; it stays open until 10/19. Once he does, item 1 on his 10/11 meeting page is settled."
       ],
       "notes": "Standing rule from Tasha as of today: every build gets pushed to both GitHub accounts, the dashboard's and the company's."
     },
