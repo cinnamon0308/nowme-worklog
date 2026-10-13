@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-13T06:12:49.200Z",
+  "updated": "2026-10-13T06:19:12.695Z",
   "projects": [
     {
       "id": "night-shift",
@@ -969,8 +969,8 @@
       ],
       "commands": [
         {
-          "label": "Give Tasha read-only access to the call-sheet storage (finds her account in the project's existing permissions; safe to run twice)",
-          "code": "M=$(gcloud projects get-iam-policy dragon-auto-automations --flatten=\"bindings[].members\" --format=\"value(bindings.members)\" | grep -m1 -E '^user:nathasia[@]'); if [ -n \"$M\" ] && gcloud storage buckets add-iam-policy-binding gs://dragon-auto-automations-callsheet-cache --member=\"$M\" --role=roles/storage.objectViewer >/dev/null; then echo \"DONE: tell Tasha the call-sheet read is on for $M\"; else echo \"FAILED: send Tasha this output\"; fi"
+          "label": "Give Tasha read-only access to the call-sheet storage (finds her account in the project's permissions; grants nothing unless exactly one account matches; safe to run twice)",
+          "code": "M=$(gcloud projects get-iam-policy dragon-auto-automations --flatten=\"bindings[].members\" --format=\"value(bindings.members)\" | grep -E '^user:nathasia[@]' | sort -u); N=$(printf '%s\\n' \"$M\" | grep -c .); if [ \"$N\" = \"1\" ] && gcloud storage buckets add-iam-policy-binding gs://dragon-auto-automations-callsheet-cache --member=\"$M\" --role=roles/storage.objectViewer >/dev/null; then echo \"DONE: tell Tasha the call-sheet read is on for $M\"; else echo \"FAILED: found $N matching account(s), need exactly 1, or the grant failed. Nothing was granted. Send Tasha this output\"; fi"
         }
       ]
     }
@@ -981,11 +981,11 @@
       "title": "Checked Noah's 'call me in November' gap on the live code: callbacks set since 10/08 already come back, and an approved plan brings back the rest",
       "shipped": [
         "Checked Noah's 10/11 ask ('call me in November' leads never come back on their date) against the live systems before building anything. The daily reader has booked 11 callbacks for Sean since 10/08, including ones from calls Sean made himself, so the work goes into the gaps it can't reach instead of a second robot that would fight it over task dates.",
-        "Planned the fix with Tasha and got her approval, down to the line of code. Old 'later' leads come back through the M81 backfill at 4 a workday, with one slot a day kept free. Waiting cards with no callback get read each morning. A customer's own date that already passed goes to Sean as a missed callback unless someone on our side already reached out. 'Call me Thursday' gets a task too.",
         "Added a one-line, read-only grant for the call-sheet storage to Noah's approvals item M239. The storage keeps a dated copy of every morning's sheet, so once he runs it Tasha can prove each promised callback reached Sean on its day, 10/12 included."
       ],
       "fixed": [],
       "inProgress": [
+        "Planned the fix down to the line of code: old 'later' leads come back through the M81 backfill at 4 a workday, with one slot a day kept free; Waiting cards with no callback get read each morning; a customer's own date that already passed goes to Sean as a missed callback unless someone on our side already reached out; and 'call me Thursday' gets a task too. Nothing is built yet.",
         "Next is the build, starting from the code that runs in production (both live copies downloaded and checked 10/12, not the older Mac copies). After that come about five mornings of test runs that only list what would change, before anything writes.",
         "Waiting on Noah: the M239 line now, then the M81 tap and two deploys once the test runs are in. Each deploy goes in first in a mode that only lists, so he sees every change before it reaches Sean."
       ],
