@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-13T09:26:47.378Z",
+  "updated": "2026-10-13T17:11:43.915Z",
   "projects": [
     {
       "id": "night-shift",
@@ -32,16 +32,17 @@
       "id": "call-me-later",
       "name": "Call-Me-Later Callbacks",
       "status": "IN_PROGRESS",
-      "summary": "Noah's top gap from the 10/11 call: a customer who says 'call me in November' should come back on Sean's sheet on that date with no hand work. Callbacks said since 10/08 already work through the daily reader; the approved plan covers older leads, passed dates, short timings and the sheet's blind spot.",
-      "blockedOn": "Noah's one-line M239 grant now; later the M81 tap and two deploys, after about five mornings of test runs.",
+      "summary": "Noah's top gap from the 10/11 call: a customer who says 'call me in November' should come back on Sean's sheet on that date with no hand work. Built and tested on 10/13; nothing deployed yet.",
+      "blockedOn": "Tasha's decision on overdue moved-up callbacks, then Noah's taps: the M81 refresh, the reader deploy in test mode, and the sheet deploy. The M239 sheet-access line is still open.",
       "health": {
         "band": "watch",
-        "reason": "Plan approved and step 0 checks done on 10/12; nothing built or deployed yet."
+        "reason": "Built and reviewed, and a live test run wrote nothing; deploy and writes wait on approvals and four more test mornings."
       },
       "detail": {
         "goal": "Every 'call me later' lead returns on its date, including ones said before 10/08, and Sean never sets the date by hand.",
         "whatWasDone": [
-          "2026-10-12: checked the live reader (11 callbacks since 10/08), the live sheet and the task data; plan and code-level build plan approved; M239 grant added."
+          "2026-10-12: checked the live reader (11 callbacks since 10/08), the live sheet and the task data; plan and code-level build plan approved; M239 grant added.",
+          "2026-10-13: full build on production code, 727 new checks plus the original 129, live test run with zero GHL writes, before-and-after sheet comparison (17 of 75 rows changed), deploy scripts and four approvals drafts."
         ],
         "needsImprovement": [
           "Build from the production code, run test mode for about five mornings, then the M81 tap and the two deploys.",
@@ -1050,6 +1051,29 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-13",
+      "title": "Built the 'call me later' fix end to end and proved it writes nothing in test mode; 157 old callbacks and 94 Waiting cards are ready to come back once Noah approves",
+      "shipped": [
+        "Built every piece of the plan for Noah's 'call me in November' gap on a copy of the exact production code. The daily reader now finds Waiting cards with no callback, books missed callbacks at 4 a workday so Sean's list isn't flooded, writes 'call me Thursday' callbacks, and leaves alone any lead Sean already gave his own task. 727 new automated checks pass, plus the reader's original 129, and every rule was tested by breaking it on purpose: several hundred deliberate breaks, every one caught.",
+        "Proved the new rules write nothing in test mode. A live test run on 10/13 read 80 real leads and Waiting cards and sent zero writes to GHL, behind a guard that blocks any write at the network level.",
+        "Ran Sean's call sheet twice on the same 10/13 data, old code and new. Ranks 1 to 55 stayed identical, 17 of 75 rows changed, and each change has a written reason, so Noah sees exactly what moves before he deploys.",
+        "Night Shift's callback rule now labels a callback the system missed as a system miss, not Sean's."
+      ],
+      "fixed": [
+        "Caught before deploy: on a heavy morning the reader could have stopped silently, timing out with no alarm and losing its place. Added a time limit, so it finishes and reports what it skipped.",
+        "Caught before deploy: Noah's approved email-reply fix (M192) did nothing in the reader as written. Carried the version that works, and flagged that the follow-up bot's copy may do nothing too.",
+        "Caught before deploy: the sheet's 6 AM safety check would have blocked Sean's real sheet after the update. The deploy script now sets the new code stamp."
+      ],
+      "inProgress": [
+        "Four drafts for Noah's approvals page are ready: refresh M81 (157 people to bring back at 4 a workday, 136 cards move into Waiting), deploy the reader in test mode, deploy the sheet update with M192, and switch writes on later.",
+        "Waiting on Tasha's call: whether a callback more than 3 days overdue keeps its moved-up spot on Sean's sheet. On 10/13, two 47-day-old team callbacks pushed out two 'quote still owed' rows.",
+        "Four more test mornings to compare against Night Shift before any write goes on."
+      ],
+      "notes": [
+        "Nothing was deployed and nothing was written to GHL. The build lives on Tasha's Mac and has not been pushed."
+      ]
+    },
     {
       "date": "2026-10-13",
       "title": "Waiting on Noah now clears itself: a card leaves the dashboard as soon as a live check or Noah's own notes prove the task is done",
