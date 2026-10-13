@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-13T09:23:56.071Z",
+  "updated": "2026-10-13T09:26:47.378Z",
   "projects": [
     {
       "id": "night-shift",
@@ -636,7 +636,7 @@
       "id": "work-dashboard",
       "name": "Work Visibility Dashboard",
       "status": "LIVE",
-      "summary": "Internal work dashboard, live on GitHub Pages at https://dashboard.nowme.cloud and republished automatically after every work session, with the same update copied to the private company repo nathasia-afk/dragon-auto-worklog for Noah's Claude. Private sections travel only inside the encrypted vault.",
+      "summary": "Internal work dashboard, live on GitHub Pages at https://dashboard.nowme.cloud and republished automatically after every work session, with the same update copied to the private company repo nathasia-afk/dragon-auto-worklog for Noah's Claude. Private sections travel only inside the encrypted vault. Waiting on Noah cards now leave by themselves once a live check or Noah's own notes prove the task is done.",
       "blockedOn": null,
       "progress": null,
       "detail": {
@@ -651,7 +651,8 @@
           "08-26: Noah's Log was printing one word a day for six days; the note reader and the page were both still built for his old daily-note layout. Both fixed, and the test that should have caught it is running again.",
           "09-27: cut the dashboard to 5 pages (Latest work, Waiting on Noah, Systems, Pipeline Map, Tasha's log) and made Latest work the opening page; the KPI page came down because its newest figure was from the week of July 13.",
           "10-06: removed five customer phone numbers from the public page and made every publish strip phone numbers and emails, refusing to publish one it cannot clean. 21 new checks guard it.",
-          "10-12: every publish now also pushes to a private repo on the Dragon Auto GitHub account, so Noah's Claude can read the log directly. A missed copy fails loudly and retries on the next run; 60 automated checks guard both pushes."
+          "10-12: every publish now also pushes to a private repo on the Dragon Auto GitHub account, so Noah's Claude can read the log directly. A missed copy fails loudly and retries on the next run; 60 automated checks guard both pushes.",
+          "10-13: added the Waiting on Noah watcher. Twice a day it checks each card against GitHub, Google Cloud, and Noah's vault, takes off any card whose proof is true, and keeps the proof in an archive. The first run cleared the GitHub invite card."
         ],
         "needsImprovement": [
           "No fixed finish line; this tool keeps growing as new needs come up."
@@ -1049,6 +1050,22 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-13",
+      "title": "Waiting on Noah now clears itself: a card leaves the dashboard as soon as a live check or Noah's own notes prove the task is done",
+      "shipped": [
+        "Built a watcher that checks every Waiting on Noah card twice a day against the real system and Noah's own vault. Its first run took the GitHub invite card off: GitHub shows Noah already accepted, so his Claude can read the work log, and his list no longer asks him for something he already did.",
+        "Gave each of the 6 cards its own proof: GitHub for the invite, the live quiz receiver code for the GA4 fields, the live Re-Engage file against his vault copy, the quiz request log for the old webhooks, and the storage permission for M239. A card leaves only when its proof is true, so his list shows only what is really still waiting on him.",
+        "The one card nothing on our side can see (the digest alarm runs on Noah's Mac) leaves only when his approvals item M63 turns done or his notes say it is installed, and the archive keeps his words as the proof."
+      ],
+      "fixed": [],
+      "inProgress": [],
+      "notes": [
+        "Reading the vault alone would have removed 2 unfinished cards. Noah's 10/12 note says the quiz deploy shipped the staged bundle, but the live code has 0 of the 3 GA4 fields; and approvals M234 reads done while its own line says his vault copy is still the 8/17 version. So where a live check exists, only the live check can clear a card.",
+        "The old quiz webhooks still refused 4 posts on the 10/11 3:01 PM quiz (84 refused in 14 days). That card clears only after 5 quizzes in a row land clean and 4 days pass, a bar set from 3 weeks of the receiver's own log, where up to 3 clean quizzes in a row happened even with the webhooks still there.",
+        "Every cleared card is kept with its proof, so any of them can be put back. 78 offline checks cover the watcher, and the existing publish, page, and vault checks all still pass."
+      ]
+    },
     {
       "date": "2026-10-12",
       "title": "Checked Noah's 'call me in November' gap on the live code: callbacks set since 10/08 already come back, and an approved plan brings back the rest",
