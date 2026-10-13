@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-13T00:43:14.513Z",
+  "updated": "2026-10-13T06:12:49.200Z",
   "projects": [
     {
       "id": "night-shift",
@@ -25,6 +25,31 @@
         "watchFor": [
           "Moving a card into the Won column sends Meta a purchase event; never bulk-move without Noah.",
           "Queued follow-ups come back on any card the follow-up robot still works, so only finished leads get cleared."
+        ]
+      }
+    },
+    {
+      "id": "call-me-later",
+      "name": "Call-Me-Later Callbacks",
+      "status": "IN_PROGRESS",
+      "summary": "Noah's top gap from the 10/11 call: a customer who says 'call me in November' should come back on Sean's sheet on that date with no hand work. Callbacks said since 10/08 already work through the daily reader; the approved plan covers older leads, passed dates, short timings and the sheet's blind spot.",
+      "blockedOn": "Noah's one-line M239 grant now; later the M81 tap and two deploys, after about five mornings of test runs.",
+      "health": {
+        "band": "watch",
+        "reason": "Plan approved and step 0 checks done on 10/12; nothing built or deployed yet."
+      },
+      "detail": {
+        "goal": "Every 'call me later' lead returns on its date, including ones said before 10/08, and Sean never sets the date by hand.",
+        "whatWasDone": [
+          "2026-10-12: checked the live reader (11 callbacks since 10/08), the live sheet and the task data; plan and code-level build plan approved; M239 grant added."
+        ],
+        "needsImprovement": [
+          "Build from the production code, run test mode for about five mornings, then the M81 tap and the two deploys.",
+          "Prove one parked lead came back on its day using the saved morning sheets."
+        ],
+        "watchFor": [
+          "A callback task on a lead still in New Lead through Engaged is invisible to the sheet until the sheet change ships.",
+          "Never start a reader or sheet change from the Mac copies; both are behind production."
         ]
       }
     },
@@ -932,9 +957,43 @@
           "code": "ME=$(gh api user --jq .login 2>/dev/null); echo \"GitHub account on this Mac: ${ME:-not signed in}\"\nID=$(gh api user/repository_invitations --jq '.[] | select(.repository.full_name==\"nathasia-afk/dragon-auto-worklog\") | .id' 2>/dev/null)\nif [ -n \"$ID\" ]; then if gh api --method PATCH \"user/repository_invitations/$ID\" >/dev/null 2>&1; then echo \"Accepted Tasha's invite.\"; else echo \"Could not accept the invite.\"; fi; fi\nif LATEST=$(gh api repos/nathasia-afk/dragon-auto-worklog/commits/main --jq '.commit.committer.date + \"  \" + .commit.message' 2>/dev/null); then echo \"Latest update: $LATEST\"; echo \"DONE: tell Tasha: Noah's Claude can read dragon-auto-worklog.\"; else echo \"FAILED: send Tasha this output. Signed in as ${ME:-nobody}; the repo is not readable yet.\"; fi"
         }
       ]
+    },
+    {
+      "item": "Run one line so Tasha can read Sean's morning call sheets (added to M239)",
+      "project": "Call-Me-Later Callbacks",
+      "since": "2026-10-12",
+      "impact": "Every morning's call sheet is saved in the call-sheet storage with its date. Tasha needs to read those to prove that a customer who said 'call me in November' really landed on Sean's sheet on that day. Until then she saves each sheet by hand. It's read-only: she can't change or delete anything there.",
+      "whatToDo": [
+        "Copy the block below into a terminal on a machine signed in to Google Cloud as you.",
+        "Send Tasha the line it ends with. It starts with DONE or FAILED."
+      ],
+      "commands": [
+        {
+          "label": "Give Tasha read-only access to the call-sheet storage (finds her account in the project's existing permissions; safe to run twice)",
+          "code": "M=$(gcloud projects get-iam-policy dragon-auto-automations --flatten=\"bindings[].members\" --format=\"value(bindings.members)\" | grep -m1 -E '^user:nathasia[@]'); if [ -n \"$M\" ] && gcloud storage buckets add-iam-policy-binding gs://dragon-auto-automations-callsheet-cache --member=\"$M\" --role=roles/storage.objectViewer >/dev/null; then echo \"DONE: tell Tasha the call-sheet read is on for $M\"; else echo \"FAILED: send Tasha this output\"; fi"
+        }
+      ]
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-12",
+      "title": "Checked Noah's 'call me in November' gap on the live code: callbacks set since 10/08 already come back, and an approved plan brings back the rest",
+      "shipped": [
+        "Checked Noah's 10/11 ask ('call me in November' leads never come back on their date) against the live systems before building anything. The daily reader has booked 11 callbacks for Sean since 10/08, including ones from calls Sean made himself, so the work goes into the gaps it can't reach instead of a second robot that would fight it over task dates.",
+        "Planned the fix with Tasha and got her approval, down to the line of code. Old 'later' leads come back through the M81 backfill at 4 a workday, with one slot a day kept free. Waiting cards with no callback get read each morning. A customer's own date that already passed goes to Sean as a missed callback unless someone on our side already reached out. 'Call me Thursday' gets a task too.",
+        "Added a one-line, read-only grant for the call-sheet storage to Noah's approvals item M239. The storage keeps a dated copy of every morning's sheet, so once he runs it Tasha can prove each promised callback reached Sean on its day, 10/12 included."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Next is the build, starting from the code that runs in production (both live copies downloaded and checked 10/12, not the older Mac copies). After that come about five mornings of test runs that only list what would change, before anything writes.",
+        "Waiting on Noah: the M239 line now, then the M81 tap and two deploys once the test runs are in. Each deploy goes in first in a mode that only lists, so he sees every change before it reaches Sean."
+      ],
+      "notes": [
+        "Found why a callback can still get lost after the task exists. Sean's sheet ignores a dated callback on any lead still in New Lead through Engaged, so 'call me Thursday' there only shows if the lead's rank makes the 75. The sheet has also never read the 'who asked for this' marker, because it looks in a field GHL leaves empty. Both go into one sheet change, and Noah sees the before and after lead by lead before he deploys it.",
+        "Nothing was written to GHL and nothing was deployed today. The only outside change is the M239 text on Noah's approvals page."
+      ]
+    },
     {
       "date": "2026-10-12",
       "title": "225 people who already said no or already bought came off 607 queued follow-up texts, and Night Shift stopped mistaking consultations for installs",
