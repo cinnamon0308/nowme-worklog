@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-13T06:19:12.695Z",
+  "updated": "2026-10-13T09:23:56.071Z",
   "projects": [
     {
       "id": "night-shift",
@@ -892,7 +892,18 @@
           "label": "The same install as a Terminal paste, if you would rather not use Claude (safe to run twice)",
           "code": "F=\"$HOME/Documents/Dragon Auto Synced/Projects/ai-urable-proposal/launchd/install-cadence-digest-alarm.sh\"\nif [ \"$(shasum -a 256 \"$F\" 2>/dev/null | cut -d' ' -f1)\" = \"41f0315051dd2418a4c22b45795b42cce76bf734bcb876c9cb65d551bf7ef0b2\" ]; then /bin/zsh \"$F\"; else echo \"FAILED: send Tasha this output. The installer is not on this Mac yet, or it changed. Open Obsidian, wait a minute, then paste this again.\"; ls -la \"$F\"; fi"
         }
-      ]
+      ],
+      "doneCheck": {
+        "doneWhen": "Noah's approvals item M63 turns done, or his notes say the 9:15 digest alarm is installed. The alarm runs on his Mac, which nothing on Tasha's side can see, so his own words are the proof.",
+        "approvals": "M63",
+        "vault": [
+          "digest alarm",
+          "digest-alarm",
+          "install-cadence-digest-alarm",
+          "M63"
+        ],
+        "live": null
+      }
     },
     {
       "item": "Give Claude the quiz receiver GA4 file Tasha sent",
@@ -909,7 +920,31 @@
           "label": "Check whether it is already done (read-only, safe to run any time)",
           "code": "F=$(find \"$HOME/deploy-staging/quiz-lead-receiver-email422-20260928\" -name quiz_lead_receiver_main.py 2>/dev/null | head -1)\nif [ -z \"$F\" ]; then echo \"FAILED: send Tasha this output. The staged quiz receiver folder is not on this Mac.\"\nelif [ \"$(grep -c -e 6458MqU4YjnYebrzMGqP -e 0zIgKZKMg7QDyyYyr4PJ -e znfWwXGxMWOYrpqOoD4T \"$F\")\" -ge 3 ]; then echo \"DONE: the staged quiz receiver saves the three GA4 fields ($F). Tell Tasha whether it is deployed.\"\nelse echo \"NOT YET: the staged quiz receiver does not save the GA4 fields. Hand Claude the file from Tasha.\"; fi"
         }
-      ]
+      ],
+      "doneCheck": {
+        "doneWhen": "The live quiz-lead-receiver code saves all three GA4 fields (GA Client ID, GA Session ID, Landing Page).",
+        "approvals": "S90",
+        "vault": [
+          "ga_client_id",
+          "GA Client ID",
+          "GA4 field",
+          "quiz-receiver-ga-fields",
+          "quiz-lead-receiver",
+          "S90"
+        ],
+        "live": {
+          "type": "function-source-contains",
+          "project": "dragon-auto-automations",
+          "region": "us-west1",
+          "function": "quiz-lead-receiver",
+          "file": "quiz_lead_receiver_main.py",
+          "needles": [
+            "6458MqU4YjnYebrzMGqP",
+            "0zIgKZKMg7QDyyYyr4PJ",
+            "znfWwXGxMWOYrpqOoD4T"
+          ]
+        }
+      }
     },
     {
       "item": "Give Claude the Re-Engage triage file Tasha sent",
@@ -926,7 +961,29 @@
           "label": "The same copy as a Terminal paste, if you would rather not use Claude (safe to run twice)",
           "code": "T=\"$HOME/Documents/Dragon Auto Synced/Projects/ai-urable-proposal/cloud-functions/reengage-auto-triage/reengage_auto_triage.py\"\nOLD=d6882c2ce5e1a353a10cea248384a12f38423070122e9708e89b5a554c63da6e\nNEW=39853b7a0e6c4f137a8d557270aeb46466148637d8fd29ebce913994d5a0d170\nW=\"$(mktemp -d)\"\nCUR=\"$(shasum -a 256 \"$T\" 2>/dev/null | cut -d' ' -f1)\"\nif [ \"$CUR\" = \"$NEW\" ]; then\n  echo \"DONE: tell Tasha: triage vault copy was already up to date (${NEW:0:12})\"\nelif [ \"$CUR\" != \"$OLD\" ]; then\n  echo \"FAILED: send Tasha this output. Vault copy hash is ${CUR:-missing}, expected $OLD. Nothing was changed.\"\nelse\n  TOKEN=\"$(gcloud auth print-access-token)\"\n  URL=\"$(curl -s -X POST \"https://cloudfunctions.googleapis.com/v2/projects/dragon-auto-automations/locations/us-west1/functions/reengage-auto-triage:generateDownloadUrl\" -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\" -d '{}' | python3 -c \"import json,sys; print(json.load(sys.stdin).get('downloadUrl',''))\")\"\n  if [ -z \"$URL\" ]; then\n    echo \"FAILED: send Tasha this output. Could not get the live bundle download link. Nothing was changed.\"\n  elif ! curl -s -o \"$W/bundle.zip\" \"$URL\" || ! unzip -q -o \"$W/bundle.zip\" -d \"$W/src\"; then\n    echo \"FAILED: send Tasha this output. Could not download or unzip the live bundle. Nothing was changed.\"\n  elif [ \"$(shasum -a 256 \"$W/src/reengage_auto_triage.py\" | cut -d' ' -f1)\" != \"$NEW\" ]; then\n    echo \"FAILED: send Tasha this output. Live file hash is $(shasum -a 256 \"$W/src/reengage_auto_triage.py\" | cut -d' ' -f1), expected $NEW. Nothing was changed.\"\n  else\n    mkdir -p \"$HOME/.dragon-backups\"\n    cp -p \"$T\" \"$HOME/.dragon-backups/reengage_auto_triage.py.pre-20261001\"\n    cp \"$W/src/reengage_auto_triage.py\" \"$T.new\" && mv \"$T.new\" \"$T\"\n    if [ \"$(shasum -a 256 \"$T\" | cut -d' ' -f1)\" = \"$NEW\" ]; then\n      echo \"DONE: tell Tasha: triage vault copy updated to ${NEW:0:12}, old file kept in ~/.dragon-backups\"\n    else\n      echo \"FAILED: send Tasha this output. The copy did not verify. The old file is in ~/.dragon-backups/reengage_auto_triage.py.pre-20261001\"\n    fi\n  fi\nfi\nrm -rf \"$W\""
         }
-      ]
+      ],
+      "doneCheck": {
+        "doneWhen": "Noah's vault copy of reengage_auto_triage.py is the same file the live reengage-auto-triage function runs, and that file is not the old 8/17 copy.",
+        "approvals": "M234",
+        "vault": [
+          "reengage_auto_triage",
+          "reengage-auto-triage",
+          "Re-Engage triage",
+          "reengage-triage-copy",
+          "M234"
+        ],
+        "live": {
+          "type": "function-file-matches-vault",
+          "project": "dragon-auto-automations",
+          "region": "us-west1",
+          "function": "reengage-auto-triage",
+          "file": "reengage_auto_triage.py",
+          "vaultPath": "Projects/ai-urable-proposal/cloud-functions/reengage-auto-triage/reengage_auto_triage.py",
+          "oldSha256": [
+            "d6882c2ce5e1a353a10cea248384a12f38423070122e9708e89b5a554c63da6e"
+          ]
+        }
+      }
     },
     {
       "item": "Say yes to deleting the two old 'New Lead' webhook entries in the quiz funnels",
@@ -939,24 +996,28 @@
         "Do the same in Rocklear Quote Quiz - Google Ads.",
         "Tell Tasha when they are gone. She reruns the log check a day later, and refused posts should read 0."
       ],
-      "commands": []
-    },
-    {
-      "item": "Accept Tasha's GitHub invite so your Claude can read her work log",
-      "project": "Work Visibility Dashboard",
-      "since": "2026-10-12",
-      "impact": "On the 10/11 call you asked for the repo link so your Claude can see what Tasha builds without opening this dashboard. The link is https://github.com/nathasia-afk/dragon-auto-worklog, a private repo on Tasha's Dragon Auto GitHub account, and every work session she finishes now lands there in the same update as this page. Your GitHub account (noah-dragon-auto) has an invite waiting. Until it is accepted the repo stays closed to you, and GitHub drops an unaccepted invite on 10/19.",
-      "whatToDo": [
-        "On the Mac (gh has been signed in there since the 10/11 call), copy the block below into Claude and say: claude do this, tasha sent this. It accepts the invite and reads the latest update. It changes nothing else and is safe to run twice.",
-        "Send Tasha the line it ends with. It starts with DONE or FAILED.",
-        "After DONE, your Claude can read worklog.json in that repo any time: sessions lists each work session newest first, projects has each system's status, and waitingOnNoah is this list. The privateVault field is encrypted on purpose, so leave it alone."
-      ],
-      "commands": [
-        {
-          "label": "Accept the invite and check access (run on the Mac, safe to run twice)",
-          "code": "ME=$(gh api user --jq .login 2>/dev/null); echo \"GitHub account on this Mac: ${ME:-not signed in}\"\nID=$(gh api user/repository_invitations --jq '.[] | select(.repository.full_name==\"nathasia-afk/dragon-auto-worklog\") | .id' 2>/dev/null)\nif [ -n \"$ID\" ]; then if gh api --method PATCH \"user/repository_invitations/$ID\" >/dev/null 2>&1; then echo \"Accepted Tasha's invite.\"; else echo \"Could not accept the invite.\"; fi; fi\nif LATEST=$(gh api repos/nathasia-afk/dragon-auto-worklog/commits/main --jq '.commit.committer.date + \"  \" + .commit.message' 2>/dev/null); then echo \"Latest update: $LATEST\"; echo \"DONE: tell Tasha: Noah's Claude can read dragon-auto-worklog.\"; else echo \"FAILED: send Tasha this output. Signed in as ${ME:-nobody}; the repo is not readable yet.\"; fi"
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Five quizzes in a row reach the quiz receiver with no refused post after them, and four days pass with none, which means the keyless New Lead webhooks are gone.",
+        "approvals": "S18",
+        "vault": [
+          "New Lead webhook",
+          "New Lead entr",
+          "keyless",
+          "S18"
+        ],
+        "live": {
+          "type": "request-refusals-stopped",
+          "project": "dragon-auto-automations",
+          "service": "quiz-lead-receiver",
+          "userAgentPrefix": "node-fetch",
+          "refusedStatus": 401,
+          "acceptedStatus": 200,
+          "minCleanAccepted": 5,
+          "minQuietHours": 96,
+          "days": 14
         }
-      ]
+      }
     },
     {
       "item": "Run one line so Tasha can read Sean's morning call sheets (added to M239)",
@@ -972,7 +1033,19 @@
           "label": "Give Tasha read-only access to the call-sheet storage (finds her account in the project's permissions; grants nothing unless exactly one account matches; safe to run twice)",
           "code": "M=$(gcloud projects get-iam-policy dragon-auto-automations --flatten=\"bindings[].members\" --format=\"value(bindings.members)\" | grep -E '^user:nathasia[@]' | sort -u); N=$(printf '%s\\n' \"$M\" | grep -c .); if [ \"$N\" = \"1\" ] && gcloud storage buckets add-iam-policy-binding gs://dragon-auto-automations-callsheet-cache --member=\"$M\" --role=roles/storage.objectViewer >/dev/null; then echo \"DONE: tell Tasha the call-sheet read is on for $M\"; else echo \"FAILED: found $N matching account(s), need exactly 1, or the grant failed. Nothing was granted. Send Tasha this output\"; fi"
         }
-      ]
+      ],
+      "doneCheck": {
+        "doneWhen": "Tasha's gcloud account can list the call-sheet storage bucket.",
+        "approvals": "M239",
+        "vault": [
+          "callsheet-cache",
+          "M239"
+        ],
+        "live": {
+          "type": "bucket-readable",
+          "bucket": "dragon-auto-automations-callsheet-cache"
+        }
+      }
     }
   ],
   "sessions": [
