@@ -1,7 +1,33 @@
 {
   "version": 1,
-  "updated": "2026-10-12T21:17:17.430Z",
+  "updated": "2026-10-13T00:43:14.513Z",
   "projects": [
+    {
+      "id": "night-shift",
+      "name": "Night Shift Lead Check",
+      "status": "IN_PROGRESS",
+      "summary": "Noah's nightly check of every open Rockclear lead against ten rules, handed to Tasha on 10/11. Phase 1 is the opportunity cards: on 10/12 every card was checked, 225 finished leads came off 607 stale queued follow-ups, and the checker's two known false alarms were fixed.",
+      "blockedOn": "Noah's taps on the approvals page: the one clear 'said no' card, and three card decisions drafted on 10/12. Turning the nightly run on is still his item M216.",
+      "health": {
+        "band": "watch",
+        "reason": "Phase 1 writes are done and read back clean; the morning post and Noah's decisions are still open, and nothing is deployed."
+      },
+      "detail": {
+        "goal": "Every open lead checked every night against ten rules that should always be true, with the slipped ones fixed or handed to the right person by morning.",
+        "whatWasDone": [
+          "2026-10-12: checked all 3,277 Rockclear cards; 225 people off 607 stale queued follow-ups; R5 and R6 fixes committed with 166 checks passing."
+        ],
+        "needsImprovement": [
+          "Post the first 'fixed overnight' summary for Noah and carry out his decisions.",
+          "Push the branch to the private repo once Tasha OKs it.",
+          "Later phases: the reading step for unanswered messages, the nightly deploy, Sean's call-sheet block, and the alarm clean-up."
+        ],
+        "watchFor": [
+          "Moving a card into the Won column sends Meta a purchase event; never bulk-move without Noah.",
+          "Queued follow-ups come back on any card the follow-up robot still works, so only finished leads get cleared."
+        ]
+      }
+    },
     {
       "id": "ga4-conversion-loop",
       "name": "GA4 Lead Tracking",
@@ -909,6 +935,28 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-12",
+      "title": "225 people who already said no or already bought came off 607 queued follow-up texts, and Night Shift stopped mistaking consultations for installs",
+      "shipped": [
+        "Took over Night Shift from Noah's 10/11 handoff and checked all 3,277 Rockclear cards against Urable and each conversation, so the cards he saw as 'booked but not won' could be sorted by fact. None of the 38 open Booked cards has a finished, paid job, so nothing was left open by mistake; the real mess is 54 cards already marked won that still sit in the Booked column.",
+        "Removed 607 queued follow-up texts from 225 people who had already said no, been disqualified or already bought, under Noah's standing rule for taking finished leads out of follow-ups. None of them can now get a stale sales text from the approval queue. One contact went first and was re-read 3 minutes later, then five batches with a read-back after every change: 225 of 225 clean, no message sent, nothing else on the contacts touched.",
+        "Fixed Night Shift's false 'should be Won' alarm: it now skips consultations, inspection washes and Dragon Care visits when it judges a Booked card, and says Won only when every paid install is finished and paid in full. Checked live on 38 Booked cards: 7 results changed and each one matched the customer's Urable jobs, including 2 paid installs that were never closed in Urable.",
+        "Gave Night Shift its exclusion list: 30 staff, vendor, peer-shop, solicitor and test contacts it should never count as leads, plus Dragon Care members, who need no sales card but still get flagged if they ask something. Its 'talking to us with no card' list drops from 167 to 140, with exactly those 27 contacts removed.",
+        "Put the Night Shift code into the private GitHub repo Noah approved, with history: the unchanged import, then the two fixes. 166 automated checks pass, and 9 planted bugs were each caught before anything was committed."
+      ],
+      "fixed": [
+        "Corrected Noah's card-fix list before he taps it: a live re-read shows only one of the four 'said no' cards is a clear no. Another customer, who paid a $512.50 deposit, actually asked on 10/9 which day his appointment is, and only a phone call reaches him. The approvals card now says so."
+      ],
+      "inProgress": [
+        "Morning post for Noah in Discord after the 5:40 AM re-check, with the full card list attached.",
+        "Three decisions drafted for Noah's approvals page: moving 20 finished, paid jobs into Won without telling Meta about old sales as new ones, reopening 5 deposit-only cards per his 9/29 rule, and clearing 2,010 old queued follow-ups on 440 people who haven't said no.",
+        "One clear 'no' card is staged to move the moment Noah approves it."
+      ],
+      "notes": [
+        "Every change has a backup and a read-back log. The Night Shift branch is not pushed yet; that waits for Tasha's OK because Noah's morning routine reads the repo."
+      ]
+    },
     {
       "date": "2026-10-12",
       "title": "Every work-log update now also lands in a private repo on the Dragon Auto GitHub account, so Noah's Claude can read what Tasha builds",
