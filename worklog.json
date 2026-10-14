@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-14T05:03:26.281Z",
+  "updated": "2026-10-14T09:49:36.193Z",
   "projects": [
     {
       "id": "night-shift",
@@ -880,10 +880,612 @@
   ],
   "waitingOnNoah": [
     {
-      "item": "Give Claude the digest alarm file Tasha sent on Discord",
+      "item": "Say yes or no: does the #5703 customer get his full $512.50 deposit back if he confirms the cancel?",
+      "project": "Deposit Lane (M151)",
+      "since": "2026-10-09",
+      "impact": "The #5703 customer texted on 10/7 (cancel), 10/9 (which day is my appointment), and 10/13 (cancel, or reschedule if he can't), and nobody has answered him, while his $512.50 deposit sits with us. No install date was ever set, so your 10/12 rule (deposits refundable up to 72 hours before the appointment) points to yes, but Sean can't close the call until you say it.",
+      "whatToDo": [
+        "Decide: if he confirms the cancel, does the full $512.50 go back? A yes also OKs moving his card to Lost (Declined) after the refund, which stays your call.",
+        "Reply to Tasha in Discord with yes or no on #5703.",
+        "Then Sean calls him (his July STOP blocks texts and email, so only a call reaches him). If he cancels, the refund goes through Urable so it is on record and Jenn cancels #5703; if he would rather reschedule, Jenn sets a Friday or Saturday drop-off."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah has said yes or no on refunding the #5703 deposit if the customer cancels (his own words in his notes or to Tasha), or Urable shows #5703 refunded, cancelled, or given an install date.",
+        "approvals": null,
+        "vault": [
+          "#5703",
+          "job 5703",
+          "5703 refund"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Rule on 14 old paid jobs with no install date, starting with the $1,125 refund promised on #4221",
+      "project": "Deposit Lane (M151)",
+      "since": "2026-10-13",
+      "impact": "Urable shows $8,597.50 in customer deposits on 11 of these jobs with no finished work on record, the oldest since 3/2024, and #4221 was promised his $1,125 back in June 2025. The other three (#3364, #5326, #4435) are paid records only you can explain. Each needs a Stripe or Square look-up, a price, or a refund call that only you can make.",
+      "whatToDo": [
+        "#4221 first: check Stripe for any refund of the $1,125 charged 6/5/2025. He cancelled 6/24/2025, inside the refund window, and was told he would get it back. If nothing went out, approve the refund, or set the price if he would rather book ($2,250, $1,225 for one layer, or no further charge).",
+        "Look up in Square: #2846 ($500, 7/2024) and #2665 ($1,750, 7/2024): refunded already, and was #2665 ever worked on? #3362 ($1,225): who won the 1/2025 chargeback? #4680 ($300, 1/2026, car later totaled): who paid it? Then say refund, rebook, or credit for each.",
+        "Rule on held deposits: #4285 ($900, 7/2025: was it the STI the media team filmed 9/23/2025, and was the balance waived?); #3971 ($1,500, 4/2025: still a customer, and which car?); #3546 ($100) and #3518 ($142.50): rebook at the old price or today's (a #3518 refund would be goodwill); #2205 ($1,025, 3/2024): move, close, or credit once Jenn checks whether it went toward a later Kia job under another record.",
+        "Explain records only you know: #3364's two 'other' payments ($1,550 and $1,450, entered 12/2024): real money, or paperwork for the car done under #3312? Bill or zero #3365's $350. The $30 kept on #3088 (card fee?) and #3086's uncharged $150 (chase or close). #5326's $2,875 paid on the wrong job: close #5326 with the June dates, or move both payments to finished #5438, and may its card go to Won (sends Meta a purchase dated today)? #4435 and #5650: confirm the 8/2025 drop-off, then price or comp the $750 second coat.",
+        "S61 on your page (Jenn books the paid deposits with no date) can close: Tasha's 10/13 list gives each current one to Sean or Jenn.",
+        "Reply to Tasha in Discord, one line per job number. Jenn and Sean do the calls and Urable work, Tasha the cards; your answer also covers any Lost move that follows."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah has given a ruling on every listed job (#4221, #2846, #2665, #3362, #4680, #4285, #3971, #3546, #3518, #2205, #3364, #3088, #5326, #4435), in his notes or to Tasha, or Urable shows each one refunded, cancelled, dated, or closed. A partial answer keeps the card open.",
+        "approvals": null,
+        "vault": [
+          "#4221",
+          "job 4221",
+          "#4285",
+          "#3971",
+          "#3546",
+          "#3518",
+          "#2846",
+          "#2665",
+          "#2205",
+          "#3362",
+          "#4680",
+          "#3088",
+          "#3364",
+          "#5326",
+          "#4435",
+          "dateless deposit",
+          "S61"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Answer three customers whose money or booking questions wait on you (M4, M46, S183)",
+      "project": "Sales Action Queue",
+      "since": "2026-09-18",
+      "impact": "Each is a customer waiting on an answer only you can give: a $400 deposit paid 9/08 that Urable shows as $0, a July job (#5478) the customer says missed the summer-sale discount, unanswered since 9/04, and a two-car $3,456 quote whose customer has waited since 10/09.",
+      "whatToDo": [
+        "M4: check Square or Stripe for the $400 deposit paid 9/08 that Urable shows as $0. The reply to him now sits in Jenn's Reply Review.",
+        "M46 (#5478): pick refund the difference, explain it did get the discount, or look first.",
+        "S183: pick whether the two-car quote holds both cars together or lets the Model Y go first. Re-issuing his expired payment links (M3) follows your answer.",
+        "Answer on your approvals page, items M4, M46, and S183."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M4, M46, and S183 each have an answer on Noah's approvals page, or his notes say each customer was answered.",
+        "approvals": null,
+        "vault": [
+          "M4",
+          "M46",
+          "S183",
+          "#5478",
+          "summer-sale discount"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Rotate the Urable key that was shared in chat on 9/28, and tell Tasha before you change your Urable password",
+      "project": "Full-System Audit + Conversion Architecture",
+      "since": "2026-10-08",
+      "impact": "The Urable key made on 9/28 can change jobs and record payments. A full copy of it was shared in chat that day and is still in that week's saved transcript, and eight cloud services use it today. Your 10/13 Mac batch (T3) covers the saved Urable login, not this key.",
+      "whatToDo": [
+        "In Urable, make a new API key with the same permissions as the 9/28 one and save it as a new version of the same Google secret, the way M49 did. Then restart the eight cloud services that load it, or tell Tasha and she restarts them.",
+        "Once nothing uses the 9/28 key, revoke it in Urable (as in M74), and swap any copy typed into a settings file, such as the Urable connection in M211.",
+        "Delete the 9/28 chat message that holds the key, and remove the key line from your week-40 transcript note.",
+        "Before the Urable password change in T3, tell Tasha: one cloud job also carries a copy of the saved Urable login, so it has to come out in the same pass.",
+        "Reply to Tasha in Discord with 'Urable key rotated' once the 9/28 key is revoked."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Urable has a new key in use and the 9/28 key is revoked, the chat message and the transcript copy are gone, and the saved Urable login is out of the cloud job after the password change.",
+        "approvals": null,
+        "vault": [
+          "Urable key rotated",
+          "new Urable key",
+          "Urable API key",
+          "rotated the Urable",
+          "2026-W40"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Answer what PeelClear, matte and color-change askers hear while PeelClear is paused (M219, S68)",
+      "project": "Night Shift Lead Check",
+      "since": "2026-09-28",
+      "impact": "20 people asked for PeelClear, matte or satin since the 9/23 pause, and all are held for you, so nobody can answer them. Some have waited months, including a Tundra owner who paid a $2,200 PeelClear deposit in May and has checked in 6+ times since July. One answer lets Sean reply to most of them, with drafts coming to you first.",
+      "whatToDo": [
+        "Pick the answer for askers: 'Paused, offer gloss Rocklear', 'Paused, join a waitlist', or 'I'll answer each one' (S68 also offers 'Close them out').",
+        "Tell Sean what to say to the two longest waits: the Tundra owner with the $2,200 deposit (a date or a straight answer) and the Audi A4 owner waiting since May.",
+        "Say whether the 4 PeelClear askers held for you on Reply Review get a Rocklear offer. Then either call back the color-change lead from M217 (last reply 9/13) or hand him to Sean.",
+        "Answer on your approvals page, item M219. The same answer closes S68."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M219 is answered with what PeelClear and matte askers are told (S68 takes the same answer).",
+        "approvals": "M219",
+        "vault": [
+          "M219",
+          "S68",
+          "PeelClear askers",
+          "PeelClear answer"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Retire the old webhooks and keys that sit in plain text, including the Framer key (M111)",
+      "project": "Full-System Audit + Conversion Architecture",
+      "since": "2026-10-02",
+      "impact": "Anyone who finds one of these copies can still use it: three Discord webhook addresses saved in notes, the quiz key (it rides in a web address, so the request logs hold it), the Framer key with edit and publish rights on dragonauto.net (printed into a local log on 10/01), a bot token in a settings file on your Mac, and a Google Cloud key from 6/07 with no deletion on record. An April GHL key from the old daily audit also still worked on 10/02.",
+      "whatToDo": [
+        "Discord: delete the three webhooks and re-create any still in use: #automation-work (also B4 in your 10/13 Mac batch; five cloud services load it, and Tasha can restart them), the 'Captain Hook' new-lead webhook a Zapier step posts through, and an approval-bot webhook from a June doc.",
+        "Quiz key: tell Tasha a time you can be in Perspective, so the new key goes into the cloud side and into both quizzes' Funnel completed webhook (the same screen as S18) within the same few minutes.",
+        "Framer (M111): make a new API key in your Framer account, delete the old one, and tell Tasha if anything else used it.",
+        "Move the Dragon Auto Assistant bot token out of the Claude settings file on your Mac into Google's secret store (your B23 plan needs it there), and in Google Cloud delete the 6/07 key on the ghl-automation service account if nothing uses it. Tasha's account cannot list keys.",
+        "Reply to Tasha in Discord with yes or no: may she check the April GHL key from the old daily audit against the live keys and revoke it in GHL if nothing live uses it?"
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "The three webhooks are deleted or re-created, the quiz key and the Framer key are replaced, the bot token is in Google's secret store, the 6/07 key is deleted or confirmed in use, and Noah has answered on the April GHL key.",
+        "approvals": null,
+        "vault": [
+          "M111",
+          "Framer key",
+          "Captain Hook",
+          "automation-work webhook",
+          "sweep token",
+          "quiz key",
+          "old audit key",
+          "Assistant bot token",
+          "ghl-automation key"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Hold the staged M192 deploy: it was built on an older follow-up bot and may not catch email replies (M192)",
+      "project": "Cadence Orchestrator",
+      "since": "2026-10-08",
+      "impact": "When a customer answers one of our automated emails, the follow-up bot and Sean's sheet still read it as our own email echoing back; your 10/08 test of the fix changed 35 of 61 real threads. The command staged that day redeploys the follow-up bot as it stood before your 10/09 deposit-welcome deploy, so running it now would quietly roll that change back.",
+      "whatToDo": [
+        "Don't run the 10/08 M192 command or its undo script. The command redeploys the follow-up bot from its 10/08 copy (00076-xod) and the undo goes back to that copy; either one drops the drop-off time now in every deposit welcome (live since 10/09 as 00077-qof), and the script's settings check would not flag it.",
+        "The bot half may also do nothing. Its new email lookup only runs when a thread read asks for email status, and both of the live bot's thread reads turn that off (00077-qof, checked 10/14). The newer copy in your vault reads replies on its own switch, so it does not share that limit.",
+        "The call-sheet half needs no separate deploy: it rides in Tasha's call-me-later sheet update.",
+        "Reply to Tasha in Discord with who rebuilds the bot half on today's live bot (Tasha, or a session on your PC), or set M192 to Later on your approvals page."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah has named who rebuilds the follow-up bot half of M192 or set M192 to Later, or a rebuilt email-reply fix is live on the follow-up bot on top of 00077-qof.",
+        "approvals": "M192",
+        "vault": [
+          "M192",
+          "email-reply fix",
+          "00077-qof"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Update the payment card on Zapier so pickup emails and referral codes keep going out (M127)",
+      "project": "Zapier UI Catalog",
+      "since": "2026-10-03",
+      "impact": "Zapier failed to charge the card on 9/29 and again on 10/2, and in August the same pattern ended with the plan cancelled and the new-lead alerts paused. The completed-job Zap is what tells GHL a car was picked up so the aftercare guide and referral code go out: when every Zap paused from 9/26 to 9/29, 8 clients got neither until they were sent on 10/03. Your 10/03 note also expects the 750-task plan to run out again around the 26th of each month.",
+      "whatToDo": [
+        "In Zapier, open Settings, then Billing. Only the account owner can do this.",
+        "If the plan shows paid with no failed payment, mark M127 done on your approvals page.",
+        "If not, update the card and retry the payment (about 3 minutes).",
+        "Tell Tasha either way. She checks that the completed-job Zap is on and has run since."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M127 turns done on Noah's approvals page, or his notes say the Zapier card was updated and the payment went through.",
+        "approvals": "M127",
+        "vault": [
+          "M127",
+          "Zapier card",
+          "Zapier billing",
+          "Zapier payment"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Answer the two deposit-lane calls: who runs it, and the email for deposits with no date (M151)",
+      "project": "Deposit Lane (M151)",
+      "since": "2026-10-07",
+      "impact": "Today a paid deposit reaches a Booked card only if stage-truth-guard on your Mac catches it at 5:35 AM, and one customer who paid $932.88 on 9/26 had no GHL record for over a week. Tasha's deposit lane is built to file every paid deposit within 30 minutes and has run 884 times since 10/07 in plan-only mode with nothing written. Before it goes live she needs your two calls.",
+      "whatToDo": [
+        "Call 1: Tasha runs the deposit lane as her own system (her pick), or you build it in your card sweep. Her way, your sessions skip OPP_GUARD_PAID and her July payment sync stays retired, so one system files paid cards. Her 10/09 build also puts a Won card back to open in Booked when only a deposit is paid, per your 9/29 rule.",
+        "Call 2: approve, edit, or say no to the short email a customer gets when the deposit lands with no install date ('Deposit received, let's pick your drop-off day': Jenn will reach out to set the day, signed by you, Jenn, and the team). It names no amount and no car.",
+        "Answer on your approvals page, item M151, or tap both calls on the M151 decision page (if a tap won't save, tell Tasha in Discord). The email shows 'approved' there now, but that tap was Tasha's own on 10/08, so it still needs yours."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah has answered both calls (who runs the deposit lane, and approve, edit, or no on the date-pending email) on approvals M151, on the decision page under his own name, or in his notes. Tasha's own 10/08 tap on the email does not count.",
+        "approvals": "M151",
+        "vault": [
+          "M151",
+          "date-pending email",
+          "date pending email",
+          "OPP_GUARD_PAID"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Clear the Google Ads advertiser verification so search ads and the Google quiz funnel run again (M174)",
+      "project": "GA4 Lead Tracking",
+      "since": "2026-09-01",
+      "impact": "Google paused every search ad on Aug 17 when the advertiser verification lapsed, and the Google quiz funnel had no completions after 8/15 (checked 9/23). About 4 in 10 quiz fills that come from Google search book. Your floodgates plan (M163, still open) puts $50 a day on Google search from Oct 16, and while the pause lasts that money goes to the hook videos instead.",
+      "whatToDo": [
+        "Sign in to Google Ads as the account owner and finish the advertiser verification from the banner at the top of the account.",
+        "Check that the search campaigns show as running again.",
+        "Mark M174 done on your approvals page. M16 is the same ask from 9/01 and can close with it."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Google Ads advertiser verification is complete and the search campaigns run again; Noah marks M174 done or says so in his notes. Nothing on Tasha's side can read the Google Ads account.",
+        "approvals": "M174",
+        "vault": [
+          "M174",
+          "M16",
+          "advertiser verification",
+          "Google Ads verification"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Decide who clears the follow-up texts the bot already wrote: a checked switch to automatic (B1) or Judith (M69)",
+      "project": "Cadence Orchestrator",
+      "since": "2026-09-07",
+      "impact": "Your 9/28 lead audit called this the biggest reason quoted leads go cold. The follow-up bot writes the day 1, 3, 6 and 10 texts, but none go out until someone approves them. Your 10/12 morning digest showed 469 drafted texts waiting on 268 people.",
+      "whatToDo": [
+        "Answer B1 on your approvals page. If you pick 'Run the check now', a session checks the drafts against today's prices and clears the stale ones. Nothing sends until you switch the bot to automatic yourself. Note: the C8 video it links still says '7.5 mils same as PPF'.",
+        "If you would rather keep a person on every text, answer M69 on your approvals page. Judith's thumbs-up sends quiet-lead drafts, and you keep new prices, complaints, PeelClear, and VIPs. You can also choose to see her first 10 before they send.",
+        "Answer S89 on your approvals page: let the bot send your approved last text (340 to 366 characters) at full length, or keep its 320-character limit so a person sends each one by hand.",
+        "Also say whether the 2,010 older queued follow-ups on 440 people who never said no (counted 10/12) are cleared, which sends nothing, or stay in your approval queue.",
+        "S169 on your page: once the bot sends on its own, should it text only from 9 AM to 8 PM, like your texting note says?",
+        "Ghosted-lead drafts (about 100, from your 10/11 call with Tasha): reply to Tasha in Discord with whether they follow the same rule or go out without one-by-one review."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "B1 or M69 on Noah's approvals page shows an answer, or his notes say who approves or sends the follow-up drafts, including the ghosted-lead ones. S89 answered too.",
+        "approvals": "B1",
+        "vault": [
+          "B1",
+          "M69",
+          "S89",
+          "ghosted-lead follow-up",
+          "follow-up texts channel",
+          "switch it to automatic",
+          "S169",
+          "queued follow-ups"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Pick how the 28 quoted leads with no card get back in front of Sean (M125)",
+      "project": "Reply and Missed-Call Cards",
+      "since": "2026-10-03",
+      "impact": "On 10/03, 28 people quoted or spoken with since June 1 had no pipeline card, so the call sheet, the follow-up bot, and the email drip never saw them. 11 were warm, and 19 were quoted at sale prices that ended 9/7.",
+      "whatToDo": [
+        "Answer on your approvals page, item M125. The recommended option gives each of the 28 a card and a dated callback on Sean's sheet, and extends the card sweep to every Urable quote so hand-quoted leads can't go cardless again (one deploy you run, about 15 minutes).",
+        "Say whether the 19 quoted at the September sale price keep that price or get today's. Some may have booked since 10/03; Tasha rechecks the list before any card is made."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M125 is answered on Noah's approvals page, including the price for the 19 sale-price quotes.",
+        "approvals": "M125",
+        "vault": [
+          "M125",
+          "28 quoted leads"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Say yes to bringing back 157 'call me later' leads on Sean's sheet, 4 a workday (M81)",
+      "project": "Call-Me-Later Callbacks",
+      "since": "2026-09-29",
+      "impact": "157 people told us when to call them back before the daily reader went live on 10/08, and nothing puts them back in front of Sean. M81's own estimate is 5 to 10 bookings ($7,400 to $14,900). Two deploy approvals (the reader in test mode, then the call-sheet update) follow on your page once Tasha finishes her test mornings.",
+      "whatToDo": [
+        "Your page still shows the 9/29 count (169, 5 a day). Tasha's 10/13 recount is 157 at 4 a workday, with a fifth slot kept free for new missed callbacks; she re-runs the preview before the live run, so the count can drop a little.",
+        "Nothing is texted or emailed. Tasha runs the loader once on her Mac the day you tap: each person gets a dated callback task for Sean with their own words, and 136 cards move into Waiting on a future date.",
+        "Answer on your approvals page, item M81: Load all 169, 5 a day (recommended; Tasha runs it as the 157 at 4 a day), Load 3 a day, or Hold."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M81 is answered on Noah's approvals page (Load all, Load 3 a day, or Hold).",
+        "approvals": "M81",
+        "vault": [
+          "M81",
+          "169-lead backfill",
+          "parked leads"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Give every 'Needs us' flag from Judith an owner and a due date (M190)",
+      "project": "Sales Action Queue",
+      "since": "2026-10-08",
+      "impact": "Judith flagged 31 threads as needing a reply from 10/05 to 10/08, and three days later only 2 had been worked. 19 had a customer waiting on an answer, the oldest since May. A flag saves a note on her desk, but nobody is assigned and nothing is due.",
+      "whatToDo": [
+        "Answer on your approvals page, item M190. 'A now, then B' is recommended there: A turns each flag into a GHL task for Sean, Jenn, or you, due the next day, with a 9 AM post of overdue flags (about 2 hours to build); B adds the 'customer spoke last' morning list so email replies and threads with no card reach the desk (about half a day more)."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M190 is answered on Noah's approvals page.",
+        "approvals": "M190",
+        "vault": [
+          "M190",
+          "Needs us flag"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Rule on SLK and two car sizes, say yes or no to the up-to-date car list, and hand Claude the marine fix (M1)",
+      "project": "Vehicle Quote Lookup",
+      "since": "2026-09-02",
+      "impact": "The live quote bot still files any car whose paint color has the word Marine in it as a boat, so that lead gets no quote and every follow-up skips it. On 10/02 Tasha replayed 2,572 real car descriptions: the up-to-date car list starts automatic quotes for 16 of them that wait for a person today and moves 35 to the size you ruled.",
+      "whatToDo": [
+        "SLK: say whether every Mercedes SLK is sedan class like the SLK 300 you ruled on 9/25, or only the SLK 300. Until you answer, five SLK spellings that get a quote today would wait for a person after the deploy.",
+        "Give the size for a 2025 Audi Q6 e-tron (the SQ6 is Midsize) and a 1973 International Harvester Scout II (no row today, so that lead gets no text and no card).",
+        "Say yes or no to shipping the up-to-date car list (item A3 in your 10/13 Mac batch).",
+        "With a yes, give Claude Tasha's file noah-marine-paint-fix.md in the same run and have it run the fix inside the bundle it builds from the live code (the file's step 4), because the vault's main.py is never deployed.",
+        "S94: say yes to pricing every BMW Gran Coupe spelling as a sedan, per your 8/01 rule. 8 of 20 spellings quote $150 low today, and the fix rides in the same deploy. Answer on your approvals page, items M1 and S94."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "The live ghl-lead-receiver main.py carries the marine-paint fix. That fix ships only inside the combined M1 deploy, which waits on Noah's SLK, Q6 e-tron and Scout rulings and his yes on the up-to-date car list, so the live check clears the card when that deploy lands.",
+        "approvals": "M1",
+        "vault": [
+          "noah-marine-paint-fix",
+          "Marine Blue",
+          "SLK",
+          "up-to-date car list",
+          "Q6 e-tron",
+          "Scout II",
+          "S94"
+        ],
+        "live": {
+          "type": "function-source-contains",
+          "project": "dragon-auto-automations",
+          "region": "us-west1",
+          "function": "ghl-lead-receiver",
+          "file": "main.py",
+          "needles": [
+            "marine\\b(?!"
+          ]
+        }
+      }
+    },
+    {
+      "item": "Tap 'Turn it on' for M216 so Tasha can deploy the nightly lead check (read-only, runs at 2 AM)",
+      "project": "Night Shift Lead Check",
+      "since": "2026-10-09",
+      "impact": "The ten-rule lead check still only runs when someone starts it by hand. Its 10/09 live run found 109 customers who needed something from us, including 38 future-date leads with no callback. It only reads: it sends nothing to customers and changes no card.",
+      "whatToDo": [
+        "Answer on your approvals page, item M216: 'Turn it on', 'Show me the rules first', or 'Not now'.",
+        "On 'Turn it on', Tasha runs the one-command deploy, as you decided on M238, and checks the first 2 AM run."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M216 is answered on the approvals page ('Turn it on' means Tasha deploys the nightly check; the other answers keep it off).",
+        "approvals": "M216",
+        "vault": [
+          "M216",
+          "lead-check",
+          "nightly lead check"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Answer M218 and S175: may Sean get his slipped-lead names now, before his call-sheet block is built",
+      "project": "Night Shift Lead Check",
+      "since": "2026-10-08",
+      "impact": "Your Night Shift brief bars Tasha from sending Sean any slipped-lead names until you OK M218 or S175. The 10/09 run found 21 recent customers waiting on a reply or a date and 7 September deposits with no install date, and the call-sheet block that would carry his names is a later phase that needs your deploy OK. Other lead problems go to the separate page you asked for on 10/11; Tasha brings you its format once it is drafted.",
+      "whatToDo": [
+        "M218: 'Post it to Sean' lets Tasha post his slipped-lead rows in the Discord channel he works from. 'I'll pass it on' means nothing posts and you forward them yourself.",
+        "S175: 'Post it in #sales-chat' points the daily read's morning report (who got a callback, plus the 1 or 2 names a day that need a person) at #sales-chat and redeploys the reader, about 10 minutes. Today it goes to a channel nobody on our side reads.",
+        "Answer both on your approvals page, items M218 and S175."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M218 and S175 are both answered on the approvals page.",
+        "approvals": "M218",
+        "vault": [
+          "M218",
+          "S175",
+          "slipped-lead list",
+          "sales-chat"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Tap 'Fix the six clear ones' on M217 (only one card moves now) and answer S180 (not a lead)",
+      "project": "Night Shift Lead Check",
+      "since": "2026-10-09",
+      "impact": "One customer wrote 'I dont need one anymore' on 9/30, but her card still sits in Waiting on a future date with an overdue 9/1 callback, so she keeps landing on Sean's lists. Your tap lets Tasha move her to Lost (Declined) and close that callback; the move is staged and test-run. S180 takes the Las Vegas owner you are helping off Sean's sheet and the nightly lead list.",
+      "whatToDo": [
+        "M217: tap 'Fix the six clear ones'. On Tasha's live re-read only one of the four 'said no' cards is a clear no, so only that card moves. The other three stay where they are, and the two queued follow-ups already came off on 10/12 under your standing rule A1.",
+        "S180: tap 'Mark not a lead' if the Las Vegas owner you are helping (another shop's customer, M220) is not a lead. His card closes as a non-lead, his thread stays open for your texts, and Tasha adds him to Night Shift's skip list.",
+        "Answer both on your approvals page, items M217 and S180."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M217 and S180 are both answered on the approvals page.",
+        "approvals": "M217",
+        "vault": [
+          "M217",
+          "S180",
+          "not a lead"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Pick A or B for the bot that closes out no's instead of Sean doing it by hand (hygiene-1012)",
+      "project": "Night Shift Lead Check",
+      "since": "2026-10-12",
+      "impact": "Your 10/12 check found three texts in your unread inbox that the bots should have handled: a cancel, a 'not right now', and a client's husband arranging a drop-off who was given a sales card. The decline closer has run in practice mode since 9/28 and writes nothing, and even switched on it knows only five hard-no phrasings and would have caught none of the three. Tasha's 10/13 count also found 10 spam cards with every channel blocked still sitting in Manual Quote Required, because the cleanup sets their status but never moves the card; option B could close that case in full too.",
+      "whatToDo": [
+        "A: switch the existing closer from practice to live (about 10 minutes). It still knows only five hard-no phrasings and has no guard for clients' family.",
+        "B, the one your 10/12 note recommends: a closer that reads the whole thread, skips clients' family, and logs each case (3 to 4 hours, then 2 days of practice).",
+        "Option A is the same switch as M2 (status go since 9/15). If you pick A, use a fresh command built on today's code: the 9/29 command redeploys an older folder and would undo the quote-reading code.",
+        "Answer on your approvals page, item hygiene-1012."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah picks A or B on approvals item hygiene-1012. The watcher cannot read that id (it only accepts S, M and B numbers), so the page or his daily note is the proof.",
+        "approvals": null,
+        "vault": [
+          "hygiene-1012",
+          "decline closer",
+          "DECLINE_STOP_DRY_RUN",
+          "thread-reading closer"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Pick how the follow-up bot reaches the 190 leads who replied (M122)",
+      "project": "Cadence Orchestrator",
+      "since": "2026-10-03",
+      "impact": "The follow-up bot reads at most 400 of 606 cards a run and reaches the replied column last, so the 190 leads who replied get no follow-up drafts; in a sample of 12, 11 had not been read in 9 or more days. Tasha's 10/06 check found the bot already hit its 30-minute hard limit 17 times in 30 days, so reading more cards needs the skip for unchanged threads switched on with it.",
+      "whatToDo": [
+        "Raise the limit to 700 and turn on the skip for unchanged threads (recommended on the page): every replied lead gets checked each run, one deploy, about 10 minutes.",
+        "Only reorder so replied and hot leads are read first: no extra GHL calls, but the oldest awaiting-first-contact cards fall off the end.",
+        "Leave it: replied leads keep getting no automatic follow-up, and Sean remembering is the only net.",
+        "Answer on your approvals page, item M122. S6 (raise the cap toward 570) closes with the same answer."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M122 is answered and, if the limit changes, the live follow-up bot reads past card 400 with the unchanged-thread skip on.",
+        "approvals": "M122",
+        "vault": [
+          "M122",
+          "MAX_CONTACTS_PER_POLL",
+          "700 cards"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "OK the nurture email fixes: name the car instead of 'about the .' (S44), and swap in the rebuilt templates",
+      "project": "Quiz Lead Email Follow-Up",
+      "since": "2026-09-25",
+      "impact": "When a lead's car name is blank, the nurture email reads 'Thanks for reaching out about the .' 41 customers got 125 of those in the 60 days to 9/26, and about 3 more customers get one each week. The fix is tested, but the lead receiver you redeployed on 10/12 (revision 00097) does not include it.",
+      "whatToDo": [
+        "Answer S44 on your approvals page. 'Both' is recommended: a session redeploys the lead receiver from the live code so it writes the car the lead typed, or 'car'. Tasha then sets 'car' as the fallback on the ten car-name spots and test-sends one email first.",
+        "Say yes or no to swapping in the six templates rebuilt on 10/08, which show the brand headlines as images so they look right in Gmail. The swap also replaces emails 2 to 4, which may still carry the July copy. Email 1 is included unless you are folding it into the combined first email from your 10/09 plan.",
+        "If yes, Tasha re-selects each step in the workflow, checks that every step keeps its subject line, and sends one test.",
+        "Reply to Tasha in Discord with your answer on the template swap."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "S44 has an answer on Noah's approvals page, and Noah has said yes or no to swapping in the rebuilt nurture templates.",
+        "approvals": "S44",
+        "vault": [
+          "S44",
+          "vehicle-display-fallback",
+          "display fallback",
+          "nurture templates",
+          "templates swapped"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Decide whether older quiz leads keep a spot on Sean's sheet until someone reaches them (S165)",
+      "project": "Daily Call Sheet",
+      "since": "2026-10-05",
+      "impact": "A quiz lead tops Sean's sheet only until its first dial, even a voicemail, then competes for 10 reserved seats: on 10/05, 11 of 16 older quiz leads who needed a call were missing from the sheet. 33 of 39 quiz leads who paid did so within a week of the quiz, so that first week is when they buy.",
+      "whatToDo": [
+        "Yes, keep them on (the page's recommendation): a session finds why they drop off, then the sheet holds a spot for each open quiz lead until its timeline runs out. One deploy after your yes.",
+        "If yes, the voicemail-greeting fix ships first, in test mode: on 10/05 the sheet counted 6 voicemail greetings as answered calls, so those leads read 'never called' and the three-call limit never fired.",
+        "Not now: older quiz leads keep competing with 600+ cards for 75 spots, and Sean works them from a separate list by hand.",
+        "Answer on your approvals page, item S165."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "S165 is answered on Noah's approvals page (Yes, keep them on, or Not now).",
+        "approvals": "S165",
+        "vault": [
+          "S165",
+          "older quiz leads"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Rule on the call-sheet seat rules that bring back the same leads daily and mark every post degraded",
+      "project": "Daily Call Sheet",
+      "since": "2026-09-30",
+      "impact": "On 10/13, 68 leads held protected seats against a soft cap of 15, so all 11 weekday posts since 9/29 went out marked 'degraded' and a truly bad morning would look the same. Some protections never run out on their own (a card in Manual Quote Required, a rescue tag) and a bare 'Ok' holds a seat for 30 days, which is why the same names come back. Tasha's 10/01 cleanup (29 card moves, 7 task fixes) cut the block to 37 on 10/02, but it was back to 72 by 10/05.",
+      "whatToDo": [
+        "A bare 'Ok' or 'thanks' from a customer stops counting as 'customer spoke last', so it no longer holds a seat for 30 days (yes or no).",
+        "Leads tagged by the rescue sweep, and cards in Manual Quote Required, lose their protected seat after 3 unanswered chases; a Manual Quote Required card with no dialable phone loses it at once (yes or no).",
+        "The 'degraded' warning: keep the cap of 15 (it also decides when weak protected rows give way to fresh leads) and stop it marking every post degraded, or raise the cap.",
+        "Your Mac batch's call-sheet prompt fix (A4d) and Tasha's call-me-later update change the same 6 AM function: say which ships first, so the second is rebuilt on top and nothing gets undone.",
+        "Reply to Tasha in Discord with an answer per line. She builds the yeses on the live sheet, tests them on a saved morning, and brings the deploy to your approvals page."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah has answered each line (the 'Ok' filter, the 3-chase seat end, the degraded warning, and which call-sheet change ships first), in Discord or on his approvals page.",
+        "approvals": null,
+        "vault": [
+          "soft cap",
+          "POST DEGRADED",
+          "protected seat",
+          "protected block",
+          "builder prompt fix"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Paste one line so the cloud job monitor can read logs, so a failed cloud job shows within 10 minutes",
+      "project": "Cloud Run Evidence",
+      "since": "2026-09-10",
+      "impact": "The Monday Re-Engage report failed three Mondays in a row (9/14, 9/21, 9/28) and nobody heard for 17 days. Tasha's cloud monitor, built 9/10, checks every cloud job every 10 minutes and would have caught it, but it cannot start until the account your cloud services run as gets two read-only roles. Your 9/28 review of Tasha lists this as waiting on you since 9/10.",
+      "whatToDo": [
+        "Copy the block below into Terminal on a machine signed in to Google Cloud as you.",
+        "It gives the account your cloud services run as two read-only roles (logs viewer and Cloud Run viewer), the same two roles in Tasha's 9/10 setup file. It finds the account itself and changes nothing else.",
+        "Send Tasha the line it ends with. It starts with DONE or FAILED. She then switches on the 10-minute schedule and checks the first full report; the cloud section for your Mac status board comes later as its own file."
+      ],
+      "commands": [
+        {
+          "label": "Give the cloud monitor its two read-only roles (finds the account itself; grants nothing unless exactly one account matches; safe to run twice)",
+          "code": "P=dragon-auto-automations; SA=$(gcloud iam service-accounts list --project=\"$P\" --format=\"value(email)\" | grep -E -- '-compute[@]developer[.]gserviceaccount[.]com$' | sort -u); N=$(printf '%s\\n' \"$SA\" | grep -c .); OK=0; if [ \"$N\" = \"1\" ]; then OK=1; for R in roles/logging.viewer roles/run.viewer; do if ! gcloud projects add-iam-policy-binding \"$P\" --member=\"serviceAccount:$SA\" --role=\"$R\" --condition=None --quiet --format=\"value(etag)\" >/dev/null; then OK=0; fi; done; fi; if [ \"$OK\" = \"1\" ]; then echo \"DONE: tell Tasha the cloud monitor's two read roles are on\"; else echo \"FAILED: found $N matching account(s), need exactly 1, or a role was not added. Send Tasha this output\"; fi"
+        }
+      ],
+      "doneCheck": {
+        "doneWhen": "The account the cloud services run as holds the logs viewer and Cloud Run viewer roles, and the monitor's 10-minute schedule (cloud-run-status-cron) runs.",
+        "approvals": null,
+        "vault": [
+          "cloud-run-status",
+          "logging.viewer",
+          "run.viewer",
+          "status-board-with-cloud",
+          "cloud monitor"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Give Claude the digest alarm file Tasha sent on Discord (M63)",
       "project": "Cadence Orchestrator",
       "since": "2026-09-24",
-      "impact": "On 9/17 and 9/20 the 9:15 follow-up digest could not read the queue, and on 9/10 it wrote nothing, and nobody was told. Anyone approving follow-ups on those days was looking at a list that was never built. After this paste, a failed morning posts to Discord, and it keeps trying for ten minutes if the Mac has only just woken up.",
+      "impact": "The 9:15 follow-up digest could not read the queue on 9/17, 9/20, 9/24, 9/27, and again on 10/13 (on 9/10 it wrote nothing), and nobody was told. Anyone approving follow-ups on those days was looking at a list that was never built. After this paste, a failed morning posts to Discord, and it keeps trying for ten minutes if the Mac has only just woken up.",
       "whatToDo": [
         "Download noah-claude-digest-alarm.md from Tasha's Discord message.",
         "Drag it into Claude and say: claude do this, tasha sent this. It takes a few minutes and sends one Discord message marked TEST.",
@@ -896,60 +1498,52 @@
         }
       ],
       "doneCheck": {
-        "doneWhen": "Noah's approvals item M63 turns done, or his notes say the 9:15 digest alarm is installed. The alarm runs on his Mac, which nothing on Tasha's side can see, so his own words are the proof.",
+        "doneWhen": "Noah's approvals item M63 turns done, or his notes say the 9:15 follow-up digest alarm is installed. The alarm runs on his Mac, which nothing on Tasha's side can see, so his own words are the proof.",
         "approvals": "M63",
         "vault": [
-          "digest alarm",
-          "digest-alarm",
           "install-cadence-digest-alarm",
+          "cadence-approval-digest",
+          "follow-up digest alarm",
+          "9:15 digest",
           "M63"
         ],
         "live": null
       }
     },
     {
-      "item": "Give Claude the quiz receiver GA4 file Tasha sent",
-      "project": "GA4 Lead Tracking",
-      "since": "2026-09-28",
-      "impact": "GA4 recorded 1,684 website visits and zero leads from 8/08 to 9/06, so no report can say which page or ad produced a customer. The quiz already collects each visitor's GA4 id, but the quiz receiver drops it before it reaches GoHighLevel. This adds the three fields, and it ships inside the 9/28 email fix you already have staged, so it is one deploy.",
+      "item": "Bring your vault and Mac copies up to date so an old script can't undo live fixes or rerun old quote jobs",
+      "project": "Cadence Orchestrator",
+      "since": "2026-08-16",
+      "impact": "A plain deploy from your vault would quietly undo three live fixes: the Booked-first stage order that keeps welcome emails going, the 10/02 guard that stops a web address from switching the follow-up bot and missed-call texts live, and the 540-second poller limit that stopped the Urable sweeps being cut off. On your Mac, four one-time quote jobs from early September still carry a daily schedule (three of them ran again on 9/28), and the consult check-in prompt still offers Monday drop-offs.",
       "whatToDo": [
-        "Download noah-quiz-receiver-ga-fields.md from Tasha's Discord message.",
-        "Drag it into Claude and say: claude do this, tasha sent this. It edits the staged receiver, runs the tests, and deploys it together with the 9/28 email fix.",
-        "Send Tasha the line Claude gives you at the end. It starts with DONE or FAILED."
+        "Paste the block below in Terminal on your Mac. It copies the live orchestrator and missed-call entry files into your vault after checking each file's hash, deploys nothing, and ends with a DONE or FAILED line for Tasha.",
+        "Then ask Claude on your Mac for three small edits in your vault: put the Booked stage first in the orchestrator's stage list (.env-orchestrator) so it matches the live service; set the poller deploy scripts (deploy-poll.sh and deploy-lane-split.sh) to 540 seconds instead of 240; and take Monday out of the days the consult-soon prompt offers (your rule 72) before the consult check-in bot (S149) starts.",
+        "Ask Tasha in Discord for her 9/10 Block A: it archives the four early-September one-time quote jobs that still carry a daily schedule and teaches your status board to read one-time jobs by their receipt.",
+        "Send Tasha the DONE or FAILED line and a one-line note on the three edits."
       ],
       "commands": [
         {
-          "label": "Check whether it is already done (read-only, safe to run any time)",
-          "code": "F=$(find \"$HOME/deploy-staging/quiz-lead-receiver-email422-20260928\" -name quiz_lead_receiver_main.py 2>/dev/null | head -1)\nif [ -z \"$F\" ]; then echo \"FAILED: send Tasha this output. The staged quiz receiver folder is not on this Mac.\"\nelif [ \"$(grep -c -e 6458MqU4YjnYebrzMGqP -e 0zIgKZKMg7QDyyYyr4PJ -e znfWwXGxMWOYrpqOoD4T \"$F\")\" -ge 3 ]; then echo \"DONE: the staged quiz receiver saves the three GA4 fields ($F). Tell Tasha whether it is deployed.\"\nelse echo \"NOT YET: the staged quiz receiver does not save the GA4 fields. Hand Claude the file from Tasha.\"; fi"
+          "label": "Copy the live orchestrator and missed-call entry files into your vault (checks every hash, changes nothing unless the old files are there, safe to run twice)",
+          "code": "T1=\"$HOME/Documents/Dragon Auto Synced/Projects/ai-urable-proposal/orchestrator_main.py\"\nT2=\"$HOME/Documents/Dragon Auto Synced/Projects/ai-urable-proposal/missed_call_main.py\"\nOLD1=9b812d2f34a8f4515e71693b8c890441f97c9e826637ed39e9cc0d6118f73012\nNEW1=cbb0b5510914f47184fa5edb4f60ef15ce389bdf4cb8676b685756cf41e92409\nOLD2=8ad0b21aa4af8775e2c462c83aa5ffe4ed2c593267b7b9f47f0f3633e4ace68a\nNEW2=dbcd3c8d8c57951aa7823aa44218bd4811440dde418e0619c034bd1a363ceee0\nW=\"$(mktemp -d)\"\nH1=\"$(shasum -a 256 \"$T1\" 2>/dev/null | cut -d' ' -f1)\"\nH2=\"$(shasum -a 256 \"$T2\" 2>/dev/null | cut -d' ' -f1)\"\nif [ \"$H1\" = \"$NEW1\" ] && [ \"$H2\" = \"$NEW2\" ]; then\n  echo \"DONE: tell Tasha: both vault copies were already up to date (${NEW1:0:12} and ${NEW2:0:12})\"\nelif [ \"$H1\" != \"$OLD1\" ] && [ \"$H1\" != \"$NEW1\" ]; then\n  echo \"FAILED: send Tasha this output. orchestrator_main.py hash is ${H1:-missing}, expected $OLD1. Nothing was changed.\"\nelif [ \"$H2\" != \"$OLD2\" ] && [ \"$H2\" != \"$NEW2\" ]; then\n  echo \"FAILED: send Tasha this output. missed_call_main.py hash is ${H2:-missing}, expected $OLD2. Nothing was changed.\"\nelse\n  TOKEN=\"$(gcloud auth print-access-token)\"\n  URL1=\"$(curl -s -X POST \"https://cloudfunctions.googleapis.com/v2/projects/dragon-auto-automations/locations/us-west1/functions/cadence-orchestrator:generateDownloadUrl\" -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\" -d '{}' | python3 -c \"import json,sys; print(json.load(sys.stdin).get('downloadUrl',''))\")\"\n  URL2=\"$(curl -s -X POST \"https://cloudfunctions.googleapis.com/v2/projects/dragon-auto-automations/locations/us-west1/functions/missed-call-responder:generateDownloadUrl\" -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\" -d '{}' | python3 -c \"import json,sys; print(json.load(sys.stdin).get('downloadUrl',''))\")\"\n  if [ -z \"$URL1\" ] || [ -z \"$URL2\" ]; then\n    echo \"FAILED: send Tasha this output. Could not get the live bundle download links. Nothing was changed.\"\n  elif ! curl -s -o \"$W/o.zip\" \"$URL1\" || ! unzip -q -o \"$W/o.zip\" orchestrator_main.py -d \"$W/o\"; then\n    echo \"FAILED: send Tasha this output. Could not download or unzip the orchestrator bundle. Nothing was changed.\"\n  elif ! curl -s -o \"$W/m.zip\" \"$URL2\" || ! unzip -q -o \"$W/m.zip\" missed_call_main.py -d \"$W/m\"; then\n    echo \"FAILED: send Tasha this output. Could not download or unzip the missed-call bundle. Nothing was changed.\"\n  elif [ \"$(shasum -a 256 \"$W/o/orchestrator_main.py\" | cut -d' ' -f1)\" != \"$NEW1\" ]; then\n    echo \"FAILED: send Tasha this output. Live orchestrator_main.py hash is $(shasum -a 256 \"$W/o/orchestrator_main.py\" | cut -d' ' -f1), expected $NEW1. Nothing was changed.\"\n  elif [ \"$(shasum -a 256 \"$W/m/missed_call_main.py\" | cut -d' ' -f1)\" != \"$NEW2\" ]; then\n    echo \"FAILED: send Tasha this output. Live missed_call_main.py hash is $(shasum -a 256 \"$W/m/missed_call_main.py\" | cut -d' ' -f1), expected $NEW2. Nothing was changed.\"\n  else\n    mkdir -p \"$HOME/.dragon-backups\"\n    if [ \"$H1\" = \"$OLD1\" ]; then cp -p \"$T1\" \"$HOME/.dragon-backups/orchestrator_main.py.pre-20261002\"; cp \"$W/o/orchestrator_main.py\" \"$T1.new\"; mv \"$T1.new\" \"$T1\"; fi\n    if [ \"$H2\" = \"$OLD2\" ]; then cp -p \"$T2\" \"$HOME/.dragon-backups/missed_call_main.py.pre-20261002\"; cp \"$W/m/missed_call_main.py\" \"$T2.new\"; mv \"$T2.new\" \"$T2\"; fi\n    if [ \"$(shasum -a 256 \"$T1\" | cut -d' ' -f1)\" = \"$NEW1\" ] && [ \"$(shasum -a 256 \"$T2\" | cut -d' ' -f1)\" = \"$NEW2\" ]; then\n      echo \"DONE: tell Tasha: orchestrator_main.py and missed_call_main.py updated to ${NEW1:0:12} and ${NEW2:0:12}, old files kept in ~/.dragon-backups\"\n    else\n      echo \"FAILED: send Tasha this output. A copy did not verify. The old files are in ~/.dragon-backups (*.pre-20261002)\"\n    fi\n  fi\nfi\nrm -rf \"$W\""
         }
       ],
       "doneCheck": {
-        "doneWhen": "The live quiz-lead-receiver code saves all three GA4 fields (GA Client ID, GA Session ID, Landing Page).",
-        "approvals": "S90",
+        "doneWhen": "Your vault's orchestrator_main.py and missed_call_main.py match the live ones, .env-orchestrator starts with the Booked stage, both poller deploy scripts default to 540 seconds, the consult-soon prompt no longer offers Monday, and the four early-September one-time quote plists are archived.",
+        "approvals": null,
         "vault": [
-          "ga_client_id",
-          "GA Client ID",
-          "GA4 field",
-          "quiz-receiver-ga-fields",
-          "quiz-lead-receiver",
-          "S90"
+          "dryrun-switches",
+          "orchestrator_main",
+          ".env-orchestrator",
+          "FN_TIMEOUT",
+          "Block A",
+          "oneshots",
+          "consult-soon"
         ],
-        "live": {
-          "type": "function-source-contains",
-          "project": "dragon-auto-automations",
-          "region": "us-west1",
-          "function": "quiz-lead-receiver",
-          "file": "quiz_lead_receiver_main.py",
-          "needles": [
-            "6458MqU4YjnYebrzMGqP",
-            "0zIgKZKMg7QDyyYyr4PJ",
-            "znfWwXGxMWOYrpqOoD4T"
-          ]
-        }
+        "live": null
       }
     },
     {
-      "item": "Give Claude the Re-Engage triage file Tasha sent",
+      "item": "Give Claude the Re-Engage triage file Tasha sent (M234)",
       "project": "Re-Engage Cleanup + Rescue",
       "since": "2026-10-01",
       "impact": "Your vault still has the 8/17 copy of the Monday Re-Engage report. It has your User-Agent fix, but not the plain-English post or the new logging that keeps the week's list when a post fails. A deploy from that folder would undo both. This copies the live file into your vault so both copies match. It deploys nothing and changes nothing in GHL.",
@@ -988,44 +1582,10 @@
       }
     },
     {
-      "item": "Say yes to deleting the two old 'New Lead' webhook entries in the quiz funnels",
-      "project": "Quiz Lead Receiver",
-      "since": "2026-10-05",
-      "impact": "Every quiz fires four extra posts at the quiz receiver with no key, and the receiver refuses all of them: 56 in the week of 9/29 to 10/05. The working 'Funnel completed' webhook still delivers each quiz, so no lead is lost today. The refusals fill the log with noise, and a real key problem would hide inside them. It is part of S18 on your approvals page.",
-      "whatToDo": [
-        "Open Perspective, then Rocklear Quote Quiz 2026, then Apps, then Webhooks.",
-        "Under New Lead, delete each entry whose address has no /hook/ key in it. Leave the Funnel completed entry alone.",
-        "Do the same in Rocklear Quote Quiz - Google Ads.",
-        "Tell Tasha when they are gone. She reruns the log check a day later, and refused posts should read 0."
-      ],
-      "commands": [],
-      "doneCheck": {
-        "doneWhen": "Five quizzes in a row reach the quiz receiver with no refused post after them, and four days pass with none, which means the keyless New Lead webhooks are gone.",
-        "approvals": "S18",
-        "vault": [
-          "New Lead webhook",
-          "New Lead entr",
-          "keyless",
-          "S18"
-        ],
-        "live": {
-          "type": "request-refusals-stopped",
-          "project": "dragon-auto-automations",
-          "service": "quiz-lead-receiver",
-          "userAgentPrefix": "node-fetch",
-          "refusedStatus": 401,
-          "acceptedStatus": 200,
-          "minCleanAccepted": 5,
-          "minQuietHours": 96,
-          "days": 14
-        }
-      }
-    },
-    {
-      "item": "Run one line so Tasha can read Sean's morning call sheets (added to M239)",
+      "item": "Run the one line so Tasha can read Sean's saved morning call sheets (added to M239)",
       "project": "Call-Me-Later Callbacks",
       "since": "2026-10-12",
-      "impact": "Every morning's call sheet is saved in the call-sheet storage with its date. Tasha needs to read those to prove that a customer who said 'call me in November' really landed on Sean's sheet on that day. Until then she saves each sheet by hand. It's read-only: she can't change or delete anything there.",
+      "impact": "Every morning's call sheet is saved in the call-sheet storage with its date. Tasha needs those to prove that a customer who said 'call me in November' really landed on Sean's sheet that day; until then she saves each sheet by hand. It is read-only: she can't change or delete anything there.",
       "whatToDo": [
         "Copy the block below into a terminal on a machine signed in to Google Cloud as you.",
         "Send Tasha the line it ends with. It starts with DONE or FAILED."
@@ -1048,9 +1608,279 @@
           "bucket": "dragon-auto-automations-callsheet-cache"
         }
       }
+    },
+    {
+      "item": "Decide if Tasha may read the Night Shift reports in the database, read-only (M239)",
+      "project": "Night Shift Lead Check",
+      "since": "2026-10-11",
+      "impact": "Each night's full Night Shift report, listing every slipped lead, is kept in the Firestore database (Google Cloud's data store), and today Tasha can read only the short run summaries in the logs. Without the full list she cannot check whether a night's list is right. Read access covers the whole database, which also holds other automation data, but she could read only, not change anything.",
+      "whatToDo": [
+        "Answer on your approvals page, item M239: 'Give her read access' or 'Summaries only'.",
+        "If you pick 'Give her read access', run the one read-only command written on M239 and send Tasha what it prints.",
+        "'Summaries only' means she keeps working from the log summaries, and full lists reach her through the morning page or you."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "M239 shows 'Summaries only', or it shows 'Give her read access' and Tasha's read-only probe of the Night Shift reports stops returning permission denied.",
+        "approvals": "M239",
+        "vault": [
+          "night_shift_reports",
+          "datastore.viewer",
+          "M239"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Make the free healthchecks.io account and say 'Set it up' so a Mac job that never starts raises an alarm (S51)",
+      "project": "Automation Registry",
+      "since": "2026-09-26",
+      "impact": "Your 32 scheduled Mac jobs alert only from inside themselves, so a job that never starts or a sleeping Mac sends nothing; your August notes count about 16 such misses, including the quiz sweep down about 51 hours. Tasha's plan to move the inspection-wash and waiver pollers off your Mac gives each one an outside did-it-run ping, and that needs this account first.",
+      "whatToDo": [
+        "Create a free healthchecks.io account (about 5 minutes; Claude can't create accounts). It's free for 20 jobs and receives no customer data.",
+        "Answer 'Set it up' on your approvals page, item S51. Claude then wires the 20 most important jobs to it in 1 to 2 hours."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "S51 is answered and a healthchecks.io account exists for the scheduled jobs.",
+        "approvals": "S51",
+        "vault": [
+          "S51",
+          "healthchecks"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Deploy the three GA4 fields onto the live quiz receiver, from Tasha's updated file (S90)",
+      "project": "GA4 Lead Tracking",
+      "since": "2026-09-28",
+      "impact": "GA4 counted 1,684 website visits from 8/08 to 9/06 and could not tie a single one to a lead, so no report can say which page or ad produced a customer. Your 10/12 deploy (quiz-lead-receiver-00003-ciz) shipped the 9/28 email fix and the 10/05 changes, but not the three GA4 fields, so the live receiver still drops each visitor's GA4 id before it reaches GoHighLevel. Tasha's 9/28 GA4 file edits and deploys the old 9/28 folder, which is older than what you deployed on 10/12, so it should not be run as it stands.",
+      "whatToDo": [
+        "Do not run Tasha's 9/28 file (noah-quiz-receiver-ga-fields.md) as it stands: it deploys the old 9/28 folder over your 10/12 quiz deploy.",
+        "When Tasha sends the updated GA4 file built on the live quiz receiver, drag it into Claude and say: claude do this, tasha sent this.",
+        "Send Tasha the line Claude gives you at the end. It starts with DONE or FAILED."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "The live quiz-lead-receiver code saves all three GA4 fields (GA Client ID, GA Session ID, Landing Page).",
+        "approvals": "S90",
+        "vault": [
+          "ga_client_id",
+          "GA Client ID",
+          "GA4 field",
+          "quiz-receiver-ga-fields",
+          "S90"
+        ],
+        "live": {
+          "type": "function-source-contains",
+          "project": "dragon-auto-automations",
+          "region": "us-west1",
+          "function": "quiz-lead-receiver",
+          "file": "quiz_lead_receiver_main.py",
+          "needles": [
+            "6458MqU4YjnYebrzMGqP",
+            "0zIgKZKMg7QDyyYyr4PJ",
+            "znfWwXGxMWOYrpqOoD4T"
+          ]
+        }
+      }
+    },
+    {
+      "item": "OK closing the old pipeline's dead cards as lost with no do-not-contact, minus Tasha's hold list (M82)",
+      "project": "Old-Pipeline Sort (M64)",
+      "since": "2026-09-29",
+      "impact": "Closing all 557 cards on your M82 list clears $182,176 of agency-era value from the open pipeline totals, and only 2 of the old pipeline's 1,045 people wrote in the last 90 days. Tasha's 9/30 check of your 9/29 close list found 366 clean, 38 that should stay open (paying customers, booked or open Urable jobs) and 173 that need a look first, so a blanket close would bury real customers.",
+      "whatToDo": [
+        "Say yes or no to closing with status lost (Lost - Ghost for the silent ones, Lost - Declined for the no's) and no do-not-contact. Tasha's own rule has been never to set status lost, because the old Abandoned Automation workflow put do-not-contact on every lost deal; it has been switched off since 8/03, so your yes settles it for this close.",
+        "With a yes, only the 366 Tasha found clean close now, 5 to 10 first and read back. The 38 that should stay open and the 173 that need a look wait for her per-person list.",
+        "Answer on your approvals page, item M82."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah answers M82: yes or no to closing the dead old-pipeline cards as lost with no do-not-contact.",
+        "approvals": "M82",
+        "vault": [
+          "M82",
+          "dead old-pipeline cards",
+          "1,045 dead cards",
+          "old pipeline's 1,045"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Delete the keyless 'New Lead' quiz webhooks and the parked llms.txt you OK'd removing (S18)",
+      "project": "Quiz Lead Receiver",
+      "since": "2026-09-23",
+      "impact": "Every quiz fires four extra posts at the quiz receiver with no key, and the receiver refuses all of them: 92 in the 14 days to 10/14, the newest at 12:29 AM PT that morning. The working 'Funnel completed' webhook still delivers each quiz, so no lead is lost today, but the refusals fill the log and would hide a real key problem. You answered 'Remove them' on S18 on 10/03; only the deletion is left.",
+      "whatToDo": [
+        "Open Perspective, then Rocklear Quote Quiz 2026, then Apps, then Webhooks.",
+        "Under New Lead, delete each entry whose address has no /hook/ key in it. Leave the Funnel completed entry alone.",
+        "Do the same in Rocklear Quote Quiz - Google Ads.",
+        "In Framer, Site Settings, Hosting, Files: remove the parked /archive-2026-09-06/llms.txt, the other half of S18. It still loads on dragonauto.net, and Remove is permanent.",
+        "While you are in Perspective: if the three old 2025 quiz funnels are still online, take them offline too (S9, about 3 minutes).",
+        "Tell Tasha when they are gone. She reruns the log check a day later, and refused posts should read 0."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Five quizzes in a row reach the quiz receiver with no refused post after them, and four days pass with none, which means the keyless New Lead webhooks are gone. The llms.txt removal has no live check and stays tracked on S18.",
+        "approvals": "S18",
+        "vault": [
+          "New Lead webhook",
+          "New Lead entr",
+          "keyless",
+          "S18",
+          "archive-2026-09-06",
+          "S9"
+        ],
+        "live": {
+          "type": "request-refusals-stopped",
+          "project": "dragon-auto-automations",
+          "service": "quiz-lead-receiver",
+          "userAgentPrefix": "node-fetch",
+          "refusedStatus": 401,
+          "acceptedStatus": 200,
+          "minCleanAccepted": 5,
+          "minQuietHours": 96,
+          "days": 14
+        }
+      }
+    },
+    {
+      "item": "Pick how 20 finished, paid jobs move from Booked to Won without muddying your Meta ad data",
+      "project": "Night Shift Lead Check",
+      "since": "2026-10-12",
+      "impact": "20 cards for finished, fully paid jobs still sit in the Booked column, so the board shows done jobs as upcoming. Moving a card into Won fires the 'Meta CAPI: Opportunity Won' workflow, which would send Meta (your Facebook ads) a purchase event dated today for each one, for sales going back to February.",
+      "whatToDo": [
+        "A: Tasha pauses the Meta workflow for the batch, moves the 20 cards, then turns it back on, so Meta hears nothing about old sales (Tasha recommends this).",
+        "B: move them with the workflow on, so Meta gets 20 purchase events dated today.",
+        "C: leave them in Booked; their status already says won, so reports count them.",
+        "Reply to Tasha in Discord with A, B, or C."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah has picked A, B, or C for the 20 finished, paid jobs still in the Booked column.",
+        "approvals": null,
+        "vault": [
+          "Meta paused",
+          "20 finished",
+          "Won column",
+          "Meta CAPI"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Pick: pause the three Guild VIP workflows before 93 VIP tags go on, or let the May referral email go (S82)",
+      "project": "Dragon's Guild VIP Refresh",
+      "since": "2026-09-28",
+      "impact": "Your saved VIP list (93 clients plus 9 tier fixes) has waited since 9/29. Each tag starts one of three GHL workflows, unchanged since May 4, that email the old Dragon's Guild referral offer, and nobody has re-read that email since May. That campaign logged $0 revenue and 1 referral.",
+      "whatToDo": [
+        "Answer S82 on your approvals page.",
+        "'Pause the workflows, then tag' (recommended): Tasha pauses the three Guild VIP workflows in GHL (about 2 minutes), a session checks that they read paused, then adds the tags. Nobody is emailed.",
+        "'Tag and let the email go': 98 clients get the May referral email as soon as the tags land.",
+        "'Hold': nothing changes, and the list stays saved."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "S82 shows an answer on Noah's approvals page, or his notes say the VIP tags went on or are held.",
+        "approvals": "S82",
+        "vault": [
+          "S82",
+          "VIP tags",
+          "guild-ltv-vip",
+          "Guild VIP workflow"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Check whether you answered a customer's 7/26 email asking our labor price to polish and apply his own coating",
+      "project": "Dead Lead Revival",
+      "since": "2026-08-02",
+      "impact": "A customer with a $1,225 Rocklear quote on a 2024 Ioniq 5 emailed you on 7/26: Rocklear was over his budget, so he asked what we would charge to polish the car and apply an 8-year coating bottle he already bought. GoHighLevel shows no reply from anyone, only two automated sale messages on 9/07, and his card sits in Lost - Ghost, which Sean's call sheet never shows.",
+      "whatToDo": [
+        "Search your own inbox for the 7/26 email with the subject 'Quote' about a 2024 Ioniq 5.",
+        "If you already answered it, reply to Tasha in Discord with 'answered' and she closes this.",
+        "If not, say whether we polish a car and apply a coating the customer brings, labor only, and at what price. Reply to him, or reply to Tasha in Discord so Sean can answer. It is the same kind of call as the customer-bought film question in Part C of your 10/13 Mac batch."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah confirms he answered the 7/26 email, or rules on labor-only coating installs so a reply goes out to that customer from him or Sean.",
+        "approvals": null,
+        "vault": [
+          "7/26 email",
+          "Ioniq 5",
+          "own coating",
+          "labor only"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Say whether a session fixes the safety check that runs before every deploy (S73)",
+      "project": "Cadence Reply Drafter",
+      "since": "2026-09-28",
+      "impact": "Your page says the automatic check before every deploy has failed since 9/22 on two things unrelated to the deploys, so every deploy needs the skip switch and the check protects nothing. It is also the check that notices when the text-drafting bot breaks.",
+      "whatToDo": [
+        "Answer on your approvals page, item S73: 'Fix the check' (a session reruns the drafting bot's report card and fixes its test file, about 20 minutes and a few dollars of AI calls) or 'Keep skipping'."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "S73 is answered on Noah's approvals page, or the pre-deploy check passes again.",
+        "approvals": "S73",
+        "vault": [
+          "S73",
+          "safety check",
+          "skip switch"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Switch on the daily quiz-ledger job on your Mac (the rest of S90)",
+      "project": "GA4 Lead Tracking",
+      "since": "2026-10-05",
+      "impact": "The quiz ledger (every quiz sign-up's answers, page, button, and outcome) was last written on 10/05, because its 6:40 AM Mac job is still saved as a staged file in your vault and was never loaded.",
+      "whatToDo": [
+        "Ask Claude on your Mac to load the staged quiz-ledger job from your vault's launchd folder (com.dragonauto.quiz-ledger.plist.staged) and run it once.",
+        "Tell Tasha when the ledger shows today's date."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "The quiz-ledger job is loaded on Noah's Mac and the ledger is written daily again.",
+        "approvals": null,
+        "vault": [
+          "quiz-ledger",
+          "com.dragonauto.quiz-ledger"
+        ],
+        "live": null
+      }
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-14",
+      "title": "Every open decision waiting on Noah is now on one list: 38 cards, most urgent first, each checked against his own notes and approvals page",
+      "shipped": [
+        "Swept the work log, Tasha's project notes, Noah's approvals page, and his daily notes through 10/14 for anything waiting on Noah: 165 mentions, merged into 38 cards on Waiting on Noah, with money owed to customers and exposed keys first. Each card says why it matters, what to do, and what proof takes it off the list.",
+        "Checked every card against Noah's approvals page and his notes from 10/10 to 10/14 before adding it. Left off anything he had already answered, anything that is GHL work or Jenn's or Sean's, and anything not ready to ask yet, so the list holds only real asks.",
+        "Top of the list: a customer (#5703) who has asked to cancel three times with $512.50 held, a $1,125 refund promised in June 2025 (#4221), three customers waiting on a money or booking answer, and a Urable key with write access exposed since 9/28."
+      ],
+      "fixed": [
+        "Caught before Noah ran it: the GA4 card told him to run Tasha's 9/28 file, which would have deployed the old 9/28 quiz receiver over his 10/12 deploy. The card now says to wait for a version built on the live receiver.",
+        "Caught before Noah ran it: the staged M192 command would put the follow-up bot back to how it was before his 10/09 deposit-welcome deploy. The card now says to hold it.",
+        "Built the cloud-monitor card's paste block as one short grant, tested against a fake Google Cloud for success, a failed grant, and a wrong account count, instead of a 9 KB encoded script nobody could read on a public page."
+      ],
+      "inProgress": [
+        "None of the five older cards was finished: the live checks and Noah's page still show each one open on 10/14.",
+        "Tasha owes Noah a GA4 file rebuilt on the live quiz receiver before the S90 card can be done."
+      ],
+      "notes": [
+        "Nothing was deployed, and nothing changed in GHL, Urable, or Noah's approvals page. Customer names stay off the public list; the cards use job numbers."
+      ]
+    },
     {
       "date": "2026-10-13",
       "title": "The 6:15 AM deposit check (C25) is ready to ship on its own, and it found 36 paid deposits with no install date and 5 paid jobs with a wrong card; held for Tasha's go",
