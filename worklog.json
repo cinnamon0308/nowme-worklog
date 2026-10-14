@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-14T00:48:50.169Z",
+  "updated": "2026-10-14T02:28:07.239Z",
   "projects": [
     {
       "id": "night-shift",
@@ -684,7 +684,7 @@
       "id": "payment-sync",
       "name": "Deposit Lane (M151)",
       "status": "IN_PROGRESS",
-      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/08 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. Since 10/09 the payment read pages back to the last good run instead of a fixed 500 records, a payment stuck at $0 on its job becomes person work after an hour, and a card in Won before its job is done goes back to open in Booked (Noah's 9/29 rule); a one-time cleanup found 17 such cards today, 5 ready to move. 221 lane tests and 13 cleanup tests. On 10/13 the 6:15 AM check C25 was rebuilt, wired into the morning report, and proved on live data: it found 4 paid jobs with a wrong card. It waits for Tasha's review and is not live.",
+      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/08 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. Since 10/09 the payment read pages back to the last good run instead of a fixed 500 records, a payment stuck at $0 on its job becomes person work after an hour, and a card in Won before its job is done goes back to open in Booked (Noah's 9/29 rule); a one-time cleanup found 17 such cards today, 5 ready to move. 221 lane tests and 13 cleanup tests. On 10/13 the 6:15 AM check C25 was rebuilt, wired into the morning report, and proved on live data: it found 5 paid jobs with a wrong card. Tasha reviewed it the same evening; her fixes are in, and it waits for her deploy decisions. It is not live.",
       "blockedOn": "C25, the 6:15 check, is built and waiting on Tasha's review and deploy (it ships with C24). Before the lane is armed, its Install Date comparison has to be fixed: GHL reads dates back as a timestamp, so the lane would rewrite every date on every pass. Plan-only week started 10/07: 254 runs and 0 writes through 10/09, 4:10 PM PT. Next: commit and redeploy the 10/09 patches, review and canary the 17-card Won cleanup, the reviewed backfill since June, then arming the deposit side, then reading the refund plans before arming refunds. Job #5773 needs cancelling (and its refund recording) in Urable before the lane can see it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
       "health": {
         "band": "on-track",
@@ -1053,25 +1053,26 @@
   "sessions": [
     {
       "date": "2026-10-13",
-      "title": "The 6:15 AM deposit check (C25) now catches 4 paid jobs with a wrong or missing card on live data; built and reviewed, held for Tasha before it goes live",
+      "title": "The 6:15 AM deposit check (C25) now catches 5 paid jobs with a wrong or missing card, one of them paid tonight; reviewed by Tasha, fixed, and held before it goes live",
       "shipped": [
-        "Rebuilt the morning paid-deposit check (C25) and wired it into the 6:15 AM report on its own branch, so a paid deposit with no proper card can't sit unnoticed for days again (one sat 8 days in September). Each morning it reads every Rocklear job paid in the last 8 days and checks that the customer has a GHL contact, one Booked card per car, a card price that matches the job, and the Urable install date, or a task for Jenn to set the date when Urable has none.",
-        "Ran it read-only against real Urable and GHL data on 10/13: 23 paid jobs, 6 open Rocklear jobs checked, and 4 paid jobs with a wrong card. #5729's car has no card at all (the customer's only card is for their other car), #5808's card is $950 under the job, #5810's card reads $0, and #5821's card is marked won before the job is done. On #5808 and #5810 nobody owns setting the install date. A separate check against Urable, GHL, and the deposit lane's own plans confirmed every line."
+        "Rebuilt the morning paid-deposit check (C25) and wired it into the 6:15 AM report on its own branch, so a paid deposit with no proper card can't sit unnoticed for days again (one sat 8 days in September). Each morning it reads every Rocklear job paid in the last 8 days and checks the customer's GHL contact, one Booked card per car, a card price that matches the job, and the Urable install date, or a task for Jenn to set the date when Urable has none.",
+        "Ran it read-only against real Urable and GHL data on 10/13: 24 paid jobs, 6 open Rocklear jobs checked, 5 with a wrong card. #5729's car has no card (the customer's only card is for their other car), #5808's card is $950 under the job, #5810's card reads $0, #5821's card is marked won before the job is done, and #5824, paid at 7:20 PM, has a card naming a Toyota Camry while Urable's job says Honda Accord. On #5808 and #5810 nobody owns setting the install date.",
+        "After Tasha's review the same evening, the check says plainly that it reads a bounded window (Urable's payment list can't be filtered by date), and it adds a second net through Urable's recently changed jobs, so a payment on a months-old request is still caught. Cards matched to a job by car only go on their own 'confirm it' list instead of a 'nothing today' list. The report shows the deposit lane's state and the deposit check as two separate results."
       ],
       "fixed": [
-        "Caught before deploy: as first written, the check would have called every paid deposit 'no card', because only the deposit lane stamps the job on a card and the lane is still in test mode. It now tells a missing stamp (a warning) apart from a missing or wrong card (a failure).",
+        "Caught before deploy: as first written, the check would have called every paid deposit 'no card', because only the deposit lane stamps the job on a card and the lane is still in test mode. It now tells a missing stamp apart from a missing or wrong card.",
         "Caught before deploy: GHL hands dates back as a raw timestamp, so every install date would have looked wrong. The check reads them correctly now. The deposit lane has the same bug, written up as its own fix before the lane is switched on.",
-        "Caught before deploy: a short or empty answer from Urable could have read as 'no deposits, all clear', and one slow Urable morning could have pushed the whole 6:15 report past its time limit and lost it. The check now reports clean only after proving it read far enough back, and it stops in time and says so.",
-        "Caught before deploy: the check could have accepted another car's card for a paid job. It now compares the car on the card with the car on the Urable job, the way the deposit lane does."
+        "Caught before deploy: a short or empty answer from Urable could have read as 'no deposits, all clear', and one slow Urable morning could have pushed the whole 6:15 report past its time limit and lost it.",
+        "Caught before deploy: the check could have accepted another car's card for a paid job, and later blamed the card when the two systems simply name the car differently (#5824). It now compares cars the way the deposit lane does and shows both names when they disagree."
       ],
       "inProgress": [
-        "Waiting on Tasha's review: the code, the exact report it would post, every mismatch explained, and the deploy and rollback steps are written up. Deploying it also turns on the quiet-after-us list (C24) for the first time.",
-        "The check can only read all clear once the deposit lane is switched on. Until then it says plainly that the lane writes nothing.",
-        "Three calls for Tasha: keep the test-mode warnings or go strict from day one; whether a card marked won before its job is done is wrong (Noah's 9/29 rule, which the check follows) or fine (the lane's current view); and #5810's $0 card, which only this check can see, and only through the 10/14 run."
+        "Waiting on Tasha's calls: ship it together with the quiet-after-us list (C24, never deployed, which would add a 188-person list with phone numbers to the morning post) or alone; prove before deploy that the check can read the deposit lane's state (needs a one-hour permission from Noah) or rely on the deploy check and its rollback; and whether to add a daily list of paid deposits that still have no install date.",
+        "Found while answering the review: 34 open Rocklear quotes hold a paid deposit with no install date, and only 2 are recent enough for the 8-day check, so older ones have no owner until the deposit lane is live. #5810 leaves the check after the 10/14 run.",
+        "The check can only read all clear once the deposit lane is switched on."
       ],
       "notes": [
-        "Nothing was deployed, no GHL record changed, and no customer was messaged. The live 6:15 report still runs the 9/10 build.",
-        "Four rounds of independent review (19, 5, 8, and 10 findings); every confirmed one is fixed and covered by a test, including 76 pairs of real car names the card check must tell apart. 400 automated checks pass."
+        "Nothing was deployed, the deposit lane was not switched on, no GHL record changed, and no customer was messaged. The live 6:15 report still runs the 9/10 build.",
+        "Five rounds of independent review; every confirmed finding is fixed and covered by a test, including 76 pairs of real car names the card check must tell apart. 411 automated checks pass."
       ]
     },
     {
