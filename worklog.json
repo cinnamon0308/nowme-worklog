@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-16T16:21:02.663Z",
+  "updated": "2026-10-16T22:41:02.082Z",
   "projects": [
     {
       "id": "night-shift",
@@ -905,7 +905,7 @@
       "item": "Check Square: did the $932.88 deposit refund for job #5773 go through?",
       "project": "Pipeline cleanup (MQR audit)",
       "since": "2026-10-16",
-      "impact": "The #5773 customer (2019 Camaro ZL1) cancelled on 10/06 and you replied the refund was processed. Urable still shows the $932.88 Square payment as paid with no refund on record, and job #5773 is still scheduled for Nov 30 with an automatic reminder text set for Nov 29. If the money went back through Square outside Urable, the job needs cancelling so he is not reminded about an appointment he cancelled. If it did not go back, he is still waiting on it.",
+      "impact": "The #5773 customer (2019 Camaro ZL1) cancelled on 10/06 and you replied the refund was processed. On 10/16 at 12:41 PM he texted that he still has not received it and asked when to expect it. Urable still shows the $932.88 Square payment as paid with no refund on record, and job #5773 is still scheduled for Nov 30 with an automatic reminder text set for Nov 29.",
       "whatToDo": [
         "In Square, find the $932.88 payment from 9/26 (job #5773 in Urable links to it).",
         "If it was refunded: cancel job #5773 in Urable so the Nov 29 reminder never sends, and tell Tasha so his card can go to Re-Engage.",
@@ -933,7 +933,7 @@
         "2023 Model Y after an accident: price for 3 layers on the hood and front bumper (promised by text on 9/23).",
         "2026 Mercedes S580: satin-black PeelClear, top half and whole car (asked 9/30, PeelClear is paused). Quote it, or offer something else?",
         "2011 Saab: can Rocklear go over failed clear coat (asked 10/07)?",
-        "2017 BMW M4: price to remove the PPF on the front bumper (asked 10/14). Reply to Tasha with the five answers and Sean sends them."
+        "2017 BMW M4: price for 3 layers on the front bumper only (Sean told him about $850 on the 10/16 call and said he'd confirm with you). Reply to Tasha with the five answers and Sean sends them."
       ],
       "commands": [],
       "doneCheck": {
@@ -1910,7 +1910,7 @@
   "sessions": [
     {
       "date": "2026-10-16",
-      "title": "Checked all 131 cards in Manual Quote Required: 41 are customers still owed a price, 32 are cleared to move, and nothing moves until Tasha approves",
+      "title": "Checked all 131 cards in Manual Quote Required: 41 are customers still owed a price, 45 stage moves are ready, and nothing moves until Tasha approves",
       "shipped": [
         "Read all 131 Manual Quote Required cards against both sides of every text, call and voicemail, and against Urable's payments, jobs and quotes. 41 are real customers still owed a first price; the other 90 are quotes that already went out, paying customers, duplicate cards, spam, or people who never wanted Rocklear.",
         "Found that J.'s Lexus install for Saturday at 1:30 ($1,595, a returning customer) is not booked yet: no deposit, no job and no calendar slot, and his Thursday-night question about the rock-chip layer is unanswered. Sean has it today.",
@@ -1925,9 +1925,10 @@
         "Taught the audit both new traps, duplicate contacts from a second phone and voicemails nobody reads, so the next stage audit checks them first."
       ],
       "inProgress": [
-        "32 card moves and one follow-up task are tested and wait for Tasha's go. Nothing in GHL or Urable has changed.",
+        "45 stage-only moves are tested and wait for Tasha's go: 43 in the main list and 2 into Re-Engage, kept apart because the stage's entry check tags each arrival and opens a review task. Each move changes the stage only; status, value, owner and contact stay as they are, and a check after the moves proves it. Nothing in GHL or Urable has changed.",
         "12 robocall and pitch cards wait on a one-card test first, because they are still open, unlike the junk cards moved on 10/14.",
-        "15 cards wait on a person's answer before they move: Noah 6, Jenn 5, Sean 2, Noah or Jenn 1, Tasha 1."
+        "7 duplicate cards (customers on a second phone or Instagram) are kept apart for a separate cleanup; 14 cards stay put until their evidence is clear; 2 future-date cards have no reminder set yet.",
+        "32 customer questions and money items are handed to Sean and Noah, without holding up any stage move."
       ],
       "notes": [
         "Read-only. Nothing was sent, moved, or written in GHL or Urable."
