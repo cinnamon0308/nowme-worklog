@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-14T23:19:05.514Z",
+  "updated": "2026-10-16T14:20:43.107Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1862,23 +1862,24 @@
   "sessions": [
     {
       "date": "2026-10-14",
-      "title": "Moved the first of 8 junk cards out of the quote queue with nothing else changing; the follow-up check waits for Thursday's 10:30 AM sweep",
+      "title": "Moved the first of 8 junk cards out of the quote queue with nothing else changing, and the follow-up sweep's tags on it checked out the next morning",
       "shipped": [
-        "Read the live code of every job that could react to a card landing in Lost-Declined before touching one: the 30-minute sweep that stops follow-up emails, Sean's call sheet, the spam-caller janitor, the inbound detector, and the card, decline, and cadence jobs. Only the sweep reacts, and only when its turn comes (up to about 20 hours later, 10:30 AM Thursday for this card). Sean's call sheet lists only open cards, so these 8 lost cards were never on his list and the move changes nothing there.",
+        "Read the live code of every job that could react to a card landing in Lost-Declined before touching one: the 30-minute sweep that stops follow-up emails, Sean's call sheet, the spam-caller janitor, the inbound detector, and the card, decline, and cadence jobs. Only the sweep reacts, and only when its turn comes (up to about 20 hours later; it reached this card at 10:00 AM Thursday). Sean's call sheet lists only open cards, so these 8 lost cards were never on his list and the move changes nothing there.",
         "Re-ran the full check on all 8 junk cards just before the move and got the exact same fingerprint as the list Tasha reviewed. Urable's customer list was read to the end again (5,193 customers, none matching any of the 8), and the check made no writes.",
         "Moved 1 card, a recorded robocall telling the business it is 'not verified on Google', to Lost-Declined with one backed-up write that changed only the stage. Compared the card, the whole contact, every timeline row, the contact's other card, and all 120 workflows right before, right after, and 20 minutes later: only the stage and its timestamps changed. Nothing was sent to the caller, the block on all 6 contact channels stayed on, and the workflow that stamps do-not-contact on dead-stage moves is still switched off.",
+        "Checked the card again after the follow-up sweep reached it on Thursday: the sweep put its two follow-up-stop tags (nurture-pause and nurture-stop:declined) on the contact 19 hours after the move. Comparing the card, the whole contact, every timeline row, the contact's other card, and all 120 workflows against the snapshot taken right after the move showed only those two tags and the contact's last-updated time had changed. No message went out, the block on all 6 contact channels is intact, the stage is Lost-Declined, and the status is still lost.",
         "Had a second reviewer who saw only the code, not my conclusions, search for anything I missed. It found one small side effect (the 6:45 AM KPI post can count the move's timeline row as one automated text) and nothing that sends to a customer or reopens a lost card. Both findings are written into the tool's notes.",
         "Pulled the live voicemail transcripts again for the 3 silent-caller cards before deciding anything on them: all 4 calls came back empty ('No transcript found', no words) and each auto-reply text bounced, which fits Noah's 8/07 rule. The cards stay held for a look in GHL."
       ],
       "fixed": [
-        "Caught from the live code before the second move: the closeout tool's notes said the follow-up sweep covers every card in about 55 minutes and listed Sean's call sheet as unknown. The sweep needs up to about 20 hours to reach a newly moved card, and the call sheet reads only open cards. The tool's text and tests now say so (781 checks pass)."
+        "Caught from the live code before the second move: the closeout tool's notes said the follow-up sweep covers every card in about 55 minutes and listed Sean's call sheet as unknown. The sweep needs up to about 20 hours to reach a newly moved card, and the call sheet reads only open cards. The tool's text and tests now say so (781 checks pass).",
+        "Caught on Thursday: my estimate for when the sweep would reach the card (10:30 AM) was 30 minutes late, because the sweep's list wraps around and the newest cards get covered by two runs in each 20-hour rotation. The helper that predicts it now accounts for that and reproduces the real run."
       ],
       "inProgress": [
-        "The follow-up check on the moved card is still pending. The sweep's two tags should land on it at the 10:30 AM PT run on Thursday 10/15. Tasha re-checks the tags, do-not-contact blocks, messages, stage, and status then, and the other 7 cards stay where they are until that passes.",
-        "3 silent-caller cards stay held for a human look in GHL, and 2 funding-pitch cards that Noah's cleanup script stamped on 10/14 are outside this work."
+        "The other 7 cards were not moved and wait for Tasha's go. 3 silent-caller cards stay held for a human look in GHL, and 2 funding-pitch cards that Noah's cleanup script stamped on 10/14 are outside this work."
       ],
       "notes": [
-        "One write reached GHL in this work: the single stage move. No texts, emails, tags, notes, or do-not-contact changes were made, and nothing was deployed."
+        "One write reached GHL in this work: the single stage move. The two tags on the contact came from the live follow-up sweep. No texts, emails, notes, or do-not-contact changes were made, and nothing was deployed."
       ]
     },
     {
