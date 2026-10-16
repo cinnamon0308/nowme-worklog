@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-16T22:41:02.082Z",
+  "updated": "2026-10-16T22:42:23.350Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1928,7 +1928,7 @@
         "45 stage-only moves are tested and wait for Tasha's go: 43 in the main list and 2 into Re-Engage, kept apart because the stage's entry check tags each arrival and opens a review task. Each move changes the stage only; status, value, owner and contact stay as they are, and a check after the moves proves it. Nothing in GHL or Urable has changed.",
         "12 robocall and pitch cards wait on a one-card test first, because they are still open, unlike the junk cards moved on 10/14.",
         "7 duplicate cards (customers on a second phone or Instagram) are kept apart for a separate cleanup; 14 cards stay put until their evidence is clear; 2 future-date cards have no reminder set yet.",
-        "32 customer questions and money items are handed to Sean and Noah, without holding up any stage move."
+        "31 customer questions and money items are handed to Sean and Noah, without holding up any stage move."
       ],
       "notes": [
         "Read-only. Nothing was sent, moved, or written in GHL or Urable."
