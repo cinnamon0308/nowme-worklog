@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-16T14:56:38.048Z",
+  "updated": "2026-10-16T15:41:51.716Z",
   "projects": [
     {
       "id": "night-shift",
@@ -684,7 +684,7 @@
       "id": "payment-sync",
       "name": "Deposit Lane (M151)",
       "status": "IN_PROGRESS",
-      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/08 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. Since 10/09 the payment read pages back to the last good run instead of a fixed 500 records, a payment stuck at $0 on its job becomes person work after an hour, and a card in Won before its job is done goes back to open in Booked (Noah's 9/29 rule); a one-time cleanup found 17 such cards today, 5 ready to move. 221 lane tests and 13 cleanup tests. On 10/13 the 6:15 AM check C25 was rebuilt, proved on live data (5 paid jobs with a wrong card), reviewed twice by Tasha, and prepared as a release on its own, without C24. It now also lists every open paid deposit with no install date at any age (36 today). It waits for Tasha's go. It is not live.",
+      "summary": "Every paid Rocklear deposit in Urable becomes a Booked card per car, at the job total, within 30 minutes, or an #alarms line plus a task for Jenn. A dateless deposit gets Jenn's task and no blank-date welcome. Built 10/07 as its own cloud function plus the 6:15 AM check C25. Running in plan-only mode since 10/07, 11:41 PM PT: it checks every 10 minutes and writes nothing until the test week and the reviewed backfill are done. Since 10/08 it tags paid customers 'deposit-paid' and 'paid-in-full'. Since 10/08 it also closes a deposit Urable shows refunded in full (card to Lost - Declined, Deposit Amount Paid to $0, 'deposit-paid' swapped for 'deposit-refunded') and sends anything less certain to Jenn, behind its own plan-only switch. Since 10/09 every problem a person must fix posts to the new Deposit Lane Discord channel, and #alarms keeps lane failures only. Since 10/09 the payment read pages back to the last good run instead of a fixed 500 records, a payment stuck at $0 on its job becomes person work after an hour, and a card in Won before its job is done goes back to open in Booked (Noah's 9/29 rule); a one-time cleanup found 17 such cards today, 5 ready to move. 221 lane tests and 13 cleanup tests. On 10/13 the 6:15 AM check C25 was rebuilt, proved on live data (5 paid jobs with a wrong card), reviewed twice by Tasha, and prepared as a release on its own, without C24. It now also lists every open paid deposit with no install date at any age (36 today), and since 10/16 it counts deposits Urable marks 'partial refund' unless 90% or more went back. It waits for Tasha's go. It is not live.",
       "blockedOn": "C25, the 6:15 check, is ready as a C25-only release and waits on Tasha's go to deploy. Before the lane is armed, its Install Date comparison has to be fixed: GHL reads dates back as a timestamp, so the lane would rewrite every date on every pass. Plan-only week started 10/07: 254 runs and 0 writes through 10/09, 4:10 PM PT. Next: commit and redeploy the 10/09 patches, review and canary the 17-card Won cleanup, the reviewed backfill since June, then arming the deposit side, then reading the refund plans before arming refunds. Job #5773 needs cancelling (and its refund recording) in Urable before the lane can see it. Waiting on Noah: confirm M151 is Tasha's, and the date-pending email wording.",
       "health": {
         "band": "on-track",
@@ -1860,6 +1860,27 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-16",
+      "title": "Google Cloud commands work on Tasha's Mac again, so deploys and the Waiting on Noah watcher run; the 6:15 deposit check (C25) now counts deposits with money handed back",
+      "shipped": [
+        "Found why Google Cloud commands had been failing on Tasha's Mac since 10/14: Claude, the scheduled watcher, and background jobs were running Google's tool on the Mac's old Python 3.9, which it no longer supports. One setting now points every shell at Python 3.11, so deploys, audits, and live checks run again.",
+        "Unstuck the Waiting on Noah watcher. Its 10/13 9:46 PM run had hung and blocked every run after it, so none of the 38 cards had been checked for 2.5 days. Its live checks run again, and the next scheduled run takes off any card Noah has finished.",
+        "Taught the 6:15 AM deposit check (C25) that a deposit Urable marks 'partial refund' is still money we hold unless 90% or more went back, the same line the audit's refund check uses. Urable holds 27 such payments, and 21 of them gave back 10% or less (change or a card fee), the kind of deposit the check used to skip entirely.",
+        "Gave those deposits their own 'needs a person to stamp' card. The deposit lane hands every partial refund to a person and never stamps the card, so without this, correct cards would have failed every morning once the lane goes live."
+      ],
+      "fixed": [
+        "Caught in two rounds of independent review before anything shipped: 7 real problems, including an empty answer from Urable that would have read as a quiet week, and correct cards that would have failed daily. All 7 are fixed, each with a test, and 384 automated checks pass.",
+        "Ran the check read-only against live Urable and GHL twice after the change: both runs finished in about 2 minutes, read every partial refund, and found the same 5 paid jobs from the past week still off."
+      ],
+      "inProgress": [
+        "C25 still waits on Tasha's go to commit and deploy. It now uses about 2 of the audit's 15 minutes.",
+        "One deposit flagged on 10/13 for a card naming a different car (#5729) has passed the check's 8-day window. Tasha confirms it was fixed, or keeps it in view."
+      ],
+      "notes": [
+        "Nothing was deployed, and nothing changed in GHL or Urable."
+      ]
+    },
     {
       "date": "2026-10-14",
       "title": "Moved the first of 8 junk cards out of the quote queue with nothing else changing, and the follow-up sweep's tags on it checked out the next morning",
