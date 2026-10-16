@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-16T15:41:51.716Z",
+  "updated": "2026-10-16T16:21:02.663Z",
   "projects": [
     {
       "id": "night-shift",
@@ -897,6 +897,54 @@
           "#5703",
           "job 5703",
           "5703 refund"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Check Square: did the $932.88 deposit refund for job #5773 go through?",
+      "project": "Pipeline cleanup (MQR audit)",
+      "since": "2026-10-16",
+      "impact": "The #5773 customer (2019 Camaro ZL1) cancelled on 10/06 and you replied the refund was processed. Urable still shows the $932.88 Square payment as paid with no refund on record, and job #5773 is still scheduled for Nov 30 with an automatic reminder text set for Nov 29. If the money went back through Square outside Urable, the job needs cancelling so he is not reminded about an appointment he cancelled. If it did not go back, he is still waiting on it.",
+      "whatToDo": [
+        "In Square, find the $932.88 payment from 9/26 (job #5773 in Urable links to it).",
+        "If it was refunded: cancel job #5773 in Urable so the Nov 29 reminder never sends, and tell Tasha so his card can go to Re-Engage.",
+        "If it was not refunded: refund it through Urable so it is on record, or tell Tasha the booking stands."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah or Jenn says whether the job #5773 deposit refund went through (his notes or to Tasha), or Urable shows the payment refunded or job #5773 cancelled.",
+        "approvals": null,
+        "vault": [
+          "#5773",
+          "job 5773",
+          "Camaro ZL1"
+        ],
+        "live": null
+      }
+    },
+    {
+      "item": "Five quotes are waiting on your price or answer before Sean can send them",
+      "project": "Pipeline cleanup (MQR audit)",
+      "since": "2026-10-16",
+      "impact": "Each of these customers asked for a price and is still waiting, and their cards sit in Manual Quote Required with nothing Sean can send. Two were promised a price weeks ago (9/23 and 9/29).",
+      "whatToDo": [
+        "2014 Mercedes ML350 (the customer agreed to $1,195 in person on 9/15): your car list puts the ML350 at Large SUV/Truck, held for review, not Small SUV. Which size?",
+        "2023 Model Y after an accident: price for 3 layers on the hood and front bumper (promised by text on 9/23).",
+        "2026 Mercedes S580: satin-black PeelClear, top half and whole car (asked 9/30, PeelClear is paused). Quote it, or offer something else?",
+        "2011 Saab: can Rocklear go over failed clear coat (asked 10/07)?",
+        "2017 BMW M4: price to remove the PPF on the front bumper (asked 10/14). Reply to Tasha with the five answers and Sean sends them."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah has answered all five (his notes or to Tasha), or each of the five customers has a Urable proposal sent after 10/16.",
+        "approvals": null,
+        "vault": [
+          "ML350",
+          "S580",
+          "satin PeelClear",
+          "failed clear coat",
+          "PPF removal"
         ],
         "live": null
       }
@@ -1860,6 +1908,31 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-16",
+      "title": "Checked all 131 cards in Manual Quote Required: 41 are customers still owed a price, 32 are cleared to move, and nothing moves until Tasha approves",
+      "shipped": [
+        "Read all 131 Manual Quote Required cards against both sides of every text, call and voicemail, and against Urable's payments, jobs and quotes. 41 are real customers still owed a first price; the other 90 are quotes that already went out, paying customers, duplicate cards, spam, or people who never wanted Rocklear.",
+        "Found that Jay's Lexus install for Saturday at 1:30 ($1,595, a returning customer) is not booked yet: no deposit, no job and no calendar slot, and his Thursday-night question about the rock-chip layer is unanswered. Sean has it today.",
+        "Found a refund Urable never recorded: the customer who cancelled job #5773 on 10/06 still shows his $932.88 deposit as paid, and the cancelled job is still set to text him a reminder on Nov 29. Added to the Waiting on Noah list to confirm in Square.",
+        "Found two $937.50 deposit requests on one Civic Type R deal: Urable created the second one by itself, under the wrong car, when the customer accepted the quote. Only one should ever be collected.",
+        "Caught a quote that would have gone out wrong twice: Rafa's i8 quote bounced on a mistyped email, and it was built at the sedan size while Noah's car list puts the i8 in a smaller size.",
+        "Kept 7 duplicate cards from being moved: customers who texted from a second phone or Instagram got a new $0 card while their real deal sits on their main contact, including two booked installs ($1,945 and $2,695) and a won job ($3,795).",
+        "Listened to the voicemails behind 21 'unknown caller' cards: 7 were robocalls the spam filter missed, one was a marketing pitch, and one was a paying customer arriving for his drop-off."
+      ],
+      "fixed": [
+        "Corrected two of the first plan's moves before anything ran: a headlight job is not Booked without a deposit or a job, and past customers asking for service stay open with a named owner instead of being closed.",
+        "Taught the audit both new traps, duplicate contacts from a second phone and voicemails nobody reads, so the next stage audit checks them first."
+      ],
+      "inProgress": [
+        "32 card moves and one follow-up task are tested and wait for Tasha's go. Nothing in GHL or Urable has changed.",
+        "12 robocall and pitch cards wait on a one-card test first, because they are still open, unlike the junk cards moved on 10/14.",
+        "15 cards wait on a person's answer before they move: Noah 6, Jenn 5, Sean 2, Noah or Jenn 1, Tasha 1."
+      ],
+      "notes": [
+        "Read-only. Nothing was sent, moved, or written in GHL or Urable."
+      ]
+    },
     {
       "date": "2026-10-16",
       "title": "Google Cloud commands work on Tasha's Mac again, so deploys and the Waiting on Noah watcher run; the 6:15 deposit check (C25) now counts deposits with money handed back",
