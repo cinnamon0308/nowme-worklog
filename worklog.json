@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-17T13:54:51.951Z",
+  "updated": "2026-10-17T15:45:52.756Z",
   "projects": [
     {
       "id": "night-shift",
@@ -794,26 +794,27 @@
       "id": "reply-call-cards",
       "name": "Reply and Missed-Call Cards",
       "status": "IN_PROGRESS",
-      "summary": "Sean's call sheet only sees people with an open card, and 602 people had written or called with none. Two card-only workflows went live on 9/29: a reply from someone with no card opens one at Awaiting Engagement, and a missed call or voicemail from someone with no card opens one at New Lead plus a call-back task for Sean. The old inbound-call workflow could not do this: its create step has no name, so 73 of 85 attempts since August failed for callers saved as a phone number. Expect about 3 reply cards and 1 to 2 call cards a day. Neither workflow sends anything.",
-      "blockedOn": "Nothing. The live triggers have not fired yet, so the first real reply and the first real voicemail still have to be watched.",
+      "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, which crowded the call sheet, so both workflows were switched off on 10/17. The same day, the 22 open auto-made cards that were not sales calls were closed after a full read of each thread (open Manual Quote Required 104 to 83). Noah's fix, message-only cards and no-car cards parked in Awaiting Engagement, is planned, not built.",
+      "blockedOn": "Noah's answer on the missed-call task before that workflow comes back. The message-only reply workflow and the Vehicle Estimation change can go first.",
       "health": {
         "band": "watch",
-        "reason": "Every step passed on internal test contacts, but no real customer has triggered either workflow yet, and the backfill of the people already waiting is not done."
+        "reason": "Both card workflows are off, so people who message in get no card until the message-only version is published."
       },
       "detail": {
         "goal": "Make every real reply and every missed call land on Sean's board as a card, so no one who reached out is invisible to the call sheet.",
         "whatWasDone": [
           "2026-09-29: read the old workflows' run logs to find the empty-name failure, built both new workflows, and tested them on internal test contacts with real actions.",
-          "Both skip opted-out people, paid customers, junk and long-term-nurture contacts, and never touch someone who already has a card of any status."
+          "Both skip opted-out people, paid customers, junk and long-term-nurture contacts, and never touch someone who already has a card of any status.",
+          "2026-10-17: read all 45 open auto-made cards that have a phone and closed the 22 that were not sales calls; two duplicate contacts wait on a merge."
         ],
         "needsImprovement": [
-          "Watch the first real reply and the first real voicemail in each workflow's Execution logs.",
-          "Build a vetted one-time list for the 602 and the 210 who already wrote, and decide how many go on Sean's sheet per day.",
-          "People whose card sits in Lost - Ghost, Lost - Declined or Disqualified still go unseen when they write back; only the honest-last-text group is covered."
+          "Publish the message-only reply workflow and the Vehicle Estimation change, so texters get cards again without the call junk.",
+          "Decide the missed-call task: as built it never reached Sean, and removing only the card step breaks it.",
+          "Merge the two duplicate contacts, then remove their stray cards."
         ],
         "watchFor": [
-          "A caller who now has a card no longer gets the old missed-call text on their next missed call.",
-          "A stuck card:pending tag on a contact would block that contact's next card."
+          "A card left open for a spam texter takes a fresh seat at the top of the sheet. A closed card blocks a new one; a deleted card does not.",
+          "Never move these cards to Won: a Won move reports a won deal to Meta."
         ]
       }
     },
@@ -1908,6 +1909,25 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-17",
+      "title": "Took 22 cards that were not sales calls off Monday's call sheet: open Manual Quote Required went from 104 to 83",
+      "shipped": [
+        "Checked Noah's 10/17 handoff for the auto-card workflows against live GHL before building it. It stops new junk cards, but it leaves the 75 auto-made cards already open on Sean's call-sheet stages, and its 'no car' rule would also send texters who have a phone into a stage where the sheet tells Sean a quote already went out. The holes are written up so the build avoids them.",
+        "Read all 45 open auto-made cards that have a phone, including every text and every call and voicemail transcript, and sorted each one: 22 are not sales calls, 5 close after one more step, and 18 are real leads or paid jobs that stay. The 22 are spam, vendors, a car dealer, an installer-to-be, people who wanted services we don't sell, two people who told Sean no, two duplicates of booked customers, and seven past customers asking about service.",
+        "Moved the 22 at 8:38 AM PT by stage only, after a dry run, a fresh check for new messages, and a check that no workflow reacts to those stages. All 22 read back clean a minute later with no texts sent and no do-not-disturb or tag changes, so Monday's 6 AM sheet gives those seats to real leads."
+      ],
+      "fixed": [
+        "Caught that the MQR plan staged on 10/16 would have moved 8 cards to Won, and every Won move reports a won deal to Meta's ad system. Those cards went to Disqualified instead, so no false sales reached Meta."
+      ],
+      "inProgress": [
+        "Two duplicate contacts, customers who texted from a second number while their real booking sits on their main contact, are ready to merge. Tasha merges them in GHL, then the two stray cards come off.",
+        "Noah's workflow edits are planned but not made: message-only reply cards, the Vehicle Estimation change for cards with no car, and the missed-call task, which needs his answer first."
+      ],
+      "notes": [
+        "Found while reading: a customer's refund he says never arrived, and several quotes and replies people are still waiting on. They're listed on the close list page with an owner for each."
+      ]
+    },
     {
       "date": "2026-10-16",
       "title": "Checked all 131 cards in Manual Quote Required: 41 are customers still owed a price, 45 stage moves are ready, and nothing moves until Tasha approves",
