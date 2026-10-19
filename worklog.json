@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-19T15:31:58.199Z",
+  "updated": "2026-10-19T15:38:00.668Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1208,6 +1208,27 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-19",
+      "title": "Found follow-up email 5 still offering PeelClear to every new lead (173 since the 9/23 pause) and lined up the one-template fix that also unblocks the 35 re-adds",
+      "shipped": [
+        "Counted every follow-up email 5 sent since Noah paused PeelClear on 9/23, straight from GoHighLevel's send records: 173 leads got it, 6 to 9 a day last week, and every one still has the paragraph offering PeelClear. That goes against Noah's 9/23 rule that nothing automated offers PeelClear, and any of those leads could reply asking for it while there is no installer. The clean version, the same email minus that one paragraph, has been in the email library since 9/29, but the workflow step was never pointed at it, so the old copy kept sending.",
+        "Wrote Tasha a step-by-step plan for the swap: the exact template to pick, the subject and preview text to check before saving, the top-right Save that actually commits, and a test email at the end. The one real risk is the subject line. Re-picking templates on 9/12 blanked it on emails 1 and 6, and 219 email 1s and 120 email 6s went out as \"No Subject\" between 9/23 and 10/15, so the plan has her check it before she saves.",
+        "Built a read-only checker that proves the swap from real sends instead of the builder screen, and tested that it catches the problem: run on 10/18's sends, it failed all 9 email 5s for naming PeelClear. It also confirmed the swap can't confuse the drip-stop sweep or the nightly checker, because both recognize email 5 by its preview line and both versions share it."
+      ],
+      "fixed": [
+        "Kept a needless risk out of the plan. Two vault notes still said emails 1 and 6 go out with no subject, which would have meant re-picking two more templates with the same subject-wiping risk. The send records show every email 1 and 6 since 10/16 has its subject, so that job is already done."
+      ],
+      "inProgress": [
+        "The swap itself: Tasha re-picks the template in the workflow builder outside sending hours (before 9 AM or after 7 PM Pacific), then the checker confirms it on the next real email 5 sends. With the Meta lead ads stopped since 10/14, few new leads are reaching email 5, so the real-send proof may wait until ads run again; her test email stands in until then.",
+        "Re-adding the September leads who never got a follow-up email (M62). The swap was the condition Noah set. A separate check this morning found 27 of the 35 still qualify, and three of them hold quotes that are wrong to email (two old sale prices, one with a PeelClear option). The re-add code also has to go live on the poller in one agreed order with three other pending changes to the same file, or a later deploy would wipe out an earlier one."
+      ],
+      "notes": [
+        "Noah's Claude: the 10/13 handoff (item B3) and the 10/16 daily note in Noah's vault still list follow-up emails 1 and 6 as going out with no subject. GoHighLevel's send records show every email 1 and 6 since 10/16 has its subject, so that item can be marked fixed. Once Tasha's swap is verified, the nurture-emails README should name \"Nurture E5 - Why Not PPF (v3 2026-09-29 no PeelClear)\" as the live email 5.",
+        "Also visible in the send records: new people stopped entering the follow-up emails on 10/14, the same day Meta stopped the lead ads. A separate session traced it, and Noah already handles the ad account.",
+        "Nothing in GoHighLevel, the code, or the approvals page changed in this session."
+      ]
+    },
     {
       "date": "2026-10-19",
       "title": "Set a stopgap so Noah's sessions and Tasha's stop moving the same GHL cards twice, until the M369 Discord channel exists",
