@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-19T02:51:59.603Z",
+  "updated": "2026-10-19T04:49:03.769Z",
   "projects": [
     {
       "id": "night-shift",
@@ -879,6 +879,30 @@
           "Do not repeat the 9/07 bulk close: it also set do-not-contact."
         ]
       }
+    },
+    {
+      "id": "model-evals",
+      "name": "Model Evals",
+      "status": "LIVE",
+      "summary": "A scoreboard for the Claude models themselves: 5 fixed tasks from our work, 10 runs per model, graded by script. Baseline 10/18: Opus 5.5 and Sonnet 5.5 at 50 of 50, Haiku 5.5 at 46 of 50, for $0.89.",
+      "blockedOn": null,
+      "health": {
+        "band": "healthy",
+        "reason": "Baseline recorded and all 93 self-checks pass. The tasks are too easy to rank Opus against Sonnet; a harder version would fix that."
+      },
+      "detail": {
+        "goal": "Tell within minutes whether a new Claude model is better or worse than the ones we use, on tasks from our own work, before trusting it with client texts or automations.",
+        "whatWasDone": [
+          "Built the bench on 10/18: 5 fixed tasks, 10 runs per model, a script grades every answer.",
+          "Baseline on 10/18: Opus 5.5 50 of 50, Sonnet 5.5 50 of 50, Haiku 5.5 46 of 50; 150 runs for $0.89."
+        ],
+        "needsImprovement": [
+          "Harder tasks, so the scoreboard can rank Opus against Sonnet instead of showing a tie at 50 of 50."
+        ],
+        "watchFor": [
+          "Rerun all three models after a Claude Code update and on every new model release, and trust only changes labeled 'likely real'."
+        ]
+      }
     }
   ],
   "waitingOnNoah": [
@@ -1182,6 +1206,24 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-18",
+      "title": "Built a scoreboard that tests each Claude model 10 times per task: Sonnet 5.5 matched Opus 5.5 on all 50 runs at less than half the cost",
+      "shipped": [
+        "Built a test bench that scores Claude models on 5 fixed tasks from our own work: a client text under Noah's product rules, pulling 12 fields out of a messy lead note, a phone-number cleaner checked against 14 hidden cases, drop-off days around the Tuesday to Thursday closure, and a 100 to 130 word explanation under a list of writing rules. Each task runs 10 times per model, because the same prompt gives different answers from run to run, and a script grades every answer, so no AI judge can tilt the score.",
+        "Ran the first full baseline on 10/18 (150 runs in about 5 minutes, $0.89 of usage): Opus 5.5 passed 50 of 50, Sonnet 5.5 passed 50 of 50, and Haiku 5.5 passed 46 of 50, with all 4 misses running past the word limit. Per run, Opus cost about 1.2 cents, Sonnet about half a cent, and Haiku 0.03 cents.",
+        "All 30 client texts across the three models kept Noah's product rules: no 'chip-proof', no 'hydrophobic', no stacked years called a warranty, no PeelClear, and no prices.",
+        "When the next model comes out, one command runs it through the same 5 tasks and shows whether it beats, ties, or trails the models in use, with a check that separates a real change from normal run-to-run wobble."
+      ],
+      "fixed": [
+        "Caught that test runs started from the Claude desktop app inherit about 30 hidden app settings, which added about 300 tokens to every model's instructions and forced maximum effort. The bench now strips them, so a test started from the app scores the same as one started from Terminal. Any other script that runs Claude from the app has the same leak.",
+        "Found and fixed two bench bugs before they cost anything: one crashed run could have thrown away a whole batch's paid results, and a test edited mid-batch would have been stamped with the wrong version. Both are covered now, among 93 self-checks that run for free."
+      ],
+      "inProgress": [
+        "Opus and Sonnet both scored 50 of 50, so these 5 tasks can catch a model getting worse but can't yet say which of the two is better. A harder second version of the tasks would answer that."
+      ],
+      "notes": "This grades the models, not the business. It is one data point for Noah's rule that client drafts may run on Sonnet 5.5 when a side-by-side on our own prompts shows the same output: Sonnet matched Opus here at less than half the cost, but these were 5 short tasks, not the drafter's real prompts."
+    },
     {
       "date": "2026-10-18",
       "title": "Deleted 7 proven junk cards from the quote queue: Manual Quote Required went from 92 cards to 85, and no real customer was touched",
