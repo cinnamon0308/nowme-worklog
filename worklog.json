@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-19T15:38:00.668Z",
+  "updated": "2026-10-19T15:40:38.612Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1220,7 +1220,7 @@
         "Kept a needless risk out of the plan. Two vault notes still said emails 1 and 6 go out with no subject, which would have meant re-picking two more templates with the same subject-wiping risk. The send records show every email 1 and 6 since 10/16 has its subject, so that job is already done."
       ],
       "inProgress": [
-        "The swap itself: Tasha re-picks the template in the workflow builder outside sending hours (before 9 AM or after 7 PM Pacific), then the checker confirms it on the next real email 5 sends. With the Meta lead ads stopped since 10/14, few new leads are reaching email 5, so the real-send proof may wait until ads run again; her test email stands in until then.",
+        "The swap itself: Tasha re-picks the template in the workflow builder (any time works, because changes only go live when she saves), then the checker confirms it on the next real email 5 sends. With the Meta lead ads stopped since 10/14, few new leads are reaching email 5, so the real-send proof may wait until ads run again; her test email stands in until then.",
         "Re-adding the September leads who never got a follow-up email (M62). The swap was the condition Noah set. A separate check this morning found 27 of the 35 still qualify, and three of them hold quotes that are wrong to email (two old sale prices, one with a PeelClear option). The re-add code also has to go live on the poller in one agreed order with three other pending changes to the same file, or a later deploy would wipe out an earlier one."
       ],
       "notes": [
