@@ -1,30 +1,33 @@
 {
   "version": 1,
-  "updated": "2026-10-19T04:49:03.769Z",
+  "updated": "2026-10-19T14:36:31.366Z",
   "projects": [
     {
       "id": "night-shift",
       "name": "Night Shift Lead Check",
       "status": "IN_PROGRESS",
-      "summary": "Noah's nightly check of every open Rockclear lead against ten rules, handed to Tasha on 10/11. Phase 1 is the opportunity cards: on 10/12 every card was checked, 225 finished leads came off 607 stale queued follow-ups, and the checker's two known false alarms were fixed.",
-      "blockedOn": "Noah's taps on the approvals page: the one clear 'said no' card, and three card decisions drafted on 10/12. Turning the nightly run on is still his item M216.",
+      "summary": "Noah's nightly check of every open Rockclear lead, handed to Tasha on 10/11. Version 1 runs at 2 AM since 10/17 but shows its results to nobody. On 10/18 Noah picked Tasha to build version 2, which reads whole conversations, puts Sean's and Noah's rows in front of them by 6 AM, and learns from every slip someone logs as missed.",
+      "blockedOn": "Noah's four permission lines (Tasha's read access to the lead database and the Night Shift reports, and Argon for the nightly check), sent 10/19 as a file for his Claude.",
       "health": {
         "band": "watch",
-        "reason": "Phase 1 writes are done and read back clean; the morning post and Noah's decisions are still open, and nothing is deployed."
+        "reason": "Version 1 runs nightly but nobody sees its results yet; the version 2 starting copy is built, tested and on GitHub, and the build waits on access."
       },
       "detail": {
-        "goal": "Every open lead checked every night against ten rules that should always be true, with the slipped ones fixed or handed to the right person by morning.",
+        "goal": "Every open lead checked every night, with slipped ones on Sean's call sheet or Noah's approvals page by 6 AM, and every slip someone finds turned into a test the check must pass from then on.",
         "whatWasDone": [
-          "2026-10-12: checked all 3,277 Rockclear cards; 225 people off 607 stale queued follow-ups; R5 and R6 fixes committed with 166 checks passing."
+          "2026-10-12: checked all 3,277 Rockclear cards; 225 people off 607 stale queued follow-ups; R5 and R6 fixes committed with 166 checks passing.",
+          "2026-10-19: one copy of the code with the live version plus Tasha's three fixes, 197 checks passing, pushed as night-shift-v2."
         ],
         "needsImprovement": [
           "Post the first 'fixed overnight' summary for Noah and carry out his decisions.",
-          "Push the branch to the private repo once Tasha OKs it.",
-          "Later phases: the reading step for unanswered messages, the nightly deploy, Sean's call-sheet block, and the alarm clean-up."
+          "Version 2 step 1: plain-code checks for dead-stage cards left open, won or paid records in Lost, open pick cards on closed leads, and deposits and callbacks in any stage, with rows going to Sean's sheet and Noah's page.",
+          "Version 2 step 2: Argon reads the day's changed conversations, and a second check re-reads each row before it reaches a person.",
+          "Version 2 step 3: the miss log, so every slip Noah finds becomes a permanent test."
         ],
         "watchFor": [
           "Moving a card into the Won column sends Meta a purchase event; never bulk-move without Noah.",
-          "Queued follow-ups come back on any card the follow-up robot still works, so only finished leads get cleared."
+          "Queued follow-ups come back on any card the follow-up robot still works, so only finished leads get cleared.",
+          "Night Shift only reads; nothing posts to Sean, Noah or Discord until Noah approves the first results."
         ]
       }
     },
@@ -1206,6 +1209,28 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-19",
+      "title": "Night Shift version 2 started: the nightly lead check's live code and Tasha's three 10/13 fixes are now one tested copy on GitHub, so the new version builds on what actually runs every night",
+      "shipped": [
+        "Read Noah's 10/18 plan for Night Shift version 2 and turned it into a step-by-step build list: 22 steps for Tasha in the order his plan sets, 7 asks for Noah, the 15 rules, and the 21-slip test his sessions ran, with each step's 'done when' written out.",
+        "Found that the Night Shift running every night since 10/17 was put live from Noah's copy, so Tasha's 10/13 fixes were never in it: consultations still read as finished installs, the list of 30 staff, vendor and test contacts to skip is empty in the live code, and callbacks the system dropped still count as Sean's misses.",
+        "Downloaded the code that is actually deployed (46 files) and confirmed it matches Noah's copy on all 41 code files. Then built one copy: the live code exactly, plus the three fixes. All 197 automated checks pass (179 from the live code and 18 from the fixes), and a file-by-file check shows the fixes are the only difference.",
+        "Pushed that copy to the private dragon-auto-routines repo as the night-shift-v2 branch, so Noah's sessions can see it. The live Night Shift and the repo's main branch were not touched."
+      ],
+      "fixed": [
+        "New commits on this Mac were being signed with a placeholder name because no git name is set here. Every commit on the new branch now carries Tasha's name.",
+        "Noah's 10/17 check said Night Shift had not moved since 10/12, because the 10/13 work had never been pushed. It is on GitHub now, so his sessions see the real state."
+      ],
+      "inProgress": [
+        "Sent Noah a file for his Claude with four permission lines: read access for Tasha to the lead database and to the Night Shift reports, and permission for the nightly check to use Argon. Building version 2 waits on it.",
+        "Next asks for Noah: the details behind the 21 slips his sessions found 10/12 to 10/17, and two files that live only on his Mac (the spam numbers already closed and the 10/16 Argon sweep data).",
+        "Build plan once access lands: step 1 plain-code checks ($0 a night), step 2 Argon reading with a second check before anything reaches a person (about $3 a night), step 3 the miss log that turns every slip Noah finds into a test. Each step goes live only on Noah's yes."
+      ],
+      "notes": [
+        "Read-only throughout: nothing in GHL, Urable, or the live Night Shift changed. The older phase-1 branch stays on Tasha's Mac as it was."
+      ]
+    },
     {
       "date": "2026-10-18",
       "title": "Built a scoreboard that tests each Claude model 10 times per task: Sonnet 5.5 matched Opus 5.5 on all 50 runs at less than half the cost",
