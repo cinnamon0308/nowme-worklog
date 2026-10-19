@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-19T14:36:31.366Z",
+  "updated": "2026-10-19T15:02:04.761Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1044,23 +1044,22 @@
       }
     },
     {
-      "item": "Answer what PeelClear, matte and color-change askers hear while PeelClear is paused (M219, S68)",
+      "item": "Answer what PeelClear, matte and color-change askers hear while PeelClear is paused (M219)",
       "project": "Night Shift Lead Check",
       "since": "2026-09-28",
       "impact": "20 people asked for PeelClear, matte or satin since the 9/23 pause, and all are held for you, so nobody can answer them. Some have waited months, including a Tundra owner who paid a $2,200 PeelClear deposit in May and has checked in 6+ times since July. One answer lets Sean reply to most of them, with drafts coming to you first.",
       "whatToDo": [
-        "Pick the answer for askers: 'Paused, offer gloss Rocklear', 'Paused, join a waitlist', or 'I'll answer each one' (S68 also offers 'Close them out').",
+        "Pick the answer for askers: 'Paused, offer gloss Rocklear', 'Paused, join a waitlist', or 'I'll answer each one'.",
         "Tell Sean what to say to the two longest waits: the Tundra owner with the $2,200 deposit (a date or a straight answer) and the Audi A4 owner waiting since May.",
         "Say whether the 4 PeelClear askers held for you on Reply Review get a Rocklear offer. Then either call back the color-change lead from M217 (last reply 9/13) or hand him to Sean.",
-        "Answer on your approvals page, item M219. The same answer closes S68."
+        "Answer on your approvals page, item M219."
       ],
       "commands": [],
       "doneCheck": {
-        "doneWhen": "M219 is answered with what PeelClear and matte askers are told (S68 takes the same answer).",
+        "doneWhen": "M219 is answered with what PeelClear and matte askers are told.",
         "approvals": "M219",
         "vault": [
           "M219",
-          "S68",
           "PeelClear askers",
           "PeelClear answer"
         ],
@@ -1114,30 +1113,30 @@
       }
     },
     {
-      "item": "Decide who clears the follow-up texts the bot already wrote: a checked switch to automatic (B1) or Judith (M69)",
+      "item": "Follow-up texts: you picked automatic for cold leads (M352); answer S89 and S169 before it goes live",
       "project": "Cadence Orchestrator",
       "since": "2026-09-07",
-      "impact": "Your 9/28 lead audit called this the biggest reason quoted leads go cold. The follow-up bot writes the day 1, 3, 6 and 10 texts, but none go out until someone approves them. Your 10/12 morning digest showed 469 drafted texts waiting on 268 people.",
+      "impact": "Your 9/28 lead audit called unsent follow-ups the biggest reason quoted leads go cold. On 10/18 you picked 'Full cold ladder' on M352, which replaced B1: the bot will send the day 1, 3, 6 and 10 texts to quiet leads on its own, and you approved the 30-text sample. It is not live yet, so the bot keeps drafting and nothing sends, and two smaller calls on your page still decide how it sends.",
       "whatToDo": [
-        "Answer B1 on your approvals page. If you pick 'Run the check now', a session checks the drafts against today's prices and clears the stale ones. Nothing sends until you switch the bot to automatic yourself. Note: the C8 video it links still says '7.5 mils same as PPF'.",
-        "If you would rather keep a person on every text, answer M69 on your approvals page. Judith's thumbs-up sends quiet-lead drafts, and you keep new prices, complaints, PeelClear, and VIPs. You can also choose to see her first 10 before they send.",
-        "Answer S89 on your approvals page: let the bot send your approved last text (340 to 366 characters) at full length, or keep its 320-character limit so a person sends each one by hand.",
+        "S89 on your approvals page: let the bot send your approved last text (340 to 366 characters) at full length, or keep its 320-character limit so a person sends each one by hand.",
+        "S169 on your page: should the bot text only from 9 AM to 8 PM, like your texting note says, or keep 8 AM to 9 PM?",
+        "M69 (Judith's thumbs-up sends quiet-lead drafts) is still open on your page. The cold ladder now sends those texts on its own, so close M69 unless you still want her checking them.",
+        "Before it goes live: M352's own note says J. and S. said no and are still on the follow-up schedule. Take them off first so the bot never texts someone who said no.",
         "Also say whether the 2,010 older queued follow-ups on 440 people who never said no (counted 10/12) are cleared, which sends nothing, or stay in your approval queue.",
-        "S169 on your page: once the bot sends on its own, should it text only from 9 AM to 8 PM, like your texting note says?",
-        "Ghosted-lead drafts (about 100, from your 10/11 call with Tasha): reply to Tasha in Discord with whether they follow the same rule or go out without one-by-one review."
+        "Ghosted-lead drafts (about 100, from your 10/11 call with Tasha): reply to Tasha in Discord with whether they follow the cold ladder or go out only after one-by-one review.",
+        "Then run the two deploy commands in the M352 patch README to switch it on."
       ],
       "commands": [],
       "doneCheck": {
-        "doneWhen": "B1 or M69 on Noah's approvals page shows an answer, or his notes say who approves or sends the follow-up drafts, including the ghosted-lead ones. S89 answered too.",
-        "approvals": "B1",
+        "doneWhen": "S89 and S169 are answered on Noah's approvals page and M69 is answered or closed, or his notes say how the cold-ladder texts send, including the ghosted-lead ones.",
+        "approvals": "S89",
         "vault": [
-          "B1",
-          "M69",
+          "M352",
           "S89",
-          "ghosted-lead follow-up",
-          "follow-up texts channel",
-          "switch it to automatic",
           "S169",
+          "M69",
+          "cold ladder",
+          "ghosted-lead follow-up",
           "queued follow-ups"
         ],
         "live": null
