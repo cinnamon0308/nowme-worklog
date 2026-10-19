@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-19T15:43:42.770Z",
+  "updated": "2026-10-19T16:40:38.938Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1208,6 +1208,27 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-19",
+      "title": "Put Noah's September follow-up email fix live and added the first of 25 quoted leads back into the emails; the other 24 go in once its first email lands",
+      "shipped": [
+        "Re-checked the 35 September leads Noah approved for re-adding on approvals card M62 (9/29) against GoHighLevel and Urable, reading every text, call recording, appointment and quote. 25 still qualify: none has booked, paid or written to us since mid-September, and none has ever received any of the six follow-up emails. The 22 with current-price quotes carry $32,940 in one-layer quotes. 10 dropped out: 6 were closed in Noah's 10/18 quiet-lead sweep, 1 has a deposit invoice out, 1 is on vacation and texting Sean, and 2 are being worked by Sean right now.",
+        "Tested the duplicate check before trusting it: it found every follow-up email on 5 people known to have them, including the sends GoHighLevel logged with no subject, so 'zero emails received' for the 25 is real and nobody gets a repeat.",
+        "Put Noah's 9/28 fix live on the quote poller at 9:01 AM (revision 00048-vev). It puts quoted leads back into the emails once their quote link exists, and pulls anyone who replies out before email 6 ('Before I close your file'). Only that one file changed; every other setting was copied from the live poller, including its 9-minute time limit, which the 9/28 install script would have cut to 4 minutes and could have stopped the poller's other jobs halfway. All 340 checks passed against the live code first, and the 9:30 email sweep ran clean in 190 seconds, the same as before.",
+        "Added the first lead back into the follow-up emails at 9:34 AM as the test, with its quote link written and read back. Its email 1 is due around 1:30 PM; that is the only proof GoHighLevel lets a lead re-enter the sequence."
+      ],
+      "fixed": [
+        "Noah's 9/28 backlog script only looked back 30 days for emails already sent, which no longer reaches the September sends. Widened it to full history for this run, so the duplicate check covers every email ever sent."
+      ],
+      "inProgress": [
+        "The other 24 go in after the test lead's email 1 arrives, during daytime hours, with Tasha's OK.",
+        "For Noah's sessions: the 10/16 email 6 fix was pinned to the old poller version and will now refuse to deploy until it is rebuilt on top of 00048-vev. Noah's vault copy of the file already holds both changes."
+      ],
+      "notes": [
+        "Email wording unchanged. The 3 leads holding September sale-era quotes go in as they are (Tasha's call); pricing gets handled when they reply.",
+        "Rollback: send the poller's traffic back to revision 00047-dtc, about a minute, no redeploy."
+      ]
+    },
     {
       "date": "2026-10-19",
       "title": "Found follow-up email 5 still offering PeelClear to every new lead (173 since the 9/23 pause) and lined up the one-template fix that also unblocks the 35 re-adds",
