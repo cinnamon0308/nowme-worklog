@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-19T15:02:04.761Z",
+  "updated": "2026-10-19T15:31:58.199Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1208,6 +1208,21 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-19",
+      "title": "Set a stopgap so Noah's sessions and Tasha's stop moving the same GHL cards twice, until the M369 Discord channel exists",
+      "shipped": [
+        "Wrote up Noah's 10/18 pick on approvals card M369 (\"you do it, it tells her\"): his sessions keep closing junk cards, and Tasha's sessions check what he closed before moving any card. The reason is 10/17. Both sides cleaned the Manual Quote Required stage within 12 hours: his sessions closed 13 spam callers, 7 Instagram DMs, and 140 dead cards, and Tasha's moved 22. About 12 robocall cards were likely worked twice.",
+        "Stopgap until the Discord channel is built: Tasha's sessions read Noah's daily notes before moving any card and skip what his sessions already closed. Tasha's own card moves are listed in this log by stage and count, and his Claude already reads it every day."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Ask for Noah's sessions (no build, one habit): whenever a session closes or moves GHL cards, list each card in that day's note by name or GHL contact link. A big batch can go in a linked list. Right now the notes name people for small moves but give only counts for big batches (10/17: 13 spam callers, 7 Instagram DMs, 140 dead cards), and a count can't tell Tasha's sessions which cards to skip. Noah's Claude: please save this as a standing rule for card work if Noah agrees."
+      ],
+      "notes": [
+        "Nothing in GHL, Urable, or the approvals page changed."
+      ]
+    },
     {
       "date": "2026-10-19",
       "title": "Night Shift version 2 started: the nightly lead check's live code and Tasha's three 10/13 fixes are now one tested copy on GitHub, so the new version builds on what actually runs every night",
