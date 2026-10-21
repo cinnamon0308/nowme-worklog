@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-21T06:22:47.944Z",
+  "updated": "2026-10-21T11:09:59.082Z",
   "projects": [
     {
       "id": "night-shift",
@@ -797,11 +797,11 @@
       "id": "reply-call-cards",
       "name": "Reply and Missed-Call Cards",
       "status": "IN_PROGRESS",
-      "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, which crowded the call sheet, so both workflows were switched off on 10/17. The same day, the 22 open auto-made cards that were not sales calls were closed after a full read of each thread (open Manual Quote Required 104 to 83). Noah's fix, message-only cards and no-car cards parked in Awaiting Engagement, is planned, not built. On 10/18 the 7 proven junk cards left in Manual Quote Required (robocalls, silent callers, and funding pitches) were deleted after a full re-check: 92 cards to 85, open cards unchanged.",
-      "blockedOn": "Noah's answer on the missed-call task before that workflow comes back. The message-only reply workflow and the Vehicle Estimation change can go first.",
+      "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, so both were switched off on 10/17. Noah's fix went live at 2:45 AM PT on 10/21: the reply workflow now fires on 7 message channels only, so texts and DMs open cards again and calls do not, and Vehicle Estimation leaves a card with no car where it opened. The missed-call workflow stays off until Noah answers the call-back task question. The four go-live tests have not run yet.",
+      "blockedOn": "Noah's answer on the missed-call task (on Waiting on Noah). Tests 1 to 4 still to run.",
       "health": {
         "band": "watch",
-        "reason": "Both card workflows are off, so people who message in get no card until the message-only version is published."
+        "reason": "Live since 2:45 AM PT 10/21; the four tests have not run yet, and missed calls get no card or task until Noah answers."
       },
       "detail": {
         "goal": "Make every real reply and every missed call land on Sean's board as a card, so no one who reached out is invisible to the call sheet.",
@@ -809,17 +809,19 @@
           "2026-09-29: read the old workflows' run logs to find the empty-name failure, built both new workflows, and tested them on internal test contacts with real actions.",
           "Both skip opted-out people, paid customers, junk and long-term-nurture contacts, and never touch someone who already has a card of any status.",
           "2026-10-17: read all 45 open auto-made cards that have a phone and closed the 22 that were not sales calls; two duplicate contacts wait on a merge.",
-          "2026-10-18: deleted the 7 proven junk cards after a full re-check; every contact stayed unchanged, and each card can be restored from Audit Logs for 60 days."
+          "2026-10-18: deleted the 7 proven junk cards after a full re-check; every contact stayed unchanged, and each card can be restored from Audit Logs for 60 days.",
+          "2026-10-21: built the 7 message-channel triggers, put the no-car rule live in Vehicle Estimation after a review copy, published the reply workflow at 2:45 AM PT, and built the 'New messages, no car yet' Smart List."
         ],
         "needsImprovement": [
-          "Publish the message-only reply workflow and the Vehicle Estimation change, so texters get cards again without the call junk.",
-          "Decide the missed-call task: as built it never reached Sean, and removing only the card step breaks it.",
+          "Run tests 1 to 4, then send Noah his done line.",
+          "Decide the missed-call task: as built it never reached Sean, and removing only the card step breaks it (on Waiting on Noah).",
           "Merge the two duplicate contacts, then remove their stray cards.",
-          "Keep the call-block and Do Not Contact checks when the reply workflow is rebuilt as message-only."
+          "Claude's recommendation: a 'car added' workflow plus a typing rule, so a DM card moves to Manual Quote Required once its car is known."
         ],
         "watchFor": [
           "A card left open for a spam texter takes a fresh seat at the top of the sheet. A closed card blocks a new one; a deleted card does not, unless the contact is blocked from calls or has a Do Not Contact card, which the reply workflow checks.",
-          "Never move these cards to Won: a Won move reports a won deal to Meta."
+          "Never move these cards to Won: a Won move reports a won deal to Meta.",
+          "The review copy of Vehicle Estimation (a Draft named 'REVIEW COPY, do not publish or Run test') is unused; delete it once Tasha is satisfied."
         ]
       }
     },
@@ -909,6 +911,31 @@
     }
   ],
   "waitingOnNoah": [
+    {
+      "item": "Say how missed calls should reach Sean now that calls no longer open cards: a call-back task with no card, or leave it off",
+      "project": "Reply and Missed-Call Cards",
+      "since": "2026-10-21",
+      "impact": "Your two fixes from 10/16 and 10/17 went live at 2:45 AM PT on 10/21: texts and DMs open a card again, phone calls no longer do, and a DM with no car waits in Awaiting Engagement. The missed-call half waits on you. Taking only the card step out of 'Missed call > open a card + callback task' would also kill Sean's task, because the task sits behind a 'find the card we just made' step. That workflow never gave Sean a real task anyway: 0 in 190 runs since 9/29, because the reply workflow always got to the caller first. Until you answer, it stays switched off, so a missed call from someone with no card gets no card and no task.",
+      "whatToDo": [
+        "Decide on the task-only version: every missed call from someone with no card gives Sean a 'Call back within 60 minutes' task in GoHighLevel Tasks, and no card. That is about 6 tasks a day, spam and repeat callers included. The call sheet does not read GHL tasks.",
+        "If yes: Tasha removes the 5 card steps in each branch, rewords the task (it still says a card was opened), and gives the workflow its own lock tag, callback:pending, so someone who texts within 2 minutes of a missed call still gets a card. Then she publishes it and tests it with a voicemail.",
+        "If no: it stays off. Nothing changes from what Sean gets today.",
+        "Reply to Tasha with 'yes, task-only' or 'no, leave it off', in Discord or on your approvals page."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah says yes to the task-only missed-call workflow (Tasha then builds, tests and publishes it) or says to leave it off.",
+        "approvals": null,
+        "vault": [
+          "missed-call task",
+          "missed call task",
+          "task-only",
+          "callback:pending",
+          "230c63ca"
+        ],
+        "live": null
+      }
+    },
     {
       "item": "Say yes or no: does the #5703 customer get his full $512.50 deposit back if he confirms the cancel?",
       "project": "Deposit Lane (M151)",
@@ -1208,6 +1235,32 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-21",
+      "title": "Texts and DMs open cards on Sean's board again, phone calls no longer do, and a DM with no car waits in Awaiting Engagement instead of the quote queue",
+      "shipped": [
+        "Checked the reply-card fix plan against GoHighLevel's own rules before building. One trigger holds only one reply channel, so the fix needed 7 triggers, one per channel. A draft version that put three channels in one trigger would never have fired, and it dropped the 'already has a card' check, which would have pulled Booked deals back into Manual Quote Required every time the customer texted.",
+        "Tested four more gaps against 18 days of run logs before go-live: 7 emails reached the workflow and made 0 cards (all came from existing customers), and 101 of 146 Instagram runs were people's second or later messages, which is why a car named later needs its own step.",
+        "1:56 AM PT: built the 7 message-channel triggers on the Reply workflow (SMS, email, Instagram, Facebook, WhatsApp, live chat, and Google Business), each carrying the same 24 stop phrases such as 'not interested' and 'wrong number'. Calls match none of them.",
+        "2:44 AM PT: put Noah's 10/17 rule live in Vehicle Estimation after reviewing it on a copy first. A new card with no car on file now stays where it opened instead of moving to Manual Quote Required 20 seconds later. A car the estimator can't price still goes to Manual Quote Required.",
+        "2:45 AM PT: published the Reply workflow. People who text or DM with no card get one again (about 3.8 a day went without since 10/17), and phone calls no longer open cards (74 of the 143 auto-made cards from 9/29 to 10/16 came from calls).",
+        "Built a Smart List in Opportunities, Rockclear: 'New messages, no car yet' (Awaiting Engagement, source auto-card: reply, newest first), so Instagram leads with no phone number have one place to be seen."
+      ],
+      "fixed": [
+        "Tasha's 10/19 trigger save never reached GoHighLevel. This time every change was read back from GHL and passed GHL's own validation before publishing.",
+        "Creating the Smart List also filtered Tasha's main Opportunities view down to 0 cards for about a minute. Cleared it; the view is back to 3,339 cards."
+      ],
+      "inProgress": [
+        "Tests 1 to 4 (a voicemail and a text from a new number, two Instagram DMs) still to run. Noah gets his done line after they pass.",
+        "The Missed call workflow stays off until Noah answers the call-back task question (on Waiting on Noah). Until then a missed call gets no card and no task, the same as Sean got from it since 9/29.",
+        "Next steps, Claude's recommendation: a 'car added' workflow that moves a waiting card to Manual Quote Required once its car is typed in, and a rule that whoever answers a DM types the car into the contact's Vehicle Description field (needs Sean's OK)."
+      ],
+      "notes": [
+        "First live result: at 3:14 AM PT a Facebook form lead whose car the estimator couldn't price took the new 'has a car' path to Manual Quote Required, as designed.",
+        "Rollback: the Reply workflow goes back to Draft in one click; the Vehicle Estimation change undoes by putting its 3 steps back under the no-car branch.",
+        "'01.1 New Lead inbound call' and 'lead replied > engage stage' were not touched, per Noah's 10/16 brief."
+      ]
+    },
     {
       "date": "2026-10-19",
       "title": "Put Noah's September follow-up email fix live and added the first of 25 quoted leads back into the emails; the other 24 go in once its first email lands",
