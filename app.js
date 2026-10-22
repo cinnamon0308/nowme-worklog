@@ -1166,7 +1166,7 @@
         ],
         human: {
           do: ['Every lead here needs an owner and an open dated task within 24h, or the coverage ledger fails it.'],
-          dont: ['Never drag a lead out of this stage. They have not been quoted; moving them buries our own dropped ball. This is exactly what happened to M.Rod.']
+          dont: ['Never drag a lead out of this stage. They have not been quoted; moving them buries our own dropped ball. It has already happened once: a lead moved out of here was never quoted.']
         },
         flags: [],
         tech: { stageId: 'fc94b6e7-08b8-4b18-a35d-1eff5a11eb73', signals: ['tag: needs-manual-classification-rocklear', 'tag: requote-rocklear to exit'], automations: ['MQR tag-triggered GHL workflow', 'call sheet p2 tier', 'watchdog C7', '07-24 reactivation campaign is emailing the old Feb/Mar cohort parked here (attribution and intent open with Noah/Sean)'] }
@@ -1199,7 +1199,7 @@
         plain: 'Noah defined it: a lead who showed real interest and gave real hope, then went quiet, is still thinking, or is waiting on something like payday or a spouse. Not a dump for dead leads, and never where an actively worked hot lead lives.',
         entry: [
           { text: 'Lead asks for a future callback: parked here with a tag and a dated task. The only robot allowed to write this stage', robot: 'deferred-callback' },
-          { text: 'Hand-drags land here too. This is the confirmed leak: audit logs named Sean on every checked entrant (reconfirmed 07-31, after the written rule), and it buried Tauqueer (open invoice) and M.Rod (never quoted). Since 07-30 the entry guard flags every anomalous entrant within minutes', kind: 'hidden', robot: 'reengage-entry-guard' }
+          { text: 'Hand-drags land here too. This is the confirmed leak: audit logs named Sean on every checked entrant (reconfirmed 07-31, after the written rule), and it buried two leads, one with an open invoice and one never quoted. Since 07-30 the entry guard flags every anomalous entrant within minutes', kind: 'hidden', robot: 'reengage-entry-guard' }
         ],
         exit: [
           { text: 'Callback day arrives: surfaces at the top of the call sheet', kind: 'auto', robot: 'daily-call-sheet' },
