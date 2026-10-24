@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-24T14:53:50.049Z",
+  "updated": "2026-10-24T15:09:49.558Z",
   "projects": [
     {
       "id": "night-shift",
@@ -675,7 +675,7 @@
       "id": "dead-lead-revival",
       "name": "Dead Lead Revival",
       "status": "IN_PROGRESS",
-      "summary": "Every lead written off in Rockclear's three dead stages, pulled and ranked by how likely it is to come back. 1,035 leads, $595,772 in quoted value that stopped being called. 603 are worth a phone call and are queued in 13 waves of 50; 268 get a bulk email; 164 are held out because there is no legal channel left or they already bought from us. Aug 3: the Lost - Ghost stage got its own live roster page, all 383 names ($415,610 quoted) with GHL links, search, and band filters, so working the list needs no spreadsheet gymnastics. The tracker scores itself: revive rate, dollars recovered, touches per revive, and which original Facebook ad produces leads that come back. Aug 9: the 19 leads already rescued into the new Waiting stage ($23,575) each got a dated reminder task assigned to Sean, and the 15 leftover ghost tags that could have re-buried them were removed, dry-run first, every write verified. Oct 5: a fresh read of all 637 Lost (Ghost) cards, both sides of every thread, found 21 people who reached back out after being written off; the team had already replied to 17 of them, and none of those has written back since.",
+      "summary": "Every lead written off in Rockclear's three dead stages, pulled and ranked by how likely it is to come back. 1,035 leads, $595,772 in quoted value that stopped being called. 603 are worth a phone call and are queued in 13 waves of 50; 268 get a bulk email; 164 are held out because there is no legal channel left or they already bought from us. Aug 3: the Lost - Ghost stage got its own live roster page, all 383 names ($415,610 quoted) with GHL links, search, and band filters, so working the list needs no spreadsheet gymnastics. The tracker scores itself: revive rate, dollars recovered, touches per revive, and which original Facebook ad produces leads that come back. Aug 9: the 19 leads already rescued into the new Waiting stage ($23,575) each got a dated reminder task assigned to Sean, and the 15 leftover ghost tags that could have re-buried them were removed, dry-run first, every write verified. Oct 5: a fresh read of all 637 Lost (Ghost) cards, both sides of every thread, found 21 people who reached back out after being written off; the team had already replied to 17 of them, and none of those has written back since. Oct 24: read every Lost - Declined and Lost - Ghost conversation (1,189 people) for the reason each lead was lost; 62% never wrote back, and 46 of the 164 opt-outs came on the Aug 25 sale-text day.",
       "blockedOn": "None",
       "progress": {
         "stage": "underway",
@@ -1239,6 +1239,22 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-24",
+      "title": "Read all 1,189 lost and ghosted Rocklear conversations to learn why we lose leads: most never answer, and our own blasts drive the opt-outs",
+      "shipped": [
+        "Pulled every card in Lost - Declined (440) and Lost - Ghost (754), 1,189 people, and read each conversation, calls included. Read-only: no tags, no stage moves, and no customer got a message.",
+        "Sorted the 452 people who wrote back by the reason in their own words, then checked every quoted reason word for word against the conversation: 0 made-up quotes. 164 asked us to stop, 122 went quiet after getting a quote, 37 said price, 34 went with someone else (PPF, a regular ceramic coating, or another shop), and 31 said not now.",
+        "737 of the 1,189 (62%) never wrote back at all. 358 of them opened their Urable quote and 271 never opened it, so for most of them the quote arrived and the silence came after it.",
+        "Found that our own mass texts drive the opt-outs: 46 of the 164 came on Aug 25, the sale-text day, and 13 more on Sep 7. That is a real cost to weigh before the next blast."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "3 paying customers are filed under Lost - Ghost, which breaks the rule that a customer is never Lost, and about 9 Ghost leads gave a clear no and belong in Lost - Declined. Flagged only; each move needs its own dry run first.",
+        "In 14 conversations the customer's last question or callback request got no answer from a person, including one customer who wrote that they waited a month and bought elsewhere. Worth a look at how replies get routed, not at any one person."
+      ],
+      "notes": []
+    },
     {
       "date": "2026-10-24",
       "title": "Put the 8 Waiting-stage leads who named a time back on Sean's call sheet for that day, and pulled one callback that was booked six weeks late back to its right date",
