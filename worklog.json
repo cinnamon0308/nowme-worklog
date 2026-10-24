@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-24T14:47:52.745Z",
+  "updated": "2026-10-24T14:53:50.049Z",
   "projects": [
     {
       "id": "night-shift",
@@ -45,7 +45,8 @@
         "goal": "Every 'call me later' lead returns on its date, including ones said before 10/08, and Sean never sets the date by hand.",
         "whatWasDone": [
           "2026-10-12: checked the live reader (11 callbacks since 10/08), the live sheet and the task data; plan and code-level build plan approved; M239 grant added.",
-          "2026-10-13: full build on production code, 727 new checks plus the original 129, live test run with zero GHL writes, before-and-after sheet comparison (17 of 75 rows changed), deploy scripts and four approvals drafts."
+          "2026-10-13: full build on production code, 727 new checks plus the original 129, live test run with zero GHL writes, before-and-after sheet comparison (17 of 75 rows changed), deploy scripts and four approvals drafts.",
+          "2026-10-24: the live timeline reader booked a Waiting lead for Dec 18 from \"after a couple of weeks\" said on 10/23; its own rule gives Nov 3, and the task was moved. Its other bookings deserve the same quote-against-date check."
         ],
         "needsImprovement": [
           "Build from the production code, run test mode for about five mornings, then the M81 tap and the two deploys.",
@@ -225,7 +226,7 @@
       "id": "call-sheet",
       "name": "Daily Call Sheet",
       "status": "LIVE",
-      "summary": "October 21 PT: an audit against Sean's real dials found the best calls (customers who messaged and got no answer) ranked low or missing, the morning list late or missing on 4 of its first 7 workdays, and 39 of 74 Waiting cards the sheet can never see because it only reads 'Scheduled Callback' tasks. October 6 PT: a separate 6:30 AM check now posts one line to #alarms if the morning's sheet did not go out, 4.5 hours before Sean starts; it was proved on the stored 10/05 and 10/06 sheets and one test alarm. October 1 PT: found why the same leads sit on the automatic list every morning (54 of 75 seats on 9/30 were held by leads the list can never drop) and moved or closed 36 of them, all checked. September 30 PT: the first check of the automatic list found all 6 mornings since 9/23 posted 75 leads, Sean's week matches Noah's 6:45 AM report on dials, long conversations and inbound calls, and the seven sorting mistakes in my hand-build script are fixed. Wednesday's 6 AM run was the first with Noah's 9/29 callback fix: 31 open callback tasks, no blocks, one routine warning. My deploy copies match both his 9/23 and 9/29 versions, so a deploy from my side cannot undo either.",
+      "summary": "October 21 PT: an audit against Sean's real dials found the best calls (customers who messaged and got no answer) ranked low or missing, the morning list late or missing on 4 of its first 7 workdays, and 39 of 74 Waiting cards the sheet could not see because it only reads 'Scheduled Callback' tasks (on 10/24 the 8 who named a time got dated callbacks; 31 remain). October 6 PT: a separate 6:30 AM check now posts one line to #alarms if the morning's sheet did not go out, 4.5 hours before Sean starts; it was proved on the stored 10/05 and 10/06 sheets and one test alarm. October 1 PT: found why the same leads sit on the automatic list every morning (54 of 75 seats on 9/30 were held by leads the list can never drop) and moved or closed 36 of them, all checked. September 30 PT: the first check of the automatic list found all 6 mornings since 9/23 posted 75 leads, Sean's week matches Noah's 6:45 AM report on dials, long conversations and inbound calls, and the seven sorting mistakes in my hand-build script are fixed. Wednesday's 6 AM run was the first with Noah's 9/29 callback fix: 31 open callback tasks, no blocks, one routine warning. My deploy copies match both his 9/23 and 9/29 versions, so a deploy from my side cannot undo either.",
       "blockedOn": "A decision on running the July 30 overlay procedure to put the missing rescue step, the PPF rule and the unreadable-ring fix onto the live engine; until then the hand-build carries those rules by hand. The rebuilt opt-out fix (rebuilt again 9/30 on Noah's 9/29 version) waits on its side-by-side comparison and Tasha's sign-off.",
       "health": {
         "band": "watch",
@@ -234,6 +235,7 @@
       "detail": {
         "goal": "Give Sean a ready-to-work call list every morning, ranked by real intent, so he always knows who to call first without pulling it by hand.",
         "whatWasDone": [
+          "10-24 PT: the 8 hidden Waiting cards whose customers named a time got dated Scheduled Callback tasks (7 new, and 1 reader-booked task moved from Dec 18 to Nov 3); the live sheet code finds all 8. 31 stay hidden with no future date.",
           "10-21 PT: rebuilt every Rockclear card's path from GHL's stage-move records (it matched the 9/14 board on all 2,795 cards) and measured the sheet against Sean's real dials. Read-only; the fixes are Claude's recommendations waiting on Tasha's go, and two of them are in Noah's code.",
           "10-06 PT: built and deployed the 6:30 AM post check (fix list F12): it looks for the copy of the sheet the 6 AM run saves only after Discord accepts the post, and alarms in #alarms when it is missing. Verified live on 10/04, 10/05 and 10/06 before the weekday clock was switched on, plus one test alarm; 27 automated checks.",
           "09-30 PT: checked the automatic list for its first week from the system's own log (6 of 6 mornings posted 75 leads; 9/21 and 9/22 had been blocked), counted Sean's week (dials 48, 48, 47, 60, 39; matches Noah's 6:45 report), joined 31 payments ($31,779.63) to who had called or texted the payer, fixed the seven sorting mistakes test-first and replayed 1,518 real records (28 changed, nobody newly blocked), and ran the same phrases through the live code.",
@@ -1237,6 +1239,25 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-24",
+      "title": "Put the 8 Waiting-stage leads who named a time back on Sean's call sheet for that day, and pulled one callback that was booked six weeks late back to its right date",
+      "shipped": [
+        "Recounted the Waiting on a future date stage: 87 cards, and the same 39 the 10/21 audit found were still invisible to the call sheet. The sheet only reads tasks titled Scheduled Callback; 23 of those cards had no task at all and 16 had only an old Waiting resurface task.",
+        "Read all 39 against their texts, 84 call transcripts, their other cards, and Urable. None had booked or paid. 8 had said in their own words when to come back; the other 31 gave no time, said no, or have not answered 3 or more follow-ups, so they got no task.",
+        "Added a dated Scheduled Callback task for Sean on 7 of them, each date worked out with the timeline reader's own rules from what the customer said: Nov 2, Nov 26, Dec 1 for three, Jan 5, and May 4. Closed 3 out-of-date resurface tasks and left a note on each card with the customer's words. No customer got a message and no card changed stage.",
+        "Proved the pickup with the live call-sheet code (Noah's 10/23 build): it lists all 8 cards and finds all 8 tasks, and on each date the lead takes a protected seat on Sean's list and stays there until the task is completed or moved."
+      ],
+      "fixed": [
+        "The timeline reader had booked one of the 8 at 5:15 AM PT today for Dec 18, from \"after a couple of weeks\" said on 10/23. Its own rule gives Nov 3, so the task now says Nov 3, while the call is recent enough for the sheet to show it as the customer's own timing.",
+        "Three separate reviews of the write script ran before it touched GHL. They caught a retry path that could have created the same callback twice; the script now sends each create once and never repeats it, and 22 offline tests cover each failure case."
+      ],
+      "inProgress": [
+        "31 Waiting cards still have no future date, so the sheet cannot see them. Moving each one to the stage that matches what the customer said is the next step.",
+        "One of the 8 said he would pass on his current car but buy a new one next year. On May 4 the sheet's AI may send him to the review list instead of the call list, where a person decides."
+      ],
+      "notes": []
+    },
     {
       "date": "2026-10-24",
       "title": "Caught 5 problems in the deposit lane that would have written bad data to GHL on its first live run, before it was switched on",
