@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-25T15:27:12.396Z",
+  "updated": "2026-10-25T16:44:01.164Z",
   "projects": [
     {
       "id": "night-shift",
@@ -661,7 +661,8 @@
           "09-27: cut the dashboard to 5 pages (Latest work, Waiting on Noah, Systems, Pipeline Map, Tasha's log) and made Latest work the opening page; the KPI page came down because its newest figure was from the week of July 13.",
           "10-06: removed five customer phone numbers from the public page and made every publish strip phone numbers and emails, refusing to publish one it cannot clean. 21 new checks guard it.",
           "10-12: every publish now also pushes to a private repo on the Dragon Auto GitHub account, so Noah's Claude can read the log directly. A missed copy fails loudly and retries on the next run; 60 automated checks guard both pushes.",
-          "10-13: added the Waiting on Noah watcher. Twice a day it checks each card against GitHub, Google Cloud, and Noah's vault, takes off any card whose proof is true, and keeps the proof in an archive. The first run cleared the GitHub invite card."
+          "10-13: added the Waiting on Noah watcher. Twice a day it checks each card against GitHub, Google Cloud, and Noah's vault, takes off any card whose proof is true, and keeps the proof in an archive. The first run cleared the GitHub invite card.",
+          "10-25: added a gap check (npm run worklog:gaps) and a daily update that writes and publishes the missing entries. The scheduled run publishes on its own and notifies Tasha (her call); the schedule itself is still to be set up."
         ],
         "needsImprovement": [
           "No fixed finish line; this tool keeps growing as new needs come up."
@@ -1243,6 +1244,26 @@
   "sessions": [
     {
       "date": "2026-10-25",
+      "title": "The work log now finds its own gaps: a check lists every session that did work with no entry, and a daily update writes and publishes the missing ones",
+      "shipped": [
+        "Built a check (npm run worklog:gaps) that reads every Claude session since yesterday and lists the ones that did real work, like GHL writes, deploys, or commits, but have no work-log entry. Replayed on 10/22 to 10/25 against the log as it stood before this morning's backfill, it found the 11 sessions behind the 8 missing entries. 128 tests.",
+        "Built the daily update that runs on top of it: it reads each flagged session's own final report, writes the entry in the log's standard (outcome titles, counts and initials only, who decided what), runs the same name check the publish uses, and publishes to both GitHubs. Tasha decided on 10/25 that the scheduled run publishes on its own and then notifies her.",
+        "Tested the update on a copy of the log over the same 4 days: it wrote 7 entries from those 11 sessions, all passing the name check, and afterward the check flagged only the 3 sessions it had chosen to leave off or fold into another entry.",
+        "It keeps a ledger of every session it has logged or left off on purpose, so the next day's run never logs the same work twice."
+      ],
+      "fixed": [
+        "The test caught a date slip in this morning's backfill: a decision made at 9:16 PM PT on 10/24 was written as 10/25, the Japan date. Corrected on the live log.",
+        "The test also found gaps in the update's own instructions (which sources to trust, when a failed-looking write had really landed, Pacific dates in git), all fixed before its first real run."
+      ],
+      "inProgress": [
+        "The daily schedule is not set up yet; Tasha will add it. Until then the update runs when she asks for it."
+      ],
+      "notes": [
+        "Nothing in GHL, Urable, or any customer record was touched. The check only reads, and the update only adds entries: it never edits or deletes one."
+      ]
+    },
+    {
+      "date": "2026-10-25",
       "title": "Checked all 168 quiz leads for a card: 166 have one, and the one real miss, hidden 15 days by a failure logged as a success, is now on Sean's list",
       "shipped": [
         "Checked every contact tagged as a quiz lead, read-only: 168 people, 166 with a Rockclear card. Quiz leads are the best-paying source (36.3% in Noah's 10/18 study), and a quiz lead with no card never reaches Sean's call sheet. Of the 2 without one, 1 declined after a quote and is skipped on purpose. The other took the quiz on 10/10 and had no card for 15 days.",
@@ -1292,7 +1313,7 @@
         "The card-move script reported FAIL when a card was already marked lost before the move, even though the moves had landed. Added two read-back checks, test-first, so it now reports what GHL really holds."
       ],
       "inProgress": [
-        "Tasha decided on 10/25 that the third card closes in Disqualified instead, since there has been no reply in a year and three tries since an 8/29 missed call went unanswered. That write waits for her go."
+        "Tasha decided on 10/24 that the third card closes in Disqualified instead, since there has been no reply in a year and three tries since an 8/29 missed call went unanswered. That write waits for her go."
       ],
       "notes": []
     },
@@ -2110,11 +2131,11 @@
       },
       {
         "weekOf": "2026-10-19",
-        "sessions": 24,
-        "shipped": 94,
-        "fixed": 21,
-        "inProgress": 38,
-        "outcomes": 153
+        "sessions": 25,
+        "shipped": 98,
+        "fixed": 23,
+        "inProgress": 39,
+        "outcomes": 160
       }
     ]
   },
