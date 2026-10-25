@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-25T16:44:01.164Z",
+  "updated": "2026-10-25T18:19:43.249Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1246,14 +1246,15 @@
       "date": "2026-10-25",
       "title": "The work log now finds its own gaps: a check lists every session that did work with no entry, and a daily update writes and publishes the missing ones",
       "shipped": [
-        "Built a check (npm run worklog:gaps) that reads every Claude session since yesterday and lists the ones that did real work, like GHL writes, deploys, or commits, but have no work-log entry. Replayed on 10/22 to 10/25 against the log as it stood before this morning's backfill, it found the 11 sessions behind the 8 missing entries. 128 tests.",
+        "Built a check (npm run worklog:gaps) that reads every Claude session since yesterday and lists the ones that did real work, like GHL writes, deploys, or commits, but have no work-log entry. Replayed on 10/22 to 10/25 against the log as it stood before this morning's backfill, it found the 11 sessions behind the 8 missing entries. 143 tests.",
         "Built the daily update that runs on top of it: it reads each flagged session's own final report, writes the entry in the log's standard (outcome titles, counts and initials only, who decided what), runs the same name check the publish uses, and publishes to both GitHubs. Tasha decided on 10/25 that the scheduled run publishes on its own and then notifies her.",
         "Tested the update on a copy of the log over the same 4 days: it wrote 7 entries from those 11 sessions, all passing the name check, and afterward the check flagged only the 3 sessions it had chosen to leave off or fold into another entry.",
         "It keeps a ledger of every session it has logged or left off on purpose, so the next day's run never logs the same work twice."
       ],
       "fixed": [
         "The test caught a date slip in this morning's backfill: a decision made at 9:16 PM PT on 10/24 was written as 10/25, the Japan date. Corrected on the live log.",
-        "The test also found gaps in the update's own instructions (which sources to trust, when a failed-looking write had really landed, Pacific dates in git), all fixed before its first real run."
+        "The test also found gaps in the update's own instructions (which sources to trust, when a failed-looking write had really landed, Pacific dates in git), all fixed before its first real run.",
+        "Closed a gap in the check the same day, on Tasha's go: a session that logged early and then kept building, with no GHL write or deploy, still read as logged. Now 2 or more real files changed 45 or more minutes after its last log write flag that later part for its own entry (143 tests)."
       ],
       "inProgress": [
         "The daily schedule is not set up yet; Tasha will add it. Until then the update runs when she asks for it."
@@ -2133,9 +2134,9 @@
         "weekOf": "2026-10-19",
         "sessions": 25,
         "shipped": 98,
-        "fixed": 23,
+        "fixed": 24,
         "inProgress": 39,
-        "outcomes": 160
+        "outcomes": 161
       }
     ]
   },
