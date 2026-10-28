@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-28T06:12:17.697Z",
+  "updated": "2026-10-28T06:47:19.376Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1242,6 +1242,25 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-27",
+      "title": "Mapped where Rockclear money stalls: $928K of open quotes has sat 14+ days, and customers answered within an hour booked at 41% against 2% for those never answered",
+      "shipped": [
+        "Built a revenue audit page from the full read-only pull of 10/21: 3,338 Rockclear cards, 24,262 contacts, 95,590 messages and calls, and all of Urable. It charts stuck quote value by stage, reply speed, missed calls, quiet past customers, and which lead sources book, so the next builds go where the money is.",
+        "Measured how fast a person answers across every pipeline thread: of 1,625 times a customer wrote and waited (8/22 to 10/20), a person answered within an hour 34% of the time and never 17% of the time. Of 500 calls nobody picked up, 33% never got a person back. Answered within an hour, 41% booked within two weeks; never answered, 2%.",
+        "Measured stuck value: $928K of $1.05M in open quotes has sat 14+ days in the same stage. Re-Engage alone holds $467K across 459 cards, a median 114 days in the stage, and 158 of those cards ($164K) never replied or talked. 1,792 of 2,147 past paying customers have had no GHL message in 90+ days.",
+        "Ranked eight possible builds against Noah's written rules: replies stay with a person (8/14), nothing to rebuy after a Rocklear job (10/02), and review asks after the 30-day wash (rule #50). The upkeep and PeelClear offers in the 10/13 draft plan are marked do-not-build because Noah's own words rule them out.",
+        "Replayed the top pick (Claude's recommendation, not approved yet): a lane that hands Sean each unanswered qualifying reply or missed call as a GHL task after 30 desk minutes. Flagging everything would mean 32 tasks a day; Noah's 9/05 qualifying-reply test brings it to about 9 (4 messages and 5 missed calls), and it sends nothing to customers."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "The answer-fast lane is a recommendation waiting on Tasha's review, not a build. Deploying it would need Noah's 10/19 access file, the same one Night Shift v2 waits on."
+      ],
+      "notes": [
+        "Read-only. Nothing in GHL, Urable, or any customer record was touched; the figures come from the 10/21 pull plus the 10/24 fix that counts staff texts as replies.",
+        "Every recommendation on the page is labeled as Claude's, Noah's (with his date), or Tasha's. Counts only, no customer names."
+      ]
+    },
     {
       "date": "2026-10-27",
       "title": "Noah's Log now runs through 10/27, and the sync that copies Noah's notes stops whenever that copy is stale",
