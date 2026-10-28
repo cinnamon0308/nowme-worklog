@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-28T06:47:19.376Z",
+  "updated": "2026-10-28T07:40:38.778Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1250,11 +1250,12 @@
         "Measured how fast a person answers across every pipeline thread: of 1,625 times a customer wrote and waited (8/22 to 10/20), a person answered within an hour 34% of the time and never 17% of the time. Of 500 calls nobody picked up, 33% never got a person back. Answered within an hour, 41% booked within two weeks; never answered, 2%.",
         "Measured stuck value: $928K of $1.05M in open quotes has sat 14+ days in the same stage. Re-Engage alone holds $467K across 459 cards, a median 114 days in the stage, and 158 of those cards ($164K) never replied or talked. 1,792 of 2,147 past paying customers have had no GHL message in 90+ days.",
         "Ranked eight possible builds against Noah's written rules: replies stay with a person (8/14), nothing to rebuy after a Rocklear job (10/02), and review asks after the 30-day wash (rule #50). The upkeep and PeelClear offers in the 10/13 draft plan are marked do-not-build because Noah's own words rule them out.",
-        "Replayed the top pick (Claude's recommendation, not approved yet): a lane that hands Sean each unanswered qualifying reply or missed call as a GHL task after 30 desk minutes. Flagging everything would mean 32 tasks a day; Noah's 9/05 qualifying-reply test brings it to about 9 (4 messages and 5 missed calls), and it sends nothing to customers."
+        "Replayed the top pick (Claude's recommendation, not approved yet): a lane that hands Sean each unanswered qualifying reply or missed call as a GHL task after 30 desk minutes. Flagging everything would mean 32 tasks a day; Noah's 9/05 qualifying-reply test brings it to about 9 (4 messages and 5 missed calls), and it sends nothing to customers.",
+        "Hand-checked the recommended lane on 60 real threads, 30 it flagged and 30 it skipped. As first written, 13 of the 30 flags were real waits: 9 were spam or robocalls (7 already had do-not-disturb on) and 2 were paying customers the check missed. It also skipped 5 real waits, including a 'Yes please!' reply to a sale text that nobody answered for 3 days. Rewrote the rules and replayed them: Sean would get about 8 tasks a desk day, all 7 of his in the sample were real waits, and customers' service messages go to a separate list for Jenn."
       ],
       "fixed": [],
       "inProgress": [
-        "The answer-fast lane is a recommendation waiting on Tasha's review, not a build. Deploying it would need Noah's 10/19 access file, the same one Night Shift v2 waits on."
+        "The answer-fast lane is a recommendation waiting on Tasha's review, not a build. Claude's recommendation for the next step is the 5-day shadow run in its test plan; deploying it would need Noah's 10/19 access file, the same one Night Shift v2 waits on."
       ],
       "notes": [
         "Read-only. Nothing in GHL, Urable, or any customer record was touched; the figures come from the 10/21 pull plus the 10/24 fix that counts staff texts as replies.",
