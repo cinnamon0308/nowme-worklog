@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-28T08:42:38.782Z",
+  "updated": "2026-10-28T08:57:18.924Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1287,11 +1287,12 @@
         "Measured stuck value: $928K of $1.05M in open quotes has sat 14+ days in the same stage. Re-Engage alone holds $467K across 459 cards, a median 114 days in the stage, and 158 of those cards ($164K) never replied or talked. 1,792 of 2,147 past paying customers have had no GHL message in 90+ days.",
         "Ranked eight possible builds against Noah's written rules: replies stay with a person (8/14), nothing to rebuy after a Rocklear job (10/02), and review asks after the 30-day wash (rule #50). The upkeep and PeelClear offers in the 10/13 draft plan are marked do-not-build because Noah's own words rule them out.",
         "Replayed the top pick (Claude's recommendation, not approved yet): a lane that hands Sean each unanswered qualifying reply or missed call as a GHL task after 30 desk minutes. Flagging everything would mean 32 tasks a day; Noah's 9/05 qualifying-reply test brings it to about 9 (4 messages and 5 missed calls), and it sends nothing to customers.",
-        "Hand-checked the recommended lane on 60 real threads, 30 it flagged and 30 it skipped. As first written, 13 of the 30 flags were real waits: 9 were spam or robocalls (7 already had do-not-disturb on) and 2 were paying customers the check missed. It also skipped 5 real waits, including a 'Yes please!' reply to a sale text that nobody answered for 3 days. Rewrote the rules and replayed them: Sean would get about 8 tasks a desk day, all 7 of his in the sample were real waits, and customers' service messages go to a separate list for Jenn."
+        "Hand-checked the recommended lane on 60 real threads, 30 it flagged and 30 it skipped. As first written, 13 of the 30 flags were real waits: 9 were spam or robocalls (7 already had do-not-disturb on) and 2 were paying customers the check missed. It also skipped 5 real waits, including a 'Yes please!' reply to a sale text that nobody answered for 3 days. Rewrote the rules and replayed them: Sean would get about 8 tasks a desk day, all 7 of his in the sample were real waits, and customers' service messages go to a separate list for Jenn.",
+        "Built the read-only shadow runner Tasha approved for the week of Mon 11/2: each evening it replays that desk day and lists which customers would have become Sean's reply tasks, without creating anything in GHL. Before any live call, an independent code review found 9 problems, including a do-not-disturb check that would have read texted STOPs as reachable and an email reader that would have hidden real replies. The confirmed ones are fixed, and 79 offline tests, including the 60 hand-checked threads, now hold the rules in place."
       ],
       "fixed": [],
       "inProgress": [
-        "The answer-fast lane is a recommendation waiting on Tasha's review, not a build. Claude's recommendation for the next step is the 5-day shadow run in its test plan; deploying it would need Noah's 10/19 access file, the same one Night Shift v2 waits on."
+        "The answer-fast lane's shadow week is approved by Tasha and built offline; nothing has called GHL yet. Next: a one-day read-only trial run on Tasha's word, then the schedule on her Mac for Mon 11/2 to Fri 11/6. An AI triage column will run beside the rules once Tasha refreshes her Claude login; it never touches the call sheet's API key. Deploying the lane itself would still need Noah's 10/19 access file, the same one Night Shift v2 waits on."
       ],
       "notes": [
         "Read-only. Nothing in GHL, Urable, or any customer record was touched; the figures come from the 10/21 pull plus the 10/24 fix that counts staff texts as replies.",
