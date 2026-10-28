@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-28T07:40:38.778Z",
+  "updated": "2026-10-28T08:12:34.711Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1242,6 +1242,23 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-28",
+      "title": "Tested a draft AI triage prompt for Sean's reply tasks on 60 real waits: as written it would hand Sean 43 tasks, 17 of them nobody was owed; a corrected version made 22, with 2",
+      "shipped": [
+        "Ran the draft triage prompt (the AI step that would decide which waiting customers become a GHL task for Sean, and write the task line) over the 60 waits hand-checked on 10/27, with the answers hidden. It made 43 tasks: 14 of the 15 real prospect waits, all 9 existing-customer waits (service questions would have landed on Sean's dial list), and 17 that nobody was owed, including 6 spam or robocalls, 5 threads Noah or the reply drafter had already answered, a PPF quote, and a \"may reconsider early 2027\".",
+        "Traced each wrong task to a rule: the draft counts every missed call (Noah's qualifying test calls silent calls false flags), puts \"not right now, check back in [month]\" on today's list (his test calls \"not ready\" a false flag, and dated callbacks belong to the callback reader), reads robocalls from voicemail transcripts the threads never carry (0 of 31 inbound calls in the sample had one), and has no route for customers, PPF asks, or replies a person already sent.",
+        "Wrote a corrected prompt (Claude's recommendation, not approved): code first removes do-not-disturb contacts, spam, and threads a person already answered, and hands over the wait time, quote total, and customer status; the AI then sends each wait to Sean, the person already in the thread, Noah's desk, the callback reader, the opt-out check, or nowhere. On the same 60 waits it made 22 tasks: all 16 of Sean's were real, and the 2 that nobody was owed went to the person already in the thread."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "The corrected prompt was scored on the same 60 threads the lane's rules were built from, so it still needs a fresh sample. Claude's recommendation is to run it beside the rules during the proposed shadow week. Nothing was deployed or written to GHL."
+      ],
+      "notes": [
+        "Read-only. Nothing in GHL, Urable, or any customer record was touched; the test used the 10/21 pull and the 10/27 hand-check verdicts.",
+        "Both prompts were run by a Claude subagent told to follow only the prompt in front of it, not through the call sheet's API key, so no production credits were spent."
+      ]
+    },
     {
       "date": "2026-10-27",
       "title": "Mapped where Rockclear money stalls: $928K of open quotes has sat 14+ days, and customers answered within an hour booked at 41% against 2% for those never answered",
