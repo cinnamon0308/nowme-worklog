@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-28T08:12:34.711Z",
+  "updated": "2026-10-28T08:42:38.782Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1242,6 +1242,25 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-28",
+      "title": "Proved the answer-fast rules on all 3,564 waits from the October pull and ran them read-only on Tuesday's live messages: 3 tasks for Sean, 2 for Jenn's customer list, and 3 wrong tasks caught before any shadow week",
+      "shipped": [
+        "Rebuilt the answer-fast lane's rules as a read-only program: it finds customers who wrote or called and waited 30 desk minutes with no reply from a person, then decides whether the task goes to Sean, to the person already in the thread, or to Jenn's customer list. Every rule is copied word for word from the 10/27 replay and the call sheet's own tests, and run beside that replay it made the same decision on all 3,564 waits from Aug 22 to Oct 20, so the hand check's figure of about 7.8 tasks a desk day for Sean carries over.",
+        "Ran it read-only on Tuesday 10/27's live GHL and Urable data: 104 conversations and 30 waits. It would have made 3 tasks for Sean (one lead's two financing questions became one task) and 2 for Jenn's list, and it skipped 13 waits a person had already answered.",
+        "Corrected the 10/27 revenue audit page: it said a \"Scheduled Callback\" task would put a waiting lead on Sean's morning call sheet. The live sheet skips those tasks for cards in its five calling stages (625 of 1,158 open cards), never reads the task text, and keeps only a lead's latest-dated callback, so the page now marks how a task reaches Sean as an open decision."
+      ],
+      "fixed": [
+        "The first live day exposed 3 wrong tasks for Sean, all let in by the rule that keeps a new contact's first message: a written \"stop\", a business-loan pitch, and a vendor asking for the owner. Added a screen for each, so a shadow week starts without them."
+      ],
+      "inProgress": [
+        "Two read-only shadow runners now exist for this lane: today's daily-replay runner (the shape Tasha approved for Mon 11/2 to Fri 11/6) and this one, with the full replay match and the three screens. Tasha picks which one carries the week; neither is scheduled."
+      ],
+      "notes": [
+        "Read-only. Nothing in GHL or Urable was written: two passes over Tuesday made 433 GHL reads, with about 193,500 of the day's allowance left.",
+        "The lane is Claude's recommendation from the 10/27 audit; neither Noah nor Tasha has approved a live version."
+      ]
+    },
     {
       "date": "2026-10-28",
       "title": "Tested a draft AI triage prompt for Sean's reply tasks on 60 real waits: as written it would hand Sean 43 tasks, 17 of them nobody was owed; a corrected version made 22, with 2",
