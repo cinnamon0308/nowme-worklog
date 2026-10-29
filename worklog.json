@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-29T06:43:06.798Z",
+  "updated": "2026-10-29T06:57:03.867Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1249,14 +1249,15 @@
         "Checked all 450 Rockclear cards made 9/29 to 10/29 against GHL tags, Urable proposals and quote jobs, and both sides of every conversation, calls included: 300 have a quote and 150 do not. Only 39 of the 150 are real Rocklear prospects; the rest are voicemails with no words, spam and vendors, past customers, and PPF, PeelClear, tint or wash asks, mostly opened by the reply and missed-call card workflows.",
         "Confirmed the ad funnel is quoting: 200 of 217 Meta form leads in the window got a quote, 186 of them from the quote robot.",
         "Named the causes behind the 39 so the fixes go to the right place: a car mentioned only in a DM or text, which the quote robot never reads (9); Instagram DMs no person answered, 7 with no phone for Sean to dial (8); ad-form typos and a missing price row the robot could not read, each one already called by Sean (6); ad leads who never gave a model after 12 messages and 11 calls from us (6); a two-car form the robot holds without sending anything, untouched for 29 days (1); and browsing, visit-first, or likely junk chats (9).",
-        "Found that since 10/21 the follow-up robot moves every no-car message card into Proposal Sent - Engaged within 30 minutes, so 23 cards there say a proposal went out when none exists, and Manual Quote Required overstates the backlog: 22 of its 65 new cards already hold a quote in Urable and 20 are not quote work."
+        "Found that since 10/21 the follow-up robot moves every no-car message card into Proposal Sent - Engaged within 30 minutes, so 23 cards there say a proposal went out when none exists, and Manual Quote Required overstates the backlog: 22 of its 65 new cards already hold a quote in Urable and 20 are not quote work.",
+        "Wrote and tested the fix for the Engaged-stage mix-up: the follow-up robot now leaves a message card with no quote where it is, with no stage move and no automatic text, until the quote robot sends a price. Checked it on a copy of the live robot with 21 new tests and Noah's existing suites, and replayed it on all 3,442 Rockclear cards: no card changes today, and 598 quoted cards still move to Engaged as before."
       ],
       "fixed": [
         "Taught the quote-blocker check to count Sean's custom quotes, which Urable keeps as quote jobs instead of proposals; 7 leads that looked unquoted had a price after all."
       ],
       "inProgress": [
         "Needs a person: Sean or Noah, 13 prospects are waiting on us for a price: 8 Instagram or text asks with no reply from a person (7 have no phone, so the call sheet cannot reach them), 2 who sent their email for a quote that never went out, and 3 ad leads whose quote draft sits unsent in Urable.",
-        "The Engaged-stage mix-up and the robot's unread typos are written up for a fix decision; nothing changed yet."
+        "The Engaged fix waits on Noah's deploy (a ready file for his Claude). It also closes a trap found while building it: without the hold, a no-quote card left in Awaiting Engagement would get the live day-1 follow-up text about a quote that does not exist. The robot's unread typos are written up for a fix decision."
       ],
       "notes": [
         "Read-only: no GHL or Urable writes and no customer messages."
