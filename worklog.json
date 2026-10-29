@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-29T06:57:03.867Z",
+  "updated": "2026-10-29T07:20:54.084Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1286,7 +1286,8 @@
         "Rebuilt the answer-fast lane's rules as a read-only program: it finds customers who wrote or called and waited 30 desk minutes with no reply from a person, then decides whether the task goes to Sean, to the person already in the thread, or to Jenn's customer list. Every rule is copied word for word from the 10/27 replay and the call sheet's own tests, and run beside that replay it made the same decision on all 3,564 waits from Aug 22 to Oct 20, so the hand check's figure of about 7.8 tasks a desk day for Sean carries over.",
         "Ran it read-only on Tuesday 10/27's live GHL and Urable data: 104 conversations and 30 waits. It would have made 3 tasks for Sean (one lead's two financing questions became one task) and 2 for Jenn's list, and it skipped 13 waits a person had already answered.",
         "Corrected the 10/27 revenue audit page: it said a \"Scheduled Callback\" task would put a waiting lead on Sean's morning call sheet. The live sheet skips those tasks for cards in its five calling stages (625 of 1,158 open cards), never reads the task text, and keeps only a lead's latest-dated callback, so the page now marks how a task reaches Sean as an open decision.",
-        "Moved the three new screens, a fix that recognizes past customers from each card's stage history, a report table of written opt-outs that still have no do-not-disturb set, and the 3,564-wait match test into the runner Tasha approved, then archived the duplicate. The shadow week now starts from one runner, and its 96 tests pass."
+        "Moved the three new screens, a fix that recognizes past customers from each card's stage history, a report table of written opt-outs that still have no do-not-disturb set, and the 3,564-wait match test into the runner Tasha approved, then archived the duplicate. The shadow week now starts from one runner, and its 96 tests pass.",
+        "Split how the shadow lane reads opt-outs, on Tasha's approval: \"Please stop calling\" now skips the lead under its own reason and the daily report asks for do-not-disturb on calls only, \"Please don't call, just text\" stays a task for Sean marked text only, and a lead asking for a \"quick call\" (typed \"quit call\") or answering a price with \"Stop. I'm getting quotes at $500\" no longer reads as an opt-out. On the October data this changed 7 of 355 opt-out reads and turned 2 of them into tasks for Sean that the old reading dropped; 132 offline tests and 38 deliberate breaks hold it in place."
       ],
       "fixed": [
         "The first live day exposed 3 wrong tasks for Sean, all let in by the rule that keeps a new contact's first message: a written \"stop\", a business-loan pitch, and a vendor asking for the owner. Added a screen for each, so a shadow week starts without them."
