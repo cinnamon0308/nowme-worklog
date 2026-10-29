@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-29T08:15:34.681Z",
+  "updated": "2026-10-29T08:36:29.545Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1351,7 +1351,8 @@
         "Ran the one-time background test of the shadow week's schedule on Tasha's word and caught a silent failure before 11/2: macOS blocks scheduled jobs from reading the external drive the runner lives on, so all five nightly runs would have died before starting, with no alert. Nothing was read from GHL, and the test job was removed.",
         "Moved the shadow runner's scheduled copy to the Mac's internal disk, next to the call-sheet alarm, on Tasha's word, with a one-command deploy that fingerprints every file and flags any copy that drifts from the source. The background test then passed: 683 read-only GHL reads, 0 errors, nothing posted, and a clean all-clear with 3 tasks for Sean and 5 for Jenn, the same rows the offline replay produced.",
         "Finished setting up the shadow week on Tasha's word: stored a Keychain backup of its three keys, checked each against Secret Manager and proved the runner falls back to them when gcloud fails, so a lapsed login can't cost a night. Then installed the schedule: five read-only runs at noon Japan time, 11/3 to 11/7, each posting one count line to Tasha's audit channel.",
-        "Scheduled the shadow week's morning check on Tasha's word: a Claude task at 12:40 Japan time on 11/3 to 11/7 confirms each night's report came from the tested code, reads it, pre-fills a verdict on every would-be task and sampled skip for Tasha to confirm, and raises one Mac notification. It reads files on the Mac only and contacts no one."
+        "Scheduled the shadow week's morning check on Tasha's word: a Claude task at 12:40 Japan time on 11/3 to 11/7 confirms each night's report came from the tested code, reads it, pre-fills a verdict on every would-be task and sampled skip for Tasha to confirm, and raises one Mac notification. It reads files on the Mac only and contacts no one.",
+        "Set do-not-disturb on every channel, on Tasha's word, for 1 Re-Engage lead who texted \"Stop please\" on 10/27 after four days of calls and texts, which the trial run caught still open in GHL. No automation or rep can now call, text, or email them by accident, and their own messages still come through."
       ],
       "fixed": [],
       "inProgress": [
