@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-29T08:36:29.545Z",
+  "updated": "2026-10-29T12:01:21.793Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1247,20 +1247,42 @@
       "title": "Traced every Rockclear lead from the last 30 days that has no quote: 39 real Rocklear prospects are waiting on a price, and six causes explain them",
       "shipped": [
         "Checked all 450 Rockclear cards made 9/29 to 10/29 against GHL tags, Urable proposals and quote jobs, and both sides of every conversation, calls included: 300 have a quote and 150 do not. Only 39 of the 150 are real Rocklear prospects; the rest are voicemails with no words, spam and vendors, past customers, and PPF, PeelClear, tint or wash asks, mostly opened by the reply and missed-call card workflows.",
-        "Confirmed the ad funnel is quoting: 200 of 217 Meta form leads in the window got a quote, 186 of them from the quote robot.",
+        "Pulled the evidence fresh for this, read-only: the whole Rockclear and PeelClear board, every contact's vehicle field replayed through Noah's live quote matcher, a new Urable snapshot (5,287 customers, 3,181 proposals, 5,927 jobs, 5,417 payments), and both sides of 227 threads with call lengths and delivery status. Eight reader agents labeled the 158 cards with no quote found, and every prospect verdict (40) was re-read by hand.",
+        "Of the 450 cards, 348 belong to people who first arrived in the window: 237 got a quote (210 from the quote robot, 27 by hand in Urable), 8 have only an unsent draft, and 103 have nothing. No PeelClear cards were made in the window.",
+        "Confirmed the ad funnel is quoting: 200 of 217 Meta form leads in the window got a quote (92%), 186 of them from the quote robot. 8 of the other 17 have an unsent verify-tier draft in Urable and 9 have nothing.",
+        "Broke the no-quote cards down by stage (cards made since 9/29): New Lead 4 cards, 2 real prospects with no quote; Manual Quote Required (the quote queue) 65 cards, 23; Re-Engage 13, 0; Proposal Sent - Hot 5, 0; Proposal Sent - Engaged 59, 6; Disqualified and the two Lost stages 125, 8.",
         "Named the causes behind the 39 so the fixes go to the right place: a car mentioned only in a DM or text, which the quote robot never reads (9); Instagram DMs no person answered, 7 with no phone for Sean to dial (8); ad-form typos and a missing price row the robot could not read, each one already called by Sean (6); ad leads who never gave a model after 12 messages and 11 calls from us (6); a two-car form the robot holds without sending anything, untouched for 29 days (1); and browsing, visit-first, or likely junk chats (9).",
-        "Found that since 10/21 the follow-up robot moves every no-car message card into Proposal Sent - Engaged within 30 minutes, so 23 cards there say a proposal went out when none exists, and Manual Quote Required overstates the backlog: 22 of its 65 new cards already hold a quote in Urable and 20 are not quote work.",
-        "Wrote and tested the fix for the Engaged-stage mix-up: the follow-up robot now leaves a message card with no quote where it is, with no stage move and no automatic text, until the quote robot sends a price. Checked it on a copy of the live robot with 21 new tests and Noah's existing suites, and replayed it on all 3,442 Rockclear cards: no card changes today, and 598 quoted cards still move to Engaged as before."
+        "Found that 5 of the 7 unanswered Instagram DMs came in 10/02 to 10/14, inside the Instagram connection break Noah logged on 10/17, so the break cost real price asks, not only spam.",
+        "Found that the 6 typo leads were all reachable: Sean had a connected call with each (25 to 69 seconds), 5 have a verify-tier draft in Urable nobody sent, and 3 of those cards were then closed as Declined or Disqualified with no reason written down. Spelled correctly ('tullride', 'insisht', 'toyota runner', 'boxter'), four of them price at once; the fifth is a 2005 Chevrolet compact (cavalier) with no price row, which the robot guesses as a large SUV or truck, and the sixth is a Cayenne coupe the robot holds on body style.",
+        "Found that since 10/21 the follow-up robot moves every no-car message card into Proposal Sent - Engaged within 30 minutes, so 23 cards there say a proposal went out when none exists, and Manual Quote Required overstates the backlog: 22 of its 65 new cards already hold a quote in Urable and 20 are not quote work. Only 23 of its 65 are real prospects owed a price.",
+        "Found that the 'New messages, no car yet' smart list filters on Awaiting Engagement, so it shows none of those 23 cards: a person working that list never sees them.",
+        "Found 205 older cards (Nov 2025 to May 2026, most moved on 10/18) that landed in Re-Engage during the window; 100 have no quote-robot tag and no Urable record. They are outside the 30-day window and their threads were not read yet.",
+        "Wrote and tested the fix for the Engaged-stage mix-up: the follow-up robot now leaves a message card with no quote where it is, with no stage move and no automatic text, until the quote robot sends a price. Checked it on a copy of the live robot with 21 new tests and Noah's existing suites, and replayed it on all 3,442 Rockclear cards: no card changes today, and 598 quoted cards still move to Engaged as before.",
+        "Test detail for Noah's Claude: built on a copy of live revision 00082-xib; 15 of the 21 new tests fail on the unpatched copy and pass on the patched one; Noah's suites give the same results before and after (restart 37 plus 1 known clock failure, ladder 62, arming 39, halt gate 8, receiver smoke 15 of 15). The apply script rebuilds the patched file byte for byte, is safe to run twice, and refuses to patch if the live file drifted inside a changed spot. A switch (NO_QUOTE_CARD_HOLD=0) turns the hold off without a redeploy.",
+        "Wrote the handoff for Noah's Claude as one ready file: apply, test, dry plan, deploy, then confirm the live bundle."
       ],
       "fixed": [
-        "Taught the quote-blocker check to count Sean's custom quotes, which Urable keeps as quote jobs instead of proposals; 7 leads that looked unquoted had a price after all."
+        "Taught the quote-blocker check to count Sean's custom quotes, which Urable keeps as quote jobs instead of proposals; 7 leads that looked unquoted had a price after all.",
+        "Caught a broken first join before any finding went out: it read Urable's customer link as a bare id and used a 2025 cutoff, so every lead read as unquoted. The all-zero result gave it away, and the join was fixed and rerun.",
+        "Moved one lead from 'no quote' to quoted on re-read: a reader had missed a $500 price written by hand in an email.",
+        "Caught a trap before it shipped: the simple fix (skip the Engaged move) would have left no-quote cards in Awaiting Engagement, where the live day-1 follow-up text would tell them about a quote that does not exist. The hold blocks both the move and the text."
       ],
       "inProgress": [
-        "Needs a person: Sean or Noah, 13 prospects are waiting on us for a price: 8 Instagram or text asks with no reply from a person (7 have no phone, so the call sheet cannot reach them), 2 who sent their email for a quote that never went out, and 3 ad leads whose quote draft sits unsent in Urable.",
-        "The Engaged fix waits on Noah's deploy (a ready file for his Claude). It also closes a trap found while building it: without the hold, a no-quote card left in Awaiting Engagement would get the live day-1 follow-up text about a quote that does not exist. The robot's unread typos are written up for a fix decision."
+        "Noah's decision: deploy the no-quote card hold. The ready file for his Claude covers apply, test, dry plan, deploy, and the live check. Until it is live, 23 cards keep showing as Proposal Sent - Engaged with no proposal, and every new message card with no car joins them within 30 minutes. Trade-off he should know: 8 reply cards from the window that Sean quoted by hand would have stayed in Awaiting Engagement until a person moved them.",
+        "Noah's decision: fix the quote robot's unread car names. Adding the four misspellings and a price row for an older compact like the 2005 Cavalier would have priced 4 to 5 of the 6 typo leads with no person involved. Claude's recommendation; written up for his call, not built.",
+        "Noah's decision: who sends the verify-tier drafts. 9 were built in the window and none was sent; the morning money check (C23) has had no lane for them since this was found on 9/23, so they sit in Urable with no owner. Claude's recommendation is Sean, with a daily list.",
+        "Noah's decision: what happens to two-car forms. The multi-car guard holds the lead and sends nothing, and nobody is told. One 9/30 Meta lead with two BMWs has sat in New Lead 29 days with no text, call, or email. This hold was first flagged 9/10 and is still open.",
+        "Needs a person: Sean or Noah, 13 prospects are waiting on us for a price: 8 Instagram or text asks with no reply from a person (7 have no phone, so the call sheet cannot reach them and they must be answered in the DM), 2 who sent their email for a quote that never went out (10/02 and 10/22), and 3 ad leads whose quote draft sits unsent in Urable.",
+        "Needs a person: Sean, one car-in-a-DM lead got a text from us saying the quote is in their inbox, but no proposal or quote job exists in Urable for them. The quote needs to be built and actually sent.",
+        "Needs a person: Sean, quote the two-BMW lead from 9/30 (both cars). Nothing has gone to them in 29 days.",
+        "Needs a person: Sean, 3 typo-lead cards were closed as Declined or Disqualified after a connected call with no reason written. A one-line reason on each says whether they are truly lost or still owed a price.",
+        "Tasha's next step, waits for her go and the hold going live: move the 22 Manual Quote Required cards that already hold a Urable quote out of the quote queue so it shows only real quote work. Do not move the 23 Engaged cards back to Awaiting Engagement before the hold is live, or the day-1 text reaches them.",
+        "Not started: read the 100 older Re-Engage cards with no quote record to see how many are still worth a price."
       ],
       "notes": [
-        "Read-only: no GHL or Urable writes and no customer messages."
+        "Read-only: no GHL or Urable writes and no customer messages.",
+        "The hold is built and tested on a copy only. Nothing is deployed; the live follow-up robot is unchanged.",
+        "Customer details stay in Tasha's local run folder (locked to her account), not on this log."
       ]
     },
     {
@@ -1966,7 +1988,7 @@
     }
   ],
   "sessionStats": {
-    "generated": "2026-10-28",
+    "generated": "2026-10-29",
     "window": "14 days",
     "note": "Per-ISO-week tallies of Tasha's Log, kept so the Shipped/Fixed charts and the shipping streak hold their history after entries older than 14 days are deleted. Generated by scripts/prune-sessions.mjs from sessions[] + sessions-archive.json. Do not hand-edit.",
     "weeks": [
@@ -2108,11 +2130,11 @@
       },
       {
         "weekOf": "2026-10-26",
-        "sessions": 6,
-        "shipped": 21,
-        "fixed": 3,
-        "inProgress": 5,
-        "outcomes": 29
+        "sessions": 7,
+        "shipped": 45,
+        "fixed": 7,
+        "inProgress": 16,
+        "outcomes": 68
       }
     ]
   },
