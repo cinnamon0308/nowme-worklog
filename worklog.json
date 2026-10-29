@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-29T07:59:34.093Z",
+  "updated": "2026-10-29T08:08:59.969Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1349,11 +1349,12 @@
         "Fixed the two problems the trial found, on Tasha's word and test-first: staff records (11 on Tuesday, Noah's own included) are no longer read as leads or allowed to block the nightly all-clear, and Sean's quick callbacks count as answering. A second review caught that matching staff by email alone could hide a real customer: one record carrying Noah's email held 8 unanswered customer texts, so records under another name are now read like leads. Replayed offline on Tuesday's data, the day reads clean with 3 tasks for Sean and 5 for Jenn, and 116 tests plus 28 deliberate breaks hold it.",
         "Set Sean's callback rule to Tasha's 10-second minimum after the review showed GHL marks almost every dial \"completed\", even one hung up on a voicemail greeting: 31 to 42% of October's completed calls under 10 seconds were redialed within 10 minutes, so they weren't real follow-ups. Built and proven on a copy first, then applied on top of the callback-task session's opt-out change: the runner passes 135 tests and catches all 40 deliberate breaks, and Tuesday's replay still reads 3 tasks for Sean and 5 for Jenn.",
         "Ran the one-time background test of the shadow week's schedule on Tasha's word and caught a silent failure before 11/2: macOS blocks scheduled jobs from reading the external drive the runner lives on, so all five nightly runs would have died before starting, with no alert. Nothing was read from GHL, and the test job was removed.",
-        "Moved the shadow runner's scheduled copy to the Mac's internal disk, next to the call-sheet alarm, on Tasha's word, with a one-command deploy that fingerprints every file and flags any copy that drifts from the source. The background test then passed: 683 read-only GHL reads, 0 errors, nothing posted, and a clean all-clear with 3 tasks for Sean and 5 for Jenn, the same rows the offline replay produced."
+        "Moved the shadow runner's scheduled copy to the Mac's internal disk, next to the call-sheet alarm, on Tasha's word, with a one-command deploy that fingerprints every file and flags any copy that drifts from the source. The background test then passed: 683 read-only GHL reads, 0 errors, nothing posted, and a clean all-clear with 3 tasks for Sean and 5 for Jenn, the same rows the offline replay produced.",
+        "Finished setting up the shadow week on Tasha's word: stored a Keychain backup of its three keys, checked each against Secret Manager and proved the runner falls back to them when gcloud fails, so a lapsed login can't cost a night. Then installed the schedule: five read-only runs at noon Japan time, 11/3 to 11/7, each posting one count line to Tasha's audit channel."
       ],
       "fixed": [],
       "inProgress": [
-        "The answer-fast lane's shadow week (Mon 11/2 to Fri 11/6) is approved, its one-day live trial ran with 0 errors, the fixes it called for are built and checked, including Tasha's 10-second minimum for Sean's callbacks, and the background test of the schedule passed from the internal disk. Left, each on Tasha's word: the Keychain backup of the three keys, then installing the schedule. The AI triage column waits on Tasha's Claude login refresh and never touches the call sheet's API key. Deploying the lane would still need Noah's 10/19 access file, the same one Night Shift v2 waits on.",
+        "The answer-fast lane's shadow week is installed and runs on its own at noon Japan time, Tue 11/3 to Sat 11/7 (the Mon 11/2 to Fri 11/6 desk days). Each morning Claude checks the night's report and pre-fills verdicts for Tasha to confirm. The schedule comes out after the last run. The AI triage column waits on Tasha's Claude login refresh and never touches the call sheet's API key. Deploying the lane would still need Noah's 10/19 access file, the same one Night Shift v2 waits on.",
         "Needs a person: Jenn, 1 booked customer (C.S.) asked Tue 10/27 at 4:15 PM to drop off Sat 10/31 and sent it again Wed at 4:27 PM after a missed call; no reply yet when the trial read GHL Wed 10:18 PM PT."
       ],
       "notes": [
