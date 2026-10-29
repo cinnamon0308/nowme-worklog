@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-29T05:36:04.904Z",
+  "updated": "2026-10-29T05:36:52.349Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1327,7 +1327,7 @@
       ],
       "fixed": [],
       "inProgress": [
-        "The answer-fast lane's shadow week (Mon 11/2 to Fri 11/6) is approved, and its one-day live trial ran with 0 errors. Claude recommends two fixes before the week, pending Tasha: keep staff contacts out of the read, because Noah's own GHL record is too long to read in full and would mark every night incomplete, and count Sean's quick voicemail callbacks as follow-ups, as Tasha's 9/05 rule already does. Then one background run of the schedule, the Keychain backup, and the schedule itself, each on Tasha's word. The AI triage column waits on Tasha's Claude login refresh and never touches the call sheet's API key. Deploying the lane would still need Noah's 10/19 access file, the same one Night Shift v2 waits on.",
+        "The answer-fast lane's shadow week (Mon 11/2 to Fri 11/6) is approved, and its one-day live trial ran with 0 errors. Claude recommends two fixes before the week, pending Tasha: keep staff contacts out of the read, because Noah's own GHL record could not be read in full and would likely mark most nights incomplete, and count Sean's quick voicemail callbacks as follow-ups, as Tasha's 9/05 rule already does. Then one background run of the schedule, the Keychain backup, and the schedule itself, each on Tasha's word. The AI triage column waits on Tasha's Claude login refresh and never touches the call sheet's API key. Deploying the lane would still need Noah's 10/19 access file, the same one Night Shift v2 waits on.",
         "Needs a person: Jenn, 1 booked customer (C.S.) asked Tue 10/27 at 4:15 PM to drop off Sat 10/31 and sent it again Wed at 4:27 PM after a missed call; no reply yet when the trial read GHL Wed 10:18 PM PT."
       ],
       "notes": [
