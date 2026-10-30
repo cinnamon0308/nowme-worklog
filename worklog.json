@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-29T12:01:21.793Z",
+  "updated": "2026-10-30T15:11:16.675Z",
   "projects": [
     {
       "id": "night-shift",
@@ -186,15 +186,16 @@
       "id": "full-system-audit-august",
       "name": "Full-System Audit + Conversion Architecture",
       "status": "IN_PROGRESS",
-      "summary": "September 23 Pacific: checked all 60 Rockclear Manual Quote Required cards. Ten have drafts with no send record, one quote failed delivery, 17 people received a quote, and 32 have no verified formal quote in the checked records. Earlier approved work created 35 missing cards, but 30 were automatically rerouted to Manual Quote Required and their stage correction remains unfinished. Follow-up vehicle repairs corrected four records; their proposals remain unsent drafts.",
+      "summary": "October 30: checked all 3,450 Rockclear cards and delivered a local HTML report with nine findings and exact review records. Confirmed 143 open cards without either owner, 25 Waiting cards without a complete callback handoff, incorrect win probabilities, and almost no structured loss reasons. Quote-delivery candidates remain review work; no CRM repairs or deployments were made. A second 10/30 audit read all 120 workflows and scored the Rockclear system 35 of 100: missed calls, written opt-outs, and failed texts fail with no alert, and a payment step still points at a deleted stage.",
       "blockedOn": "E8 needs Noah's configuration decision before scheduling: his latest janitor revision reports DRY_RUN=false, the new ledger runner correctly refuses to invoke it, and the old direct cron is paused. The next safe sequence is target dry-run, runner wiring, one supervised scheduled ledger, then a separate live-arm decision.",
       "progress": {
         "stage": "underway",
-        "reason": "Five unsent drafts reviewed: M. and newer G. pricing verified; older G. duplicate identified; BMW body style and Toyota model unresolved. Quote cleanup and earlier stage corrections remain open."
+        "reason": "The October 30 system audit and HTML review queue are complete locally. Quote-stage protection, callback and ownership repairs, and reporting corrections still need approved execution. Earlier five-quote decisions and the E8 configuration decision remain unresolved."
       },
       "detail": {
         "goal": "Give Dragon Auto one measurable sales system where every active lead has an owner, next action, due time, and safe exit, while Urable remains the source for payment and job truth.",
         "whatWasDone": [
+          "October 30: audited all 3,450 Rockclear cards, 24,402 contacts, and 606 tasks; delivered nine findings with record links and a fix order so callback promises, quote holds, and unowned leads can be repaired against evidence.",
           "September 23 Pacific: corrected seven vehicle-field copies for four unquoted leads and verified production matcher gaps for Trax, Uncharted, Lincoln Continental, and BMW 840.",
           "September 23 Pacific: completed the named 60-card quote-delivery audit and verified all cards remained in the live stage. Kept missing evidence separate from proven non-delivery.",
           "September 20 Pacific: delivered local HTML/CSV with all 713 five-stage decisions, 486 aging cards, current-job checks, and eight business flags.",
@@ -209,6 +210,8 @@
           "Caught Noah-authored configuration drift before the next daily run: the janitor target was armed and the cron pointed directly at it, so the cron is now paused with zero customer writes while the intended configuration is reconciled."
         ],
         "needsImprovement": [
+          "October 30: protect the pre-quote gate before moving the 36 Engaged verification candidates; resolve six draft-only open cards and the two-car hold, then reconcile the 13 MQR quote-record candidates using delivery and current-vehicle evidence.",
+          "October 30: repair the 18 missing Waiting tasks and seven unassigned task handoffs, assign the 143 unowned open cards, and verify due callbacks reach the current call sheet before calling the handoff fixed.",
           "Resolve the 10 draft-only quotes and S. S. delivery failure, then investigate why 30 newly created Rockclear cards were automatically rerouted to Manual Quote Required.",
           "Reconcile the janitor's armed target revision, then validate one scheduled dry-run through the ledger runner before any separate live-arm decision.",
           "Give all 132 uncovered active leads a verified owner and next action, with MQR and unanswered inbound first.",
@@ -1243,6 +1246,45 @@
   ],
   "sessions": [
     {
+      "date": "2026-10-30",
+      "title": "Audited all 120 GHL workflows behind the Rockclear pipeline: missed calls, written opt-outs, and failed texts each fail with no alert, and a payment step still points at a deleted stage",
+      "shipped": [
+        "Read every one of the 120 workflow definitions step by step, plus 3,442 cards from the 10/29 board pull and 3,473 message threads from the 10/21 pull, with no new GHL calls, and scored the Rockclear system 35 of 100 on 20 checks. Every number in the report carries the date of the pull it came from.",
+        "Found that a missed call now reaches nobody: the old missed-call texter fires only on 'no-answer', the missed-call card workflow made 0 cards and 0 tasks in 190 runs before it was switched off on 10/17, and since 10/21 a call opens no card at all. In the 10/21 pull, 500 of 549 inbound calls were missed and a third never got a person back.",
+        "Found that a written opt-out like 'Stop please' sets no do-not-disturb, because the opt-out workflow and GHL's own handler only match the bare word STOP, and wrote the phrase triggers that close the gap.",
+        "Showed that 245 of 501 failed texts got no other contact for 72 hours and 79 contacts never received a single message from us, while GHL's built-in trigger for failed texts, which would catch them, sits unused.",
+        "Caught that the payment workflow's Rockclear step still targets a stage deleted in the summer redesign, and that a finished customer's next booking drags their Won card back to Booked: 27 customers in the history, 2 of whom sent Meta a second 'Won' sale.",
+        "Confirmed the other 10/30 audit's two reporting findings on separate data: GHL's stage win chances climb with board position (Lost Ghost 84.6% against Booked 61.5%), and 1 of 1,196 lost cards has a loss reason.",
+        "Delivered an HTML report with 18 findings, click-by-click GHL fixes, and a 15-item checklist, checked at desktop and phone width with 703 text elements measured for contrast."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Tasha: five fixes need only GHL and can be built this week: opt-out phrases, the failed-text fallback, the payment step's dead stage, the nurture exit, and an alert when the quote webhook fails. The order is Claude's recommendation.",
+        "Noah's decision: how missed calls reach Sean, on his list since 10/21. The no-quote hold and the GA4 receiver fields are ready files waiting on his deploy.",
+        "Claude's recommendation, not yet raised with Noah: age Re-Engage cards out after 90 days with no reply; 405 of its 449 cards are older than that."
+      ],
+      "notes": "Read-only. No GHL or Urable writes, no messages sent, no workflow edits. This audit covers workflows, triggers, consent, failed texts, attribution, and reviews; the other 10/30 audit covers card owners and Waiting callbacks. Report: audit-runs/2026-10-30-ghl-system-audit/rockclear-system-audit.html."
+    },
+    {
+      "date": "2026-10-30",
+      "title": "Found nine Rockclear handoff and reporting gaps across all 3,450 cards, with an HTML repair queue",
+      "shipped": [
+        "Counted all 3,450 Rockclear cards and 24,402 contacts, then checked 606 tasks to find leads without an owner or callback handoff before another sales promise disappears.",
+        "Confirmed 143 open cards have neither contact nor opportunity owner; 25 of 104 Waiting cards lack a complete callback task, including 18 contacts whose individual task lists are empty and seven with no task assignee.",
+        "Refreshed 5,288 Urable customers, 3,182 proposals, 5,931 jobs, and 5,420 payments, plus 76 selected GHL conversations with 81 call records retained, to keep old customer history and missing evidence separate from current sales work.",
+        "Built a local HTML report with nine findings, searchable GHL record links, CSV export, and a fix order; 20 control checks pass so the review queue can be used without changing customer records.",
+        "Read back Rockclear's stage probabilities: Disqualified is 92.31% and Lost Ghost is 84.62%, above Booked at 61.54%; also found 1,197 of 1,198 lost-status cards without a structured reason, exposing why the sales reports cannot explain the losses."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Noah's deployment owner: review and deploy the prepared no-quote protection before repairing the 36 Engaged quote-verification candidates; cadence still reports revision 00082-xib, last updated October 18.",
+        "Needs a person: Sean to resolve six open draft-only candidates and M.'s two-car form, then verify the current vehicle and delivery on 13 MQR cards with matching non-draft quote records before any stage move.",
+        "Needs a person: Sean and Tasha to restore the 18 missing Waiting tasks and seven unassigned task handoffs, choose owners for 143 open cards, and prove due callbacks appear on the current call sheet.",
+        "Tasha: map status-triggered side effects before reconciling 20 open-status Disqualified cards; correct probabilities and future loss reasons, and reconcile the 390 open zero-value cards only where a current quote supports the price."
+      ],
+      "notes": "Read-only audit. No GHL or Urable writes, messages, workflow edits, or deployments. The local report and evidence are in audit-runs/2026-10-30-rocklear-system-audit/. Quote-record candidates are not proven delivered current-vehicle quotes; 32 of 36 Engaged candidates lack an exact Urable identity match. Source download returned 403, so mechanism inspection used the cached copy associated with the current revision. Native workflow settings and responsive screenshots remain unverified. Reviewed related Waiting on Noah items; no approval was resolved, and all 13 existing entries were retained. The report and work-log update are local and still need publication."
+    },
+    {
       "date": "2026-10-29",
       "title": "Traced every Rockclear lead from the last 30 days that has no quote: 39 real Rocklear prospects are waiting on a price, and six causes explain them",
       "shipped": [
@@ -1938,57 +1980,10 @@
       "notes": [
         "Found while reading: a customer's refund he says never arrived, and several quotes and replies people are still waiting on. They're listed on the close list page with an owner for each."
       ]
-    },
-    {
-      "date": "2026-10-16",
-      "title": "Checked all 131 cards in Manual Quote Required: 41 are customers still owed a price, 45 stage moves are ready, and nothing moves until Tasha approves",
-      "shipped": [
-        "Read all 131 Manual Quote Required cards against both sides of every text, call and voicemail, and against Urable's payments, jobs and quotes. 41 are real customers still owed a first price; the other 90 are quotes that already went out, paying customers, duplicate cards, spam, or people who never wanted Rocklear.",
-        "Found that J.'s Lexus install for Saturday at 1:30 ($1,595, a returning customer) is not booked yet: no deposit, no job and no calendar slot, and his Thursday-night question about the rock-chip layer is unanswered. Sean has it today.",
-        "Found a refund Urable never recorded: the customer who cancelled job #5773 on 10/06 still shows his $932.88 deposit as paid, and the cancelled job is still set to text him a reminder on Nov 29. Added to the Waiting on Noah list to confirm in Square.",
-        "Found two $937.50 deposit requests on one Civic Type R deal: Urable created the second one by itself, under the wrong car, when the customer accepted the quote. Only one should ever be collected.",
-        "Caught a quote that would have gone out wrong twice: R.'s i8 quote bounced on a mistyped email, and it was built at the sedan size while Noah's car list puts the i8 in a smaller size.",
-        "Kept 7 duplicate cards from being moved: customers who texted from a second phone or Instagram got a new $0 card while their real deal sits on their main contact, including two booked installs ($1,945 and $2,695) and a won job ($3,795).",
-        "Listened to the voicemails behind 21 'unknown caller' cards: 7 were robocalls the spam filter missed, one was a marketing pitch, and one was a paying customer arriving for his drop-off."
-      ],
-      "fixed": [
-        "Corrected two of the first plan's moves before anything ran: a headlight job is not Booked without a deposit or a job, and past customers asking for service stay open with a named owner instead of being closed.",
-        "Taught the audit both new traps, duplicate contacts from a second phone and voicemails nobody reads, so the next stage audit checks them first."
-      ],
-      "inProgress": [
-        "45 stage-only moves are tested and wait for Tasha's go: 43 in the main list and 2 into Re-Engage, kept apart because the stage's entry check tags each arrival and opens a review task. Each move changes the stage only; status, value, owner and contact stay as they are, and a check after the moves proves it. Nothing in GHL or Urable has changed.",
-        "12 robocall and pitch cards wait on a one-card test first, because they are still open, unlike the junk cards moved on 10/14.",
-        "7 duplicate cards (customers on a second phone or Instagram) are kept apart for a separate cleanup; 14 cards stay put until their evidence is clear; 2 future-date cards have no reminder set yet.",
-        "31 customer questions and money items are handed to Sean and Noah, without holding up any stage move."
-      ],
-      "notes": [
-        "Read-only. Nothing was sent, moved, or written in GHL or Urable."
-      ]
-    },
-    {
-      "date": "2026-10-16",
-      "title": "Google Cloud commands work on Tasha's Mac again, so deploys and the Waiting on Noah watcher run; the 6:15 deposit check (C25) now counts deposits with money handed back",
-      "shipped": [
-        "Found why Google Cloud commands had been failing on Tasha's Mac since 10/14: Claude, the scheduled watcher, and background jobs were running Google's tool on the Mac's old Python 3.9, which it no longer supports. One setting now points every shell at Python 3.11, so deploys, audits, and live checks run again.",
-        "Unstuck the Waiting on Noah watcher. Its 10/13 9:46 PM run had hung and blocked every run after it, so none of the 38 cards had been checked for 2.5 days. Its live checks run again, and the next scheduled run takes off any card Noah has finished.",
-        "Taught the 6:15 AM deposit check (C25) that a deposit Urable marks 'partial refund' is still money we hold unless 90% or more went back, the same line the audit's refund check uses. Urable holds 27 such payments, and 21 of them gave back 10% or less (change or a card fee), the kind of deposit the check used to skip entirely.",
-        "Gave those deposits their own 'needs a person to stamp' card. The deposit lane hands every partial refund to a person and never stamps the card, so without this, correct cards would have failed every morning once the lane goes live."
-      ],
-      "fixed": [
-        "Caught in two rounds of independent review before anything shipped: 7 real problems, including an empty answer from Urable that would have read as a quiet week, and correct cards that would have failed daily. All 7 are fixed, each with a test, and 384 automated checks pass.",
-        "Ran the check read-only against live Urable and GHL twice after the change: both runs finished in about 2 minutes, read every partial refund, and found the same 5 paid jobs from the past week still off."
-      ],
-      "inProgress": [
-        "C25 still waits on Tasha's go to commit and deploy. It now uses about 2 of the audit's 15 minutes.",
-        "One deposit flagged on 10/13 for a card naming a different car (#5729) has passed the check's 8-day window. Tasha confirms it was fixed, or keeps it in view."
-      ],
-      "notes": [
-        "Nothing was deployed, and nothing changed in GHL or Urable."
-      ]
     }
   ],
   "sessionStats": {
-    "generated": "2026-10-29",
+    "generated": "2026-10-30",
     "window": "14 days",
     "note": "Per-ISO-week tallies of Tasha's Log, kept so the Shipped/Fixed charts and the shipping streak hold their history after entries older than 14 days are deleted. Generated by scripts/prune-sessions.mjs from sessions[] + sessions-archive.json. Do not hand-edit.",
     "weeks": [
@@ -2130,11 +2125,11 @@
       },
       {
         "weekOf": "2026-10-26",
-        "sessions": 7,
-        "shipped": 45,
+        "sessions": 8,
+        "shipped": 50,
         "fixed": 7,
-        "inProgress": 16,
-        "outcomes": 68
+        "inProgress": 20,
+        "outcomes": 77
       }
     ]
   },
