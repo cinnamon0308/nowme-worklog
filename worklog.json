@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-31T05:54:58.005Z",
+  "updated": "2026-10-31T06:47:29.578Z",
   "projects": [
     {
       "id": "night-shift",
@@ -665,7 +665,8 @@
           "10-06: removed five customer phone numbers from the public page and made every publish strip phone numbers and emails, refusing to publish one it cannot clean. 21 new checks guard it.",
           "10-12: every publish now also pushes to a private repo on the Dragon Auto GitHub account, so Noah's Claude can read the log directly. A missed copy fails loudly and retries on the next run; 60 automated checks guard both pushes.",
           "10-13: added the Waiting on Noah watcher. Twice a day it checks each card against GitHub, Google Cloud, and Noah's vault, takes off any card whose proof is true, and keeps the proof in an archive. The first run cleared the GitHub invite card.",
-          "10-25: added a gap check (npm run worklog:gaps) and a daily update that writes and publishes the missing entries. The scheduled run publishes on its own and notifies Tasha (her call); the schedule itself is still to be set up."
+          "10-25: added a gap check (npm run worklog:gaps) and a daily update that writes and publishes the missing entries. The scheduled run publishes on its own and notifies Tasha (her call); the schedule itself is still to be set up.",
+          "10-30: the publish check now refuses a customer's first name on its own, using 1,308 common first names and 5,085 scrambled first names from GHL contacts; staff, tools, and car models pass, and 105 checks cover it."
         ],
         "needsImprovement": [
           "No fixed finish line; this tool keeps growing as new needs come up."
@@ -1245,6 +1246,21 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-30",
+      "title": "A customer's first name on its own now stops the work log from publishing, so customer names stay off the public dashboard",
+      "shipped": [
+        "Extended the publish check to refuse a customer named by first name alone, not only a first and last name together, so a lead's name can't slip onto the public dashboard in a quick note.",
+        "Built its name list from 1,308 common first names and 5,085 first names from the 24,402 GHL contacts, stored scrambled so the list itself never reads as a customer list.",
+        "Tested it against the whole live log with no false alarms on staff, tools, days, months, or 18 car models; the publish tests grew from 75 to 105 checks, all passing."
+      ],
+      "fixed": [
+        "Turned 9 customer first names in older project notes and one Waiting on Noah card into initials, so the live log passes its own check.",
+        "Closed the 4 gaps an independent code review found in the first version: a name in front of a date, a name used as a label, common first names the dictionary files as proper nouns, and an emptied name list letting everything through."
+      ],
+      "inProgress": [],
+      "notes": "Local scripts only (scripts/lib/pii-guard.mjs and its name list); nothing in GHL changed."
+    },
     {
       "date": "2026-10-30",
       "title": "Audited all 120 GHL workflows behind the Rockclear pipeline: missed calls, written opt-outs, and failed texts each fail with no alert, and a payment step still points at a deleted stage",
