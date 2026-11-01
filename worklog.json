@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-31T06:47:29.578Z",
+  "updated": "2026-11-01T06:19:50.636Z",
   "projects": [
     {
       "id": "night-shift",
@@ -207,7 +207,8 @@
           "Wrote the full stage-by-stage leakage report, revenue scenarios, AI authority limits, cron schedule, reporting contract, and High-to-Low roadmap in the Dragon Mirror notes.",
           "Voided H. H.'s wrong $1,325 Large SUV/Truck proposal, corrected his GHL vehicle to Volvo XC60, and verified the replacement Small SUV/Truck proposal plus delivered SMS and Awaiting Engagement move.",
           "Repaired three safety defects in the spam-janitor ledger runner, passed 5 tests, and deployed revision 00002-nel with a gate that refuses to call a target unless its deployed DRY_RUN value is true.",
-          "Caught Noah-authored configuration drift before the next daily run: the janitor target was armed and the cron pointed directly at it, so the cron is now paused with zero customer writes while the intended configuration is reconciled."
+          "Caught Noah-authored configuration drift before the next daily run: the janitor target was armed and the cron pointed directly at it, so the cron is now paused with zero customer writes while the intended configuration is reconciled.",
+          "10-31: built the two written opt-out workflows from the 10/30 audit (B-018-WF-3.2 for texts like 'stop texting', B-018-WF-3.3 for 'stop calling') as Drafts, with a guard so a phone reaction to our own text never blocks anyone; they go live after Tasha's phone test."
         ],
         "needsImprovement": [
           "October 30: protect the pre-quote gate before moving the 36 Engaged verification candidates; resolve six draft-only open cards and the two-car hold, then reconcile the 13 MQR quote-record candidates using delivery and current-vehicle evidence.",
@@ -1246,6 +1247,21 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-10-31",
+      "title": "Built the GHL fix for written opt-outs: a texted 'please stop texting' or 'stop calling' will now set do-not-disturb, as two Drafts waiting on a phone test",
+      "shipped": [
+        "Built B-018-WF-3.2 (written opt-out) as a Draft: a text with one of 22 opt-out phrases such as 'stop texting', 'unsubscribe', or 'remove me' (72 spellings counting capitals) tags the customer unsubscribed, dates the opt-out, and turns on do-not-disturb for every channel. Today only the bare word STOP does this, so a customer who asks in a sentence can still be texted and called.",
+        "Built B-018-WF-3.3 (written stop-calling) as a Draft: 'stop calling', 'text me instead', and 9 more phrases turn on do-not-disturb for calls only, so the customer still gets texts, the way they asked.",
+        "Added a guard to both so a phone reaction to our own text never counts as an opt-out: 26 of the last 157 outbound texts end with our 'unsubscribe' line, and an iPhone 'Liked' reaction quotes that line back, which would have blocked a customer who only liked the message.",
+        "Each run leaves a note on the contact with the customer's exact words and a next-day task for Tasha to confirm the block, so a misread or a failed step gets caught within a day."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Both drafts fire only for a contact tagged optout-test. Next: Tasha texts the test phrases from her own phone, the contact is read back after each one, and only then does the test gate come off."
+      ],
+      "notes": "Built in GHL through the workflow builder as Drafts (nothing published, no message sent to anyone); created 3 tags: optout-test, b-018. unsubscribed in writing, b-018. no calls in writing."
+    },
     {
       "date": "2026-10-30",
       "title": "A customer's first name on its own now stops the work log from publishing, so customer names stay off the public dashboard",
