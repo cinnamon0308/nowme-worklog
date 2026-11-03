@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-03T06:06:16.809Z",
+  "updated": "2026-11-03T07:43:50.881Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1247,6 +1247,24 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-02",
+      "title": "Audited the Rocklear pipeline end to end and caught Meta leads at zero since 10/29, five days before anyone flagged it",
+      "shipped": [
+        "Read the whole Rockclear board and Urable's money records to the end: 3,454 of 3,454 cards, 24,408 contacts, 620 tasks, 124 workflows, and 5,430 Urable payments. Nothing was changed, and the pull waited for GHL's daily allowance to reset instead of eating into the safety margin the live automations need.",
+        "Found that new leads stopped: Noah's lead receiver got 5 to 16 Meta form leads a day from 10/20 to 10/28 and zero from 10/29 through 11/02, about 50 leads missed so far. It matches the five earlier Meta billing stops.",
+        "Showed the $393K 'past due' in Urable is not money owed: $377K of it is deposits on quotes nobody accepted. The real past due on booked or finished work is 12 payments, about $11K.",
+        "Counted where the board stalls: Re-Engage holds 435 open cards and $442K with no way out, 460 of 531 open tasks are overdue, and 446 cards are tagged ghost with nothing to move them.",
+        "Measured what sells: quiz leads win 31.6% of the time against 5.7% for Meta leads, and when a quote exists it goes out in a median of under a minute.",
+        "Wrote a 15-page PDF for Tasha that explains how the business runs from ad to paid job, the ten findings with fixes, and a who-does-what list where every fix is labelled with whose call it is."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Needs a person: Jenn, 12 Urable past-due payments on booked or finished jobs, about $11K in total, to confirm whether each is really unpaid.",
+        "The 65 cards sitting in Booked with status won, and the two Urable Zap steps behind them, wait on Tasha's go; moving them into Won fires the Meta Won event, so that batch also needs Noah's yes."
+      ],
+      "notes": "Read-only throughout. Comparison is against the 10/30 system audit using the same scripts, so the flag counts line up one to one."
+    },
     {
       "date": "2026-11-02",
       "title": "Sorted the 80 Manual Quote Required cards: 8 moved live where they belong, after finding a second opinion's top fix would clear only 1 card",
