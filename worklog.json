@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-01T06:19:50.636Z",
+  "updated": "2026-11-03T05:58:44.872Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1247,6 +1247,22 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-03",
+      "title": "Read all 80 Manual Quote Required cards: a second opinion's top fix would clear 1 card, and a dry-run sort frees 24 of Sean's 36 dial seats there",
+      "shipped": [
+        "Checked a second-opinion review of the Manual Quote Required stage against a live read of all 80 open cards. Its top fix, automatic re-pricing, would clear about 1 card: 60 have no car on file, 19 already hold a Urable quote, and of the 10 with a car the price matcher can auto-send 1.",
+        "Found a hole the review missed. The quote-sent and quote-opened tags never expire and carry no date, so the stage's repair robot would treat a quote from July as current.",
+        "Built a dry-run sort from every card's full message history, not just its tags: 7 cards to Engaged, 2 to Waiting with a December callback, 11 to Re-Engage, and 11 closed as not a lead. 1 decline is left for Noah, and 2 duplicates need a merge first. Nothing in GHL was changed.",
+        "Kept every card out of the two stages that send automatic follow-up texts. Those stages would have sent a burst of 4 texts to leads quoted weeks ago."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "The sort waits on Tasha's go, plan by plan. Before the live run: re-read each card for new messages, check workflow triggers on the destination stages, and read Noah's newest daily note.",
+        "Needs a person: 21 cards are owed a reply and 13 of them have no phone (Instagram only), so the dial sheet cannot surface them. This is a call-sheet gap to fix, tracked as a count."
+      ],
+      "notes": "Read-only throughout: GHL threads, the live cadence settings, and the 10/29 Urable pull. 18 cards had changed since the 10/16 audit, including 2 written declines or 'later' replies, which the sort caught before any move."
+    },
     {
       "date": "2026-10-31",
       "title": "Built the GHL fix for written opt-outs: a texted 'please stop texting' or 'stop calling' will now set do-not-disturb, as two Drafts waiting on a phone test",
