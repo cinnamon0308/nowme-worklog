@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-03T07:43:50.881Z",
+  "updated": "2026-11-03T09:12:29.373Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1247,6 +1247,22 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-03",
+      "title": "Fixed the two Urable booking and payment steps that kept paid Rocklear customers out of Won",
+      "shipped": [
+        "Repointed the GHL step that runs when Urable marks a Rocklear job paid in full. It was aimed at a stage deleted in the summer redesign, so 43 paid customers stayed in Booked instead of moving to Won. From now on a paid-in-full job lands in Won, which also sends Meta the real Won sale the ads learn from.",
+        "Added a guard to the GHL step that runs when Urable books a service: if the customer's card is already in Won, it now stays there. Before, a past customer's next booking dragged the finished sale back to Booked (27 times in the 10/21 history), and moving it to Won again told Meta about the same sale twice.",
+        "Left backward moves on, so a lost lead who books still lands in Booked.",
+        "Backed up both workflows first, checked that neither had changed since 6/25, and checked GHL's own validation and the builder view after saving. A one-command rollback is saved next to the backups."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "The 65 cards already sitting in Booked with status won were not moved. Moving them all into Won fires 65 Meta Won events at once, so that batch waits on Noah's yes.",
+        "The next real paid-in-full and booked customers will confirm both steps in GHL's execution logs; nothing was test-fired, because a test sends the team's Lead Paid alerts and Meta events for real."
+      ],
+      "notes": "Edited live workflows 'Urable Paid Job > Zapier > GHL Opportunity update' (now v42) and 'Urable Booked service> Zapier > Peelclear/Rocklear tags' (now v22). Triggers and the PeelClear branches were not touched."
+    },
     {
       "date": "2026-11-02",
       "title": "Audited the Rocklear pipeline end to end and caught Meta leads at zero since 10/29, five days before anyone flagged it",
