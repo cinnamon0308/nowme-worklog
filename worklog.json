@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-10T14:05:25.213Z",
+  "updated": "2026-11-10T16:42:09.571Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1255,11 +1255,12 @@
         "Checked the reader that is actually running (revision 00011-dog), not the vault copy, which differs from it. With the dry-run flag on the URL it writes no tags, pauses no follow-ups, and cannot fire the car-answer quote resend, even though that resend's own server switch is set to live.",
         "Caught a setting that would have sent the reader blank texts for three days: the webhook type the Discord reply alerts use sends a key/value list and drops the JSON body. Switched it to the raw-JSON type the live quote bot uses, then confirmed in the builder view that the body is there.",
         "Turned on Allow re-entry so every text reaches the reader, not only each customer's first one. All 6 live reply workflows checked have it on.",
-        "Saved it as a Draft first, read every field back from GHL and from the builder view, then published (version 6, trigger active, dry-run flag still in the saved URL)."
+        "Saved it as a Draft first, read every field back from GHL and from the builder view, then published (version 6, trigger active, dry-run flag still in the saved URL).",
+        "Proved the connection with real customer texts, so no phone test was needed: 3 texts reached the reader between 8:15 and 8:25 AM PT, and its log shows one arriving with the customer's id and the full 145-character message, so the merge fields Noah asked for work."
       ],
       "fixed": [],
       "inProgress": [
-        "Phone test text to the shop number, then Noah's session reads the reader's log and confirms the words arrived. A second test with a line break and a quote mark shows whether GHL breaks the JSON on texts like that.",
+        "Still unknown: whether a text with a line break or a quote mark breaks the JSON. Real texts during the watch will show it: a broken one reaches the reader with no customer id and gets skipped.",
         "For Noah: during the watch, a text that reads like a partner-shop referral still posts a '[DRY-RUN] would refer out' message to Discord. Nothing reaches the customer."
       ],
       "notes": "Workflow id 45331c42. Custom webhook is a premium action, about $0.01 a text, roughly $10 a month during the 3-day watch. Going live (password on the reader, dry-run flag removed) is a separate ask after the watch."
