@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-12T20:29:29.339Z",
+  "updated": "2026-11-12T21:17:32.116Z",
   "projects": [
     {
       "id": "night-shift",
@@ -934,7 +934,8 @@
         "Labeled where each task came from so nothing reads as an order Noah never gave: 60 are his handoffs or were already on Tasha's pages, and 70 are items Claude picked out of his notes as work Tasha can take off his plate, marked as Claude's recommendation.",
         "Kept all customer-facing work off the board (texts, calls, lead follow-up, deposits, install dates), since Sean, Noah, and Jenn own it.",
         "Added a step to the sync that copies Noah's notes, so every sync now reads his new notes, adds each new handoff to the board with a priority, and checks for duplicates first. His notes become Tasha's to-do list the same day he writes them.",
-        "Built the board for phone and desktop: drag a task to change its priority, mark it done or drop it with an undo, and see what got finished this week. Tested every action on a copy before loading the real tasks, then read all 130 back to confirm the counts."
+        "Built the board for phone and desktop: drag a task to change its priority, mark it done or drop it with an undo, and see what got finished this week. Tested every action on a copy before loading the real tasks, then read all 130 back to confirm the counts.",
+        "Reworked the board the same day into a full project view: a sidebar that filters by status, by who the task came from, and by each of the 48 projects with its open count, plus a list layout that shows all 130 tasks in rows by priority. One click now answers what is open on the call sheet or what is waiting on someone."
       ],
       "fixed": [],
       "inProgress": [
