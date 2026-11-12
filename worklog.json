@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-12T18:30:07.110Z",
+  "updated": "2026-11-12T20:29:29.339Z",
   "projects": [
     {
       "id": "night-shift",
@@ -925,6 +925,23 @@
   ],
   "waitingOnNoah": [],
   "sessions": [
+    {
+      "date": "2026-11-12",
+      "title": "Turned three weeks of Noah's notes and three old to-do pages into one priority board: 130 open tasks, 9 urgent, with every new handoff added on each sync",
+      "shipped": [
+        "Read every note Noah wrote from 10/20 to 11/11 plus the still-open cards on Tasha's three older to-do pages, merged 8 tasks that showed up in more than one place, and left off work his notes already mark done. Result: 130 open tasks in one list instead of four places.",
+        "Gave every task a priority with a one-line reason: 9 urgent, 18 high, 57 medium, 46 low. Most urgent ones are opt-out and safety gaps: the written opt-out workflows still unpublished, a texted STOP that does not block email, the follow-up bot running without its blacklist stop since the 11/05 redeploy, and the promised-visit check that booked a wash a year late.",
+        "Labeled where each task came from so nothing reads as an order Noah never gave: 60 are his handoffs or were already on Tasha's pages, and 70 are items Claude picked out of his notes as work Tasha can take off his plate, marked as Claude's recommendation.",
+        "Kept all customer-facing work off the board (texts, calls, lead follow-up, deposits, install dates), since Sean, Noah, and Jenn own it.",
+        "Added a step to the sync that copies Noah's notes, so every sync now reads his new notes, adds each new handoff to the board with a priority, and checks for duplicates first. His notes become Tasha's to-do list the same day he writes them.",
+        "Built the board for phone and desktop: drag a task to change its priority, mark it done or drop it with an undo, and see what got finished this week. Tested every action on a copy before loading the real tasks, then read all 130 back to confirm the counts."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "One task waits on a decision instead of being worked: Noah's 11/06 notes suggest an alarm for when Meta ads stop, which Tasha decided on 10/19 not to build. It sits under Waiting on the board."
+      ],
+      "notes": "The board is a private claude.ai page only Tasha can open. Task source files stay in her vault."
+    },
     {
       "date": "2026-11-11",
       "title": "Night Shift version 2 ran on the real lead database for the first time: it finds 4 Booked cards version 1 misses, and the holiday offer fills 4 of every 5 'no card' rows",
