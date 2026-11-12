@@ -1,22 +1,23 @@
 {
   "version": 1,
-  "updated": "2026-11-10T16:42:09.571Z",
+  "updated": "2026-11-12T02:06:26.181Z",
   "projects": [
     {
       "id": "night-shift",
       "name": "Night Shift Lead Check",
       "status": "IN_PROGRESS",
       "summary": "Noah's nightly check of every open Rockclear lead, handed to Tasha on 10/11. Version 1 runs at 2 AM since 10/17 but shows its results to nobody. On 10/18 Noah picked Tasha to build version 2, which reads whole conversations, puts Sean's and Noah's rows in front of them by 6 AM, and learns from every slip someone logs as missed.",
-      "blockedOn": "Noah's four permission lines (Tasha's read access to the lead database and the Night Shift reports, and Argon for the nightly check), sent 10/19 as a file for his Claude.",
+      "blockedOn": "Nothing for the read-only build: Noah granted read access to the lead database and the Night Shift reports on 11/10. The miss log still needs write access to the lead database, and any deploy needs Noah's yes.",
       "health": {
         "band": "watch",
-        "reason": "Version 1 runs nightly but nobody sees its results yet; the version 2 starting copy is built, tested and on GitHub, and the build waits on access."
+        "reason": "Version 1 runs nightly but nobody sees its results yet. Version 2's starting copy ran on the real lead database on 11/11 and already finds 4 Booked cards version 1 misses; the new checks are not built yet."
       },
       "detail": {
         "goal": "Every open lead checked every night, with slipped ones on Sean's call sheet or Noah's approvals page by 6 AM, and every slip someone finds turned into a test the check must pass from then on.",
         "whatWasDone": [
           "2026-10-12: checked all 3,277 Rockclear cards; 225 people off 607 stale queued follow-ups; R5 and R6 fixes committed with 166 checks passing.",
-          "2026-10-19: one copy of the code with the live version plus Tasha's three fixes, 197 checks passing, pushed as night-shift-v2."
+          "2026-10-19: one copy of the code with the live version plus Tasha's three fixes, 197 checks passing, pushed as night-shift-v2.",
+          "2026-11-11: first run of the version 2 code on the real lead database (1,423 open cards, 2,244 conversations), compared row by row with version 1; the holiday offer explains 307 of 373 'no card' rows."
         ],
         "needsImprovement": [
           "Post the first 'fixed overnight' summary for Noah and carry out his decisions.",
@@ -1247,6 +1248,25 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-11",
+      "title": "Night Shift version 2 ran on the real lead database for the first time: it finds 4 Booked cards version 1 misses, and the holiday offer fills 4 of every 5 'no card' rows",
+      "shipped": [
+        "Confirmed the four permission lines Noah ran on 11/10 work from Tasha's login: the lead database answers (41 tables, 190,237 messages, synced every 15 minutes) and all 25 nightly Night Shift reports since 10/18 open. Version 2 had waited on this access since 10/19.",
+        "Ran the version 2 code against the real lead database for the first time: 1,423 open cards and 2,244 conversations read, every rule passed its own self-test, and the report went to a local folder only. Nothing was posted, no card or contact was changed, and the 2 AM job was not touched.",
+        "Replayed the same saved night through the live version 1 code and compared the two row by row. Tasha's fixes find 4 Booked cards that version 1 misses (3 whose install date already passed and 1 with a deposit and no install date, $7,470 in quotes) and drop 16 rows nobody should chase: 12 from her exclusion list of staff, vendors and test contacts, and 4 people who need no card.",
+        "Traced why the 'talking to us, no card' list jumped from 77 to 315 rows overnight on 11/11: 307 of tonight's 373 rows are past clients who received the holiday offer, not slipped leads. Only 66 rows are real candidates, so the list is not ready to hand Sean as is.",
+        "Read all 25 nights of version 1 history: it ran every night since 10/18 with status OK. Its nightly counts swing by hundreds when a mass send goes out or an old one ages past 60 days, which version 2 has to account for before anyone sees the numbers."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Needs a person: Jenn or Sean, 15 past clients answered the holiday offer and their message was still the last one in the thread 12 to 48 hours later (as of 5:59 PM PT on 11/11). 12 of them have a card in the Engaged stage. Night Shift reads only the last message, so a phone call back would not show here.",
+        "60 of the 188 'no price' rows are holiday-offer recipients whose card sits in the Engaged stage with no dollar value on it.",
+        "Next, from Noah's 10/18 scope (step 1): build the checks for dead-stage cards left open, paid records in a Lost stage, and deposits and callbacks in any stage. Claude's recommendation, not yet decided by Tasha: first make the no-card check skip people whose only recent contact is a mass send.",
+        "Still closed: writing to the lead database (the miss log needs it) and deploying. Each needs its own ask to Noah."
+      ],
+      "notes": "Code is branch night-shift-v2, unchanged, 197 checks passing. The live lead-check job is still on its 10/17 revision. Run data stays on Tasha's Mac because it holds customer details."
+    },
     {
       "date": "2026-11-10",
       "title": "Connected customer texts to the reply reader in watch-only mode: about 967 texts a month now reach it, and it cannot send anything yet",
