@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-14T01:12:22.759Z",
+  "updated": "2026-11-14T04:58:19.278Z",
   "projects": [
     {
       "id": "night-shift",
@@ -211,7 +211,8 @@
           "Repaired three safety defects in the spam-janitor ledger runner, passed 5 tests, and deployed revision 00002-nel with a gate that refuses to call a target unless its deployed DRY_RUN value is true.",
           "Caught Noah-authored configuration drift before the next daily run: the janitor target was armed and the cron pointed directly at it, so the cron is now paused with zero customer writes while the intended configuration is reconciled.",
           "10-31: built the two written opt-out workflows from the 10/30 audit (B-018-WF-3.2 for texts like 'stop texting', B-018-WF-3.3 for 'stop calling') as Drafts, with a guard so a phone reaction to our own text never blocks anyone; they go live after Tasha's phone test.",
-          "2026-11-13: tested the two unpublished stop-request rules on 4,215 real texts; the main rule was right on 2 of 21 hits, and two fixes leave only the 2 real requests."
+          "2026-11-13: tested the two unpublished stop-request rules on 4,215 real texts; the main rule was right on 2 of 21 hits, and two fixes leave only the 2 real requests.",
+          "2026-11-13: stop-request rules fixed and re-tested on all 19,001 customer texts: 19 of 19 real requests caught, 0 wrong blocks; still unpublished."
         ],
         "needsImprovement": [
           "October 30: protect the pre-quote gate before moving the 36 Engaged verification candidates; resolve six draft-only open cards and the two-car hold, then reconcile the 13 MQR quote-record candidates using delivery and current-vehicle evidence.",
@@ -929,6 +930,24 @@
   "sessions": [
     {
       "date": "2026-11-13",
+      "title": "Fixed the stop-request rules after testing them on all 19,001 customer texts: every real stop request is now caught and nobody is blocked by mistake",
+      "shipped": [
+        "Tested the unpublished stop-request rules against every text customers have sent since July 2025 (19,001 texts from 3,128 people) and read each hit. As first built they would have acted 118 times: 19 right, 88 on sales texts from other companies, and 11 that would have blocked people who never asked, including 6 who only gave a thumbs-up to one of our texts. They also missed 2 real requests.",
+        "Reworked the word lists and saved them into the two unpublished rules. On the same 19,001 texts the result is now 19 of 19 real stop requests caught, 0 wrong blocks, and 2 harmless hits on ad senders. The 'stop calling' rule: 7 of 7 right, 0 wrong.",
+        "Read both rules back from GHL after saving and caught a silent failure: GHL answered 'saved' but kept the old word list. Saved it the way the builder itself does, read it back again, and re-ran the test on the exact words GHL now holds. Both rules are still off, so no customer is affected.",
+        "Found that reactions (a thumbs-up or heart on a text) reach GHL as normal texts, in many formats and languages, each carrying a copy of our own message. About 910 of the 19,001 texts are reactions."
+      ],
+      "fixed": [
+        "Before go-live: the reaction check only knew six English words like 'Liked' and 'Loved', so emoji reactions and reactions in Spanish got through. It now skips every text that quotes one of our messages."
+      ],
+      "inProgress": [
+        "Next: test the block on Tasha's own contact inside GHL, undo it, then turn the rules on.",
+        "10 people who asked in writing in the past are not blocked today: 6 asked us to stop texting or contacting them, and 4 asked us to stop calling. Next: read each thread and block them, on Tasha's go."
+      ],
+      "notes": "A read-only test on the lead database copy. Nothing was sent to anyone, and both rules stay unpublished."
+    },
+    {
+      "date": "2026-11-13",
       "title": "Tested the new stop-request rules on 4,215 real customer texts before turning them on: they would have wrongly blocked up to 3 customers, and two small fixes remove every wrong hit",
       "shipped": [
         "Ran the two unpublished stop-request rules against every incoming customer text from the last 90 days (4,215 texts from 967 people), reading only. Nothing was sent to anyone and nothing in GHL changed.",
@@ -1242,11 +1261,11 @@
       },
       {
         "weekOf": "2026-11-09",
-        "sessions": 5,
-        "shipped": 26,
-        "fixed": 0,
-        "inProgress": 12,
-        "outcomes": 38
+        "sessions": 6,
+        "shipped": 30,
+        "fixed": 1,
+        "inProgress": 14,
+        "outcomes": 45
       }
     ]
   },
