@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "updated": "2026-11-12T21:17:32.116Z",
+  "updated": "2026-11-14T00:47:07.992Z",
   "projects": [
     {
       "id": "night-shift",
       "name": "Night Shift Lead Check",
       "status": "IN_PROGRESS",
       "summary": "Noah's nightly check of every open Rockclear lead, handed to Tasha on 10/11. Version 1 runs at 2 AM since 10/17 but shows its results to nobody. On 10/18 Noah picked Tasha to build version 2, which reads whole conversations, puts Sean's and Noah's rows in front of them by 6 AM, and learns from every slip someone logs as missed.",
-      "blockedOn": "Nothing for the read-only build: Noah granted read access to the lead database and the Night Shift reports on 11/10. The miss log still needs write access to the lead database, and any deploy needs Noah's yes.",
+      "blockedOn": "Noah's yes to deploy Tasha's three fixes; she deploys herself, as his 10/11 handoff set out. The miss log still needs write access to the lead database.",
       "health": {
         "band": "watch",
         "reason": "Version 1 runs nightly but nobody sees its results yet. Version 2's starting copy ran on the real lead database on 11/11 and already finds 4 Booked cards version 1 misses; the new checks are not built yet."
@@ -17,7 +17,8 @@
         "whatWasDone": [
           "2026-10-12: checked all 3,277 Rockclear cards; 225 people off 607 stale queued follow-ups; R5 and R6 fixes committed with 166 checks passing.",
           "2026-10-19: one copy of the code with the live version plus Tasha's three fixes, 197 checks passing, pushed as night-shift-v2.",
-          "2026-11-11: first run of the version 2 code on the real lead database (1,423 open cards, 2,244 conversations), compared row by row with version 1; the holiday offer explains 307 of 373 'no card' rows."
+          "2026-11-11: first run of the version 2 code on the real lead database (1,423 open cards, 2,244 conversations), compared row by row with version 1; the holiday offer explains 307 of 373 'no card' rows.",
+          "2026-11-13: the three fixes re-checked against the live version (unchanged since 10/17), 197 checks passing, deploy and rollback steps written; ready on Noah's yes."
         ],
         "needsImprovement": [
           "Post the first 'fixed overnight' summary for Noah and carry out his decisions.",
@@ -926,6 +927,23 @@
   "waitingOnNoah": [],
   "sessions": [
     {
+      "date": "2026-11-13",
+      "title": "Night Shift's three fixes are checked and ready to go live on Noah's yes: the live version is unchanged since 10/17, all 197 checks pass, and the rollback is written down",
+      "shipped": [
+        "Confirmed the nightly lead check still runs Noah's 10/17 version: it has one revision, was never redeployed, and its last four 2 AM runs each finished clean in 87 to 130 seconds. Tasha's fixes are built on exactly that code, compared file by file against Noah's own copy, so nothing of his would be overwritten.",
+        "Re-ran all 197 checks on the three fixes and every one passes. On the 11/11 real-data run the same fixes found 4 Booked cards the live version misses ($7,470 in quotes) and dropped 16 rows nobody should chase, such as staff, vendors, and test contacts.",
+        "Confirmed Tasha can deploy this job herself, which is what Noah's 10/11 handoff set out (she deploys after his yes). A 10/24 note had said she could not, so the fixes were waiting on a file for Noah that was never needed. The only thing needed from him now is the yes.",
+        "Wrote the deploy steps down before touching anything: the two checks to run first, the deploy itself, a test run that proves the new version works, and a one-command rollback to Noah's version that takes under a minute."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Waits on Noah's yes to deploy the three fixes (approvals M238). Tasha deploys, runs the test, and checks the next 2 AM run.",
+        "After the deploy: bring Noah's own copy of the code in line so a later deploy from it cannot undo the fixes, and post the first 'fixed overnight' summary he asked for on 10/11.",
+        "One of the three fixes (a late callback counted as a system miss, not Sean's) stays idle until the call-me-later build ships, because only that build writes the mark it looks for."
+      ],
+      "notes": "Nothing was deployed or changed today. Code is branch night-shift-v2, unchanged since 10/19."
+    },
+    {
       "date": "2026-11-12",
       "title": "Turned three weeks of Noah's notes and three old to-do pages into one priority board: 130 open tasks, 9 urgent, with every new handoff added on each sync",
       "shipped": [
@@ -1046,761 +1064,10 @@
         "Both drafts fire only for a contact tagged optout-test. Next: Tasha texts the test phrases from her own phone, the contact is read back after each one, and only then does the test gate come off."
       ],
       "notes": "Built in GHL through the workflow builder as Drafts (nothing published, no message sent to anyone); created 3 tags: optout-test, b-018. unsubscribed in writing, b-018. no calls in writing."
-    },
-    {
-      "date": "2026-10-30",
-      "title": "A customer's first name on its own now stops the work log from publishing, so customer names stay off the public dashboard",
-      "shipped": [
-        "Extended the publish check to refuse a customer named by first name alone, not only a first and last name together, so a lead's name can't slip onto the public dashboard in a quick note.",
-        "Built its name list from 1,308 common first names and 5,085 first names from the 24,402 GHL contacts, stored scrambled so the list itself never reads as a customer list.",
-        "Tested it against the whole live log with no false alarms on staff, tools, days, months, or 18 car models; the publish tests grew from 75 to 105 checks, all passing."
-      ],
-      "fixed": [
-        "Turned 9 customer first names in older project notes and one Waiting on Noah card into initials, so the live log passes its own check.",
-        "Closed the 4 gaps an independent code review found in the first version: a name in front of a date, a name used as a label, common first names the dictionary files as proper nouns, and an emptied name list letting everything through."
-      ],
-      "inProgress": [],
-      "notes": "Local scripts only (scripts/lib/pii-guard.mjs and its name list); nothing in GHL changed."
-    },
-    {
-      "date": "2026-10-30",
-      "title": "Audited all 120 GHL workflows behind the Rockclear pipeline: missed calls, written opt-outs, and failed texts each fail with no alert, and a payment step still points at a deleted stage",
-      "shipped": [
-        "Read every one of the 120 workflow definitions step by step, plus 3,442 cards from the 10/29 board pull and 3,473 message threads from the 10/21 pull, with no new GHL calls, and scored the Rockclear system 35 of 100 on 20 checks. Every number in the report carries the date of the pull it came from.",
-        "Found that a missed call now reaches nobody: the old missed-call texter fires only on 'no-answer', the missed-call card workflow made 0 cards and 0 tasks in 190 runs before it was switched off on 10/17, and since 10/21 a call opens no card at all. In the 10/21 pull, 500 of 549 inbound calls were missed and a third never got a person back.",
-        "Found that a written opt-out like 'Stop please' sets no do-not-disturb, because the opt-out workflow and GHL's own handler only match the bare word STOP, and wrote the phrase triggers that close the gap.",
-        "Showed that 245 of 501 failed texts got no other contact for 72 hours and 79 contacts never received a single message from us, while GHL's built-in trigger for failed texts, which would catch them, sits unused.",
-        "Caught that the payment workflow's Rockclear step still targets a stage deleted in the summer redesign, and that a finished customer's next booking drags their Won card back to Booked: 27 customers in the history, 2 of whom sent Meta a second 'Won' sale.",
-        "Confirmed the other 10/30 audit's two reporting findings on separate data: GHL's stage win chances climb with board position (Lost Ghost 84.6% against Booked 61.5%), and 1 of 1,196 lost cards has a loss reason.",
-        "Delivered an HTML report with 18 findings, click-by-click GHL fixes, and a 15-item checklist, checked at desktop and phone width with 703 text elements measured for contrast."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Tasha: five fixes need only GHL and can be built this week: opt-out phrases, the failed-text fallback, the payment step's dead stage, the nurture exit, and an alert when the quote webhook fails. The order is Claude's recommendation.",
-        "Noah's decision: how missed calls reach Sean, on his list since 10/21. The no-quote hold and the GA4 receiver fields are ready files waiting on his deploy.",
-        "Claude's recommendation, not yet raised with Noah: age Re-Engage cards out after 90 days with no reply; 405 of its 449 cards are older than that."
-      ],
-      "notes": "Read-only. No GHL or Urable writes, no messages sent, no workflow edits. This audit covers workflows, triggers, consent, failed texts, attribution, and reviews; the other 10/30 audit covers card owners and Waiting callbacks. Report: audit-runs/2026-10-30-ghl-system-audit/rockclear-system-audit.html."
-    },
-    {
-      "date": "2026-10-30",
-      "title": "Found nine Rockclear handoff and reporting gaps across all 3,450 cards, with an HTML repair queue",
-      "shipped": [
-        "Counted all 3,450 Rockclear cards and 24,402 contacts, then checked 606 tasks to find leads without an owner or callback handoff before another sales promise disappears.",
-        "Confirmed 143 open cards have neither contact nor opportunity owner; 25 of 104 Waiting cards lack a complete callback task, including 18 contacts whose individual task lists are empty and seven with no task assignee.",
-        "Refreshed 5,288 Urable customers, 3,182 proposals, 5,931 jobs, and 5,420 payments, plus 76 selected GHL conversations with 81 call records retained, to keep old customer history and missing evidence separate from current sales work.",
-        "Built a local HTML report with nine findings, searchable GHL record links, CSV export, and a fix order; 20 control checks pass so the review queue can be used without changing customer records.",
-        "Read back Rockclear's stage probabilities: Disqualified is 92.31% and Lost Ghost is 84.62%, above Booked at 61.54%; also found 1,197 of 1,198 lost-status cards without a structured reason, exposing why the sales reports cannot explain the losses."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Noah's deployment owner: review and deploy the prepared no-quote protection before repairing the 36 Engaged quote-verification candidates; cadence still reports revision 00082-xib, last updated October 18.",
-        "Needs a person: Sean to resolve six open draft-only candidates and M.'s two-car form, then verify the current vehicle and delivery on 13 MQR cards with matching non-draft quote records before any stage move.",
-        "Needs a person: Sean and Tasha to restore the 18 missing Waiting tasks and seven unassigned task handoffs, choose owners for 143 open cards, and prove due callbacks appear on the current call sheet.",
-        "Tasha: map status-triggered side effects before reconciling 20 open-status Disqualified cards; correct probabilities and future loss reasons, and reconcile the 390 open zero-value cards only where a current quote supports the price."
-      ],
-      "notes": "Read-only audit. No GHL or Urable writes, messages, workflow edits, or deployments. The local report and evidence are in audit-runs/2026-10-30-rocklear-system-audit/. Quote-record candidates are not proven delivered current-vehicle quotes; 32 of 36 Engaged candidates lack an exact Urable identity match. Source download returned 403, so mechanism inspection used the cached copy associated with the current revision. Native workflow settings and responsive screenshots remain unverified. Reviewed related Waiting on Noah items; no approval was resolved, and all 13 existing entries were retained. The report and work-log update are local and still need publication."
-    },
-    {
-      "date": "2026-10-29",
-      "title": "Traced every Rockclear lead from the last 30 days that has no quote: 39 real Rocklear prospects are waiting on a price, and six causes explain them",
-      "shipped": [
-        "Checked all 450 Rockclear cards made 9/29 to 10/29 against GHL tags, Urable proposals and quote jobs, and both sides of every conversation, calls included: 300 have a quote and 150 do not. Only 39 of the 150 are real Rocklear prospects; the rest are voicemails with no words, spam and vendors, past customers, and PPF, PeelClear, tint or wash asks, mostly opened by the reply and missed-call card workflows.",
-        "Pulled the evidence fresh for this, read-only: the whole Rockclear and PeelClear board, every contact's vehicle field replayed through Noah's live quote matcher, a new Urable snapshot (5,287 customers, 3,181 proposals, 5,927 jobs, 5,417 payments), and both sides of 227 threads with call lengths and delivery status. Eight reader agents labeled the 158 cards with no quote found, and every prospect verdict (40) was re-read by hand.",
-        "Of the 450 cards, 348 belong to people who first arrived in the window: 237 got a quote (210 from the quote robot, 27 by hand in Urable), 8 have only an unsent draft, and 103 have nothing. No PeelClear cards were made in the window.",
-        "Confirmed the ad funnel is quoting: 200 of 217 Meta form leads in the window got a quote (92%), 186 of them from the quote robot. 8 of the other 17 have an unsent verify-tier draft in Urable and 9 have nothing.",
-        "Broke the no-quote cards down by stage (cards made since 9/29): New Lead 4 cards, 2 real prospects with no quote; Manual Quote Required (the quote queue) 65 cards, 23; Re-Engage 13, 0; Proposal Sent - Hot 5, 0; Proposal Sent - Engaged 59, 6; Disqualified and the two Lost stages 125, 8.",
-        "Named the causes behind the 39 so the fixes go to the right place: a car mentioned only in a DM or text, which the quote robot never reads (9); Instagram DMs no person answered, 7 with no phone for Sean to dial (8); ad-form typos and a missing price row the robot could not read, each one already called by Sean (6); ad leads who never gave a model after 12 messages and 11 calls from us (6); a two-car form the robot holds without sending anything, untouched for 29 days (1); and browsing, visit-first, or likely junk chats (9).",
-        "Found that 5 of the 7 unanswered Instagram DMs came in 10/02 to 10/14, inside the Instagram connection break Noah logged on 10/17, so the break cost real price asks, not only spam.",
-        "Found that the 6 typo leads were all reachable: Sean had a connected call with each (25 to 69 seconds), 5 have a verify-tier draft in Urable nobody sent, and 3 of those cards were then closed as Declined or Disqualified with no reason written down. Spelled correctly ('tullride', 'insisht', 'toyota runner', 'boxter'), four of them price at once; the fifth is a 2005 Chevrolet compact (cavalier) with no price row, which the robot guesses as a large SUV or truck, and the sixth is a Cayenne coupe the robot holds on body style.",
-        "Found that since 10/21 the follow-up robot moves every no-car message card into Proposal Sent - Engaged within 30 minutes, so 23 cards there say a proposal went out when none exists, and Manual Quote Required overstates the backlog: 22 of its 65 new cards already hold a quote in Urable and 20 are not quote work. Only 23 of its 65 are real prospects owed a price.",
-        "Found that the 'New messages, no car yet' smart list filters on Awaiting Engagement, so it shows none of those 23 cards: a person working that list never sees them.",
-        "Found 205 older cards (Nov 2025 to May 2026, most moved on 10/18) that landed in Re-Engage during the window; 100 have no quote-robot tag and no Urable record. They are outside the 30-day window and their threads were not read yet.",
-        "Wrote and tested the fix for the Engaged-stage mix-up: the follow-up robot now leaves a message card with no quote where it is, with no stage move and no automatic text, until the quote robot sends a price. Checked it on a copy of the live robot with 21 new tests and Noah's existing suites, and replayed it on all 3,442 Rockclear cards: no card changes today, and 598 quoted cards still move to Engaged as before.",
-        "Test detail for Noah's Claude: built on a copy of live revision 00082-xib; 15 of the 21 new tests fail on the unpatched copy and pass on the patched one; Noah's suites give the same results before and after (restart 37 plus 1 known clock failure, ladder 62, arming 39, halt gate 8, receiver smoke 15 of 15). The apply script rebuilds the patched file byte for byte, is safe to run twice, and refuses to patch if the live file drifted inside a changed spot. A switch (NO_QUOTE_CARD_HOLD=0) turns the hold off without a redeploy.",
-        "Wrote the handoff for Noah's Claude as one ready file: apply, test, dry plan, deploy, then confirm the live bundle."
-      ],
-      "fixed": [
-        "Taught the quote-blocker check to count Sean's custom quotes, which Urable keeps as quote jobs instead of proposals; 7 leads that looked unquoted had a price after all.",
-        "Caught a broken first join before any finding went out: it read Urable's customer link as a bare id and used a 2025 cutoff, so every lead read as unquoted. The all-zero result gave it away, and the join was fixed and rerun.",
-        "Moved one lead from 'no quote' to quoted on re-read: a reader had missed a $500 price written by hand in an email.",
-        "Caught a trap before it shipped: the simple fix (skip the Engaged move) would have left no-quote cards in Awaiting Engagement, where the live day-1 follow-up text would tell them about a quote that does not exist. The hold blocks both the move and the text."
-      ],
-      "inProgress": [
-        "Noah's decision: deploy the no-quote card hold. The ready file for his Claude covers apply, test, dry plan, deploy, and the live check. Until it is live, 23 cards keep showing as Proposal Sent - Engaged with no proposal, and every new message card with no car joins them within 30 minutes. Trade-off he should know: 8 reply cards from the window that Sean quoted by hand would have stayed in Awaiting Engagement until a person moved them.",
-        "Noah's decision: fix the quote robot's unread car names. Adding the four misspellings and a price row for an older compact like the 2005 Cavalier would have priced 4 to 5 of the 6 typo leads with no person involved. Claude's recommendation; written up for his call, not built.",
-        "Noah's decision: who sends the verify-tier drafts. 9 were built in the window and none was sent; the morning money check (C23) has had no lane for them since this was found on 9/23, so they sit in Urable with no owner. Claude's recommendation is Sean, with a daily list.",
-        "Noah's decision: what happens to two-car forms. The multi-car guard holds the lead and sends nothing, and nobody is told. One 9/30 Meta lead with two BMWs has sat in New Lead 29 days with no text, call, or email. This hold was first flagged 9/10 and is still open.",
-        "Needs a person: Sean or Noah, 13 prospects are waiting on us for a price: 8 Instagram or text asks with no reply from a person (7 have no phone, so the call sheet cannot reach them and they must be answered in the DM), 2 who sent their email for a quote that never went out (10/02 and 10/22), and 3 ad leads whose quote draft sits unsent in Urable.",
-        "Needs a person: Sean, one car-in-a-DM lead got a text from us saying the quote is in their inbox, but no proposal or quote job exists in Urable for them. The quote needs to be built and actually sent.",
-        "Needs a person: Sean, quote the two-BMW lead from 9/30 (both cars). Nothing has gone to them in 29 days.",
-        "Needs a person: Sean, 3 typo-lead cards were closed as Declined or Disqualified after a connected call with no reason written. A one-line reason on each says whether they are truly lost or still owed a price.",
-        "Tasha's next step, waits for her go and the hold going live: move the 22 Manual Quote Required cards that already hold a Urable quote out of the quote queue so it shows only real quote work. Do not move the 23 Engaged cards back to Awaiting Engagement before the hold is live, or the day-1 text reaches them.",
-        "Not started: read the 100 older Re-Engage cards with no quote record to see how many are still worth a price."
-      ],
-      "notes": [
-        "Read-only: no GHL or Urable writes and no customer messages.",
-        "The hold is built and tested on a copy only. Nothing is deployed; the live follow-up robot is unchanged.",
-        "Customer details stay in Tasha's local run folder (locked to her account), not on this log."
-      ]
-    },
-    {
-      "date": "2026-10-28",
-      "title": "Set the terms for testing the AI triage prompt in the shadow week: no call-sheet credits spent, and emails, phone numbers, and names stripped before any thread reaches the model",
-      "shipped": [
-        "Tested a second opinion from Gemini on the corrected triage prompt against the 60-wait test: 2 of its edits held up and went into the prompt (a missing route for threads a person already answered, and two missed-call examples), and its claim that only two spots could confuse the model was wrong, since the test had already hit two more.",
-        "Decided how the prompt runs beside the rules in the shadow week (Tasha, 10/28): GHL reads use the existing read-only key, the prompt runs on Haiku with thinking off through Tasha's own Claude login, and the call sheet's Anthropic key is never used, so the test can't drain the credits Sean's daily sheet runs on.",
-        "Made three test findings hard requirements for that build (Tasha, 10/28): strip emails, phone numbers, and the contact's name from message text; cut lead sources to short labels and staff to first names, since one source in the sample held a referrer's full name; and check the command-line settings on a dummy message before wiring it in."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Nothing is built. The rules-only smoke test runs first, and the prompt column waits for Tasha to refresh her Claude login."
-      ],
-      "notes": [
-        "No GHL writes and no customer messages. The 60-wait results stand: the two edits came after the test and change none of them."
-      ]
-    },
-    {
-      "date": "2026-10-28",
-      "title": "Proved the answer-fast rules on all 3,564 waits from the October pull and ran them read-only on Tuesday's live messages: 3 tasks for Sean, 2 for Jenn's customer list, and 3 wrong tasks caught before any shadow week",
-      "shipped": [
-        "Rebuilt the answer-fast lane's rules as a read-only program: it finds customers who wrote or called and waited 30 desk minutes with no reply from a person, then decides whether the task goes to Sean, to the person already in the thread, or to Jenn's customer list. Every rule is copied word for word from the 10/27 replay and the call sheet's own tests, and run beside that replay it made the same decision on all 3,564 waits from Aug 22 to Oct 20, so the hand check's figure of about 7.8 tasks a desk day for Sean carries over.",
-        "Ran it read-only on Tuesday 10/27's live GHL and Urable data: 104 conversations and 30 waits. It would have made 3 tasks for Sean (one lead's two financing questions became one task) and 2 for Jenn's list, and it skipped 13 waits a person had already answered.",
-        "Corrected the 10/27 revenue audit page: it said a \"Scheduled Callback\" task would put a waiting lead on Sean's morning call sheet. The live sheet skips those tasks for cards in its five calling stages (625 of 1,158 open cards), never reads the task text, and keeps only a lead's latest-dated callback, so the page now marks how a task reaches Sean as an open decision.",
-        "Moved the three new screens, a fix that recognizes past customers from each card's stage history, a report table of written opt-outs that still have no do-not-disturb set, and the 3,564-wait match test into the runner Tasha approved, then archived the duplicate. The shadow week now starts from one runner, and its 96 tests pass.",
-        "Split how the shadow lane reads opt-outs, on Tasha's approval: \"Please stop calling\" now skips the lead under its own reason and the daily report asks for do-not-disturb on calls only, \"Please don't call, just text\" stays a task for Sean marked text only, and a lead asking for a \"quick call\" (typed \"quit call\") or answering a price with \"Stop. I'm getting quotes at $500\" no longer reads as an opt-out. On the October data this changed 7 of 355 opt-out reads and turned 2 of them into tasks for Sean that the old reading dropped; 132 offline tests and 38 deliberate breaks hold it in place."
-      ],
-      "fixed": [
-        "The first live day exposed 3 wrong tasks for Sean, all let in by the rule that keeps a new contact's first message: a written \"stop\", a business-loan pitch, and a vendor asking for the owner. Added a screen for each, so a shadow week starts without them."
-      ],
-      "inProgress": [
-        "One read-only shadow runner now carries this lane into Mon 11/2 to Fri 11/6: the daily-replay runner Tasha approved, which now holds the three screens and the 3,564-wait match test. The duplicate is archived. Not scheduled yet."
-      ],
-      "notes": [
-        "Read-only. Nothing in GHL or Urable was written: two passes over Tuesday made 433 GHL reads, with about 193,500 of the day's allowance left.",
-        "The lane is Claude's recommendation from the 10/27 audit; neither Noah nor Tasha has approved a live version."
-      ]
-    },
-    {
-      "date": "2026-10-28",
-      "title": "Tested a draft AI triage prompt for Sean's reply tasks on 60 real waits: as written it would hand Sean 43 tasks, 17 of them nobody was owed; a corrected version made 22, with 2",
-      "shipped": [
-        "Ran the draft triage prompt (the AI step that would decide which waiting customers become a GHL task for Sean, and write the task line) over the 60 waits hand-checked on 10/27, with the answers hidden. It made 43 tasks: 14 of the 15 real prospect waits, all 9 existing-customer waits (service questions would have landed on Sean's dial list), and 17 that nobody was owed, including 6 spam or robocalls, 5 threads Noah or the reply drafter had already answered, a PPF quote, and a \"may reconsider early 2027\".",
-        "Traced each wrong task to a rule: the draft counts every missed call (Noah's qualifying test calls silent calls false flags), puts \"not right now, check back in [month]\" on today's list (his test calls \"not ready\" a false flag, and dated callbacks belong to the callback reader), reads robocalls from voicemail transcripts the threads never carry (0 of 31 inbound calls in the sample had one), and has no route for customers, PPF asks, or replies a person already sent.",
-        "Wrote a corrected prompt (Claude's recommendation, not approved): code first removes do-not-disturb contacts, spam, and threads a person already answered, and hands over the wait time, quote total, and customer status; the AI then sends each wait to Sean, the person already in the thread, Noah's desk, the callback reader, the opt-out check, or nowhere. On the same 60 waits it made 22 tasks: all 16 of Sean's were real, and the 2 that nobody was owed went to the person already in the thread."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "The corrected prompt was scored on the same 60 threads the lane's rules were built from, so it still needs a fresh sample. Claude's recommendation is to run it beside the rules during the proposed shadow week. Nothing was deployed or written to GHL."
-      ],
-      "notes": [
-        "Read-only. Nothing in GHL, Urable, or any customer record was touched; the test used the 10/21 pull and the 10/27 hand-check verdicts.",
-        "Both prompts were run by a Claude subagent told to follow only the prompt in front of it, not through the call sheet's API key, so no production credits were spent."
-      ]
-    },
-    {
-      "date": "2026-10-27",
-      "title": "Tested whether callback notes could sit on the sales card for the call sheet to read: every note GHL returned links to the contact, so the call-me-later design holds",
-      "shipped": [
-        "Ran 3 read-only GHL searches on Tasha's go to test her idea of writing callback notes on the opportunity card so the call-sheet bot could read them while it scans leads. Notes do come back with each card: the first page of 20 cards (of 6,383) carried 19 notes, and every one links to the contact, none to its own card.",
-        "Kept the design (Claude's recommendation): the callback reader's task stays the scheduler and its contact note stays as Sean's copy, since no card-level note turned up as a better place for the callback."
-      ],
-      "fixed": [
-        "Caught a script bug before it misled anyone: the first search reported 0 notes because the script expected a list where GHL returns an object. The rerun counted them correctly."
-      ],
-      "inProgress": [
-        "None of the 19 notes carried the reader's callback marker, but one page of 20 cards can't show whether the reader's notes are missing. Checking that needs more pages or the reader's own record of its writes; neither has run."
-      ],
-      "notes": [
-        "Read-only: three search calls and nothing written in GHL. Each probe read the key through Tasha's own gcloud account, because this Mac lacks the automation account the reader uses."
-      ]
-    },
-    {
-      "date": "2026-10-27",
-      "title": "Mapped where Rockclear money stalls: $928K of open quotes has sat 14+ days, and customers answered within an hour booked at 41% against 2% for those never answered",
-      "shipped": [
-        "Built a revenue audit page from the full read-only pull of 10/21: 3,338 Rockclear cards, 24,262 contacts, 95,590 messages and calls, and all of Urable. It charts stuck quote value by stage, reply speed, missed calls, quiet past customers, and which lead sources book, so the next builds go where the money is.",
-        "Measured how fast a person answers across every pipeline thread: of 1,625 times a customer wrote and waited (8/22 to 10/20), a person answered within an hour 34% of the time and never 17% of the time. Of 500 calls nobody picked up, 33% never got a person back. Answered within an hour, 41% booked within two weeks; never answered, 2%.",
-        "Measured stuck value: $928K of $1.05M in open quotes has sat 14+ days in the same stage. Re-Engage alone holds $467K across 459 cards, a median 114 days in the stage, and 158 of those cards ($164K) never replied or talked. 1,792 of 2,147 past paying customers have had no GHL message in 90+ days.",
-        "Ranked eight possible builds against Noah's written rules: replies stay with a person (8/14), nothing to rebuy after a Rocklear job (10/02), and review asks after the 30-day wash (rule #50). The upkeep and PeelClear offers in the 10/13 draft plan are marked do-not-build because Noah's own words rule them out.",
-        "Replayed the top pick (Claude's recommendation, not approved yet): a lane that hands Sean each unanswered qualifying reply or missed call as a GHL task after 30 desk minutes. Flagging everything would mean 32 tasks a day; Noah's 9/05 qualifying-reply test brings it to about 9 (4 messages and 5 missed calls), and it sends nothing to customers.",
-        "Hand-checked the recommended lane on 60 real threads, 30 it flagged and 30 it skipped. As first written, 13 of the 30 flags were real waits: 9 were spam or robocalls (7 already had do-not-disturb on) and 2 were paying customers the check missed. It also skipped 5 real waits, including a 'Yes please!' reply to a sale text that nobody answered for 3 days. Rewrote the rules and replayed them: Sean would get about 8 tasks a desk day, all 7 of his in the sample were real waits, and customers' service messages go to a separate list for Jenn.",
-        "Built the read-only shadow runner Tasha approved for the week of Mon 11/2: each evening it replays that desk day and lists which customers would have become Sean's reply tasks, without creating anything in GHL. Before any live call, an independent code review found 9 problems, including a do-not-disturb check that would have read texted STOPs as reachable and an email reader that would have hidden real replies. The confirmed ones are fixed, and 98 offline tests, including the 60 hand-checked threads and a 3,564-wait match against the 10/27 replay, now hold the rules in place.",
-        "Ran the shadow runner's first live trial on Tuesday 10/27, on Tasha's word: 869 read-only GHL reads in 9 minutes, 0 errors, nothing posted or written. It would have handed Sean 4 reply tasks and Jenn 5. Read thread by thread, 6 of the 9 were real waits, including a booked customer's Saturday drop-off question that went 30 hours without a reply until she called and asked again. A second runner, built separately the same day, made 5 of the same tasks at the same times; the sixth it skipped because Sean called 12 minutes after the task would have fired.",
-        "Fixed the two problems the trial found, on Tasha's word and test-first: staff records (11 on Tuesday, Noah's own included) are no longer read as leads or allowed to block the nightly all-clear, and Sean's quick callbacks count as answering. A second review caught that matching staff by email alone could hide a real customer: one record carrying Noah's email held 8 unanswered customer texts, so records under another name are now read like leads. Replayed offline on Tuesday's data, the day reads clean with 3 tasks for Sean and 5 for Jenn, and 116 tests plus 28 deliberate breaks hold it.",
-        "Set Sean's callback rule to Tasha's 10-second minimum after the review showed GHL marks almost every dial \"completed\", even one hung up on a voicemail greeting: 31 to 42% of October's completed calls under 10 seconds were redialed within 10 minutes, so they weren't real follow-ups. Built and proven on a copy first, then applied on top of the callback-task session's opt-out change: the runner passes 135 tests and catches all 40 deliberate breaks, and Tuesday's replay still reads 3 tasks for Sean and 5 for Jenn.",
-        "Ran the one-time background test of the shadow week's schedule on Tasha's word and caught a silent failure before 11/2: macOS blocks scheduled jobs from reading the external drive the runner lives on, so all five nightly runs would have died before starting, with no alert. Nothing was read from GHL, and the test job was removed.",
-        "Moved the shadow runner's scheduled copy to the Mac's internal disk, next to the call-sheet alarm, on Tasha's word, with a one-command deploy that fingerprints every file and flags any copy that drifts from the source. The background test then passed: 683 read-only GHL reads, 0 errors, nothing posted, and a clean all-clear with 3 tasks for Sean and 5 for Jenn, the same rows the offline replay produced.",
-        "Finished setting up the shadow week on Tasha's word: stored a Keychain backup of its three keys, checked each against Secret Manager and proved the runner falls back to them when gcloud fails, so a lapsed login can't cost a night. Then installed the schedule: five read-only runs at noon Japan time, 11/3 to 11/7, each posting one count line to Tasha's audit channel.",
-        "Scheduled the shadow week's morning check on Tasha's word: a Claude task at 12:40 Japan time on 11/3 to 11/7 confirms each night's report came from the tested code, reads it, pre-fills a verdict on every would-be task and sampled skip for Tasha to confirm, and raises one Mac notification. It reads files on the Mac only and contacts no one.",
-        "Set do-not-disturb on every channel, on Tasha's word, for 1 Re-Engage lead who texted \"Stop please\" on 10/27 after four days of calls and texts, which the trial run caught still open in GHL. No automation or rep can now call, text, or email them by accident, and their own messages still come through."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "The answer-fast lane's shadow week is installed and runs on its own at noon Japan time, Tue 11/3 to Sat 11/7 (the Mon 11/2 to Fri 11/6 desk days). A scheduled Claude check reads each night's report at 12:40 and pre-fills verdicts for Tasha to confirm. The schedule and the check both come out after the last run. The AI triage column waits on Tasha's Claude login refresh and never touches the call sheet's API key. Deploying the lane would still need Noah's 10/19 access file, the same one Night Shift v2 waits on.",
-        "Needs a person: Jenn, 1 booked customer (C.S.) asked Tue 10/27 at 4:15 PM to drop off Sat 10/31 and sent it again Wed at 4:27 PM after a missed call; no reply yet when the trial read GHL Wed 10:18 PM PT."
-      ],
-      "notes": [
-        "Read-only. Nothing in GHL, Urable, or any customer record was touched. The audit figures come from the 10/21 pull plus the 10/24 fix that counts staff texts as replies; the 10/27 trial read live data and wrote nothing.",
-        "Every recommendation on the page is labeled as Claude's, Noah's (with his date), or Tasha's. Counts only, no customer names."
-      ]
-    },
-    {
-      "date": "2026-10-27",
-      "title": "Noah's Log now runs through 10/27, and the sync that copies Noah's notes stops whenever that copy is stale",
-      "shipped": [
-        "Ran the sync that copies Noah's notes on 10/27, after its safety check confirmed Obsidian had finished downloading them. Claude's copy is now current through 10/27, and all three days came across on the first try.",
-        "Noah's Log now shows the last three days, 10/25 to 10/27: 6 entries on 10/25, 58 on 10/26, and 8 on 10/27.",
-        "Checked all 72 entry titles in Noah's Log against the daily notes they came from. Each one matches word for word, so no title was invented or reworded."
-      ],
-      "fixed": [
-        "Closed the gap that let a stale copy of Noah's notes pass as a clean sync. The override is gone, so the sync now stops every time its copy is stale and names the newest daily note it found. An old copy can't pass for a quiet week."
-      ],
-      "inProgress": [],
-      "notes": [
-        "Nothing in GHL, Urable, or any customer record was touched. The sync read Noah's notes and wrote only to Claude's copy of them and to this log."
-      ]
-    },
-    {
-      "date": "2026-10-25",
-      "title": "The work log now finds its own gaps: a check lists every session that did work with no entry, and a daily update writes and publishes the missing ones",
-      "shipped": [
-        "Built a check (npm run worklog:gaps) that reads every Claude session since yesterday and lists the ones that did real work, like GHL writes, deploys, or commits, but have no work-log entry. Replayed on 10/22 to 10/25 against the log as it stood before this morning's backfill, it found the 11 sessions behind the 8 missing entries. 143 tests.",
-        "Built the daily update that runs on top of it: it reads each flagged session's own final report, writes the entry in the log's standard (outcome titles, counts and initials only, who decided what), runs the same name check the publish uses, and publishes to both GitHubs. Tasha decided on 10/25 that the scheduled run publishes on its own and then notifies her.",
-        "Tested the update on a copy of the log over the same 4 days: it wrote 7 entries from those 11 sessions, all passing the name check, and afterward the check flagged only the 3 sessions it had chosen to leave off or fold into another entry.",
-        "It keeps a ledger of every session it has logged or left off on purpose, so the next day's run never logs the same work twice."
-      ],
-      "fixed": [
-        "The test caught a date slip in this morning's backfill: a decision made at 9:16 PM PT on 10/24 was written as 10/25, the Japan date. Corrected on the live log.",
-        "The test also found gaps in the update's own instructions (which sources to trust, when a failed-looking write had really landed, Pacific dates in git), all fixed before its first real run.",
-        "Closed a gap in the check the same day, on Tasha's go: a session that logged early and then kept building, with no GHL write or deploy, still read as logged. Now 2 or more real files changed 45 or more minutes after its last log write flag that later part for its own entry (143 tests)."
-      ],
-      "inProgress": [
-        "The daily schedule is not set up yet; Tasha will add it. Until then the update runs when she asks for it."
-      ],
-      "notes": [
-        "Nothing in GHL, Urable, or any customer record was touched. The check only reads, and the update only adds entries: it never edits or deletes one."
-      ]
-    },
-    {
-      "date": "2026-10-25",
-      "title": "Checked all 168 quiz leads for a card: 166 have one, and the one real miss, hidden 15 days by a failure logged as a success, is now on Sean's list",
-      "shipped": [
-        "Checked every contact tagged as a quiz lead, read-only: 168 people, 166 with a Rockclear card. Quiz leads are the best-paying source (36.3% in Noah's 10/18 study), and a quiz lead with no card never reaches Sean's call sheet. Of the 2 without one, 1 declined after a quote and is skipped on purpose. The other took the quiz on 10/10 and had no card for 15 days.",
-        "Found why in the cloud logs: that lead left the quiz before the car questions. The quote receiver answered 'missing vehicle description' inside a success reply, and the quiz sweep retried every 15 minutes for 7 days, logging each failure as 'fired' with no error, so no alarm went off. After day 8 it skipped the lead as too old. It was 1 of about 66 quiz deliveries in 30 days to fail this way.",
-        "Made the card on Tasha's go, after reading the whole history (6 automatic quiz emails, 3 opened, no call, no text, no reply, no opt-out, nothing in Urable): Manual Quote Required, assigned to Sean, no dollar value, with a note to ask what car they drive. Checked a minute later: the card stayed put and no text went out."
-      ],
-      "fixed": [
-        "Kept the card out of Awaiting Engagement on purpose. That stage's text cadence counts from the day the lead came in, so it would have sent four overdue texts within minutes, each assuming a quote existed, and then moved the card to Lost and off the sheet again."
-      ],
-      "inProgress": [
-        "The quiz sweep still logs a half-finished quiz as 'fired', so the next lead who quits before the car questions would slip the same way. Making that answer raise an alarm, or open a card for a person to quote, is Claude's recommendation and is not built."
-      ],
-      "notes": [
-        "One GHL write: the new card and a note on the contact. No customer got a message."
-      ]
-    },
-    {
-      "date": "2026-10-25",
-      "title": "Deposit lane now files each payment on the right card when a customer has two cars or their car is typed differently, checked against 250 real paid jobs; not switched on yet",
-      "shipped": [
-        "Closed the last known gap before go-live: a returning customer's 2019 4Runner card can no longer take the payment for their new 2026 4Runner. Only a full four-digit year proves two cars apart. Anything weaker, like a card one year off, '23 lexus rx', or a year inside a job name, holds the job for Jenn with a task listing every card it might be. Three rounds of code review, 376 tests.",
-        "Then closed the spelling gaps that would have made a second Booked card or put money on the wrong card: 'CRV' against 'CR-V', 'Telsa modely', a Mustang card for a Mach-E job, and a Ram 1500 against a Silverado 1500. Each now matches the right card or waits for Jenn. 9 more commits, 456 tests.",
-        "A refund no longer strips the payment tags while a card that may be this car still sits in Booked. Before, Noah's follow-up bot would have read that card as a deposit to chase after the money had already gone back.",
-        "Replayed it read-only against 250 real paid jobs and 142 real plans since 9/1: none of their outcomes changed, so nothing that works today breaks. On the 76 car pairs the 6:15 AM deposit check (C25) was tested on, 75 agree; the 76th is the deliberate no-year match."
-      ],
-      "fixed": [
-        "The reviews caught three mistakes in the first versions before anything shipped, including one that could have filed a new car's job on an old card with no year, and one that ended a job with no card and no hold when the only same-year card was in Won."
-      ],
-      "inProgress": [
-        "Not deployed: the live lane still runs plan-only on the 10/24 version and writes nothing. Next: Tasha's yes for a plan-only redeploy of this code, her calls on the plan page, then a first live run on 3 jobs.",
-        "Rare spellings stay on a written list for later (nicknames like 'Cyberbeast', typos like 'Corrola', and rebadges); they still get a second card, which is how the 6:15 AM check treats them too. Claude's recommendation (10/25): stop adding spellings one at a time, match by the Urable job number once a card carries it, and hold for Jenn when a customer has another open card of the same make and year."
-      ],
-      "notes": [
-        "Code and offline replays only. No GHL card, Urable job, or customer message changed."
-      ]
-    },
-    {
-      "date": "2026-10-24",
-      "title": "Took 3 paying customers out of Lost - Ghost and tagged 2 as past customers, so sales blasts stop treating them as new leads",
-      "shipped": [
-        "Checked the 3 paying customers the lost-reason read found filed in Lost - Ghost, which breaks Noah's rule that a customer is never Lost. Read his rulings first, then each customer's history in GHL and Urable.",
-        "One card was a July duplicate: that customer's $1,195 job finished 9/29 and its sale already sits on a Won card. The duplicate went to Disqualified, stage only. Moving it to Won would have counted the sale twice and sent Meta a second sale for the same person.",
-        "One card was a past customer's May reapplication visit. The cadence later ghosted it, and on 9/07 that customer got the 'last day of 50% off' blast as if they had never bought, most likely because Urable does not have them under their GHL email or phone, so the filter that keeps customers out of blasts missed them. Tagged past-customer and closed the visit card in Disqualified.",
-        "The third is a Guild VIP with $1,536 across two past jobs: tagged past-customer and moved to Re-Engage. Backups were taken first, the moves changed stage only, and no customer got a message."
-      ],
-      "fixed": [
-        "The card-move script reported FAIL when a card was already marked lost before the move, even though the moves had landed. Added two read-back checks, test-first, so it now reports what GHL really holds."
-      ],
-      "inProgress": [
-        "Tasha decided on 10/24 that the third card closes in Disqualified instead, since there has been no reply in a year and three tries since an 8/29 missed call went unanswered. That write waits for her go."
-      ],
-      "notes": []
-    },
-    {
-      "date": "2026-10-24",
-      "title": "Checked all 49 callbacks the morning reader booked from customers' own words: 42 land on the right day, 3 were over a week late, and a tested fix is drafted",
-      "shipped": [
-        "Read every open Scheduled Callback the live timeline reader wrote (the morning job that books 'call me later' dates from connected calls) and worked out each date again from the customer's quoted words, using the reader's own rules: 49 tasks, 42 exact. 3 were booked more than a week late, all from phrases its rule list does not name, like 'a month or two' (booked Dec 11, the rule gives Nov 11) and 'service next week' (booked Nov 16, the rule gives Oct 26). The date code itself replayed correctly 12 of 12 times, so the drift comes from the model's reading.",
-        "Why it matters: the call sheet shows a callback as the customer's own timing only while their words are under 30 days old, so a late date turns a warm lead into a stale re-check.",
-        "Drafted a narrow fix that dates only the phrases seen to drift and leaves every doubtful case to the model, the same as live does today. Two review rounds caught real misfires in the first versions ('1.5 months', 'a 24 month lease', 'two weeks after my surgery'); the final draft passes 165 offline checks and moves only the 4 intended dates."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Not deployed: the reader is Noah's code, so the fix ships only through him.",
-        "'A few months' has no rule yet (the reader booked it 60 days out three times). That one is Tasha's call."
-      ],
-      "notes": [
-        "Read-only: this check re-dated nothing in GHL. One of the 3 late tasks had already been moved by hand earlier on 10/24."
-      ]
-    },
-    {
-      "date": "2026-10-24",
-      "title": "Re-ran the 10/21 lead-journey audit with staff texts counted as replies: the top finding holds and got stronger, and Re-Engage's 'customer wrote last' list shrank from 61 to 28",
-      "shipped": [
-        "Found that the 10/21 audit never counted a text from Sean, Jenn, Noah, or Chris as a reply, so customers who had been answered looked unanswered. Fixed the scripts test-first (18 tests that fail on the old copy) and re-ran everything: 272 cards lost the 'unanswered' flag because a person had texted them (Sean 110, Jenn 100, Noah 37, Chris 24, 1 other), and 29 gained it.",
-        "Finding 1 holds: calls to customers who wrote last turned into a real conversation 58% of the time (31 of 53, was 54%), and 10 of 29 booked or paid within 14 days (34%, was 23%). Most of those 10 had already said they wanted to book before Sean called, so the list may mark ready buyers more than it creates them (Claude's reading).",
-        "Read all 446 open Re-Engage cards live ($453,800): 28 customers wrote last, not 61. After reading all 28 threads, our side first, 2 are worth a call, and both already hold a Scheduled Callback from Noah's 10/16 batch, so no new tasks were needed.",
-        "Re-read the 279 sampled conversations with 12 fresh AI readers: Re-Engage's price questions nobody answered are 1 of 25, not 4, because Sean and Jenn had texted prices on the other 3. A control group of 53 unchanged leads puts rerun noise near 6%, and all 159 quotes the readers cited match the customer's own words."
-      ],
-      "fixed": [
-        "Corrects the 10/21 entry: its 54% and 23% came from the old test, and its suggested callback tasks for 5 Re-Engage people are no longer needed."
-      ],
-      "inProgress": [],
-      "notes": [
-        "A sender id does not prove a person: GHL workflows send under Sean's id (the 'No pressure, just checking in' nurture email went out 1,897 times as Sean, the 'staff are preoccupied' auto-reply 455 times), while Noah's and the drafter's real replies carry no id. The rerun screens the automated ones and read the no-id replies by hand.",
-        "Read-only: nothing in GHL, Urable, or Sean's page changed."
-      ]
-    },
-    {
-      "date": "2026-10-24",
-      "title": "Planned one consent check that every automatic text and email has to pass, after finding that none of the 7 bot-sent messages checks whether the person asked us to stop",
-      "shipped": [
-        "Mapped the 7 messages our bots send with nobody approving them: the quote email and text, the 'which model?' text, the color-change text, held overnight texts, and the welcome email and text after a deposit. None of the 7 checks whether the person told us to stop. The plan puts one check at the exits every text and email already leaves through, so it covers all 7 plus any added later. It only reads consent and never sets or lifts a do-not-contact.",
-        "Found in the live code that when the GHL quote email fails for any reason, the quote goes out through Urable instead. It happened twice since 10/08 (a GHL rate limit and an email GHL called invalid), and a do-not-contact refusal would take the same path. So the check answers 'held' instead of throwing an error.",
-        "Tested all 27 claims from two rounds of a Gemini second opinion against our own code, contact data, and logs before any of them changed the plan. Several were wrong for our system (one run sends at most 2 messages, not 3 or 4; zero hostile opt-out phrases in 1,637 inbound messages). One that held matters most: 52 published GHL workflows send texts or emails without reading our tags, so a written stop has to become a real do-not-contact within the FCC's 10 business days."
-      ],
-      "fixed": [
-        "The checks also caught three mistakes in the plan itself. It would have blocked on tags that are not opt-outs (booking, decline, wants a person), so a July 'no thanks' would block a quote asked for in October. The shared phrase list counts 'I'll stop by with my car' as a stop (only about 5 of 71 non-bare 'stop' messages were real). And the inbound stop rule misses 'stop contacting me', which is why one such text from 9/09 was never tagged."
-      ],
-      "inProgress": [
-        "Nothing built yet. Seven decisions are open first: five are Tasha's, and Noah has two plus one question (whether someone who opted out and later retakes the quiz still gets the quote email, whether to hold or send when the check cannot read the contact, and whether Tasha may set do-not-contact herself when a written stop is plain, since his 10/12 rulebook keeps that call with him)."
-      ],
-      "notes": [
-        "The card is Claude's recommendation from the 10/01 safety review; the rules it enforces are Noah's (rule 41, his 8/14 STOP list, and the 10/12 rulebook's opt-out-first line).",
-        "Planning only, from reads of the code, the 9/30 contact snapshot, and 30 days of logs. Nothing changed in GHL and no message was sent."
-      ]
-    },
-    {
-      "date": "2026-10-24",
-      "title": "Fixed every deposit-lane problem from two reviews on 10/24 and put the fixed lane back on, still plan-only: it writes nothing until Tasha's go",
-      "shipped": [
-        "Fixed all 6 must-fix problems in the deposit lane (5 from the morning review, 1 from the hand checks), plus 12 smaller ones, each with a test that fails on the old code (349 tests now, up from 234). The lane now reads GHL's install date the way GHL sends it, so it won't rewrite about 14 install dates every morning, and a slow GHL reply can no longer give a paid customer a second Booked card or a second task.",
-        "Checked by hand, read-only, the 4 jobs the lane would have gotten wrong. #5847's 4Runner never lost its card: Urable reworded the trim at drop-off, and the old code would have made a second $2,200 card for one car. The lane now holds any card that may be the same car and asks Jenn to confirm, and a replay on the real job proves it holds.",
-        "Had the fixes reviewed twice more the same evening. The first found 21 items, including one that could have left every new deposit without a card overnight (a re-run after a stopped deploy left both 10-minute clocks paused while saying it was done); the second found 3 more. All are fixed, and the deploy script now has 14 tests of its own.",
-        "Put the fixed lane live in plan-only mode (deposit-lane-00007-vig), with both clocks paused until its checks passed, and backed the code up off the drive. It now plans with every fix and still writes nothing to GHL."
-      ],
-      "fixed": [
-        "Found and fixed a gap in the new duplicate check while testing it: a truck reworded at drop-off (F-150 XLT to F-150 Lariat) would still have gotten a second card. Model names that are numbers now count, so it holds for Jenn instead.",
-        "The card match no longer reads truck numbers like 1500 and 2500 as model years, so a Silverado 2500HD job can't be filed onto the card of a Silverado 1500."
-      ],
-      "inProgress": [
-        "Not switched on yet. Next, in order: Tasha's open calls on the plan page, a heads-up to Jenn, two cards to fix by hand in GHL (#5821 and #5838), then a first live run on 3 chosen jobs with every card checked afterwards."
-      ],
-      "notes": [
-        "Everything today was plan-only or read-only. No GHL card, Urable job, or customer message changed."
-      ]
-    },
-    {
-      "date": "2026-10-24",
-      "title": "Read all 1,189 lost and ghosted Rocklear conversations to learn why we lose leads: most never answer, and our own blasts drive the opt-outs",
-      "shipped": [
-        "Pulled every card in Lost - Declined (440) and Lost - Ghost (754), 1,189 people, and read each conversation, calls included. Read-only: no tags, no stage moves, and no customer got a message.",
-        "Sorted the 452 people who wrote back by the reason in their own words, then checked every quoted reason word for word against the conversation: 0 made-up quotes. 164 asked us to stop, 122 went quiet after getting a quote, 37 said price, 34 went with someone else (PPF, a regular ceramic coating, or another shop), and 31 said not now.",
-        "737 of the 1,189 (62%) never wrote back at all. 358 of them opened their Urable quote and 271 never opened it, so for most of them the quote arrived and the silence came after it.",
-        "Found that our own mass texts drive the opt-outs: 46 of the 164 came on Aug 25, the sale-text day, and 13 more on Sep 7. That is a real cost to weigh before the next blast."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "3 paying customers are filed under Lost - Ghost, which breaks the rule that a customer is never Lost, and about 9 Ghost leads gave a clear no and belong in Lost - Declined. Flagged only; each move needs its own dry run first.",
-        "In 14 conversations the customer's last question or callback request got no answer from a person, including one customer who wrote that they waited a month and bought elsewhere. Worth a look at how replies get routed, not at any one person."
-      ],
-      "notes": []
-    },
-    {
-      "date": "2026-10-24",
-      "title": "Put the 8 Waiting-stage leads who named a time back on Sean's call sheet for that day, and pulled one callback that was booked six weeks late back to its right date",
-      "shipped": [
-        "Recounted the Waiting on a future date stage: 87 cards, and the same 39 the 10/21 audit found were still invisible to the call sheet. The sheet only reads tasks titled Scheduled Callback; 23 of those cards had no task at all and 16 had only an old Waiting resurface task.",
-        "Read all 39 against their texts, 84 call transcripts, their other cards, and Urable. None had booked or paid. 8 had said in their own words when to come back; the other 31 gave no time, said no, or have not answered 3 or more follow-ups, so they got no task.",
-        "Added a dated Scheduled Callback task for Sean on 7 of them, each date worked out with the timeline reader's own rules from what the customer said: Nov 2, Nov 26, Dec 1 for three, Jan 5, and May 4. Closed 3 out-of-date resurface tasks and left a note on each card with the customer's words. No customer got a message and no card changed stage.",
-        "Proved the pickup with the live call-sheet code (Noah's 10/23 build): it lists all 8 cards and finds all 8 tasks, and on each date the lead takes a protected seat on Sean's list and stays there until the task is completed or moved."
-      ],
-      "fixed": [
-        "The timeline reader had booked one of the 8 at 5:15 AM PT today for Dec 18, from \"after a couple of weeks\" said on 10/23. Its own rule gives Nov 3, so the task now says Nov 3, while the call is recent enough for the sheet to show it as the customer's own timing.",
-        "Three separate reviews of the write script ran before it touched GHL. They caught a retry path that could have created the same callback twice; the script now sends each create once and never repeats it, and 22 offline tests cover each failure case."
-      ],
-      "inProgress": [
-        "31 Waiting cards still have no future date, so the sheet cannot see them. Moving each one to the stage that matches what the customer said is the next step.",
-        "One of the 8 said he would pass on his current car but buy a new one next year. On May 4 the sheet's AI may send him to the review list instead of the call list, where a person decides."
-      ],
-      "notes": []
-    },
-    {
-      "date": "2026-10-24",
-      "title": "Caught 5 problems in the deposit lane that would have written bad data to GHL on its first live run, before it was switched on",
-      "shipped": [
-        "Read every deposit-lane run since 10/19 before switching it on: 769 runs, nothing written, and one failed run (10/23 at 7:40 AM PT, a Urable hiccup that went through on its retry). It is healthy, and because it only writes plans, none of the problems below has touched a card or a customer.",
-        "Reviewed the lane's code line by line, ran its 247 tests (all pass), and rebuilt the main bugs in a test setup that answers the way GHL really does. Five problems have to be fixed before the lane writes anything. The two that would hurt most are the install-date check, which never matches the timestamp GHL sends back and would rewrite about 14 install dates every morning, and a slow GHL reply, which makes the lane send \"create card\" a second time and can leave a paid customer with two Booked cards.",
-        "The other three are a deploy script that switches the lane live before its own safety check runs, a first live run that would act on all 18 planned jobs at once with no way to start with a few, and the 10/09 improvements (early-Won deposit cards back to Booked, the deeper payment read), which have never run anywhere, not even in plan-only mode. Five smaller fixes go in the same pass.",
-        "Found two other things that already move paid cards into Booked: Noah's 5:35 AM stage-truth guard, which reads every recent payment since his 10/15 fix, and Sean's Booked tap on the call sheet, published 10/19. Both only move cards forward, so they won't fight the lane. The exception is Sean's Undo, because the lane would put an undone card back in Booked within 10 minutes, so that needs a rule first. The lane still does what neither of them does. It makes the missing card (job #5825 has had none for 5 days), stamps the deposit, total, and install date on it, and opens Jenn's task when there is no date.",
-        "Went through today's plan job by job. Of 18 paid jobs, 11 cards only need their fields filled in, 3 cards would be created, 2 deposit cards sit in Won, 1 card needs its value and a date task, and 1 is a refund. Four need a look by hand before go-live: #5847's Booked card looked missing to the lane, so it would make a second one (checked by hand that evening: the card was there all along, and Urable had reworded the car); #5849 is a second car on #5848's contact; and #5821 and #5838 sit in Won on jobs Urable hasn't closed.",
-        "Found that Urable has shown the $932.88 refund on job #5773 since 10/21, while the job still reads booked for Nov 30. Updated the Waiting on Noah card: the refund question has its answer, and what's left is cancelling the job so the customer isn't reminded about a booking they cancelled.",
-        "Put the whole go-live plan on one tracking page for Tasha: 7 steps in order, the 10 code fixes, 8 overlooked items, and 21 decisions, each with a tick box."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Not switched on yet. Next, in order (the order is Claude's recommendation; Tasha decided on 10/24 to do all of it): Tasha makes the open calls, Claude fixes the 10 code problems with tests, then commit and redeploy still plan-only, the 4 hand checks, a live start on 3 chosen jobs with every card checked afterwards, fully on with refunds still plan-only, and last the 6:15 AM deposit check (C25)."
-      ],
-      "notes": [
-        "Everything today was read-only. No GHL card, Urable job, or cloud setting changed, and no customer was messaged."
-      ]
-    },
-    {
-      "date": "2026-10-23",
-      "title": "Put all 57 open October tasks on one ranked checklist, then closed the first: follow-up email 5 no longer pitches PeelClear",
-      "shipped": [
-        "Built a ranked checklist of every October task still open or dropped, from about 130 work sessions, the work log, and Noah's notes through 10/20: 57 open, of which 22 had been forgotten, 6 were built but never shipped, 10 waited on Tasha's call, 6 were half done, and 13 wait on Noah. Each card says why it matters and what changes once it is done, so the next task gets picked by what it is worth.",
-        "Tasha took 2 cards off as outside her job: getting install dates from customers who paid a deposit, and replying to people who texted. Those belong to Sean, Jenn, and Noah, and owed replies go to Sean's call sheet.",
-        "Tasha swapped Noah's new copy into email 5 of the Nurture Sequence in GHL (version 45, saved 10/23 at 1:52 AM PT), so it stops offering PeelClear, which has been paused since 9/23. Before touching the car-name field, read the last 30 days of real sends: 1,204 follow-up emails, 29 with a blank car name, all going to 11 people (about 2%). Kept Noah's clean car-name field; the fix for those 11 is his S44, already on the checklist.",
-        "Dry-ran the 24 September quoted leads Noah approved putting back into the follow-up emails (M62): all 24 are still cold, none has paid, their quotes are unchanged, and none has ever received a follow-up email. 22 of them hold current-price one-layer quotes worth $32,940. The 10/19 test lead got emails 1 to 4 on schedule."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Adding the 24 is a live step that starts their six emails. Tasha said go on 10/24, but the run refused because it was 1:08 AM PT, and it only runs between 8 AM and 6 PM PT. Nothing was written; it needs a daytime run."
-      ],
-      "notes": [
-        "The only GHL change was the email 5 swap, which Tasha made by hand."
-      ]
-    },
-    {
-      "date": "2026-10-22",
-      "title": "Claude on Tasha's Mac can no longer edit Noah's synced vault, and the daily resync now stops when her copy of his notes is stale",
-      "shipped": [
-        "After the 10/22 slip where Claude wrote notes into two of Noah's SOPs (restored the same day), mapped how Noah's vault reaches Tasha's Mac: his MacBook, Obsidian's servers, the synced copy, then the resync into her read-only mirror.",
-        "First lock, live: Claude Code on Tasha's Mac is blocked from editing Noah's synced vault, and any terminal command that might write there asks first. Proven live: a test edit was refused and the file's fingerprint never changed. 96 tests.",
-        "Second lock, live: the resync now stops when the synced copy is stale and checks afterward that the copy really landed. It was needed the same day: the synced copy had sat three days behind while Obsidian was closed, so Noah's notes from 10/20 on had not arrived. 23 tests."
-      ],
-      "fixed": [
-        "An independent review found five more ways a terminal command could still write there, and one false 'fresh' reading right after Obsidian opens. All fixed and retested before go-live.",
-        "Corrected the morning's note on the slip: Obsidian Sync had not run since 10/19 at 6:36 PM PT, so the edit very likely never reached Noah, and both SOPs match their backups byte for byte."
-      ],
-      "inProgress": [
-        "Writing into Noah's vault stays off unless Noah agrees to a way for Tasha's side to write there."
-      ],
-      "notes": [
-        "Both checks live on the Mac's own disk, so they keep working when the external drive drops (it dropped twice that day)."
-      ]
-    },
-    {
-      "date": "2026-10-22",
-      "title": "Picked Noah's newer do-not-contact rule for declines: a plain no closes the lead without blocking it, and no customer got a message",
-      "shipped": [
-        "Read Noah's 9/07 decline recipe and his 10/12 call-sheet rulebook side by side (approvals card M293) and applied the newer one: a lead who says no goes to Lost with status lost and the drips stopped, but gets no do-not-contact. A 'not right now' goes to Re-Engage. Do-not-contact stays for real opt-outs only.",
-        "Drafted the 4 notes that mark the old instructions superseded (3 for the lead-handling SOP, 1 for row 6 of the rulebook, that last one on Claude's recommendation) and put them on approvals card M293, so Noah's own session adds them to his SOPs with one tap.",
-        "Checked the live code before changing any words: the decline sweep (live since 10/16) refuses to write do-not-contact at all, and Sean's call-sheet tap never sets it. The bots already follow the 10/12 rule, so nothing needed a redeploy."
-      ],
-      "fixed": [
-        "Claude briefly wrote those notes straight into Noah's synced vault, which is off-limits. Tasha had both files restored to their exact originals within minutes (checked byte for byte), and the notes went to Noah's card instead."
-      ],
-      "inProgress": [
-        "Noah's SOPs still carry both rules until he taps \"10/12 rulebook wins\" on M293 and his session adds the 4 notes.",
-        "Not verified yet: whether the six-email Nurture Sequence in GHL stops on the nurture-stop:declined tag. It needs a look in the workflow builder.",
-        "The price-shopper lane (thrown out with full do-not-contact, Noah 8/07 and 10/08) was not part of M293 and is unchanged."
-      ],
-      "notes": [
-        "Zero GHL changes and zero messages sent: do-not-contact already set on past decliners stays in place, and no past lead was moved into Re-Engage, because either change could restart drips or texts.",
-        "Approvals card M293 is back in Noah's queue, marked partial: Tasha's decision is recorded, and the SOP wording is his to apply."
-      ]
-    },
-    {
-      "date": "2026-10-21",
-      "title": "Texts and DMs open cards on Sean's board again, phone calls no longer do, and a DM with no car waits in Awaiting Engagement instead of the quote queue",
-      "shipped": [
-        "Checked the reply-card fix plan against GoHighLevel's own rules before building. One trigger holds only one reply channel, so the fix needed 7 triggers, one per channel. A draft version that put three channels in one trigger would never have fired, and it dropped the 'already has a card' check, which would have pulled Booked deals back into Manual Quote Required every time the customer texted.",
-        "Tested four more gaps against 18 days of run logs before go-live: 7 emails reached the workflow and made 0 cards (all came from existing customers), and 101 of 146 Instagram runs were people's second or later messages, which is why a car named later needs its own step.",
-        "1:56 AM PT: built the 7 message-channel triggers on the Reply workflow (SMS, email, Instagram, Facebook, WhatsApp, live chat, and Google Business), each carrying the same 24 stop phrases such as 'not interested' and 'wrong number'. Calls match none of them.",
-        "2:44 AM PT: put Noah's 10/17 rule live in Vehicle Estimation after reviewing it on a copy first. A new card with no car on file now stays where it opened instead of moving to Manual Quote Required 20 seconds later. A car the estimator can't price still goes to Manual Quote Required.",
-        "2:45 AM PT: published the Reply workflow. People who text or DM with no card get one again (about 3.8 a day went without since 10/17), and phone calls no longer open cards (74 of the 143 auto-made cards from 9/29 to 10/16 came from calls).",
-        "Built a Smart List in Opportunities, Rockclear: 'New messages, no car yet' (Awaiting Engagement, source auto-card: reply, newest first), so Instagram leads with no phone number have one place to be seen."
-      ],
-      "fixed": [
-        "Tasha's 10/19 trigger save never reached GoHighLevel. This time every change was read back from GHL and passed GHL's own validation before publishing.",
-        "Creating the Smart List also filtered Tasha's main Opportunities view down to 0 cards for about a minute. Cleared it; the view is back to 3,339 cards."
-      ],
-      "inProgress": [
-        "Tests 1 to 4 (a voicemail and a text from a new number, two Instagram DMs) still to run. Noah gets his done line after they pass.",
-        "The Missed call workflow stays off until Noah answers the call-back task question (on Waiting on Noah). Until then a missed call gets no card and no task, the same as Sean got from it since 9/29.",
-        "Next steps, Claude's recommendation: a 'car added' workflow that moves a waiting card to Manual Quote Required once its car is typed in, and a rule that whoever answers a DM types the car into the contact's Vehicle Description field (needs Sean's OK)."
-      ],
-      "notes": [
-        "First live result: at 3:14 AM PT a Facebook form lead whose car the estimator couldn't price took the new 'has a car' path to Manual Quote Required, as designed.",
-        "Rollback: the Reply workflow goes back to Draft in one click; the Vehicle Estimation change undoes by putting its 3 steps back under the no-car branch.",
-        "'01.1 New Lead inbound call' and 'lead replied > engage stage' were not touched, per Noah's 10/16 brief."
-      ]
-    },
-    {
-      "date": "2026-10-21",
-      "title": "Found 158 dead tags out of 983 in GHL, and the reason they matter: the follow-up drafter shows the AI every tag as if it were true today",
-      "shipped": [
-        "Checked all 983 GHL tags against the contacts carrying each one, all 121 workflows, and about 13,800 code files. 158 can go: 27 sit on no contact at all, and 131 are leftovers from finished campaigns or the old GHL setup, applied about 22,300 times across contacts in total.",
-        "Found how stale tags reach customers: the follow-up drafter copies every tag on a contact into the AI's prompt, so '30% discount' (44 contacts), 'hot lead' (1,051), and 'holiday 2024 promo' (620) read to it as current facts when it writes a text.",
-        "Marked the 643 tags that look like clutter but must stay: the Urable proposal markers. The finalized and declined bots read them to avoid handling the same proposal twice, so deleting them would make the bots post decline notes again.",
-        "Found the 13 'last day for 50% off' workflows from the 9/07 sale still published with no trigger, plus tags that mean the same thing ('hot leads' and 'icon rocklear' each exist twice; 'do not contact' and 'do-not-contact' are both live opt-out guards, so they need a careful merge)."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Deleting the 27 empty tags: Tasha said go. All 27 are backed up, were still empty that morning, and the delete script passed its safety checks offline. It has not run yet.",
-        "Claude's recommendation, not approved by Noah or Tasha: remove the 131 leftover tags in batches after checking each batch against opt-out tags, unpublish the 13 trigger-less sale workflows, and ask Noah to have the drafter skip bookkeeping tags."
-      ],
-      "notes": [
-        "Read-only: nothing in GHL was changed.",
-        "Each bulk tag change adds about one row per contact to the Leadgentic sheet, so the leftover-tag cleanup has to run in small batches."
-      ]
-    },
-    {
-      "date": "2026-10-21",
-      "title": "Mapped where every Rockclear lead goes from New Lead to Won: the calls that book most are the ones Sean's sheet ranks low or never sees",
-      "shipped": [
-        "Rebuilt every Rockclear card's path from GHL's own stage-move records and checked it against the 9/14 board snapshot: it matched on all 2,795 cards. From that, built a journey map, a profile of who sits in each of the 12 stages, and a hit-or-miss check of Sean's call sheet from his real dials, on one page Tasha can hand to other AI models for a second opinion (first name and last initial only, no phones or emails).",
-        "Customers who messaged us recently and got no answer are the best calls on the sheet: 54% turned into a real conversation or reply and 23% booked, against about 2% booking for leads who never replied. The sheet ranks fresh leads above them.",
-        "Re-Engage holds the most money of any open stage: 459 cards worth $466,900 on their card values. 158 of them never engaged at all.",
-        "Sean's morning list came late or not at all on 4 of its first 7 workdays. The 10/15 and 10/20 lists never loaded, so he called from lists one or two days old.",
-        "313 of 375 list rows were reserved seats before any ranking ran, and rows 51 to 75 got dialed about a third of the time.",
-        "An automation refiles quoted cards into Manual Quote Required about 19 seconds after they land, 334 times since 8/01. Lost Declined is about half STOP replies, not people who said no.",
-        "Late 10/21 follow-up: 39 of the 74 Waiting cards can never reach the sheet, because it only reads tasks titled 'Scheduled Callback'; 23 have no task and 16 have other task titles. 21 people who texted and got no answer were on neither the 10/21 list nor any pinned card (12 in Engaged, 5 in Re-Engage, 4 in Lost Ghost)."
-      ],
-      "fixed": [
-        "Caught a wrong finding before the page went out. The first draft said Sean's 10/13 calls never reached GHL; an independent check showed the page files each tap under the list's date, and Sean worked that list on 10/15. 36 of the 37 calls he logged match a GHL call that day."
-      ],
-      "inProgress": [
-        "Claude's recommendation, waiting on Tasha's go: add 'Scheduled Callback' tasks for the 5 Re-Engage people (the sheet picks those up with no code change) and build a pinned batch for the other 16 on Sean's page, which needs Jenn to load it or edit access for Tasha.",
-        "Two of the page's seven fixes are in Noah's code: a lane for unanswered messages and the loader that puts the morning list on the page. Claude's recommendation: leave the 60 won cards still in Booked and the 21 open Disqualified cards with Noah, because a Won move reports a sale to Meta and the Disqualified fix changes status."
-      ],
-      "notes": [
-        "Read-only: nothing in GHL, Urable, or Sean's page was changed.",
-        "An 8:00 to 8:40 AM check already posts to Sean's channel and #alarms when the morning list did not load, so whoever sees it can load the list by hand."
-      ]
-    },
-    {
-      "date": "2026-10-20",
-      "title": "Put all 84 systems handoffs from Noah since September 1 on one ranked list, each checked against what is live: 23 done, 19 partly done, 4 blocked on Noah",
-      "shipped": [
-        "Collected every systems job Noah handed Tasha from 9/01 to 10/19: his approvals page (670 items, filtered to the ones that name Tasha), the September takeover lists, and his 10/11, 10/16, 10/17, and 10/18 briefs. Lead follow-up work is listed separately so nothing is lost.",
-        "Checked each job against what is running today instead of old notes: all 120 GHL workflows, 28 Cloud Run services, and 24 scheduled jobs. Result: 23 done, 19 partly done, 38 not started or needing a quick check, and 4 blocked on Noah.",
-        "Ranked the open jobs into Do now, This week, Next, and Later, with about 100 to 149 hours of build left. The order and the hours are Claude's recommendation and estimates, not Noah's.",
-        "Top of the list on 10/20: reply cards off since 10/17 (fixed and live 10/21), Tasha's three Night Shift fixes on GitHub and not deployed (they need Noah's yes), Night Shift version 2 waiting on the access Tasha asked for on 10/19, and the deposit lane and the 6:15 AM check C25, both built and not live."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Zapier was not checked (it has no API we can read), and 5 jobs need one quick read before they start."
-      ],
-      "notes": [
-        "The live check turned up the 13 'last day for 50% off' workflows from the 9/07 sale, still published.",
-        "Nothing was changed anywhere; this was a read of live systems and Noah's notes."
-      ]
-    },
-    {
-      "date": "2026-10-19",
-      "title": "Put Noah's September follow-up email fix live and added the first of 25 quoted leads back into the emails; the other 24 go in once its first email lands",
-      "shipped": [
-        "Re-checked the 35 September leads Noah approved for re-adding on approvals card M62 (9/29) against GoHighLevel and Urable, reading every text, call recording, appointment and quote. 25 still qualify: none has booked, paid or written to us since mid-September, and none has ever received any of the six follow-up emails. The 22 with current-price quotes carry $32,940 in one-layer quotes. 10 dropped out: 6 were closed in Noah's 10/18 quiet-lead sweep, 1 has a deposit invoice out, 1 is on vacation and texting Sean, and 2 are being worked by Sean right now.",
-        "Tested the duplicate check before trusting it: it found every follow-up email on 5 people known to have them, including the sends GoHighLevel logged with no subject, so 'zero emails received' for the 25 is real and nobody gets a repeat.",
-        "Put Noah's 9/28 fix live on the quote poller at 9:01 AM (revision 00048-vev). It puts quoted leads back into the emails once their quote link exists, and pulls anyone who replies out before email 6 ('Before I close your file'). Only that one file changed; every other setting was copied from the live poller, including its 9-minute time limit, which the 9/28 install script would have cut to 4 minutes and could have stopped the poller's other jobs halfway. All 340 checks passed against the live code first, and the 9:30 email sweep ran clean in 190 seconds, the same as before.",
-        "Added the first lead back into the follow-up emails at 9:34 AM as the test, with its quote link written and read back. Its email 1 is due around 1:30 PM; that is the only proof GoHighLevel lets a lead re-enter the sequence."
-      ],
-      "fixed": [
-        "Noah's 9/28 backlog script only looked back 30 days for emails already sent, which no longer reaches the September sends. Widened it to full history for this run, so the duplicate check covers every email ever sent."
-      ],
-      "inProgress": [
-        "The other 24 go in after the test lead's email 1 arrives, during daytime hours, with Tasha's OK.",
-        "For Noah's sessions: the 10/16 email 6 fix was pinned to the old poller version and will now refuse to deploy until it is rebuilt on top of 00048-vev. Noah's vault copy of the file already holds both changes."
-      ],
-      "notes": [
-        "Email wording unchanged. The 3 leads holding September sale-era quotes go in as they are (Tasha's call); pricing gets handled when they reply.",
-        "Rollback: send the poller's traffic back to revision 00047-dtc, about a minute, no redeploy."
-      ]
-    },
-    {
-      "date": "2026-10-19",
-      "title": "Found follow-up email 5 still offering PeelClear to every new lead (173 since the 9/23 pause) and lined up the one-template fix that also unblocks the 35 re-adds",
-      "shipped": [
-        "Counted every follow-up email 5 sent since Noah paused PeelClear on 9/23, straight from GoHighLevel's send records: 173 leads got it, 6 to 9 a day last week, and every one still has the paragraph offering PeelClear. That goes against Noah's 9/23 rule that nothing automated offers PeelClear, and any of those leads could reply asking for it while there is no installer. The clean version, the same email minus that one paragraph, has been in the email library since 9/29, but the workflow step was never pointed at it, so the old copy kept sending.",
-        "Wrote Tasha a step-by-step plan for the swap: the exact template to pick, the subject and preview text to check before saving, the top-right Save that actually commits, and a test email at the end. The one real risk is the subject line. Re-picking templates on 9/12 blanked it on emails 1 and 6, and 219 email 1s and 120 email 6s went out as \"No Subject\" between 9/23 and 10/15, so the plan has her check it before she saves.",
-        "Built a read-only checker that proves the swap from real sends instead of the builder screen, and tested that it catches the problem: run on 10/18's sends, it failed all 9 email 5s for naming PeelClear. It also confirmed the swap can't confuse the drip-stop sweep or the nightly checker, because both recognize email 5 by its preview line and both versions share it."
-      ],
-      "fixed": [
-        "Kept a needless risk out of the plan. Two vault notes still said emails 1 and 6 go out with no subject, which would have meant re-picking two more templates with the same subject-wiping risk. The send records show every email 1 and 6 since 10/16 has its subject, so that job is already done."
-      ],
-      "inProgress": [
-        "The swap itself: Tasha re-picks the template in the workflow builder (any time works, because changes only go live when she saves), then the checker confirms it on the next real email 5 sends. With the Meta lead ads stopped since 10/14, few new leads are reaching email 5, so the real-send proof may wait until ads run again; her test email stands in until then.",
-        "Re-adding the September leads who never got a follow-up email (M62). The swap was the condition Noah set. A separate check this morning found 27 of the 35 still qualify, and three of them hold quotes that are wrong to email (two old sale prices, one with a PeelClear option). The re-add code also has to go live on the poller, and three other pending changes edit the same file. Claude's recommendation (not from Noah): ship them in one agreed order, because a later deploy built on an older copy would wipe out an earlier one."
-      ],
-      "notes": [
-        "Noah's Claude: the 10/13 handoff (item B3) and the 10/16 daily note in Noah's vault still list follow-up emails 1 and 6 as going out with no subject. GoHighLevel's send records show every email 1 and 6 since 10/16 has its subject, so that item can be marked fixed (Claude's suggestion). Once Tasha's swap is verified, Claude also suggests the nurture-emails README name \"Nurture E5 - Why Not PPF (v3 2026-09-29 no PeelClear)\" as the live email 5.",
-        "Also visible in the send records: new people stopped entering the follow-up emails on 10/14, the same day Meta stopped the lead ads. A separate session traced it, and Noah already handles the ad account.",
-        "Nothing in GoHighLevel, the code, or the approvals page changed in this session."
-      ]
-    },
-    {
-      "date": "2026-10-19",
-      "title": "Set a stopgap so Noah's sessions and Tasha's stop moving the same GHL cards twice, until the M369 Discord channel exists",
-      "shipped": [
-        "Wrote up Noah's 10/18 pick on approvals card M369 (\"you do it, it tells her\"): his sessions keep closing junk cards, and Tasha's sessions check what he closed before moving any card. The reason is 10/17. Both sides cleaned the Manual Quote Required stage within 12 hours: his sessions closed 13 spam callers, 7 Instagram DMs, and 140 dead cards, and Tasha's moved 22. About 12 robocall cards were likely worked twice.",
-        "Stopgap until the Discord channel is built: Tasha's sessions read Noah's daily notes before moving any card and skip what his sessions already closed. Tasha's own card moves are listed in this log by stage and count, and his Claude already reads it every day."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Ask for Noah's sessions (no build, one habit): whenever a session closes or moves GHL cards, list each card in that day's note by name or GHL contact link. A big batch can go in a linked list. Right now the notes name people for small moves but give only counts for big batches (10/17: 13 spam callers, 7 Instagram DMs, 140 dead cards), and a count can't tell Tasha's sessions which cards to skip. Noah's Claude: please save this as a standing rule for card work if Noah agrees."
-      ],
-      "notes": [
-        "Nothing in GHL, Urable, or the approvals page changed."
-      ]
-    },
-    {
-      "date": "2026-10-19",
-      "title": "Night Shift version 2 started: the nightly lead check's live code and Tasha's three 10/13 fixes are now one tested copy on GitHub, so the new version builds on what actually runs every night",
-      "shipped": [
-        "Read Noah's 10/18 plan for Night Shift version 2 and turned it into a step-by-step build list: 22 steps for Tasha in the order his plan sets, 7 asks for Noah, the 15 rules, and the 21-slip test his sessions ran, with each step's 'done when' written out.",
-        "Found that the Night Shift running every night since 10/17 was put live from Noah's copy, so Tasha's 10/13 fixes were never in it: consultations still read as finished installs, the list of 30 staff, vendor and test contacts to skip is empty in the live code, and callbacks the system dropped still count as Sean's misses.",
-        "Downloaded the code that is actually deployed (46 files) and confirmed it matches Noah's copy on all 41 code files. Then built one copy: the live code exactly, plus the three fixes. All 197 automated checks pass (179 from the live code and 18 from the fixes), and a file-by-file check shows the fixes are the only difference.",
-        "Pushed that copy to the private dragon-auto-routines repo as the night-shift-v2 branch, so Noah's sessions can see it. The live Night Shift and the repo's main branch were not touched."
-      ],
-      "fixed": [
-        "New commits on this Mac were being signed with a placeholder name because no git name is set here. Every commit on the new branch now carries Tasha's name.",
-        "Noah's 10/17 check said Night Shift had not moved since 10/12, because the 10/13 work had never been pushed. It is on GitHub now, so his sessions see the real state."
-      ],
-      "inProgress": [
-        "Sent Noah a file for his Claude with four permission lines: read access for Tasha to the lead database and to the Night Shift reports, and permission for the nightly check to use Argon. Building version 2 waits on it.",
-        "Next asks for Noah: the details behind the 21 slips his sessions found 10/12 to 10/17, and two files that live only on his Mac (the spam numbers already closed and the 10/16 Argon sweep data).",
-        "Build plan once access lands: step 1 plain-code checks ($0 a night), step 2 Argon reading with a second check before anything reaches a person (about $3 a night), step 3 the miss log that turns every slip Noah finds into a test. Each step goes live only on Noah's yes."
-      ],
-      "notes": [
-        "Read-only throughout: nothing in GHL, Urable, or the live Night Shift changed. The older phase-1 branch stays on Tasha's Mac as it was."
-      ]
-    },
-    {
-      "date": "2026-10-19",
-      "title": "Cleared 6 nameless junk cards out of the quote queue (Manual Quote Required down from 85 to 79) and kept the 8 that are real people",
-      "shipped": [
-        "Read all 14 'New reply (phone)' cards in Manual Quote Required, including transcripts of the voicemails, which GHL does not show. 6 had no name and nothing to work with: 2 loan-funding pitch texts, 3 blank voicemails, and 1 garbled wrong-number voicemail. None gave a car, an email, or anything to quote.",
-        "Checked the 6 numbers against all 5,196 Urable customers first, with a known customer's number as a control to prove the check can find a match. None was a past customer, and none had a second contact in GHL.",
-        "Deleted them one at a time on Tasha's go, 8:37 to 8:41 AM PT, re-reading each card in full right before its delete. All 6 read 'not found' afterwards, and every contact, message, tag, and do-not-contact setting was unchanged a minute later. Manual Quote Required went from 85 cards to 79."
-      ],
-      "fixed": [
-        "An independent review of the delete script found ways it could have deleted a card that changed after Tasha approved it, such as a newly booked appointment it could not see. All of them were closed and tested before the first delete."
-      ],
-      "inProgress": [
-        "The other 8 'New reply' cards are real people and stayed. On 10/19, 4 of them were waiting on a reply from us, and 1 was a paid customer asking where a refund went."
-      ],
-      "notes": [
-        "Undo: GHL Settings > Audit Logs can restore a deleted card for 60 days."
-      ]
-    },
-    {
-      "date": "2026-10-19",
-      "title": "Traced the blank car name in the follow-up emails to 41 customers, and stopped a test that would have passed while 4 of the 6 emails could still go out blank",
-      "shipped": [
-        "Found the email: email 1 of the six-email Nurture Sequence reads 'Thanks for reaching out about the .' when the contact has no car on file. 41 customers got at least one blank email in 60 days (125 blank emails), and 70 of those emails also had an Open Your Proposal button that led nowhere.",
-        "Found the cause: only the lead receiver fills in the car field. 15 of the 41 never went through it (hand-sent quotes, quiz leads the sweep missed, and old contacts re-entering the drip), so a receiver fix alone cannot cover them.",
-        "Built the GHL side of the fix: the word 'car' as the default on each of the 10 car tags in the 6 email templates, in the exact format GHL's own builder uses. The dry run added one setting per template and every slot read 'the car'."
-      ],
-      "fixed": [
-        "Stopped before the first live write. The planned check, a test send of email 1, would have passed even if emails 2 to 5 still went out blank: GHL drops the part of the template that holds the fallback when a step has preview text, and emails 2 to 5 have it. Those 4 steps sent 100 emails since 10/15."
-      ],
-      "inProgress": [
-        "Claude's recommendation, waiting on Tasha's go: put the fallback on 2 unused templates first, send them to Tasha's test contact through a throwaway draft workflow, and only then change the 6 live templates one at a time."
-      ],
-      "notes": [
-        "Nothing in GHL was changed, and no customer got a test email."
-      ]
-    },
-    {
-      "date": "2026-10-19",
-      "title": "Narrowed 266 open items on Noah's approvals page to 5 Tasha can do without him, and found a deposit-lane bug that would rewrite every install date every 10 minutes if switched on",
-      "shipped": [
-        "Went through all 646 items on Noah's approvals page: 266 still open, and 25 with an answer from Noah that nobody had acted on. Picked the 5 Tasha can do without him that had sat a week or more: the email 5 swap (M65), the deposit lane fixes (M151), re-adding the September quoted leads to the follow-up emails (M62), cards for 28 quoted leads with no card (M125), and the blank car name (S44). Work on 4 of them started the same morning.",
-        "Mapped where the deposit lane (M151) stands on one page for Tasha, with 17 questions to answer before it goes live. It has run every 10 minutes since 10/07 in plan-only mode, with no warnings since 10/12 and no writes.",
-        "Confirmed a bug in the lane's code: GHL reads Install Date back as a timestamp and the lane compares it to a plain date, so switched on as is, it would rewrite the install date on every card every 10 minutes.",
-        "Read the lane's plans from the night before: one would have opened a second card for job #5824, because its card says Camry and the job is an Accord."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "The 10/09 lane fixes are still not committed or redeployed, so the live lane has not changed since 10/09.",
-        "Two calls only Noah can make are on the page: the #5703 cancel ($512.50 held) and the #4221 refund ($1,125 promised in June 2025)."
-      ],
-      "notes": [
-        "Nothing in the deposit lane, GHL, or Urable was changed."
-      ]
-    },
-    {
-      "date": "2026-10-18",
-      "title": "Built a scoreboard that tests each Claude model 10 times per task: Sonnet 5.5 matched Opus 5.5 on all 50 runs at less than half the cost",
-      "shipped": [
-        "Built a test bench that scores Claude models on 5 fixed tasks from our own work: a client text under Noah's product rules, pulling 12 fields out of a messy lead note, a phone-number cleaner checked against 14 hidden cases, drop-off days around the Tuesday to Thursday closure, and a 100 to 130 word explanation under a list of writing rules. Each task runs 10 times per model, because the same prompt gives different answers from run to run, and a script grades every answer, so no AI judge can tilt the score.",
-        "Ran the first full baseline on 10/18 (150 runs in about 5 minutes, $0.89 of usage): Opus 5.5 passed 50 of 50, Sonnet 5.5 passed 50 of 50, and Haiku 5.5 passed 46 of 50, with all 4 misses running past the word limit. Per run, Opus cost about 1.2 cents, Sonnet about half a cent, and Haiku 0.03 cents.",
-        "All 30 client texts across the three models kept Noah's product rules: no 'chip-proof', no 'hydrophobic', no stacked years called a warranty, no PeelClear, and no prices.",
-        "When the next model comes out, one command runs it through the same 5 tasks and shows whether it beats, ties, or trails the models in use, with a check that separates a real change from normal run-to-run wobble."
-      ],
-      "fixed": [
-        "Caught that test runs started from the Claude desktop app inherit about 30 hidden app settings, which added about 300 tokens to every model's instructions and forced maximum effort. The bench now strips them, so a test started from the app scores the same as one started from Terminal. Any other script that runs Claude from the app has the same leak.",
-        "Found and fixed two bench bugs before they cost anything: one crashed run could have thrown away a whole batch's paid results, and a test edited mid-batch would have been stamped with the wrong version. Both are covered now, among 93 self-checks that run for free."
-      ],
-      "inProgress": [
-        "Opus and Sonnet both scored 50 of 50, so these 5 tasks can catch a model getting worse but can't yet say which of the two is better. A harder second version of the tasks would answer that."
-      ],
-      "notes": "This grades the models, not the business. It is one data point for Noah's rule that client drafts may run on Sonnet 5.5 when a side-by-side on our own prompts shows the same output: Sonnet matched Opus here at less than half the cost, but these were 5 short tasks, not the drafter's real prompts."
-    },
-    {
-      "date": "2026-10-18",
-      "title": "Deleted 7 proven junk cards from the quote queue: Manual Quote Required went from 92 cards to 85, and no real customer was touched",
-      "shipped": [
-        "Checked all 21 cards named 'New reply' plus a phone number before touching any: none were duplicates (21 different numbers, each on its own contact), and the reply workflow that made them has been off since 10/17, so no new ones are arriving. The 11 open ones stay where they are: leads, customers, and callers Sean is still trying to reach.",
-        "Re-ran the full spam check on the 10 closed ones with nothing written. It confirmed 7 as junk: 2 recorded robocalls ('your business is not verified on Google'), 3 callers who never said a word and whose numbers cannot take a text, and 2 business-funding pitches. Urable's whole customer list (5,197 customers) was read to the end and matched none of them.",
-        "Deleted 1 card first to see GoHighLevel's real answer, then the other 6. Every deleted card now reads 'not found', and on all 7 contacts the do-not-contact blocks, tags, messages, tasks, notes, and Do Not Contact marker stayed exactly as they were. Manual Quote Required went from 92 cards to 85; all 7 were already closed, so the count of open cards is unchanged.",
-        "Confirmed the junk cannot come back as new cards: the reply workflow skips anyone blocked from calls and stops when it finds a Do Not Contact card, and all 7 contacts keep both. Any deleted card can be restored from Audit Logs for 60 days.",
-        "Had a separate reviewer check the delete script 3 times before it ran. It found no way to delete anything outside the 7, and every gap it raised was fixed before the first delete."
-      ],
-      "fixed": [
-        "Caught before deleting: one card I had first counted as junk belongs to a caller whose number received our text in July, so it may be a real person. It was kept, along with 2 funding pitches whose block note the checker does not recognize yet."
-      ],
-      "inProgress": [
-        "When the reply workflow comes back as message-only, it has to keep both checks (skip anyone blocked from calls, stop on a Do Not Contact card), or a junk number could open a new card."
-      ],
-      "notes": "This finishes the 10/14 list of 8 junk cards: the first was moved on 10/14, and the other 7 are now deleted. Tasha's call on 10/18: proven junk cards are deleted instead of moved to Lost-Declined. Cards for real people are still closed, never deleted."
-    },
-    {
-      "date": "2026-10-17",
-      "title": "Took 22 cards that were not sales calls off Monday's call sheet: open Manual Quote Required went from 104 to 83",
-      "shipped": [
-        "Checked Noah's 10/17 handoff for the auto-card workflows against live GHL before building it. It stops new junk cards, but it leaves the 75 auto-made cards already open on Sean's call-sheet stages, and its 'no car' rule would also send texters who have a phone into a stage where the sheet tells Sean a quote already went out. The holes are written up so the build avoids them.",
-        "Read all 45 open auto-made cards that have a phone, including every text and every call and voicemail transcript, and sorted each one: 22 are not sales calls, 5 close after one more step, and 18 are real leads or paid jobs that stay. The 22 are spam, vendors, a car dealer, an installer-to-be, people who wanted services we don't sell, two people who told Sean no, two duplicates of booked customers, and seven past customers asking about service.",
-        "Moved the 22 at 8:38 AM PT by stage only, after a dry run, a fresh check for new messages, and a check that no workflow reacts to those stages. All 22 read back clean a minute later with no texts sent and no do-not-disturb or tag changes, so Monday's 6 AM sheet gives those seats to real leads."
-      ],
-      "fixed": [
-        "Caught that the MQR plan staged on 10/16 would have moved 8 cards to Won, and every Won move reports a won deal to Meta's ad system. Those cards went to Disqualified instead, so no false sales reached Meta."
-      ],
-      "inProgress": [
-        "Two duplicate contacts, customers who texted from a second number while their real booking sits on their main contact, are ready to merge. Tasha merges them in GHL, then the two stray cards come off.",
-        "Noah's workflow edits are planned but not made: message-only reply cards, the Vehicle Estimation change for cards with no car, and the missed-call task, which needs his answer first."
-      ],
-      "notes": [
-        "Found while reading: a customer's refund he says never arrived, and several quotes and replies people are still waiting on. They're listed on the close list page with an owner for each."
-      ]
     }
   ],
   "sessionStats": {
-    "generated": "2026-10-30",
+    "generated": "2026-11-13",
     "window": "14 days",
     "note": "Per-ISO-week tallies of Tasha's Log, kept so the Shipped/Fixed charts and the shipping streak hold their history after entries older than 14 days are deleted. Generated by scripts/prune-sessions.mjs from sessions[] + sessions-archive.json. Do not hand-edit.",
     "weeks": [
@@ -1942,11 +1209,27 @@
       },
       {
         "weekOf": "2026-10-26",
-        "sessions": 8,
-        "shipped": 50,
-        "fixed": 7,
-        "inProgress": 20,
-        "outcomes": 77
+        "sessions": 11,
+        "shipped": 64,
+        "fixed": 9,
+        "inProgress": 24,
+        "outcomes": 97
+      },
+      {
+        "weekOf": "2026-11-02",
+        "sessions": 3,
+        "shipped": 16,
+        "fixed": 0,
+        "inProgress": 6,
+        "outcomes": 22
+      },
+      {
+        "weekOf": "2026-11-09",
+        "sessions": 4,
+        "shipped": 22,
+        "fixed": 0,
+        "inProgress": 10,
+        "outcomes": 32
       }
     ]
   },
