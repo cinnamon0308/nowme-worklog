@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-14T08:58:22.226Z",
+  "updated": "2026-11-14T09:40:07.004Z",
   "projects": [
     {
       "id": "night-shift",
@@ -933,6 +933,20 @@
   "sessions": [
     {
       "date": "2026-11-14",
+      "title": "Blocked 8 people who had asked us in writing to stop, some more than a year ago, after reading each thread first",
+      "shipped": [
+        "Checked live every one of the 26 people who ever asked us in writing to stop. 11 were still open on the channel they asked about. Read all 11 threads from start to end before touching anything.",
+        "Blocked 4 people on call, text, and email. Each had written 'take us off your list' or 'please stop reaching out'. Two of them had been told by us that they were removed and never were; one got 3 sale texts and 3 emails after asking; one had been blocked and an August cleanup lifted it by mistake.",
+        "Blocked calls only for 4 people who wrote 'please don't call, just text' or 'stop calling'. Texts and email stay open for them, as they asked. One of them had been called 4 more times after asking, another twice. Sean's call list skips blocked numbers, so these stop now."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Left 2 people open on purpose after reading: one wrote 'stop texting me' but took it back 30 minutes later and asked for a call, and one only said no to an offer in a friendly way. One more had asked about calls and was already blocked."
+      ],
+      "notes": "Each block has a note on the contact with the customer's own words and the date they asked. Nothing was sent to anyone, no card moved, and each contact was saved first so the change can be put back."
+    },
+    {
+      "date": "2026-11-14",
       "title": "Turned on the stop-request rules: a customer who writes 'please stop texting me' is now blocked, the same way as one who sends STOP",
       "shipped": [
         "Switched on two GHL rules at 12:54 AM Pacific on 11/14. Until now only the one word STOP blocked a customer. A sentence like 'please stop texting me' or 'stop calling' blocked nothing, and our follow-up texts kept going. Now a stop sentence blocks that customer on call, text, and email, and 'stop calling' or 'text me instead' blocks calls only.",
@@ -944,7 +958,6 @@
       ],
       "inProgress": [
         "For Noah: this was Tasha's call, so no question is coming on it. Her reasons: GHL already blocks on the word STOP by itself, the two leads who wrote 'Stop contacting me' and 'Please stop calling' were blocked on 9/28, and these rules send nothing to customers. If you want them off or changed (texts only, or closing the card too), say so. One switch turns each rule off.",
-        "Needs a person: 10 people who asked in writing before today are still not blocked (6 asked us to stop texting or contacting, 4 to stop calling). Tasha reads each thread and blocks them.",
         "Expect 1 to 2 real stop requests a month. Tasha reads the first real case end to end, because a test carries no customer text."
       ],
       "notes": "Rule ids in GHL: B-018-WF-3.2 (stop sentences) and B-018-WF-3.3 (stop calling). The old STOP rule (3.1) is unchanged and still blocks texts only."
