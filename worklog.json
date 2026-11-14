@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-14T08:26:17.549Z",
+  "updated": "2026-11-14T08:58:22.226Z",
   "projects": [
     {
       "id": "night-shift",
@@ -214,7 +214,8 @@
           "2026-11-13: tested the two unpublished stop-request rules on 4,215 real texts; the main rule was right on 2 of 21 hits, and two fixes leave only the 2 real requests.",
           "2026-11-13: stop-request rules fixed and re-tested on all 19,001 customer texts: 19 of 19 real requests caught, 0 wrong blocks; still unpublished.",
           "2026-11-13: both stop-request rules passed GHL's Test on an internal contact (all-channel block and calls-only block both correct); nothing was sent; still unpublished.",
-          "2026-11-14: the main stop-request rule now skips 'please stop by' (a visit, not a stop request); re-tested on all 19,001 texts; still unpublished, waiting on Noah's answer."
+          "2026-11-14: the main stop-request rule now skips 'please stop by' (a visit, not a stop request); re-tested on all 19,001 texts; still unpublished, waiting on Noah's answer.",
+          "2026-11-14: both stop-request rules are live since 12:54 AM PT. A written stop request now blocks the customer; nothing is sent to anyone."
         ],
         "needsImprovement": [
           "October 30: protect the pre-quote gate before moving the 36 Engaged verification candidates; resolve six draft-only open cards and the two-car hold, then reconcile the 13 MQR quote-record candidates using delivery and current-vehicle evidence.",
@@ -932,6 +933,24 @@
   "sessions": [
     {
       "date": "2026-11-14",
+      "title": "Turned on the stop-request rules: a customer who writes 'please stop texting me' is now blocked, the same way as one who sends STOP",
+      "shipped": [
+        "Switched on two GHL rules at 12:54 AM Pacific on 11/14. Until now only the one word STOP blocked a customer. A sentence like 'please stop texting me' or 'stop calling' blocked nothing, and our follow-up texts kept going. Now a stop sentence blocks that customer on call, text, and email, and 'stop calling' or 'text me instead' blocks calls only.",
+        "What the rules do: each one adds a label, a block, and a note with the customer's own words, and opens a task for Tasha to read the thread the next day and lift the block if it was a misread. What they do not do: they send nothing to any customer (no text, no email, no call), close no card, and change no stage.",
+        "Proof before the switch: tested on all 19,001 texts customers sent since July 2025 (26 of 26 real stop requests caught, 0 customers blocked by mistake), run once on an internal test contact with every step passing, and read back from GHL after the switch. Both rules are published and match the tested copies."
+      ],
+      "fixed": [
+        "Fixed how the script presses GHL's publish switch. The old way pressed it three times in a row and ended on 'published' only by luck. It now presses once, and each rule saved exactly once."
+      ],
+      "inProgress": [
+        "For Noah: this was Tasha's call, so no question is coming on it. Her reasons: GHL already blocks on the word STOP by itself, the two leads who wrote 'Stop contacting me' and 'Please stop calling' were blocked on 9/28, and these rules send nothing to customers. If you want them off or changed (texts only, or closing the card too), say so. One switch turns each rule off.",
+        "Needs a person: 10 people who asked in writing before today are still not blocked (6 asked us to stop texting or contacting, 4 to stop calling). Tasha reads each thread and blocks them.",
+        "Expect 1 to 2 real stop requests a month. Tasha reads the first real case end to end, because a test carries no customer text."
+      ],
+      "notes": "Rule ids in GHL: B-018-WF-3.2 (stop sentences) and B-018-WF-3.3 (stop calling). The old STOP rule (3.1) is unchanged and still blocks texts only."
+    },
+    {
+      "date": "2026-11-14",
       "title": "Closed a wrong-block gap in the stop-request rule before go-live: a customer who writes 'please stop by' to visit the shop is no longer read as a stop request",
       "shipped": [
         "Found the gap by checking the unpublished rule against Noah's 8/14 stop rule, which names 'I did stop by' as a warm lead. The rule's phrase 'please stop' would have matched 'Can I please stop by at 5?' and blocked that customer on every channel until the next-day check. Customers wrote 'stop by' 73 times in the 19,001 old texts, each time about visiting the shop."
@@ -940,7 +959,7 @@
         "Added a skip for 'please stop by' to the main stop-request rule and proved it three ways: a check with made-up texts that failed before the fix and passes after it, the same 19,001 old texts (still 19 of 19 real stop requests caught and 0 wrong blocks), and a read of the rule inside GHL's own builder."
       ],
       "inProgress": [
-        "Both rules are still off. The switch-on waits on Noah's answer to one short question from Tasha, because his 10/12 ruling keeps do-not-contact on a real person as his decision."
+        "Update, same day: both rules are now on (see the go-live entry above). No question went to Noah. Tasha made the call, because a customer's own stop request is not the case his 10/12 ruling is about."
       ],
       "notes": "One unpublished rule changed. Nothing was sent to any customer, and nothing was published."
     },
@@ -955,7 +974,7 @@
         "Caught a slip in the testing tool before it could matter: its button press counted as 5 presses on the first rule. GHL ran the rule once and skipped the other 4. The second rule used a single press, and the tool now presses once."
       ],
       "inProgress": [
-        "Both rules are still off. Checked them against Noah's past rulings: on 10/12 he kept do-not-contact on a real person as his own decision, so the switch-on waits on his answer to one short question from Tasha. A Test carries no customer text, so the first real stop request after go-live gets read end to end.",
+        "Update 11/14: both rules are now on (see the 11/14 go-live entry), and no question went to Noah. A Test carries no customer text, so the first real stop request gets read end to end.",
         "Found on the way: the old 'Master Spreadsheet' workflow runs on every contact change, and its Google Sheets step fails every time (36 failed and 44 retrying in its newest 100 log lines). It sends nothing, but it is dead weight. Needs a person: decide whether to switch it off."
       ],
       "notes": "The test ran 11/13 at 11:35 PM Pacific on one internal contact. Nothing was sent to any customer, and nothing was published."
@@ -1278,11 +1297,11 @@
       },
       {
         "weekOf": "2026-11-09",
-        "sessions": 8,
-        "shipped": 33,
-        "fixed": 3,
-        "inProgress": 17,
-        "outcomes": 53
+        "sessions": 9,
+        "shipped": 36,
+        "fixed": 4,
+        "inProgress": 20,
+        "outcomes": 60
       }
     ]
   },
