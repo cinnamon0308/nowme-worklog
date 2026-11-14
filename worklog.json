@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-14T07:49:37.979Z",
+  "updated": "2026-11-14T08:26:17.549Z",
   "projects": [
     {
       "id": "night-shift",
@@ -213,7 +213,8 @@
           "10-31: built the two written opt-out workflows from the 10/30 audit (B-018-WF-3.2 for texts like 'stop texting', B-018-WF-3.3 for 'stop calling') as Drafts, with a guard so a phone reaction to our own text never blocks anyone; they go live after Tasha's phone test.",
           "2026-11-13: tested the two unpublished stop-request rules on 4,215 real texts; the main rule was right on 2 of 21 hits, and two fixes leave only the 2 real requests.",
           "2026-11-13: stop-request rules fixed and re-tested on all 19,001 customer texts: 19 of 19 real requests caught, 0 wrong blocks; still unpublished.",
-          "2026-11-13: both stop-request rules passed GHL's Test on an internal contact (all-channel block and calls-only block both correct); nothing was sent; still unpublished."
+          "2026-11-13: both stop-request rules passed GHL's Test on an internal contact (all-channel block and calls-only block both correct); nothing was sent; still unpublished.",
+          "2026-11-14: the main stop-request rule now skips 'please stop by' (a visit, not a stop request); re-tested on all 19,001 texts; still unpublished, waiting on Noah's answer."
         ],
         "needsImprovement": [
           "October 30: protect the pre-quote gate before moving the 36 Engaged verification candidates; resolve six draft-only open cards and the two-car hold, then reconcile the 13 MQR quote-record candidates using delivery and current-vehicle evidence.",
@@ -930,6 +931,20 @@
   "waitingOnNoah": [],
   "sessions": [
     {
+      "date": "2026-11-14",
+      "title": "Closed a wrong-block gap in the stop-request rule before go-live: a customer who writes 'please stop by' to visit the shop is no longer read as a stop request",
+      "shipped": [
+        "Found the gap by checking the unpublished rule against Noah's 8/14 stop rule, which names 'I did stop by' as a warm lead. The rule's phrase 'please stop' would have matched 'Can I please stop by at 5?' and blocked that customer on every channel until the next-day check. Customers wrote 'stop by' 73 times in the 19,001 old texts, each time about visiting the shop."
+      ],
+      "fixed": [
+        "Added a skip for 'please stop by' to the main stop-request rule and proved it three ways: a check with made-up texts that failed before the fix and passes after it, the same 19,001 old texts (still 19 of 19 real stop requests caught and 0 wrong blocks), and a read of the rule inside GHL's own builder."
+      ],
+      "inProgress": [
+        "Both rules are still off. The switch-on waits on Noah's answer to one short question from Tasha, because his 10/12 ruling keeps do-not-contact on a real person as his decision."
+      ],
+      "notes": "One unpublished rule changed. Nothing was sent to any customer, and nothing was published."
+    },
+    {
       "date": "2026-11-13",
       "title": "Proved the stop-request rules work inside GHL before turning them on: both ran on a test contact, blocked the right channels, and sent nothing to anyone",
       "shipped": [
@@ -1102,25 +1117,10 @@
         "Needs a person: 21 cards are owed a reply and 13 of them have no phone (Instagram only), so the dial sheet cannot surface them. This is a call-sheet gap to fix, tracked as a count."
       ],
       "notes": "Read-only throughout: GHL threads, the live cadence settings, and the 10/29 Urable pull. 18 cards had changed since the 10/16 audit, including 2 written declines or 'later' replies, which the sort caught before any move."
-    },
-    {
-      "date": "2026-10-31",
-      "title": "Built the GHL fix for written opt-outs: a texted 'please stop texting' or 'stop calling' will now set do-not-disturb, as two Drafts waiting on a phone test",
-      "shipped": [
-        "Built B-018-WF-3.2 (written opt-out) as a Draft: a text with one of 22 opt-out phrases such as 'stop texting', 'unsubscribe', or 'remove me' (72 spellings counting capitals) tags the customer unsubscribed, dates the opt-out, and turns on do-not-disturb for every channel. Today only the bare word STOP does this, so a customer who asks in a sentence can still be texted and called.",
-        "Built B-018-WF-3.3 (written stop-calling) as a Draft: 'stop calling', 'text me instead', and 9 more phrases turn on do-not-disturb for calls only, so the customer still gets texts, the way they asked.",
-        "Added a guard to both so a phone reaction to our own text never counts as an opt-out: 26 of the last 157 outbound texts end with our 'unsubscribe' line, and an iPhone 'Liked' reaction quotes that line back, which would have blocked a customer who only liked the message.",
-        "Each run leaves a note on the contact with the customer's exact words and a next-day task for Tasha to confirm the block, so a misread or a failed step gets caught within a day."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Both drafts fire only for a contact tagged optout-test. Next: Tasha texts the test phrases from her own phone, the contact is read back after each one, and only then does the test gate come off."
-      ],
-      "notes": "Built in GHL through the workflow builder as Drafts (nothing published, no message sent to anyone); created 3 tags: optout-test, b-018. unsubscribed in writing, b-018. no calls in writing."
     }
   ],
   "sessionStats": {
-    "generated": "2026-11-13",
+    "generated": "2026-11-14",
     "window": "14 days",
     "note": "Per-ISO-week tallies of Tasha's Log, kept so the Shipped/Fixed charts and the shipping streak hold their history after entries older than 14 days are deleted. Generated by scripts/prune-sessions.mjs from sessions[] + sessions-archive.json. Do not hand-edit.",
     "weeks": [
@@ -1278,11 +1278,11 @@
       },
       {
         "weekOf": "2026-11-09",
-        "sessions": 7,
-        "shipped": 32,
-        "fixed": 2,
-        "inProgress": 16,
-        "outcomes": 50
+        "sessions": 8,
+        "shipped": 33,
+        "fixed": 3,
+        "inProgress": 17,
+        "outcomes": 53
       }
     ]
   },
