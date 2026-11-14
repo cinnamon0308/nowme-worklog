@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-14T00:47:07.992Z",
+  "updated": "2026-11-14T01:12:22.759Z",
   "projects": [
     {
       "id": "night-shift",
@@ -210,7 +210,8 @@
           "Voided H. H.'s wrong $1,325 Large SUV/Truck proposal, corrected his GHL vehicle to Volvo XC60, and verified the replacement Small SUV/Truck proposal plus delivered SMS and Awaiting Engagement move.",
           "Repaired three safety defects in the spam-janitor ledger runner, passed 5 tests, and deployed revision 00002-nel with a gate that refuses to call a target unless its deployed DRY_RUN value is true.",
           "Caught Noah-authored configuration drift before the next daily run: the janitor target was armed and the cron pointed directly at it, so the cron is now paused with zero customer writes while the intended configuration is reconciled.",
-          "10-31: built the two written opt-out workflows from the 10/30 audit (B-018-WF-3.2 for texts like 'stop texting', B-018-WF-3.3 for 'stop calling') as Drafts, with a guard so a phone reaction to our own text never blocks anyone; they go live after Tasha's phone test."
+          "10-31: built the two written opt-out workflows from the 10/30 audit (B-018-WF-3.2 for texts like 'stop texting', B-018-WF-3.3 for 'stop calling') as Drafts, with a guard so a phone reaction to our own text never blocks anyone; they go live after Tasha's phone test.",
+          "2026-11-13: tested the two unpublished stop-request rules on 4,215 real texts; the main rule was right on 2 of 21 hits, and two fixes leave only the 2 real requests."
         ],
         "needsImprovement": [
           "October 30: protect the pre-quote gate before moving the 36 Engaged verification candidates; resolve six draft-only open cards and the two-car hold, then reconcile the 13 MQR quote-record candidates using delivery and current-vehicle evidence.",
@@ -928,6 +929,22 @@
   "sessions": [
     {
       "date": "2026-11-13",
+      "title": "Tested the new stop-request rules on 4,215 real customer texts before turning them on: they would have wrongly blocked up to 3 customers, and two small fixes remove every wrong hit",
+      "shipped": [
+        "Ran the two unpublished stop-request rules against every incoming customer text from the last 90 days (4,215 texts from 967 people), reading only. Nothing was sent to anyone and nothing in GHL changed.",
+        "Found the main rule would have fired 21 times and been right twice. Two customers really did ask us to stop in a sentence. 16 hits were sales texts from other companies that end with 'Reply STOP to opt out'. 3 would have blocked real customers on every channel: one who asked to come off Monday's schedule for a work trip and said he would rebook, and 2 past clients who gave a thumbs-up to the holiday offer text, where the rule read the words 'opt out' inside our own message.",
+        "Worked out two small fixes and tested them on the same 4,215 texts: skip any text that carries a 'reply STOP' line or quotes one of our messages, and narrow 'take me off' to 'take me off your list'. With both, the rule fires on exactly the 2 real stop requests and on nothing else.",
+        "Confirmed the 'stop calling' rule matched no text in 90 days, so it can stay as built, and that the guard added on 10/31 already stops 14 'Liked' and 'Loved' style reactions from tripping either rule."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Next: put the two fixes into the unpublished rule, run the same test again, test the block on Tasha's own contact, then turn it on. Until then a customer who asks to stop in a full sentence still gets no block, and the daily sweep stays the only cover.",
+        "2 people answered 'wrong number' in the last 90 days, one of them twice. Neither rule covers a wrong number; to check next whether both are already blocked."
+      ],
+      "notes": "The phone test planned on 10/31 was replaced by this test on real texts from the lead database copy. Customer texts stay on Tasha's Mac."
+    },
+    {
+      "date": "2026-11-13",
       "title": "Night Shift's three fixes are checked and ready to go live on Noah's yes: the live version is unchanged since 10/17, all 197 checks pass, and the rollback is written down",
       "shipped": [
         "Confirmed the nightly lead check still runs Noah's 10/17 version: it has one revision, was never redeployed, and its last four 2 AM runs each finished clean in 87 to 130 seconds. Tasha's fixes are built on exactly that code, compared file by file against Noah's own copy, so nothing of his would be overwritten.",
@@ -1225,11 +1242,11 @@
       },
       {
         "weekOf": "2026-11-09",
-        "sessions": 4,
-        "shipped": 22,
+        "sessions": 5,
+        "shipped": 26,
         "fixed": 0,
-        "inProgress": 10,
-        "outcomes": 32
+        "inProgress": 12,
+        "outcomes": 38
       }
     ]
   },
