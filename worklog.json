@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-14T07:42:17.746Z",
+  "updated": "2026-11-14T07:49:37.979Z",
   "projects": [
     {
       "id": "night-shift",
@@ -940,7 +940,7 @@
         "Caught a slip in the testing tool before it could matter: its button press counted as 5 presses on the first rule. GHL ran the rule once and skipped the other 4. The second rule used a single press, and the tool now presses once."
       ],
       "inProgress": [
-        "Both rules are still off. Left before go-live: compare the rule with Noah's past rulings on blocking, then Tasha's go. A Test carries no customer text, so the first real stop request after go-live gets read end to end.",
+        "Both rules are still off. Checked them against Noah's past rulings: on 10/12 he kept do-not-contact on a real person as his own decision, so the switch-on waits on his answer to one short question from Tasha. A Test carries no customer text, so the first real stop request after go-live gets read end to end.",
         "Found on the way: the old 'Master Spreadsheet' workflow runs on every contact change, and its Google Sheets step fails every time (36 failed and 44 retrying in its newest 100 log lines). It sends nothing, but it is dead weight. Needs a person: decide whether to switch it off."
       ],
       "notes": "The test ran 11/13 at 11:35 PM Pacific on one internal contact. Nothing was sent to any customer, and nothing was published."
