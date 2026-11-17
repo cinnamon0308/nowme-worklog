@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-17T10:41:51.379Z",
+  "updated": "2026-11-17T10:58:29.083Z",
   "projects": [
     {
       "id": "night-shift",
@@ -936,13 +936,19 @@
       "since": "2026-11-17",
       "impact": "Your 10/16 handoff asked Tasha to keep the 'return this call' task, drop the card step, and tell you before publishing if that breaks. It breaks: the task sits under the card step. A reworked version would fire only for callers who have no card. In a five-day read-only test (desk days 11/2 to 11/6) that was 13 calls from 12 nameless callers. 12 of the 16 unanswered missed calls came from people who already had a card, so the workflow would do nothing for them, and its tasks would show only in the GHL task list, which the call sheet does not read. 'Owed until called' was live that week, and 4 of 9 real missed calls still had no callback by the next evening. The workflow stays a Draft (saved, switched off) until you answer, so nothing changes for customers while this waits.",
       "whatToDo": [
+        "Open the one-page picture first (the link is in the block below). It shows what happens to a missed caller today, what the reminder would do, the five-day test, and the three choices side by side. Tasha shares the page with you.",
         "Reply to Tasha in Discord with one letter: A, B, or C.",
         "A. Retire the workflow. Callers with no card keep getting only the auto-text. Callers with a card stay on Sean's list through 'owed until called', for the people the list reads each morning.",
         "B. Publish it for callers with no card, as the 10/16 handoff asked. Expect about 12 GHL tasks a week, almost all nameless callers, seen only in the GHL task list.",
         "C. A same-day spot on Sean's page for missed callers. That is a change in your call-sheet code. Tasha's read-only check can supply the list: it found 16 missed calls in the five days, and Tasha confirmed 14 were real.",
         "Claude's recommendation: A, and C as well if you want missed callers reached the same day."
       ],
-      "commands": [],
+      "commands": [
+        {
+          "label": "The one-page picture: copy this link into your browser",
+          "code": "https://claude.ai/artifact/FKeif8CSjTHCsCtm4djC1f"
+        }
+      ],
       "doneCheck": {
         "doneWhen": "Noah answers A, B, or C on the missed-call workflow, in Discord to Tasha or in his own notes.",
         "approvals": null,
@@ -963,7 +969,8 @@
         "Read all five nights of the answer-fast test (desk days 11/2 to 11/6) for the first time. The lane is a read-only check that finds people who wrote or called and got no person back. It would have handed Sean 25 tasks in five days, and 12 were real on Claude's first read, so it missed the bar Tasha set on 10/28 (8 real in every 10). Nothing was switched on, so none of the 13 wrong tasks reached Sean.",
         "Caught the missed-call workflow before it was published. As drafted it acts only on callers who have no card: 13 missed calls from 12 nameless callers in the test week. It would have done nothing for 12 of the 16 missed callers who looked real, because they already had a card, and its task title is one the call sheet does not read. It stays a Draft, which means saved and switched off.",
         "Checked the go-live plan twice, the second time with a fresh reviewer that recomputed every number from the saved reports, then rewrote it with 14 holes closed. The plan is Claude's recommendation, and Tasha approved it on 11/17: no tasks go to Sean from this build until the question below is answered.",
-        "Found the strong part of the test: missed calls. 14 of the 16 flagged missed calls were real (confirmed by Tasha), and of the 9 with a next-day read, 4 had no call back from a person by the next evening. Messages were the weak part (23 of 45 real), and customer threads that need a reply already go to the Reply Review page, so that half stays parked."
+        "Found the strong part of the test: missed calls. 14 of the 16 flagged missed calls were real (confirmed by Tasha), and of the 9 with a next-day read, 4 had no call back from a person by the next evening. Messages were the weak part (23 of 45 real), and customer threads that need a reply already go to the Reply Review page, so that half stays parked.",
+        "Built a one-page picture of the decision for Noah: two flow diagrams (a missed caller today, and the path through the reminder), the five test days drawn one square per missed call, and the three choices measured on the same four things. He can pick A, B, or C from his phone without reading the full audit."
       ],
       "fixed": [
         "Corrected the answer-fast figures on the 11/16 operations report page. It said the test showed about 8 real waits a day, a number carried over from the October replay. The test week gives 5 a day for Sean, about half of them real."
