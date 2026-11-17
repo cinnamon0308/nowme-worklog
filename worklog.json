@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-17T10:58:29.083Z",
+  "updated": "2026-11-17T11:00:40.798Z",
   "projects": [
     {
       "id": "night-shift",
@@ -37,11 +37,11 @@
       "id": "call-me-later",
       "name": "Call-Me-Later Callbacks",
       "status": "IN_PROGRESS",
-      "summary": "Noah's top gap from the 10/11 call: a customer who says 'call me in November' should come back on Sean's sheet on that date with no hand work. Built and tested on 10/13; nothing deployed yet.",
-      "blockedOn": "Tasha's decision on overdue moved-up callbacks, then Noah's taps: the M81 refresh, the reader deploy in test mode, and the sheet deploy. The M239 sheet-access line is still open.",
+      "summary": "Noah's top gap from the 10/11 call: a customer who says 'call me in November' should come back on Sean's sheet on that date with no hand work. Checked on real sheets on 11/17: since 10/31, 32 of 36 callbacks came back on their day when a person set the date or the customer gave a timing. The 10/13 build was never deployed and no longer fits the live reader and sheet.",
+      "blockedOn": "Tasha's four decisions in plan version 2 (retire the old build or port it, raise the open items with Noah or not, keep the proof check, park the old backfill). Nothing is waiting on Noah yet.",
       "health": {
         "band": "watch",
-        "reason": "Built and reviewed, and a live test run wrote nothing; deploy and writes wait on approvals and four more test mornings."
+        "reason": "The live sheet already brings dated callbacks back, measured on 31 real sheets: 32 of 36 when a person set the date or the customer gave a timing. The old build needs a go or no-go before any more work."
       },
       "detail": {
         "goal": "Every 'call me later' lead returns on its date, including ones said before 10/08, and Sean never sets the date by hand.",
@@ -49,15 +49,17 @@
           "2026-10-12: checked the live reader (11 callbacks since 10/08), the live sheet and the task data; plan and code-level build plan approved; M239 grant added.",
           "2026-10-13: full build on production code, 727 new checks plus the original 129, live test run with zero GHL writes, before-and-after sheet comparison (17 of 75 rows changed), deploy scripts and four approvals drafts.",
           "2026-10-24: the live timeline reader booked a Waiting lead for Dec 18 from \"after a couple of weeks\" said on 10/23; its own rule gives Nov 3, and the task was moved. Its other bookings deserve the same quote-against-date check.",
-          "2026-10-24: checked all 49 open callbacks the reader booked against the customers' own words: 42 exact, 3 more than a week late, all from phrases its rule list does not name. A narrow fix is drafted and passes 165 offline checks; it is not deployed, because the reader is Noah's code."
+          "2026-10-24: checked all 49 open callbacks the reader booked against the customers' own words: 42 exact, 3 more than a week late, all from phrases its rule list does not name. A narrow fix is drafted and passes 165 offline checks; it is not deployed, because the reader is Noah's code.",
+          "2026-11-17: matched all 261 callback tasks against 31 saved morning sheets and the outbound call records. Since 10/31, 37 of 49 due callbacks were on Sean's list on their day, and 32 of 36 when a person set the date or the customer gave a timing; listed leads got a same-day call 19 of 37 times, unlisted ones 0 of 12. Rewrote the plan as version 2 and marked the old plan, the old approvals drafts, and the call-sheet contract's live banner as out of date."
         ],
         "needsImprovement": [
-          "Build from the production code, run test mode for about five mornings, then the M81 tap and the two deploys.",
-          "Prove one parked lead came back on its day using the saved morning sheets."
+          "Decide session on plan version 2's four decisions.",
+          "Re-run the proof check on the 11/17, 11/19 to 11/23, and 12/01 sheets."
         ],
         "watchFor": [
-          "A callback task on a lead still in New Lead through Engaged is invisible to the sheet until the sheet change ships.",
-          "Never start a reader or sheet change from the Mac copies; both are behind production."
+          "A callback on a card in a calling stage (New Lead through Engaged) is not listed by its date; three customer-timed callbacks like that are ahead on Manual Quote cards (two on 12/01).",
+          "A due callback can be held off the list when the lead's last text reads as a not-now and the lead has not written in 30 days.",
+          "Never deploy or post anything from the 10/13 build: the reader and the sheet both changed after it."
         ]
       }
     },
@@ -962,6 +964,30 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-17",
+      "title": "Proved on 31 real morning sheets that a dated callback comes back to Sean's list: 32 of 36 since 10/31 when a person set the date or the customer gave a timing",
+      "shipped": [
+        "Answered the question from the 10/11 call with real data: does a customer who says 'call me in November' come back on Sean's list that day? Tasha's check pulled all 261 callback tasks from GHL, 31 saved morning sheets (10/01 to 11/16), and the outbound call records, then matched each task's due day to that morning's sheet. Read-only: nothing was written to GHL and nothing was deployed.",
+        "The list does bring a dated callback back. Since 10/31, 49 callbacks came due and 37 were on Sean's list on their day. Callbacks filed through Sean's call-sheet page came back 17 of 17 times, and callbacks the overnight read set from a timing the customer gave came back 14 of 17 times.",
+        "Being on the list is what gets the call. 19 of the 37 listed leads got an outbound call the same day. The 12 that were not listed got none in the week after (3 of them have had one day so far).",
+        "Found what the other 12 have in common. 8 of them were month-later re-asks: the customer named an event or a money hold but no date, so the overnight read set a day about a month out. Those came back 5 of 13 times, because the list holds 'not now' leads back and several cards were closed, booked, or held for Noah. Of the other 4, 2 were right to skip (a past customer and a card already won) and 2 are cases where two of the list's rules pull opposite ways.",
+        "Rewrote the call-me-later plan as version 2. The 10/13 build was never deployed, and the reader and the list both changed after it (the after-call sorter, owed until called, no auto-park), so it no longer fits and should not ship as built. The old backfill list of 157 people is a year old: 105 of them said their words in 2025."
+      ],
+      "fixed": [
+        "Marked three out-of-date files so nobody acts on them: the 10/12 plan, the live banner in the call-sheet contract (it named a version 18 deploys old), and the old approvals drafts, now marked do not post.",
+        "Had the plan checked three times by fresh reviewers told to find mistakes. The first pass caught a line that would have sent Sean to 4 leads who should not be called yet; it was removed before anything was logged."
+      ],
+      "inProgress": [
+        "Next: Tasha's go or no-go on four decisions in plan version 2, starting with whether to retire the old build. The recommendations in it are Claude's, and nothing has been sent to Noah yet.",
+        "Three questions for Noah come out of this, held until Tasha decides to raise them. The clearest: a lead whose callback was set for 11/09 was kept off the list that day because her last text said she would reach out when ready. A dated callback and a wait-for-them rule both apply to her.",
+        "Next live tests: the 11/17, 11/19 to 11/23, and 12/01 lists. 12/01 has three of the eight callbacks Tasha set on 10/24 and two customer-timed callbacks on Manual Quote cards."
+      ],
+      "notes": [
+        "Counts come from the list's own saved copies, GHL's task search, and the lead database copy, all read on 11/17 Pacific. The sample is 49 callbacks over 10 mornings. An outbound call means a call on record; it does not say who placed it.",
+        "Customers appear as counts only. The full check, with one row per callback, stays on Tasha's Mac."
+      ]
+    },
     {
       "date": "2026-11-17",
       "title": "Read the answer-fast test week before switching it on, and stopped a missed-call workflow that would have sent Sean the wrong callers",
