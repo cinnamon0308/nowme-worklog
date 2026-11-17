@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-17T10:29:16.870Z",
+  "updated": "2026-11-17T10:41:51.379Z",
   "projects": [
     {
       "id": "night-shift",
@@ -816,7 +816,7 @@
       "name": "Reply and Missed-Call Cards",
       "status": "IN_PROGRESS",
       "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, so both were switched off on 10/17. Noah's fix went live at 2:45 AM PT on 10/21: the reply workflow now fires on 7 message channels only, so texts and DMs open cards again and calls do not, and Vehicle Estimation leaves a card with no car where it opened. The missed-call workflow stays off: the answer-fast test week (read 11/17) showed that as drafted it would make tasks only for callers with no card, 12 nameless callers that week, under a title the call sheet does not read. One three-choice question is going to Noah. The four go-live tests have not run yet.",
-      "blockedOn": "One question for Noah on the missed-call workflow: retire it, publish it for callers with no card, or a same-day spot on Sean's page. Tasha sends it after she confirms the 16 test-week verdicts. Tests 1 to 4 still to run.",
+      "blockedOn": "Noah's answer on the missed-call workflow (on Waiting on Noah since 11/17): retire it, publish it for callers with no card, or a same-day spot on Sean's page. Tests 1 to 4 still to run.",
       "health": {
         "band": "watch",
         "reason": "Live since 2:45 AM PT 10/21; the four tests have not run yet. The missed-call workflow stays a Draft: read on 11/17, it would have tasked the wrong callers."
@@ -929,7 +929,32 @@
       }
     }
   ],
-  "waitingOnNoah": [],
+  "waitingOnNoah": [
+    {
+      "item": "Pick what happens to the missed-call workflow from your 10/16 handoff: retire it, publish it, or a same-day spot on Sean's page",
+      "project": "Reply and Missed-Call Cards",
+      "since": "2026-11-17",
+      "impact": "Your 10/16 handoff asked Tasha to keep the 'return this call' task, drop the card step, and tell you before publishing if that breaks. It breaks: the task sits under the card step. A reworked version would fire only for callers who have no card. In a five-day read-only test (desk days 11/2 to 11/6) that was 13 calls from 12 nameless callers. 12 of the 16 unanswered missed calls came from people who already had a card, so the workflow would do nothing for them, and its tasks would show only in the GHL task list, which the call sheet does not read. 'Owed until called' was live that week, and 4 of 9 real missed calls still had no callback by the next evening. The workflow stays a Draft (saved, switched off) until you answer, so nothing changes for customers while this waits.",
+      "whatToDo": [
+        "Reply to Tasha in Discord with one letter: A, B, or C.",
+        "A. Retire the workflow. Callers with no card keep getting only the auto-text. Callers with a card stay on Sean's list through 'owed until called', for the people the list reads each morning.",
+        "B. Publish it for callers with no card, as the 10/16 handoff asked. Expect about 12 GHL tasks a week, almost all nameless callers, seen only in the GHL task list.",
+        "C. A same-day spot on Sean's page for missed callers. That is a change in your call-sheet code. Tasha's read-only check can supply the list: it found 16 missed calls in the five days, and Tasha confirmed 14 were real.",
+        "Claude's recommendation: A, and C as well if you want missed callers reached the same day."
+      ],
+      "commands": [],
+      "doneCheck": {
+        "doneWhen": "Noah answers A, B, or C on the missed-call workflow, in Discord to Tasha or in his own notes.",
+        "approvals": null,
+        "vault": [
+          "missed-call workflow",
+          "Missed call > open a card",
+          "230c63ca"
+        ],
+        "live": null
+      }
+    }
+  ],
   "sessions": [
     {
       "date": "2026-11-17",
@@ -944,7 +969,7 @@
         "Corrected the answer-fast figures on the 11/16 operations report page. It said the test showed about 8 real waits a day, a number carried over from the October replay. The test week gives 5 a day for Sean, about half of them real."
       ],
       "inProgress": [
-        "Coming to Noah as one short question from Tasha: retire the missed-call workflow, publish it anyway for callers with no card, or give missed callers a same-day spot on Sean's page. His 10/16 handoff asked to keep the callback task and to be told before publishing if it breaks, so the workflow stays untouched until he answers.",
+        "On the Waiting on Noah list since 11/17, as one question with three choices: retire the missed-call workflow, publish it anyway for callers with no card, or give missed callers a same-day spot on Sean's page. His 10/16 handoff asked to keep the callback task and to be told before publishing if it breaks, so the workflow stays untouched until he answers.",
         "Tasha read and confirmed all 16 missed-call verdicts on 11/17: 14 real waits, 1 nothing owed, and 1 that could not be told. The counts for Sean's other tasks and for messages are still Claude's first read."
       ],
       "notes": "Read-only. No call to GHL or Urable, nothing changed in GHL, and nothing sent to anyone. Every count comes from the saved test-week reports of 11/2 to 11/6 and was recomputed twice. Customers appear as counts only."
