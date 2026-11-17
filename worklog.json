@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-17T10:18:23.313Z",
+  "updated": "2026-11-17T10:29:16.870Z",
   "projects": [
     {
       "id": "night-shift",
@@ -938,14 +938,14 @@
         "Read all five nights of the answer-fast test (desk days 11/2 to 11/6) for the first time. The lane is a read-only check that finds people who wrote or called and got no person back. It would have handed Sean 25 tasks in five days, and 12 were real on Claude's first read, so it missed the bar Tasha set on 10/28 (8 real in every 10). Nothing was switched on, so none of the 13 wrong tasks reached Sean.",
         "Caught the missed-call workflow before it was published. As drafted it acts only on callers who have no card: 13 missed calls from 12 nameless callers in the test week. It would have done nothing for 12 of the 16 missed callers who looked real, because they already had a card, and its task title is one the call sheet does not read. It stays a Draft, which means saved and switched off.",
         "Checked the go-live plan twice, the second time with a fresh reviewer that recomputed every number from the saved reports, then rewrote it with 14 holes closed. The plan is Claude's recommendation, and Tasha approved it on 11/17: no tasks go to Sean from this build until the question below is answered.",
-        "Found the strong part of the test: missed calls. 14 of the 16 flagged missed calls were real, and of the 9 with a next-day read, 4 had no call back from a person by the next evening. Messages were the weak part (23 of 45 real), and customer threads that need a reply already go to the Reply Review page, so that half stays parked."
+        "Found the strong part of the test: missed calls. 14 of the 16 flagged missed calls were real (confirmed by Tasha), and of the 9 with a next-day read, 4 had no call back from a person by the next evening. Messages were the weak part (23 of 45 real), and customer threads that need a reply already go to the Reply Review page, so that half stays parked."
       ],
       "fixed": [
         "Corrected the answer-fast figures on the 11/16 operations report page. It said the test showed about 8 real waits a day, a number carried over from the October replay. The test week gives 5 a day for Sean, about half of them real."
       ],
       "inProgress": [
-        "Coming to Noah as one short question from Tasha, after she confirms the 16 missed-call verdicts: retire the missed-call workflow, publish it anyway for callers with no card, or give missed callers a same-day spot on Sean's page. His 10/16 handoff asked to keep the callback task and to be told before publishing if it breaks, so the workflow stays untouched until he answers.",
-        "Next: Tasha confirms the 16 missed-call verdicts. Every count above is Claude's first read until she does."
+        "Coming to Noah as one short question from Tasha: retire the missed-call workflow, publish it anyway for callers with no card, or give missed callers a same-day spot on Sean's page. His 10/16 handoff asked to keep the callback task and to be told before publishing if it breaks, so the workflow stays untouched until he answers.",
+        "Tasha read and confirmed all 16 missed-call verdicts on 11/17: 14 real waits, 1 nothing owed, and 1 that could not be told. The counts for Sean's other tasks and for messages are still Claude's first read."
       ],
       "notes": "Read-only. No call to GHL or Urable, nothing changed in GHL, and nothing sent to anyone. Every count comes from the saved test-week reports of 11/2 to 11/6 and was recomputed twice. Customers appear as counts only."
     },
