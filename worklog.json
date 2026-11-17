@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-17T09:36:51.903Z",
+  "updated": "2026-11-17T10:18:23.313Z",
   "projects": [
     {
       "id": "night-shift",
@@ -188,7 +188,7 @@
       "id": "full-system-audit-august",
       "name": "Full-System Audit + Conversion Architecture",
       "status": "IN_PROGRESS",
-      "summary": "October 30: checked all 3,450 Rockclear cards and delivered a local HTML report with nine findings and exact review records. Confirmed 143 open cards without either owner, 25 Waiting cards without a complete callback handoff, incorrect win probabilities, and almost no structured loss reasons. Quote-delivery candidates remain review work; no CRM repairs or deployments were made. A second 10/30 audit read all 120 workflows and scored the Rockclear system 35 of 100: missed calls, written opt-outs, and failed texts fail with no alert, and a payment step still points at a deleted stage.",
+      "summary": "October 30: checked all 3,450 Rockclear cards and delivered a local HTML report with nine findings and exact review records. Confirmed 143 open cards without either owner, 25 Waiting cards without a complete callback handoff, incorrect win probabilities, and almost no structured loss reasons. Quote-delivery candidates remain review work; no CRM repairs or deployments were made. A second 10/30 audit read all 120 workflows and scored the Rockclear system 35 of 100: missed calls, written opt-outs, and failed texts fail with no alert, and a payment step still points at a deleted stage. On 11/17 the answer-fast lane's five-day test (11/2 to 11/6) was read: it flagged 25 tasks for Sean and 12 were real, short of the 8-in-10 bar, so it sends nothing to Sean. Tasha approved a rewritten plan the same day.",
       "blockedOn": "E8 needs Noah's configuration decision before scheduling: his latest janitor revision reports DRY_RUN=false, the new ledger runner correctly refuses to invoke it, and the old direct cron is paused. The next safe sequence is target dry-run, runner wiring, one supervised scheduled ledger, then a separate live-arm decision.",
       "progress": {
         "stage": "underway",
@@ -815,11 +815,11 @@
       "id": "reply-call-cards",
       "name": "Reply and Missed-Call Cards",
       "status": "IN_PROGRESS",
-      "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, so both were switched off on 10/17. Noah's fix went live at 2:45 AM PT on 10/21: the reply workflow now fires on 7 message channels only, so texts and DMs open cards again and calls do not, and Vehicle Estimation leaves a card with no car where it opened. The missed-call workflow stays off until Noah answers the call-back task question. The four go-live tests have not run yet.",
-      "blockedOn": "Noah's answer on the missed-call task (on Waiting on Noah). Tests 1 to 4 still to run.",
+      "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, so both were switched off on 10/17. Noah's fix went live at 2:45 AM PT on 10/21: the reply workflow now fires on 7 message channels only, so texts and DMs open cards again and calls do not, and Vehicle Estimation leaves a card with no car where it opened. The missed-call workflow stays off: the answer-fast test week (read 11/17) showed that as drafted it would make tasks only for callers with no card, 12 nameless callers that week, under a title the call sheet does not read. One three-choice question is going to Noah. The four go-live tests have not run yet.",
+      "blockedOn": "One question for Noah on the missed-call workflow: retire it, publish it for callers with no card, or a same-day spot on Sean's page. Tasha sends it after she confirms the 16 test-week verdicts. Tests 1 to 4 still to run.",
       "health": {
         "band": "watch",
-        "reason": "Live since 2:45 AM PT 10/21; the four tests have not run yet, and missed calls get no card or task until Noah answers."
+        "reason": "Live since 2:45 AM PT 10/21; the four tests have not run yet. The missed-call workflow stays a Draft: read on 11/17, it would have tasked the wrong callers."
       },
       "detail": {
         "goal": "Make every real reply and every missed call land on Sean's board as a card, so no one who reached out is invisible to the call sheet.",
@@ -833,7 +833,7 @@
         ],
         "needsImprovement": [
           "Run tests 1 to 4, then send Noah his done line.",
-          "Decide the missed-call task: as built it never reached Sean, and removing only the card step breaks it (on Waiting on Noah).",
+          "Decide the missed-call workflow with Noah: as built it never reached Sean, removing only the card step breaks it, and the reworked version would task only callers with no card (answer-fast test week, read 11/17).",
           "Merge the two duplicate contacts, then remove their stray cards.",
           "Claude's recommendation: a 'car added' workflow plus a typing rule, so a DM card moves to Manual Quote Required once its car is known."
         ],
@@ -931,6 +931,24 @@
   ],
   "waitingOnNoah": [],
   "sessions": [
+    {
+      "date": "2026-11-17",
+      "title": "Read the answer-fast test week before switching it on, and stopped a missed-call workflow that would have sent Sean the wrong callers",
+      "shipped": [
+        "Read all five nights of the answer-fast test (desk days 11/2 to 11/6) for the first time. The lane is a read-only check that finds people who wrote or called and got no person back. It would have handed Sean 25 tasks in five days, and 12 were real on Claude's first read, so it missed the bar Tasha set on 10/28 (8 real in every 10). Nothing was switched on, so none of the 13 wrong tasks reached Sean.",
+        "Caught the missed-call workflow before it was published. As drafted it acts only on callers who have no card: 13 missed calls from 12 nameless callers in the test week. It would have done nothing for 12 of the 16 missed callers who looked real, because they already had a card, and its task title is one the call sheet does not read. It stays a Draft, which means saved and switched off.",
+        "Checked the go-live plan twice, the second time with a fresh reviewer that recomputed every number from the saved reports, then rewrote it with 14 holes closed. The plan is Claude's recommendation, and Tasha approved it on 11/17: no tasks go to Sean from this build until the question below is answered.",
+        "Found the strong part of the test: missed calls. 14 of the 16 flagged missed calls were real, and of the 9 with a next-day read, 4 had no call back from a person by the next evening. Messages were the weak part (23 of 45 real), and customer threads that need a reply already go to the Reply Review page, so that half stays parked."
+      ],
+      "fixed": [
+        "Corrected the answer-fast figures on the 11/16 operations report page. It said the test showed about 8 real waits a day, a number carried over from the October replay. The test week gives 5 a day for Sean, about half of them real."
+      ],
+      "inProgress": [
+        "Coming to Noah as one short question from Tasha, after she confirms the 16 missed-call verdicts: retire the missed-call workflow, publish it anyway for callers with no card, or give missed callers a same-day spot on Sean's page. His 10/16 handoff asked to keep the callback task and to be told before publishing if it breaks, so the workflow stays untouched until he answers.",
+        "Next: Tasha confirms the 16 missed-call verdicts. Every count above is Claude's first read until she does."
+      ],
+      "notes": "Read-only. No call to GHL or Urable, nothing changed in GHL, and nothing sent to anyone. Every count comes from the saved test-week reports of 11/2 to 11/6 and was recomputed twice. Customers appear as counts only."
+    },
     {
       "date": "2026-11-16",
       "title": "Mapped the whole sales flow on one page, from ad to paid job, and tied 5 built fixes that are not live yet to the bottleneck each one clears",
@@ -1303,11 +1321,11 @@
       },
       {
         "weekOf": "2026-11-16",
-        "sessions": 1,
-        "shipped": 4,
-        "fixed": 0,
-        "inProgress": 3,
-        "outcomes": 7
+        "sessions": 2,
+        "shipped": 8,
+        "fixed": 1,
+        "inProgress": 5,
+        "outcomes": 14
       }
     ]
   },
