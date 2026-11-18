@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-18T19:50:52.042Z",
+  "updated": "2026-11-18T20:11:21.853Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1006,14 +1006,19 @@
         "Built the 6 fixes the 11/18 checks asked for, tests first. The main one: when the bot lets go of a card because it now belongs to another job, it always asks a person 'Same car?', even if someone later closes that card. Before, that path could end in a second Booked card. Also: a failed GHL call right after a new card can no longer let a second card through, the deploy command refuses a badly typed date or job list, and a run that runs out of time before its first job now raises an alarm. 501 tests pass (483 before), a fourth review approved the change, and a practice run on real data wrote nothing. On the server in practice mode since 11/18 (all 9 deploy checks passed; a deep practice pass wrote nothing)."
       ],
       "inProgress": [
-        "Nothing is live and nothing is deployed. The fixes sit in the bot's code folder, tested, waiting for Tasha's yes to save them and redeploy in practice mode.",
-        "Claude's recommendation: the first 3 live jobs are field-only updates on cards already in Booked, so no new card is made and no customer gets a message. Three of today's plans are new cards for second cars, and a new Booked card makes the welcome email and text send; those wait for Noah's answer to the one line.",
-        "Needs a person: job #5838's card is in Won with only the deposit paid ($1,208.88 of $2,417.75) and the job is back in quote with no date. The bot will raise it as a 'Same car?' task once live; today nobody is told.",
-        "Left open on purpose, each written down with its reason: a filed job is not read again once its payment is over 30 days old, a contact matched by phone alone is not checked against the name, and the Won-at-pickup reopen rule waits for Tasha's call."
+        "Where it stands (11/18): the bot runs on the server in practice mode as version 00010-nan. It reads every paid Urable payment every 10 minutes and writes down what it would do. It has never written a card, a tag, a task, or a message. Four reviews read the code and 501 tests pass.",
+        "The first live run, when Tasha gives the go: 3 jobs only, named by their Urable job id. All 3 are cards that already sit in Booked (jobs #5873, #5877, #5878, installs 11/20 and 11/21; Claude's recommendation, to be re-checked on the day). The bot only fills fields on them: card value, deposit paid, job total, install date, and the Urable job number and id. No new card, no stage move, no tag a workflow listens to, no message to anyone. Each card is read back before the next 3 jobs go on the list. Every other job is planned and held.",
+        "For Noah, no answer needed for the first run: once the job list is lifted, the bot also makes a new Booked card when a returning customer pays a deposit for a second car. A new Booked card with an install date makes your welcome email and text send. On 11/17 three jobs were in that shape: #5876, #5879, and #5918. Claude's recommendation: those stay off the list until you say the welcome should go out for them. If you want no welcome on bot-made cards, say so and the bot can hold them for a person instead.",
+        "For Noah, two smaller things: your stage guard may see the bot's field writes on Booked cards and try to put them back; tell Tasha if it should switch to alerts only once the bot is live. And your notes still list M151 as your own open plan; it has been Tasha's build since 10/07.",
+        "How to stop it at any time: one command sets it back to practice mode, or both of its clocks can be paused (the 10-minute run and the 5:45 AM deep run). Refund cleanup stays plan-only through the first live runs.",
+        "Needs a person: job #5838's card is in Won with only the deposit paid ($1,208.88 of $2,417.75), and the job is back in quote with no date. The bot will raise it as a 'Same car?' task once live; today nobody is told.",
+        "Left open on purpose, each written down with its reason: a filed job is not read again once its payment is over 30 days old (a moved install date would not reach the card); a contact matched by phone alone is not checked against the name; two Urable jobs for one car and one card will each ask 'Same car?' until a person settles it in Urable; and the Won-at-pickup reopen rule waits for Tasha's call.",
+        "Next: Tasha's go or no-go session, then the 3-job live run."
       ],
       "notes": [
-        "Every fix and every pick in this entry is Claude's recommendation; Tasha's own decisions are the 4 calls. Noah has ruled on none of it.",
-        "Evidence: the three practice runs and the review findings are in the 2026-11-17 loophole-check work folder; the full story is in the project's session note."
+        "Whose call is what: Tasha made the 4 calls (3 jobs first, one line to Noah, date tasks stay with Jenn, no heads-up to Jenn) and said yes to both redeploys and to building the 6 fixes. On 11/18 she chose to put the details for Noah here instead of a separate message. Every fix, the 3 picked jobs, and holding the new-card jobs are Claude's recommendations. Noah has ruled on none of it.",
+        "Timeline: 11/17 the 4 calls and the loophole check (14 found, 11 fixed). 11/18 three pre-deploy checks, first redeploy (version 00009-zit), 6 more fixes built and reviewed, second redeploy (version 00010-nan). Both redeploys passed all 9 deploy checks, and a deep practice pass after each wrote nothing.",
+        "Evidence: the practice runs, both deploy logs, and the review findings are in the 2026-11-17 loophole-check work folder; the full story is in the project's session note."
       ]
     },
     {
