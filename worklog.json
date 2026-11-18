@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-18T17:28:34.565Z",
+  "updated": "2026-11-18T17:29:13.234Z",
   "projects": [
     {
       "id": "night-shift",
@@ -964,6 +964,27 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-17",
+      "title": "Checked every scheduled job, bot, and workflow in one pass and found GHL's daily call allowance running low on 9 weekday evenings",
+      "shipped": [
+        "Tasha's audit read every automation in one pass: the 29 Google Cloud scheduled jobs, 31 cloud services, 125 GHL workflows, and the scheduled jobs on her Mac. Read-only: nothing in GHL or Google Cloud was changed.",
+        "Found the pattern behind most of the week's failed runs. GHL allows 200,000 API calls a day, and the lead database sync pauses itself under 40,000. It went under that line on 9 weekdays since 11/05 and on no weekend. The pause used to start near midnight; since 11/10 it starts between 5:30 and 8:15 PM PT. The lowest readings were 1,833 on 11/11 and 0 on 11/16.",
+        "Counted what stops while the allowance is low: the lead database sync failed 86 runs in 7 days and the past-client sweep 95. On 11/16, the one night it reached 0, the deposit bot's 10-minute check failed 3 times and the quiz sweep once.",
+        "Wrote the findings up as one file for Noah's Claude with a tested read-only check that prints the newest allowance readings. It asks for no change; what to do is Noah's call.",
+        "Regenerated the automation list for the first time since 8/11. Then: 9 cloud jobs, 15 services, 87 workflows. Now: 29, 31, and 125. All 29 cloud jobs are switched on and 28 had a clean last run."
+      ],
+      "fixed": [
+        "A daily check on Tasha's Mac that watches the follow-up engine's settings had failed all 43 runs since 9/01, so it never reported once. It was pointed at a model its login could not use. One setting fixed it; it then ran clean and reported that the welcome-email stage order in the settings file is still wrong, plus 2 setting differences that are new since 9/01.",
+        "Corrected two of the audit's own first readings before they went anywhere: the allowance reached 0 on one day, not four, and the 'buyers now' call-sheet timeouts started on 11/04, before the allowance got low, so they may be a separate problem."
+      ],
+      "inProgress": [
+        "Needs a person: Noah, to decide whether the evening allowance pause needs a fix. Claude's reading from timing, not a per-service count: the follow-up engine runs every 30 minutes for about 13 minutes, and the allowance drops about 2,300 calls each half hour while it runs, roughly 110,000 a day.",
+        "The automation list still has no owner written for 28 of the 29 cloud jobs, and about 32 one-time blast workflows from 8/24 and 9/07 are still published in GHL. Tasha will check their triggers and switch finished ones to draft.",
+        "Not checked in this pass: GHL workflow run errors and Zapier, because neither can be read from outside its own screen."
+      ],
+      "notes": "Counts come from Cloud Scheduler and Cloud Run logs read on 11/17 and 11/18 PT, and from the workflow list GHL returned on 11/17. A job that reports success was counted as clean; this pass did not open each job's output."
+    },
     {
       "date": "2026-11-17",
       "title": "Closed 11 ways the deposit bot could have filed a wrong or second Booked card, before it has written a single one",
