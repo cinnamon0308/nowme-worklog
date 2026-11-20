@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-20T01:51:45.243Z",
+  "updated": "2026-11-20T07:57:33.206Z",
   "projects": [
     {
       "id": "night-shift",
@@ -964,6 +964,38 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-19",
+      "title": "Found why the appointment bot moved customers' Urable jobs before they said yes, and built a tested fix that leaves the move to the customer's yes",
+      "shipped": [
+        "Tasha traced the bug from Noah's 11/12 teardown: when the bot texted a customer a new time to ask if it worked, it moved their Urable job as soon as the text was delivered, before they answered. One customer's visit moved twice in 7 minutes on 10/28 (11/14 to 11/2 to 11/7) while he was still replying.",
+        "Checked both customers from the teardown live in GHL and Urable: both visits ended on the time the customer did agree to (one completed 11/7, one on Fri 12/11 2 PM). No customer was hurt, but the bot still did it on every offer.",
+        "Built the fix: the bot moves a job on delivery only when the text repeats the exact time the customer asked for. For an offer, the job stays put and the card says the promised-visit check will move it once they agree, so there are no wrong dates in Urable and no extra Discord posts. Touch-ups get a note to move by hand, because the check books those as a new visit.",
+        "Tested it on a copy of the live bot: all 8 existing test sets pass (850 checks) plus 33 new ones. Packed it as a kit for Noah's Claude that refuses to run if the live file changed, keeps a backup, and puts the old file back by itself if any test fails."
+      ],
+      "fixed": [
+        "Caught a design mistake before anything was sent: the first version told staff to move the job by hand after the customer's yes, but the promised-visit check already moves it then, so a person could have moved the same job twice. Rebuilt it at about a third of the size, and made 'check every other bot that moves jobs before pushing' a standing rule."
+      ],
+      "inProgress": [
+        "The kit is built and tested but not sent. Open first: whether touch-up offers keep the hand step or the bot moves the offered job itself."
+      ],
+      "notes": "Also read the first evening check of Sean's new promised-call lane (Thu 11/19, 6:18 PM): it ran and posted, 138 promises due, 116 not called. That list was made before the lane went live, so it is the before number; Friday's list is the first real test. All work read-only on live systems; nothing changed in GHL, Urable, or Noah's files."
+    },
+    {
+      "date": "2026-11-19",
+      "title": "Made the dashboard publish push each repo under its own GitHub account, with a check before every push, so a sign-in change can no longer stall Noah's log",
+      "shipped": [
+        "Tasha changed the work-log publisher so the dashboard repo always pushes as her dashboard account and Noah's company copy always pushes as the Dragon Auto account. Before, the dashboard push used whichever account was signed in last, so one new sign-in could stop the dashboard updating without anyone noticing.",
+        "Before every push the publisher now checks 3 things: the repo address is the right one, the account is signed in, and the account is allowed to push there (a test push that changes nothing). If a check fails, the error names which copy failed, dashboard or company, and nothing is pushed to the wrong place.",
+        "Lined up the Dragon Auto instructions that Tasha's two AI assistants follow: who sets each task, pausing when a request clashes with an approval rule, Pacific dates, customer initials instead of names, and which skill runs which job."
+      ],
+      "fixed": [
+        "Corrected product facts in those instructions against Noah's brand guide: removed the retired \"35x thicker\" line, replaced the retired orange and amber colors with the current palette, and marked PeelClear as paused since 9/23 with its old launch prices retired.",
+        "The publish tests went from failing 6 new checks on the old code to passing all 108 on the new code. Both real repos passed the address, sign-in, and push-access checks without publishing anything."
+      ],
+      "inProgress": [],
+      "notes": "Checked on 11/19 PT with offline tests and dry-run pushes; no live publish was triggered by hand. The end-of-session publish runs as usual."
+    },
     {
       "date": "2026-11-17",
       "title": "Checked every scheduled job, bot, and workflow in one pass and found GHL's daily call allowance running low on 9 weekday evenings",
