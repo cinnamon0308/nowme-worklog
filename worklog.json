@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-20T07:57:33.206Z",
+  "updated": "2026-11-20T08:20:43.595Z",
   "projects": [
     {
       "id": "night-shift",
@@ -966,18 +966,20 @@
   "sessions": [
     {
       "date": "2026-11-19",
-      "title": "Found why the appointment bot moved customers' Urable jobs before they said yes, and built a tested fix that leaves the move to the customer's yes",
+      "title": "Found why the appointment bot moved customers' Urable jobs before they said yes, and built a tested fix where only their yes plus a 👍 moves the job",
       "shipped": [
         "Tasha traced the bug from Noah's 11/12 teardown: when the bot texted a customer a new time to ask if it worked, it moved their Urable job as soon as the text was delivered, before they answered. One customer's visit moved twice in 7 minutes on 10/28 (11/14 to 11/2 to 11/7) while he was still replying.",
         "Checked both customers from the teardown live in GHL and Urable: both visits ended on the time the customer did agree to (one completed 11/7, one on Fri 12/11 2 PM). No customer was hurt, but the bot still did it on every offer.",
-        "Built the fix: the bot moves a job on delivery only when the text repeats the exact time the customer asked for. For an offer, the job stays put and the card says the promised-visit check will move it once they agree, so there are no wrong dates in Urable and no extra Discord posts. Touch-ups get a note to move by hand, because the check books those as a new visit.",
-        "Tested it on a copy of the live bot: all 8 existing test sets pass (850 checks) plus 33 new ones. Packed it as a kit for Noah's Claude that refuses to run if the live file changed, keeps a backup, and puts the old file back by itself if any test fails."
+        "Built the fix: the bot moves a job on delivery only when the text repeats the exact time the customer asked for. For an offer, the job stays put until the customer says yes; then the bot posts its existing move card in #iw-scheduler for that exact job, and one 👍 moves it (Noah's 10/12 design). Touch-ups are covered too, so no second visit gets booked.",
+        "Before a move card goes up, the bot checks that our offer is still the last text or call to the customer and that the time is still open and still in the future, so a yes meant for Sean, or a slot taken since, can't move the wrong job.",
+        "Tested it on a copy of the live bot: all 7 existing test sets pass (797 checks) plus 55 new ones. Packed it as a kit for Noah's Claude that refuses to run if the live file changed, keeps a backup, and puts the old file back by itself if any test fails."
       ],
       "fixed": [
-        "Caught a design mistake before anything was sent: the first version told staff to move the job by hand after the customer's yes, but the promised-visit check already moves it then, so a person could have moved the same job twice. Rebuilt it at about a third of the size, and made 'check every other bot that moves jobs before pushing' a standing rule."
+        "Three rounds of independent code review caught problems before anything was sent. The biggest: the bot's yes-check also reads 'Ok we will see' and 'let me know' as a yes, so letting it move jobs by itself would have recreated the same bug. Every move now waits for a person's 👍.",
+        "Caught a design clash with the promised-visit check, which already acts on a customer's yes, and made 'check every other bot that moves jobs before pushing' a standing rule."
       ],
       "inProgress": [
-        "The kit is built and tested but not sent. Open first: whether touch-up offers keep the hand step or the bot moves the offered job itself."
+        "The kit is built and tested but not sent to Noah yet; Tasha decides when."
       ],
       "notes": "Also read the first evening check of Sean's new promised-call lane (Thu 11/19, 6:18 PM): it ran and posted, 138 promises due, 116 not called. That list was made before the lane went live, so it is the before number; Friday's list is the first real test. All work read-only on live systems; nothing changed in GHL, Urable, or Noah's files."
     },
