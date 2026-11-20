@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-20T08:20:43.595Z",
+  "updated": "2026-11-20T09:25:05.307Z",
   "projects": [
     {
       "id": "night-shift",
@@ -961,9 +961,63 @@
         ],
         "live": null
       }
+    },
+    {
+      "item": "Decide 2 things on the promised-visit check's wrong-year booking: pause its own booking until the fix is in, and what to do with the wrong 12/12/2026 visit",
+      "project": "Promised-Visit Check",
+      "since": "2026-11-20",
+      "impact": "The promised-visit check books agreed visits into Urable by itself every 2 hours (your 10/26 PVC_BOOK=1). On 11/10 it booked a past client, J.S., for Sat 12/12/2026 at 2 PM from a call on 12/08/2025 about his 12/12/2025 visit, which he already had. Cause: every message it shows the AI says 'Mon 12/08' with no year, and the instruction says 'use the year implied by today's date'. Your own 11/11 note lists it as found, not fixed. It can still happen today: last year's November to January messages are the risky ones right now. Tasha's plan adds 5 checks every date must pass before the bot books (the exact message it came from, the year taken from that message's date, at most 90 days after it, a matching weekday, a message under 21 days old); a date that fails becomes a card for a person. That keeps your 'book it yourself' for fresh agreements and stops old history from creating visits. Email: only 4 customer emails named a day or time in 60 days, and Jenn's 11/01 email patch already covers it, so it gets reused, not rebuilt.",
+      "whatToDo": [
+        "Decision 1, until the fix is live (Claude's recommendation: A). A. Pause the check's own booking: it keeps finding missed visits and posts a card in #appointment-replies, and a person books them. One setting, undo any time (the first block below). B. Leave booking on and ship a small first kit (year on every message line, the 'today's year' line removed, the weekday check) while the full fix is built. Wrong bookings stay possible until then.",
+        "Decision 2: J.S.'s visit on Sat 12/12/2026 at 2 PM is in Urable but he never asked for it (his real visit was 12/12/2025 and is completed). Delete it, or leave it and text him? Claude's recommendation: delete it; Tasha won't touch it without your word.",
+        "Reply to Tasha in Discord with your two answers, for example 'A, delete'.",
+        "If you pick A, have your Claude run the first block below on the Mac. It prints DONE or FAILED."
+      ],
+      "commands": [
+        {
+          "label": "A: pause the check's own booking (cards only). Run on the Mac; prints DONE or FAILED",
+          "code": "P=\"$HOME/Library/LaunchAgents/com.dragonauto.promised-visit-check.plist\"\nif [ -f \"$P\" ]; then cp \"$P\" \"$P.pre-pvcbook0-20261120.bak\"; echo \"was: $(/usr/libexec/PlistBuddy -c 'Print :EnvironmentVariables:PVC_BOOK' \"$P\" 2>/dev/null)\"; else echo \"FAILED: no $P. Send Tasha this output:\"; ls \"$HOME/Library/LaunchAgents\" | grep -i promised; fi\nif /usr/libexec/PlistBuddy -c 'Set :EnvironmentVariables:PVC_BOOK 0' \"$P\" 2>/dev/null; then echo set; else /usr/libexec/PlistBuddy -c 'Add :EnvironmentVariables:PVC_BOOK string 0' \"$P\"; fi\nlaunchctl bootout gui/$(id -u) \"$P\" 2>/dev/null; launchctl bootstrap gui/$(id -u) \"$P\"\nif launchctl print gui/$(id -u)/com.dragonauto.promised-visit-check 2>/dev/null | grep -q 'PVC_BOOK => 0'; then echo \"DONE: tell Tasha the promised-visit check is cards-only (PVC_BOOK=0)\"; else echo \"FAILED: send Tasha this output\"; fi"
+        },
+        {
+          "label": "Undo A later (booking back on). Prints DONE or FAILED",
+          "code": "P=\"$HOME/Library/LaunchAgents/com.dragonauto.promised-visit-check.plist\"\nif /usr/libexec/PlistBuddy -c 'Set :EnvironmentVariables:PVC_BOOK 1' \"$P\"; then launchctl bootout gui/$(id -u) \"$P\" 2>/dev/null; launchctl bootstrap gui/$(id -u) \"$P\"; fi\nif launchctl print gui/$(id -u)/com.dragonauto.promised-visit-check 2>/dev/null | grep -q 'PVC_BOOK => 1'; then echo \"DONE: tell Tasha booking is back on (PVC_BOOK=1)\"; else echo \"FAILED: send Tasha this output\"; fi"
+        },
+        {
+          "label": "The one-page plan with pictures (Tasha shares it with you): copy this link into your browser",
+          "code": "https://claude.ai/artifact/7pqFM5QJXnttNudxvo8viv"
+        }
+      ],
+      "doneCheck": {
+        "doneWhen": "Noah answers both decisions (A or B, and the 12/12/2026 visit) in Discord to Tasha or in his own notes, or his notes show PVC_BOOK=0 set.",
+        "approvals": null,
+        "vault": [
+          "PVC_BOOK",
+          "wrong-year",
+          "year late",
+          "12/12/2026",
+          "promised-visit stopgap"
+        ],
+        "live": null
+      }
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-20",
+      "title": "Found why the promised-visit check booked a visit a year late, proved it on the real call, and planned a safe fix with a stopgap for Noah's call",
+      "shipped": [
+        "Tasha traced the wrong-year booking from Noah's 11/11 note to its cause. The promised-visit check (the bot that books agreed visits into Urable every 2 hours) reads a customer's whole history, and every message it shows the AI says only 'Mon 12/08' with no year, while its instructions say 'use the year implied by today's date'.",
+        "Proved it on the real records, read only. A customer's call on Mon 12/08/2025 said '12 12, which is this Friday at 2 pm'. He came in Fri 12/12/2025 and that job is completed. On 11/10/2026 the bot reread that old call and booked Sat 12/12/2026 at 2 PM, a visit nobody asked for. It is still in Urable.",
+        "Planned the fix as 5 checks every date must pass before the bot books: the AI names the exact message the date came from; the code sets the year from that message's send date; the date must fall within 90 days after it; a named weekday must match ('this Friday' must land on a Friday, and 12/12/2026 is a Saturday); and the message must be under 21 days old. A date that fails any check becomes a card for a person instead of a booking.",
+        "Found that email is a small gap: 4 customers emailed a day, time or appointment in the last 60 days. Jenn already built and tested an email fix for this check on 11/01 that was never copied onto the Mac, so the plan reuses it under the new date checks instead of building a second one.",
+        "Ran the plan through 2 rounds of review against the code. The second round found 9 gaps in the first draft (3 could still book wrong); all 9 were checked against the code and are in the final plan. Nothing was built or changed."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Waiting on Noah's 2 decisions: pause the check's own booking until the fix is in, and what to do with the wrong 12/12/2026 visit. Then step A (read-only list of every booking the check made since 10/26), step B (the 5 date checks, shipped as a kit), and step C (Jenn's 11/01 email fix, only if the 4 emails show real misses)."
+      ],
+      "notes": "Read-only work: GHL threads, call transcripts in the lead database, Urable jobs, and the code copy in Noah's vault mirror. Not checked: the live Mac's settings. Customer named by initials only."
+    },
     {
       "date": "2026-11-19",
       "title": "Found why the appointment bot moved customers' Urable jobs before they said yes, and built a tested fix where only their yes plus a 👍 moves the job",
