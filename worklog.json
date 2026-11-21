@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-21T03:35:21.431Z",
+  "updated": "2026-11-21T03:44:52.171Z",
   "projects": [
     {
       "id": "night-shift",
@@ -818,10 +818,10 @@
       "name": "Reply and Missed-Call Cards",
       "status": "IN_PROGRESS",
       "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, so both were switched off on 10/17. Noah's fix went live at 2:45 AM PT on 10/21: the reply workflow now fires on 7 message channels only, so texts and DMs open cards again and calls do not, and Vehicle Estimation leaves a card with no car where it opened. The missed-call workflow stays off: the answer-fast test week (read 11/17) showed that as drafted it would make tasks only for callers with no card, 12 nameless callers that week, under a title the call sheet does not read. One three-choice question is going to Noah. The four go-live tests have not run yet.",
-      "blockedOn": "Noah's answer on the missed-call workflow (on Waiting on Noah since 11/17): retire it, publish it for callers with no card, or a same-day spot on Sean's page. Tests 1 to 4 still to run.",
+      "blockedOn": "Noah and Tasha have not approved keep/off or the cleanup dispositions. Agent recommends revising v2 before execution. Existing missed-call decision and go-live tests remain outstanding.",
       "health": {
         "band": "watch",
-        "reason": "Live since 2:45 AM PT 10/21; the four tests have not run yet. The missed-call workflow stays a Draft: read on 11/17, it would have tasked the wrong callers."
+        "reason": "Live tint-only inquiry remains an open Engaged sales card after a resolved referral. Current cadence 00092-ric still lacks the no-quote hold. Plan v2 requires review before execution."
       },
       "detail": {
         "goal": "Make every real reply and every missed call land on Sean's board as a card, so no one who reached out is invisible to the call sheet.",
@@ -834,13 +834,15 @@
           "2026-10-21: built the 7 message-channel triggers, put the no-car rule live in Vehicle Estimation after a review copy, published the reply workflow at 2:45 AM PT, and built the 'New messages, no car yet' Smart List.",
           "11-20: sorted all 166 cards the reply workflow opened since 10/21 (read-only): 75 real sales leads, 38 real people with no new deal, 40 junk, and 13 unclear; 53 came from people answering our own texts, mostly the holiday offer.",
           "11-20: wrote a 4-step plan from the sort (clean 73 false cards, block 8 pitch words at the trigger, get the 10/29 robot fix live, sort new cards weekly); the live robot (00092-ric) still lacks the fix. Nothing changed in GHL.",
-          "11-20: checked the 4-step plan for holes (12 closed), re-tested the robot fix on live revision 00092-ric and refreshed its file, and tested the block words on all 19,001 saved texts. Noah's 11/12 spam check already sits on the workflow, so missed pitches go to his filter. Nothing changed in GHL."
+          "11-20: checked the 4-step plan for holes (12 closed), re-tested the robot fix on live revision 00092-ric and refreshed its file, and tested the block words on all 19,001 saved texts. Noah's 11/12 spam check already sits on the workflow, so missed pitches go to his filter. Nothing changed in GHL.",
+          "11-20: independently checked the screenshot tint inquiry and current cadence 00092-ric source. The referral was answered, but the open $0 card remains in Engaged. Reviewed v2 and recommended revisions before execution; no CRM change."
         ],
         "needsImprovement": [
           "Run tests 1 to 4, then send Noah his done line.",
           "Decide the missed-call workflow with Noah: as built it never reached Sean, removing only the card step breaks it, and the reworked version would task only callers with no card (answer-fast test week, read 11/17).",
           "Merge the two duplicate contacts, then remove their stray cards.",
-          "Claude's recommendation: a 'car added' workflow plus a typing rule, so a DM card moves to Manual Quote Required once its car is known."
+          "Claude's recommendation: a 'car added' workflow plus a typing rule, so a DM card moves to Manual Quote Required once its car is known.",
+          "Agent recommendation after v2 review: define daily inquiry review and call-sheet treatment, resolve keyword false positives, and approve exact card stage/status changes with current workflow side effects before cleanup."
         ],
         "watchFor": [
           "A card left open for a spam texter takes a fresh seat at the top of the sheet. A closed card blocks a new one; a deleted card does not, unless the contact is blocked from calls or has a Do Not Contact card, which the reply workflow checks.",
@@ -1005,6 +1007,21 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-20",
+      "title": "Verified the tint referral behind the false-card complaint and flagged gaps before the auto-card plan runs",
+      "shipped": [],
+      "fixed": [],
+      "inProgress": [
+        "Read all 8 live conversation events for the screenshot inquiry: Sean delivered the tint-partner referral and the person thanked him, but its $0 card is still open in Rockclear Engaged. This separates a resolved service referral from a real coating sale.",
+        "Checked current deployed cadence revision 00092-ric and its source: the no-quote hold is absent, and step 5b promotes on inbound activity without checking quote delivery. This confirms why the false sales-stage label persists.",
+        "Reviewed version 2 of the plan and flagged 5 execution gaps before cleanup: false cards remain eligible for Sean's sheet, weekly review delays returning buyers, one keyword catches a real buyer, closure fields and downstream effects need checks, and the 75-lead claim is a historical classification rather than a verified forecast."
+      ],
+      "notes": [
+        "Read-only second opinion requested by Tasha. No GHL or Urable writes, no deploy, and no customer message. Historical 166-card totals were read from the existing audit, not rerun.",
+        "Agent recommendation: revise the plan before execution, preserve genuine inbound coverage, and name a daily reviewer. No new approval or decision from Noah or Tasha."
+      ]
+    },
     {
       "date": "2026-11-20",
       "title": "Checked the auto-card plan for holes before it reaches Noah: 12 gaps closed, and the robot fix is re-tested on today's live code and ready to send",
