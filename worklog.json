@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-20T23:46:32.059Z",
+  "updated": "2026-11-21T00:04:48.068Z",
   "projects": [
     {
       "id": "night-shift",
@@ -832,7 +832,8 @@
           "2026-10-18: deleted the 7 proven junk cards after a full re-check; every contact stayed unchanged, and each card can be restored from Audit Logs for 60 days.",
           "2026-10-19: deleted 6 more nameless 'New reply (phone)' cards (2 loan pitches, 4 silent or garbled callers) after a Urable check and a full re-read of each; Manual Quote Required went from 85 to 79, and the 8 real people stayed.",
           "2026-10-21: built the 7 message-channel triggers, put the no-car rule live in Vehicle Estimation after a review copy, published the reply workflow at 2:45 AM PT, and built the 'New messages, no car yet' Smart List.",
-          "11-20: sorted all 166 cards the reply workflow opened since 10/21 (read-only): 75 real sales leads, 38 real people with no new deal, 40 junk, and 13 unclear; 53 came from people answering our own texts, mostly the holiday offer."
+          "11-20: sorted all 166 cards the reply workflow opened since 10/21 (read-only): 75 real sales leads, 38 real people with no new deal, 40 junk, and 13 unclear; 53 came from people answering our own texts, mostly the holiday offer.",
+          "11-20: wrote a 4-step plan from the sort (clean 73 false cards, block 8 pitch words at the trigger, get the 10/29 robot fix live, sort new cards weekly); the live robot (00092-ric) still lacks the fix. Nothing changed in GHL."
         ],
         "needsImprovement": [
           "Run tests 1 to 4, then send Noah his done line.",
@@ -1003,6 +1004,27 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-20",
+      "title": "Turned the 166-card sort into a 4-step plan for Noah's junk-card note: keep the reply workflow on, clean 73 false cards, and stop new ones at three points",
+      "shipped": [
+        "Tasha followed up Noah's 11/20 Discord note (false cards are filling the pipeline; tune the workflow or switch it off) with a plan built on the same day's sort of all 166 cards. Plan in one line: keep the workflow on, because switching it off would also drop cards for about 75 real sales leads a month (9 of them already booked or won).",
+        "Mapped where a false card comes from, as three leaks: the trigger lets almost every message open a card, no step asks whether the message is a sale, and the follow-up robot then moves the card to Proposal Sent Engaged within 30 minutes. 127 of the 166 cards sit in that stage and 64 of those are not a sale.",
+        "Counted the one-time cleanup: 73 open cards are not a sale (36 junk and 37 real people with no new deal), 63 of them in Proposal Sent Engaged. Closing them takes that stage from 126 open auto-cards to 63, using the closing rules from 10/17 to 10/19.",
+        "Tested word filters on the 166 real opening messages before proposing any: 8 words such as 'funding', 'lender', and 'auto transport' would have stopped 11 junk cards and 0 real leads. Blocking 'tint', 'wrap', 'PPF', and 'detail' would have stopped 6 real leads too, so those words are left out.",
+        "Checked the live follow-up robot (read-only, revision 00092-ric): the fix written on 10/29 that keeps message cards with no quote out of Proposal Sent Engaged is not in it, and the handoff file was written for an older revision, so it needs a re-check before it goes to Noah.",
+        "Built a private page with a diagram for each step, a before-and-after month, and who decides each step."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Next: Tasha answers Noah's keep-or-off question with these numbers. Each step (cleanup, trigger words, weekly sort) waits for her go, and the robot fix waits for a re-check and then Noah's deploy.",
+        "Needs a person: Noah, to say keep or switch off."
+      ],
+      "notes": [
+        "Nothing changed in GHL and no customer got a message. The only live reads were the robot's revision and its code, on 11/20 at about 3:55 PM PT.",
+        "The word test covers 166 messages only; the words get a test on the full text history before any goes live. The monthly before-and-after is an estimate that assumes next month looks like the last 30 days."
+      ]
+    },
     {
       "date": "2026-11-20",
       "title": "Sorted all 166 cards the reply workflow opened since 10/21: 75 are real sales leads and 78 are not a sale, so the junk-card question Noah raised now has numbers",
