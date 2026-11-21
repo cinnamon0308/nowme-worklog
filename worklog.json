@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-21T00:04:48.068Z",
+  "updated": "2026-11-21T00:25:43.018Z",
   "projects": [
     {
       "id": "night-shift",
@@ -833,7 +833,8 @@
           "2026-10-19: deleted 6 more nameless 'New reply (phone)' cards (2 loan pitches, 4 silent or garbled callers) after a Urable check and a full re-read of each; Manual Quote Required went from 85 to 79, and the 8 real people stayed.",
           "2026-10-21: built the 7 message-channel triggers, put the no-car rule live in Vehicle Estimation after a review copy, published the reply workflow at 2:45 AM PT, and built the 'New messages, no car yet' Smart List.",
           "11-20: sorted all 166 cards the reply workflow opened since 10/21 (read-only): 75 real sales leads, 38 real people with no new deal, 40 junk, and 13 unclear; 53 came from people answering our own texts, mostly the holiday offer.",
-          "11-20: wrote a 4-step plan from the sort (clean 73 false cards, block 8 pitch words at the trigger, get the 10/29 robot fix live, sort new cards weekly); the live robot (00092-ric) still lacks the fix. Nothing changed in GHL."
+          "11-20: wrote a 4-step plan from the sort (clean 73 false cards, block 8 pitch words at the trigger, get the 10/29 robot fix live, sort new cards weekly); the live robot (00092-ric) still lacks the fix. Nothing changed in GHL.",
+          "11-20: checked the 4-step plan for holes (12 closed), re-tested the robot fix on live revision 00092-ric and refreshed its file, and tested the block words on all 19,001 saved texts. Noah's 11/12 spam check already sits on the workflow, so missed pitches go to his filter. Nothing changed in GHL."
         ],
         "needsImprovement": [
           "Run tests 1 to 4, then send Noah his done line.",
@@ -1004,6 +1005,27 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-20",
+      "title": "Checked the auto-card plan for holes before it reaches Noah: 12 gaps closed, and the robot fix is re-tested on today's live code and ready to send",
+      "shipped": [
+        "Tasha had the 4-step auto-card plan checked for holes before any step runs. The check found 12 gaps and closed each one, so nothing reaches Noah or GHL on a wrong assumption. The plan page is now version 2.",
+        "Re-tested the 10/29 robot fix on the live code Noah deployed on 11/20 (revision 00092-ric). It still fits all 4 places, its 21 new tests pass, and Noah's own test suites give the same results before and after (45 pass with 1 old known failure, then 62, then 39). The file for his Claude is refreshed so its first check passes; the old file would have stopped there. This fix keeps message cards with no quote out of Proposal Sent Engaged, where 126 open auto-cards sit and 63 are not a sale.",
+        "Tested the 8 block words on all 19,001 saved incoming texts (15 months): every hit was a loan or vendor pitch except 1 buyer text. Then found that Noah's own spam check has sat on the same workflow since 11/12, so a second word list would double it. The plan now sends missed pitches to his filter: 3 loan pitches opened cards on 11/20 with no spam tag.",
+        "Tightened the cleanup rules so no real customer is hurt. The 19 past customers with only a service question are closed by card status, the way Noah's session did it on 11/15, so they stay on quote follow-up emails for a later job. A person who still waits for an answer keeps an open card. The 2 cards a person placed by hand are left alone.",
+        "Confirmed in the live call sheet code that it reads Awaiting Engagement, so the real leads that wait there after the fix stay on Sean's list (about 75 real leads a month come through this workflow). Confirmed that no automatic robot text went to any junk card."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Next: Tasha's decide session on the plan, then one message to Noah with the keep-or-off numbers and the robot fix file for his Claude.",
+        "Needs a person: Noah, to say keep or switch off."
+      ],
+      "notes": [
+        "Nothing changed in GHL and no customer got a message. Live reads only: the robot's settings and code on 11/20 at about 5 PM PT.",
+        "The earlier entry's 73 false cards came from a snapshot a few minutes older. During that pull one junk card was closed by hand and the robot moved one new card, so the cleanup list is pulled fresh on the day.",
+        "What Noah would accept for closing real people's cards is Claude's read of his notes, not his ruling. The vault copy of his notes ends on 11/19."
+      ]
+    },
     {
       "date": "2026-11-20",
       "title": "Turned the 166-card sort into a 4-step plan for Noah's junk-card note: keep the reply workflow on, clean 73 false cards, and stop new ones at three points",
