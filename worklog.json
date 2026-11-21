@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-21T14:39:05.840Z",
+  "updated": "2026-11-21T17:19:15.456Z",
   "projects": [
     {
       "id": "night-shift",
@@ -818,10 +818,10 @@
       "name": "Reply and Missed-Call Cards",
       "status": "IN_PROGRESS",
       "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, so both were switched off on 10/17. Noah's fix went live at 2:45 AM PT on 10/21: the reply workflow now fires on 7 message channels only, so texts and DMs open cards again and calls do not, and Vehicle Estimation leaves a card with no car where it opened. The missed-call workflow stays off: the answer-fast test week (read 11/17) showed that as drafted it would make tasks only for callers with no card, 12 nameless callers that week, under a title the call sheet does not read. One three-choice question is going to Noah. The four go-live tests have not run yet.",
-      "blockedOn": "Tasha chose to keep Reply published and review daily. The proposed schedule, coverage, cadence deployment, and exact cleanup writes await review. Existing missed-call decision and go-live tests remain outstanding.",
+      "blockedOn": "Noah's Claude runs the no-quote hold file Tasha sent on 11/21 and deploys it. Tasha's cleanup list and daily sort wait for her go. The missed-call decision and the go-live tests remain outstanding.",
       "health": {
         "band": "watch",
-        "reason": "The November 20 audit found a resolved tint referral still open in Engaged, and cadence lacked the no-quote hold. Plan v3 is ready for review."
+        "reason": "Tasha picked the plan on 11/21 (version 2 plus four items from version 3) and sent Noah the tested fix. Until it is live, the robot still moves message cards that have no quote."
       },
       "detail": {
         "goal": "Make every real reply and every missed call land on Sean's board as a card, so no one who reached out is invisible to the call sheet.",
@@ -836,7 +836,8 @@
           "11-20: wrote a 4-step plan from the sort (clean 73 false cards, block 8 pitch words at the trigger, get the 10/29 robot fix live, sort new cards weekly); the live robot (00092-ric) still lacks the fix. Nothing changed in GHL.",
           "11-20: checked the 4-step plan for holes (12 closed), re-tested the robot fix on live revision 00092-ric and refreshed its file, and tested the block words on all 19,001 saved texts. Noah's 11/12 spam check already sits on the workflow, so missed pitches go to his filter. Nothing changed in GHL.",
           "11-20: independently checked the screenshot tint inquiry and current cadence 00092-ric source. The referral was answered, but the open $0 card remains in Engaged. Reviewed v2 and recommended revisions before execution; no CRM change.",
-          "11-20: prepared the revised plan with 12 proposed changes and routing rules. Daily review covers new and returning inquiries before any closure."
+          "11-20: prepared the revised plan with 12 proposed changes and routing rules. Daily review covers new and returning inquiries before any closure.",
+          "11-21: Tasha picked the plan and sent Noah the no-quote hold file, rechecked against live revision 00092-ric. No CRM change."
         ],
         "needsImprovement": [
           "Run tests 1 to 4, then send Noah his done line.",
@@ -1008,6 +1009,38 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-21",
+      "title": "Picked one plan for the false reply cards and sent Noah the tested robot fix",
+      "shipped": [
+        "Sent Noah the no-quote card hold as one file for his Claude. It stops the cadence robot from moving a message card to Proposal Sent Engaged when no quote was sent. In 30 days 128 of 166 reply cards went there and 65 of those 128 were not a sale, so the stage Sean reads for people close to buying stops filling with people who never got a quote.",
+        "Rechecked the file against the live robot before sending: it is still revision 00092-ric on 11/21, so the fix fits the code that is running.",
+        "Compared plan versions 2 and 3 and Tasha picked one: keep the reply workflow on (about 75 real sales leads in 30 days, 9 already booked or won), clean the false cards once with one test card first, sort new cards daily, and send missed pitches to Noah's spam filter."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Waiting on Noah's Claude to run the file and deploy. Until then the robot still moves message cards that have no quote.",
+        "Next on Tasha's side: a fresh list of about 70 false cards to close, for her approval. No card is touched before that."
+      ],
+      "notes": [
+        "No GHL edits and no customer messages. Known limit of the fix: a quote Sean sends by hand does not release a held card (about 8 a month), and 3 of the 166 cards sit on a contact with an old quote tag. The daily sort covers both."
+      ]
+    },
+    {
+      "date": "2026-11-20",
+      "title": "Checked the promised-visit fix plan against the bot's code before any build: 9 gaps found, 3 that could still book a wrong visit",
+      "shipped": [
+        "Read the fix plan and the bot's 3 code files line by line. Found 3 ways the planned fix could still put a visit on the wrong date in Urable: the code can match the AI's quote to the wrong message, a past date can roll a full year ahead, and saved AI answers would skip the new rule. Each has a small fix, so a customer is not booked for a day they never agreed to.",
+        "Found 6 more gaps that weaken the plan. Two examples: the notes the bot leaves in Urable carry no year, and the email part could not pass its own test."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "No decision yet. Claude's recommendation is on file: keep plan version 2 with five changes, starting with a stopgap while the bot is still live with the wrong-year bug."
+      ],
+      "notes": [
+        "Read only. Nothing in Urable, GHL, or the bot was changed."
+      ]
+    },
     {
       "date": "2026-11-20",
       "title": "Prepared the daily review plan for reply cards before any cleanup",
