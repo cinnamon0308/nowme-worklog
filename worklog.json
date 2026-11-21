@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-21T00:25:43.018Z",
+  "updated": "2026-11-21T03:35:21.431Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1054,6 +1054,7 @@
         "Tasha answered Noah's 11/20 note in Discord (inbound junk is filling the pipeline with false cards; tune the workflow or switch it off) with a full count: pulled every card the reply workflow opened since it went live again at 2:45 AM PT on 10/21, read-only. 166 cards for 163 people, 10/21 to 11/20.",
         "Read every card's whole thread, call transcripts included, and sorted each one: 75 real sales leads (72 Rocklear asks and 3 other paid jobs, 45%), 38 real people with no new deal (19 customers asking about a past job, 15 wanting work the shop doesn't sell such as window tint, and 4 who said no), 40 junk (25 vendors, sales pitches, partner shops, or personal chats, and 15 spam), and 13 with too little to tell.",
         "Found the biggest source of noise: 53 cards were opened by people answering our own texts or emails, most of them the holiday offer to past customers. One funding-pitch spammer opened 4 cards by itself, all already parked as spam.",
+        "Found where most of the clutter sits: 127 of the 166 cards are in the engaged stage, which the call sheet reads, and 64 of those 127 are not a sale (35 junk and 29 people with no new deal). An automatic step in the follow-up system moves every new card that has no quote into that stage. Tasha wrote the fix that stops those moves on 10/29; it is not deployed yet, so this pile keeps growing until it is.",
         "Found real money on these cards: 9 are booked or won, and 12 carry $27,390 in value. Nearly half the cards are real buyers, so switching the workflow off would also stop cards for them.",
         "Built a private page that lists all 166 cards by initials, channel, what the person asked, and the card's stage, with a filter by channel, so the cut can be decided card by card."
       ],
@@ -1588,11 +1589,11 @@
       },
       {
         "weekOf": "2026-11-16",
-        "sessions": 9,
-        "shipped": 43,
+        "sessions": 11,
+        "shipped": 55,
         "fixed": 16,
-        "inProgress": 22,
-        "outcomes": 81
+        "inProgress": 26,
+        "outcomes": 97
       }
     ]
   },
