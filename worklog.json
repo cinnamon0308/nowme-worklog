@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-21T03:44:52.171Z",
+  "updated": "2026-11-21T04:41:34.224Z",
   "projects": [
     {
       "id": "night-shift",
@@ -818,10 +818,10 @@
       "name": "Reply and Missed-Call Cards",
       "status": "IN_PROGRESS",
       "summary": "Two card-only workflows went live on 9/29 to put every reply and missed call on Sean's board. Calls made mostly junk cards, and Vehicle Estimation filed cards with no car into Manual Quote Required, so both were switched off on 10/17. Noah's fix went live at 2:45 AM PT on 10/21: the reply workflow now fires on 7 message channels only, so texts and DMs open cards again and calls do not, and Vehicle Estimation leaves a card with no car where it opened. The missed-call workflow stays off: the answer-fast test week (read 11/17) showed that as drafted it would make tasks only for callers with no card, 12 nameless callers that week, under a title the call sheet does not read. One three-choice question is going to Noah. The four go-live tests have not run yet.",
-      "blockedOn": "Noah and Tasha have not approved keep/off or the cleanup dispositions. Agent recommends revising v2 before execution. Existing missed-call decision and go-live tests remain outstanding.",
+      "blockedOn": "Tasha chose to keep Reply published and review daily. The proposed schedule, coverage, cadence deployment, and exact cleanup writes await review. Existing missed-call decision and go-live tests remain outstanding.",
       "health": {
         "band": "watch",
-        "reason": "Live tint-only inquiry remains an open Engaged sales card after a resolved referral. Current cadence 00092-ric still lacks the no-quote hold. Plan v2 requires review before execution."
+        "reason": "The November 20 audit found a resolved tint referral still open in Engaged, and cadence lacked the no-quote hold. Plan v3 is ready for review."
       },
       "detail": {
         "goal": "Make every real reply and every missed call land on Sean's board as a card, so no one who reached out is invisible to the call sheet.",
@@ -835,7 +835,8 @@
           "11-20: sorted all 166 cards the reply workflow opened since 10/21 (read-only): 75 real sales leads, 38 real people with no new deal, 40 junk, and 13 unclear; 53 came from people answering our own texts, mostly the holiday offer.",
           "11-20: wrote a 4-step plan from the sort (clean 73 false cards, block 8 pitch words at the trigger, get the 10/29 robot fix live, sort new cards weekly); the live robot (00092-ric) still lacks the fix. Nothing changed in GHL.",
           "11-20: checked the 4-step plan for holes (12 closed), re-tested the robot fix on live revision 00092-ric and refreshed its file, and tested the block words on all 19,001 saved texts. Noah's 11/12 spam check already sits on the workflow, so missed pitches go to his filter. Nothing changed in GHL.",
-          "11-20: independently checked the screenshot tint inquiry and current cadence 00092-ric source. The referral was answered, but the open $0 card remains in Engaged. Reviewed v2 and recommended revisions before execution; no CRM change."
+          "11-20: independently checked the screenshot tint inquiry and current cadence 00092-ric source. The referral was answered, but the open $0 card remains in Engaged. Reviewed v2 and recommended revisions before execution; no CRM change.",
+          "11-20: prepared the revised plan with 12 proposed changes and routing rules. Daily review covers new and returning inquiries before any closure."
         ],
         "needsImprovement": [
           "Run tests 1 to 4, then send Noah his done line.",
@@ -1007,6 +1008,20 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-20",
+      "title": "Prepared the daily review plan for reply cards before any cleanup",
+      "shipped": [
+        "Documented 12 proposed changes and routing rules for reply cards in an HTML review packet. The plan preserves inbound coverage, moves review to every day, and shows the exact status edit for the resolved tint referral so Sean can focus on active buyers."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Tasha chose to keep Reply published and review daily. The proposed 9 AM Pacific review, backup coverage, cadence deployment, and exact cleanup rows are open for review."
+      ],
+      "notes": [
+        "No GHL edits, deployment, or customer messages."
+      ]
+    },
     {
       "date": "2026-11-20",
       "title": "Verified the tint referral behind the false-card complaint and flagged gaps before the auto-card plan runs",
