@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-25T10:19:41.586Z",
+  "updated": "2026-11-25T10:24:41.927Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1018,12 +1018,13 @@
         "Found the stage almost clean: 4 trash cards out of 503 open. Closed Noah's 3 test cards from his 11/13 and 11/15 quiz and BMW-page tests (their notes say \"TEST LEAD, do not call\") to Disqualified, status lost. They held $4,635 of fake value, so the stage's pipeline total was overstated by that much.",
         "Deleted 1 duplicate: a $0 card for the same person and the same 2027 Model Y as an open $1,195 card made 7 hours later. Noah's rule is one card per car, so the $1,195 card with the quote stays open and nothing about the lead is lost.",
         "Kept the 9 cards Sean tapped \"Wrong number or spam\" that typed a real car, most of whom opened our quote email: the phone is bad, not the person (Noah's 11/16 rule). Closing them would have thrown away real buyers.",
-        "Got a second opinion from Fable 5.2 before any write, as Tasha asked. It agreed with all 4, found no missed trash after checking all 166 kept cards and 46 unflagged ones, and caught 2 gaps in the close script (no tag check, no log line if a write failed), fixed before the run. Ran it the safe way: dry run, one test card first, each card re-read live just before its write. All 3 closes read back Disqualified and lost with no block (DND) and no tag change; the deleted card reads gone and its contact is unchanged. Open cards in the stage: 503 to 499."
+        "Got a second opinion from Fable 5.2 before any write, as Tasha asked. It agreed with all 4, found no missed trash after checking all 166 kept cards and 46 unflagged ones, and caught 2 gaps in the close script (no tag check, no log line if a write failed), fixed before the run. Ran it the safe way: dry run, one test card first, each card re-read live just before its write. All 3 closes read back Disqualified and lost with no block (DND) and no tag change; the deleted card reads gone and its contact is unchanged. Open cards in the stage: 503 to 499.",
+        "Moved 2 people who had already declined (one wrote \"No but thank you!\", one turned down the quote for budget) from Awaiting Engagement to Lost - Declined, stage only, on Tasha's go after the second opinion (Fable 5.2) recommended it. Their status was already lost, so the stage count was off by 2; both read back right with no block (DND) and no tag change."
       ],
       "fixed": [],
       "inProgress": [
         "Needs a person: Sean or Jenn. 8 people in this stage are owed an answer: a PPF price ask on a 2027 M4 nobody answered, a past customer asking for return-customer pricing, 2 people who asked for a callback at a set time, 1 who called in on 10/26 with no callback, 1 whose quote never reached him because his email is blocked, 1 owner Sean promised to ask Noah about, and 1 new 11/10 form that landed on an old contact with calls, texts, and email all blocked, so nobody has contacted him.",
-        "Needs a person: Noah. 39 open cards are his call and were not closed: 34 old cars (2012 or older; a few are classics like a '63 Cadillac and a '95 Bentley, so not low-value), 4 people who said no or \"I'm good\", and 1 old car whose owner texted Stop. 2 more declines are already marked lost but still sit in this stage; the second opinion (Fable 5.2) suggests moving them to Lost - Declined, stage only."
+        "Needs a person: Noah. 39 open cards are his call and were not closed: 34 old cars (2012 or older; a few are classics like a '63 Cadillac and a '95 Bentley, so not low-value), 4 people who said no or \"I'm good\", and 1 old car whose owner texted Stop."
       ],
       "notes": [
         "Noah's own record: closing his 3 test cards means the daily sweep will likely tag it nurture-pause and nurture-stop about a day later (the second opinion's read of the code, not checked live), and his next quiz test on the same car may not open a new card. Its tags get re-read on 11/26.",
