@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-25T10:24:41.927Z",
+  "updated": "2026-11-25T12:37:27.979Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1010,6 +1010,26 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-25",
+      "title": "Found why won and lost cards sat in New Lead: the holiday form workflow pulls old closed cards in. Put 4 back and gave 2 live leads open cards",
+      "shipped": [
+        "Traced why 4 won, lost, and abandoned cards sat in Rockclear New Lead. All 4 people filled the current holiday Meta lead form between 11/12 and 11/20, and the \"01 New Lead form submitted\" workflow grabs a returning person's newest card from any pipeline, even a closed one, and drops it in New Lead without reopening it. Sean's call sheet reads only open cards, so none of the 4 reached his 9 sheets from 11/12 to 11/24, and 3 of them got no call, text, or task.",
+        "Kept a real sale from being deleted or counted twice. The won card ($1,455.50) was the only GHL record of a paid, finished job. Moving it into Won would have sent Meta a false \"Won\" for a holiday ad lead, and HighLevel sends no event ID for lead events, so Meta would not drop a later repeat. It went back to its old Peelclear stage instead, where no workflow fires.",
+        "Put all 4 old cards back where they were, stage only, status untouched, and restored the car and source fields the workflow had overwritten (one won card had been relabeled as a different car). Gave the 2 live new leads open cards: one in Proposal Sent Hot at $1,345 (opened our quote one minute after it went out on 11/20) and one in Manual Quote Required. New Lead now holds 3 open cards at $0 instead of $4,785.50 of closed deals.",
+        "Ran it the safe way: Fable 5.2 checked the plan on its own first and caught 3 things (one quote was sent by mistake and is Noah's to handle, 2 people still carry our own 9/07 cleanup block, and the overwritten fields). One test person first, each card re-read live just before its write, all 6 cards read back after 50 seconds. No message sent, nothing deleted, and every old position is saved, so any move can be undone."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Needs a person: Noah. The 2 leads that now have open cards still carry the do-not-contact block from our own 9/07 pipeline cleanup, noted \"reversible if they contact us\", and both did through the holiday form. Until it is lifted Sean cannot call or text them. One opened a $1,345 quote a minute after it went out.",
+        "Next on Tasha's side: fix the cause. The form workflow's Find Opportunity step should look only in Rockclear, so a past customer who fills the form gets a fresh card instead of an old closed one. Fable 5.2 agreed with that design; it waits on Tasha's go. The same unfiltered step sits in at least 8 other live workflows.",
+        "Not checked yet: 6 other closed cards were moved into Proposal Sent Engaged since 11/01 by a different path."
+      ],
+      "notes": [
+        "Left for Noah because his team's notes already hold them: 1 past customer's recoat ask (the new-car quote the form sent was a mistake) and 1 parked paint-protection ask. No new card was made for either.",
+        "Making a card for Sean also set the contact's owner to Sean, the same thing every auto-made card does. No block (DND) was added or removed."
+      ]
+    },
     {
       "date": "2026-11-25",
       "title": "Read all 505 cards in Awaiting Engagement for trash: only 4 were, and 499 real leads stay open",
