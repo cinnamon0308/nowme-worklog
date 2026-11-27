@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-25T22:35:49.091Z",
+  "updated": "2026-11-27T11:09:44.722Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1010,6 +1010,21 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-26",
+      "title": "Built a supervised AI team that checks its own work, so Dragon Auto automation jobs need less hand-holding and catch mistakes before they go live",
+      "shipped": [
+        "Built the Athenaeum, Tasha's AI workspace. One lead AI takes a job, hands parts to specialist AIs, reviews what comes back, and reports to Tasha. Today Tasha runs every build, audit, and fix by hand in one long session. This splits the work up and puts a second check on every result.",
+        "Added an independent checker AI. It reviews each finished job, with the actual changes in front of it, before the job is accepted. It is the same 'prove it before it goes live' step Tasha already does by hand, like the 19,001-text test on the stop-request rules. Now the system does that step every time, so it can't be skipped.",
+        "Built the safety walls first. Each job works on a copy, never the original. The AI team has no open command line. Nothing it writes lands until Tasha accepts it. Tests: 129 of 129 on the write path, 112 of 112 on the locked test area, and 0 escapes when the tests tried to reach outside the allowed folder.",
+        "Tested it on a non-company project first: one real read-only audit and one real small change, both passing every acceptance check. No Dragon Auto data or system was at risk while it was being proven."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Next: a separate Dragon Auto room, kept apart from Tasha's personal work. The AI team can then take routine work off her plate: pipeline audits, call-sheet checks, GHL rule tests, and work-log upkeep. It will read Noah's notes only and can never write to them."
+      ],
+      "notes": "Built 11/24 to 11/26. No customer data, no GHL contact, and no live Dragon Auto system was touched."
+    },
     {
       "date": "2026-11-25",
       "title": "Found why won and lost cards sat in New Lead: the holiday form workflow pulls old closed cards in. Put 4 back and gave 2 live leads open cards",
