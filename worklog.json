@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-28T14:12:25.142Z",
+  "updated": "2026-11-28T16:38:05.794Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1045,6 +1045,23 @@
   "sessions": [
     {
       "date": "2026-11-28",
+      "title": "Closed the editor-connection gap in the isolated AI research environment and proved the fix with made-up test data",
+      "shipped": [
+        "Added 3 protection layers so a code editor can no longer connect to the isolated AI research environment. A company file open in an editor can no longer slip into the research.",
+        "Ran 13 tests with made-up data only: the problem showed up before the fix and was gone after it, and nothing reached an AI model during the editor tests.",
+        "Confirmed that web search, approved file access, and delegated research still work after the fix."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "The research resumes with the fix in place. The separate clean-up of the AI memory add-ons has not started."
+      ],
+      "notes": [
+        "Actual: the fix is in place and verified. Potential: the same test method can check any AI tool's isolation before it touches company work.",
+        "No Dragon Auto data, GHL contact, or live system was touched."
+      ]
+    },
+    {
+      "date": "2026-11-28",
       "title": "Completed the AI team's safety foundation and passed an independent audit, readying it for planned Dragon Auto use",
       "shipped": [
         "Completed a real change end to end on a non-company project: the AI did the work, the project's own build check passed, an independent reviewer verified the result, and Tasha approved and merged it. The lead AI also caught a contradiction in the reviewer's report and settled it from the evidence. That is the kind of independent quality assurance future Dragon Auto changes need.",
@@ -1697,11 +1714,11 @@
       },
       {
         "weekOf": "2026-11-23",
-        "sessions": 9,
-        "shipped": 34,
+        "sessions": 10,
+        "shipped": 37,
         "fixed": 2,
-        "inProgress": 16,
-        "outcomes": 52
+        "inProgress": 17,
+        "outcomes": 56
       }
     ]
   },
