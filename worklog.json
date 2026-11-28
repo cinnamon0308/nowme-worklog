@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-28T12:54:26.173Z",
+  "updated": "2026-11-28T14:12:25.142Z",
   "projects": [
     {
       "id": "night-shift",
@@ -937,6 +937,39 @@
           "Rerun all three models after a Claude Code update and on every new model release, and trust only changes labeled 'likely real'."
         ]
       }
+    },
+    {
+      "id": "ai-operations",
+      "name": "AI Operations & Automation Intelligence",
+      "status": "IN_PROGRESS",
+      "summary": "A supervised AI team for Dragon Auto engineering and operations work. Tasha states a goal; specialist AIs investigate, analyze, plan, build, and review, and every change goes to Tasha for approval. The safety foundation was completed and independently audited on test projects between 11/24 and 11/28, and a study of AI capabilities is underway. Company integration is planned and not yet started: today it reads no Dragon Auto system.",
+      "health": {
+        "band": "healthy",
+        "reason": "Progressing as planned: the safety foundation was completed and independently audited on 11/28, and the capability study is underway."
+      },
+      "progress": {
+        "stage": "underway",
+        "reason": "Completed: the AI team, its safety controls, and independent review, proven on test projects. Planned: controlled access to Dragon Auto information, which needs its own plan and approval."
+      },
+      "detail": {
+        "goal": "Tasha states a Dragon Auto objective once, such as checking pipelines, finding neglected leads, or tracing an automation failure, and the AI team investigates, analyzes, plans, builds, and verifies. The aim: less manual investigation and repeated context for Tasha, more reliable automation changes, and better information for business decisions.",
+        "whatWasDone": [
+          "2026-11-26: built the supervised AI team with an independent reviewer and protective limits; its first read-only audit and first small change on a non-company project passed acceptance.",
+          "2026-11-27: added a fix-and-retry routine that stops and reports instead of delivering failing work, and closed a gap in the limits on what the AI may change.",
+          "2026-11-28: completed a real end-to-end change with independent verification and passed an independent audit of the safety foundation with no failed criteria; the phase closed.",
+          "2026-11-28: began a capability study of 1,751 inventoried AI components, ranked by value to daily Dragon Auto work."
+        ],
+        "needsImprovement": [
+          "Next milestone: finish the privacy review and capability study, then a plan for controlled, read-only access to Dragon Auto information, for Tasha's approval.",
+          "Planned Dragon Auto applications (not built yet): pipeline and lead analysis, follow-up review, neglected-lead detection, setter performance review, automation root-cause analysis, dashboard and bot improvements, and verification of proposed changes.",
+          "Performance, quality, and usage tuning of how models and reasoning depth are assigned, after evaluation."
+        ],
+        "watchFor": [
+          "No business improvement is claimed yet; conversion, revenue, and time savings will be measured only after real Dragon Auto use.",
+          "Tasha approves every change, and the checks are matched to each kind of change rather than one check for everything.",
+          "Only business-level progress is published; the technical design stays private."
+        ]
+      }
     }
   ],
   "waitingOnNoah": [
@@ -1012,6 +1045,42 @@
   "sessions": [
     {
       "date": "2026-11-28",
+      "title": "Completed the AI team's safety foundation and passed an independent audit, readying it for planned Dragon Auto use",
+      "shipped": [
+        "Completed a real change end to end on a non-company project: the AI did the work, the project's own build check passed, an independent reviewer verified the result, and Tasha approved and merged it. The lead AI also caught a contradiction in the reviewer's report and settled it from the evidence. That is the kind of independent quality assurance future Dragon Auto changes need.",
+        "Tightened control over which AI helpers can run, so only approved ones can start.",
+        "Passed a separate, independent audit of the whole safety foundation with no failed criteria. Its findings were addressed and confirmed before Tasha formally closed the phase."
+      ],
+      "fixed": [
+        "Closed the audit's main finding: the reviewer's instructions are now protected from the AI whose work it reviews."
+      ],
+      "inProgress": [
+        "Next milestone: a plan for controlled, read-only access to the Dragon Auto information the AI team needs, for Tasha's approval. Nothing reads company systems yet."
+      ],
+      "notes": [
+        "Completed: the safety foundation and independent review, proven on test projects. Planned: Dragon Auto integration, with checks chosen to fit each kind of change.",
+        "No Dragon Auto data, GHL contact, or live system was touched."
+      ]
+    },
+    {
+      "date": "2026-11-28",
+      "title": "Began mapping 1,751 AI components for ways to speed up pipeline analysis, troubleshooting, and quality checks at Dragon Auto",
+      "shipped": [
+        "Inventoried 1,751 AI components, both installed ones and capabilities available in catalogs, and chose 43 to study first, ranked by likely value to daily Dragon Auto work: pipeline and lead analysis, follow-up review, automation troubleshooting, change verification, and spotting missed opportunities.",
+        "Set up a separate research workspace with no access to company data or connected business apps, so the research can move quickly without any risk to Dragon Auto information.",
+        "Identified a performance, quality, and usage optimization opportunity in how the AI team assigns models and reasoning depth to different jobs. It will be evaluated before anything changes."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Next: a privacy review of the memory add-ons used across Claude sessions, then the full capability study. Results go to Tasha before anything changes."
+      ],
+      "notes": [
+        "Research only: no company data read, nothing installed or changed.",
+        "Benefits are potential and not yet measured. Each result will say what can help now and what depends on planned company integration."
+      ]
+    },
+    {
+      "date": "2026-11-28",
       "title": "Read 2,821 Rockclear cards and found 180 leads in the wrong stage, so Sean's call list can drop 88 quiet or dead cards and get 16 live buyers back",
       "shipped": [
         "Read every Rockclear card in Sean's calling stages, Waiting, Re-Engage, and the two Lost stages (2,821 cards), then read the full history of the 479 that looked out of place: texts, emails, call recordings, staff notes, tasks, and Urable jobs. It ran on the GHL copy and used 361 GHL calls instead of thousands, so the lead sync that feeds the call sheet stayed safe.",
@@ -1026,6 +1095,24 @@
         "173 more leads never answered anything in 30+ days. They stay where they are for now: only 21 of them ever reached Sean's list."
       ],
       "notes": "Read-only. No GHL card, tag, task, or message was changed. Customer details stay in the local audit folder."
+    },
+    {
+      "date": "2026-11-27",
+      "title": "Made AI engineering work safer to rely on: the AI team now stops and reports when a fix keeps failing instead of delivering broken work",
+      "shipped": [
+        "Built a fix-and-retry routine for AI engineering work. When a change fails its check, the AI gets the reason and tries again within a set limit, then stops and hands the work back to Tasha instead of guessing. Failing work cannot be delivered. This is the reliability base for later AI help with Dragon Auto automations, bots, and dashboards.",
+        "Tested it on a job designed to keep failing. The lead AI stopped and reported each time, and it ignored a misleading instruction planted in the tool output. That is the behavior troubleshooting and root-cause work needs: say what failed and why, and never paper over it."
+      ],
+      "fixed": [
+        "Found and closed a gap in the limits on what the AI may change, with permanent tests so it cannot come back unnoticed."
+      ],
+      "inProgress": [
+        "Next: one real end-to-end change on a non-company project and an independent audit before the safety phase closes."
+      ],
+      "notes": [
+        "Completed: the capability, proven on test projects. Planned: using it on Dragon Auto work, which needs separate approval.",
+        "No Dragon Auto data, GHL contact, or live system was touched."
+      ]
     },
     {
       "date": "2026-11-26",
@@ -1433,157 +1520,10 @@
         "Read-only. Built from work that already exists: Tasha's audits from 10/21 to 11/02, her 11/13 ad note, Noah's 11/09 ad audit, and Jenn's 11/01 analysis. No new pull from GHL, Urable, or Meta, nothing was changed, and no figure was re-checked against GHL on 11/16.",
         "The report is a private page for Tasha. Customers appear in it as counts only."
       ]
-    },
-    {
-      "date": "2026-11-14",
-      "title": "Caught the deposit bot skipping 12 of the 13 newest paid deposits, and fixed it before it was switched on",
-      "shipped": [
-        "Checked the deposit bot behind the #deposit-ops Discord channel after three quiet weeks: 2,992 runs since 10/25 with no errors, and nothing changed in GHL. It is still in plan-only mode, which means it reads every Urable payment and writes down what it would do, and changes nothing.",
-        "Rewrote the to-do page for switching it on. Only 4 of the 21 open calls are needed before the first live run, the 3 test jobs now come from today's list (the old list had finished jobs on it), and a plan-only redeploy now comes before anything goes live.",
-        "Redeployed the bot in plan-only mode with the fix and the 10/25 car-matching work (all 9 deploy checks passed, backup refreshed). A deep read on the new version matched the old one on every job it tracks, and a local run of the exact same code planned all 21 open paid jobs with no errors, so the first live run no longer starts on code that never ran."
-      ],
-      "fixed": [
-        "Found why the bot went blind on new customers. Every quote since 11/06 carries a 'Coating Repair Warranty (15 Years)' line, and the bot read the word 'warranty' as a redo job and skipped the whole job. It was ignoring 12 of the 13 open paid Rocklear deposits since 11/06, $28,511 in jobs. Switched on like that, it would have missed nearly every new customer. Fixed and tested on 4,555 real Urable jobs: all 62 real redo jobs are still skipped, and 189 normal jobs with a warranty add-on are seen again. The fix passed 458 tests and has been running in plan-only mode since 11/14, 10:58 AM PT."
-      ],
-      "inProgress": [
-        "Needs a person: three returning customers paid a deposit for a second car, and that car has no Booked card. Job #5879 (2027 Rivian R2, $2,645, install 11/21, no welcome email yet), job #5876 (a 2026 Lucid, $1,752.75, install 12/04), and job #5868 (2021 Toyota Tacoma, $1,570.50, in the shop since 11/13). Job #5773 was refunded in full and its card is still open in Booked at $1,865.75. Jobs #5860 and #5905 are paid with no install date, and each card shows $1,695 for a $2,645 job.",
-        "Next: Tasha's 4 calls, a heads-up to Jenn, and a first live run on 3 jobs."
-      ],
-      "notes": "Nothing was changed in GHL or Urable, and nothing was sent to anyone. Every customer fact above was read from GHL and Urable on 11/14. The welcome email did reach the new customers who already have a Booked card and an install date (10 of 10 checked)."
-    },
-    {
-      "date": "2026-11-14",
-      "title": "Blocked 8 people who had asked us in writing to stop, some more than a year ago, after reading each thread first",
-      "shipped": [
-        "Checked live every one of the 26 people who ever asked us in writing to stop. 11 were still open on the channel they asked about. Read all 11 threads from start to end before touching anything.",
-        "Blocked 4 people on call, text, and email. Each had written 'take us off your list' or 'please stop reaching out'. Two of them had been told by us that they were removed and never were; one got 3 sale texts and 3 emails after asking; one had been blocked and an August cleanup lifted it by mistake.",
-        "Blocked calls only for 4 people who wrote 'please don't call, just text' or 'stop calling'. Texts and email stay open for them, as they asked. One of them had been called 4 more times after asking, another twice. Sean's call list skips blocked numbers, so these stop now."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Left 2 people open on purpose after reading: one wrote 'stop texting me' but took it back 30 minutes later and asked for a call, and one only said no to an offer in a friendly way. One more had asked about calls and was already blocked."
-      ],
-      "notes": "Each block has a note on the contact with the customer's own words and the date they asked. Nothing was sent to anyone, no card moved, and each contact was saved first so the change can be put back."
-    },
-    {
-      "date": "2026-11-14",
-      "title": "Turned on the stop-request rules: a customer who writes 'please stop texting me' is now blocked, the same way as one who sends STOP",
-      "shipped": [
-        "Switched on two GHL rules at 12:54 AM Pacific on 11/14. Until now only the one word STOP blocked a customer. A sentence like 'please stop texting me' or 'stop calling' blocked nothing, and our follow-up texts kept going. Now a stop sentence blocks that customer on call, text, and email, and 'stop calling' or 'text me instead' blocks calls only.",
-        "What the rules do: each one adds a label, a block, and a note with the customer's own words, and opens a task for Tasha to read the thread the next day and lift the block if it was a misread. What they do not do: they send nothing to any customer (no text, no email, no call), close no card, and change no stage.",
-        "Proof before the switch: tested on all 19,001 texts customers sent since July 2025 (26 of 26 real stop requests caught, 0 customers blocked by mistake), run once on an internal test contact with every step passing, and read back from GHL after the switch. Both rules are published and match the tested copies."
-      ],
-      "fixed": [
-        "Fixed how the script presses GHL's publish switch. The old way pressed it three times in a row and ended on 'published' only by luck. It now presses once, and each rule saved exactly once."
-      ],
-      "inProgress": [
-        "For Noah: this was Tasha's call, so no question is coming on it. Her reasons: GHL already blocks on the word STOP by itself, the two leads who wrote 'Stop contacting me' and 'Please stop calling' were blocked on 9/28, and these rules send nothing to customers. If you want them off or changed (texts only, or closing the card too), say so. One switch turns each rule off.",
-        "Expect 1 to 2 real stop requests a month. Tasha reads the first real case end to end, because a test carries no customer text."
-      ],
-      "notes": "Rule ids in GHL: B-018-WF-3.2 (stop sentences) and B-018-WF-3.3 (stop calling). The old STOP rule (3.1) is unchanged and still blocks texts only."
-    },
-    {
-      "date": "2026-11-14",
-      "title": "Closed a wrong-block gap in the stop-request rule before go-live: a customer who writes 'please stop by' to visit the shop is no longer read as a stop request",
-      "shipped": [
-        "Found the gap by checking the unpublished rule against Noah's 8/14 stop rule, which names 'I did stop by' as a warm lead. The rule's phrase 'please stop' would have matched 'Can I please stop by at 5?' and blocked that customer on every channel until the next-day check. Customers wrote 'stop by' 73 times in the 19,001 old texts, each time about visiting the shop."
-      ],
-      "fixed": [
-        "Added a skip for 'please stop by' to the main stop-request rule and proved it three ways: a check with made-up texts that failed before the fix and passes after it, the same 19,001 old texts (still 19 of 19 real stop requests caught and 0 wrong blocks), and a read of the rule inside GHL's own builder."
-      ],
-      "inProgress": [
-        "Update, same day: both rules are now on (see the go-live entry above). No question went to Noah. Tasha made the call, because a customer's own stop request is not the case his 10/12 ruling is about."
-      ],
-      "notes": "One unpublished rule changed. Nothing was sent to any customer, and nothing was published."
-    },
-    {
-      "date": "2026-11-13",
-      "title": "Proved the stop-request rules work inside GHL before turning them on: both ran on a test contact, blocked the right channels, and sent nothing to anyone",
-      "shipped": [
-        "Ran GHL's own Test on both unpublished stop-request rules, using only Tasha's internal test contact. The main rule passed all 6 steps and blocked all 6 channels (call, text, email, WhatsApp, Facebook, Google). The 'stop calling' rule passed all 4 steps and blocked calls only, leaving text and email open. Each rule also left a note and a next-day review task for Tasha.",
-        "Checked all 76 live workflows before the test so nothing else could fire, then checked again after it. No text, email, or call went to anyone, no card moved, and the test contact was put back exactly as it was (tags, block, opt-out date, tasks)."
-      ],
-      "fixed": [
-        "Caught a slip in the testing tool before it could matter: its button press counted as 5 presses on the first rule. GHL ran the rule once and skipped the other 4. The second rule used a single press, and the tool now presses once."
-      ],
-      "inProgress": [
-        "Update 11/14: both rules are now on (see the 11/14 go-live entry), and no question went to Noah. A Test carries no customer text, so the first real stop request gets read end to end.",
-        "Found on the way: the old 'Master Spreadsheet' workflow runs on every contact change, and its Google Sheets step fails every time (36 failed and 44 retrying in its newest 100 log lines). It sends nothing, but it is dead weight. Needs a person: decide whether to switch it off."
-      ],
-      "notes": "The test ran 11/13 at 11:35 PM Pacific on one internal contact. Nothing was sent to any customer, and nothing was published."
-    },
-    {
-      "date": "2026-11-13",
-      "title": "Fixed the stop-request rules after testing them on all 19,001 customer texts: every real stop request is now caught and nobody is blocked by mistake",
-      "shipped": [
-        "Tested the unpublished stop-request rules against every text customers have sent since July 2025 (19,001 texts from 3,128 people) and read each hit. As first built they would have acted 118 times: 19 right, 88 on sales texts from other companies, and 11 that would have blocked people who never asked, including 6 who only gave a thumbs-up to one of our texts. They also missed 2 real requests.",
-        "Reworked the word lists and saved them into the two unpublished rules. On the same 19,001 texts the result is now 19 of 19 real stop requests caught, 0 wrong blocks, and 2 harmless hits on ad senders. The 'stop calling' rule: 7 of 7 right, 0 wrong.",
-        "Read both rules back from GHL after saving and caught a silent failure: GHL answered 'saved' but kept the old word list. Saved it the way the builder itself does, read it back again, and re-ran the test on the exact words GHL now holds. Both rules are still off, so no customer is affected.",
-        "Found that reactions (a thumbs-up or heart on a text) reach GHL as normal texts, in many formats and languages, each carrying a copy of our own message. About 910 of the 19,001 texts are reactions."
-      ],
-      "fixed": [
-        "Before go-live: the reaction check only knew six English words like 'Liked' and 'Loved', so emoji reactions and reactions in Spanish got through. It now skips every text that quotes one of our messages."
-      ],
-      "inProgress": [
-        "Next: test the block on Tasha's own contact inside GHL, undo it, then turn the rules on.",
-        "10 people who asked in writing in the past are not blocked today: 6 asked us to stop texting or contacting them, and 4 asked us to stop calling. Next: read each thread and block them, on Tasha's go."
-      ],
-      "notes": "A read-only test on the lead database copy. Nothing was sent to anyone, and both rules stay unpublished."
-    },
-    {
-      "date": "2026-11-13",
-      "title": "Tested the new stop-request rules on 4,215 real customer texts before turning them on: they would have wrongly blocked up to 3 customers, and two small fixes remove every wrong hit",
-      "shipped": [
-        "Ran the two unpublished stop-request rules against every incoming customer text from the last 90 days (4,215 texts from 967 people), reading only. Nothing was sent to anyone and nothing in GHL changed.",
-        "Found the main rule would have fired 21 times and been right twice. Two customers really did ask us to stop in a sentence. 16 hits were sales texts from other companies that end with 'Reply STOP to opt out'. 3 would have blocked real customers on every channel: one who asked to come off Monday's schedule for a work trip and said he would rebook, and 2 past clients who gave a thumbs-up to the holiday offer text, where the rule read the words 'opt out' inside our own message.",
-        "Worked out two small fixes and tested them on the same 4,215 texts: skip any text that carries a 'reply STOP' line or quotes one of our messages, and narrow 'take me off' to 'take me off your list'. With both, the rule fires on exactly the 2 real stop requests and on nothing else.",
-        "Confirmed the 'stop calling' rule matched no text in 90 days, so it can stay as built, and that the guard added on 10/31 already stops 14 'Liked' and 'Loved' style reactions from tripping either rule."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Next: put the two fixes into the unpublished rule, run the same test again, test the block on Tasha's own contact, then turn it on. Until then a customer who asks to stop in a full sentence still gets no block, and the daily sweep stays the only cover.",
-        "2 people answered 'wrong number' in the last 90 days, one of them twice. Neither rule covers a wrong number; to check next whether both are already blocked."
-      ],
-      "notes": "The phone test planned on 10/31 was replaced by this test on real texts from the lead database copy. Customer texts stay on Tasha's Mac."
-    },
-    {
-      "date": "2026-11-13",
-      "title": "Night Shift's three fixes are checked and ready to go live on Noah's yes: the live version is unchanged since 10/17, all 197 checks pass, and the rollback is written down",
-      "shipped": [
-        "Confirmed the nightly lead check still runs Noah's 10/17 version: it has one revision, was never redeployed, and its last four 2 AM runs each finished clean in 87 to 130 seconds. Tasha's fixes are built on exactly that code, compared file by file against Noah's own copy, so nothing of his would be overwritten.",
-        "Re-ran all 197 checks on the three fixes and every one passes. On the 11/11 real-data run the same fixes found 4 Booked cards the live version misses ($7,470 in quotes) and dropped 16 rows nobody should chase, such as staff, vendors, and test contacts.",
-        "Confirmed Tasha can deploy this job herself, which is what Noah's 10/11 handoff set out (she deploys after his yes). A 10/24 note had said she could not, so the fixes were waiting on a file for Noah that was never needed. The only thing needed from him now is the yes.",
-        "Wrote the deploy steps down before touching anything: the two checks to run first, the deploy itself, a test run that proves the new version works, and a one-command rollback to Noah's version that takes under a minute."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "Waits on Noah's yes to deploy the three fixes (approvals M238). Tasha deploys, runs the test, and checks the next 2 AM run.",
-        "After the deploy: bring Noah's own copy of the code in line so a later deploy from it cannot undo the fixes, and post the first 'fixed overnight' summary he asked for on 10/11.",
-        "One of the three fixes (a late callback counted as a system miss, not Sean's) stays idle until the call-me-later build ships, because only that build writes the mark it looks for."
-      ],
-      "notes": "Nothing was deployed or changed today. Code is branch night-shift-v2, unchanged since 10/19."
-    },
-    {
-      "date": "2026-11-12",
-      "title": "Turned three weeks of Noah's notes and three old to-do pages into one priority board: 130 open tasks, 9 urgent, with every new handoff added on each sync",
-      "shipped": [
-        "Read every note Noah wrote from 10/20 to 11/11 plus the still-open cards on Tasha's three older to-do pages, merged 8 tasks that showed up in more than one place, and left off work his notes already mark done. Result: 130 open tasks in one list instead of four places.",
-        "Gave every task a priority with a one-line reason: 9 urgent, 18 high, 57 medium, 46 low. Most urgent ones are opt-out and safety gaps: the written opt-out workflows still unpublished, a texted STOP that does not block email, the follow-up bot running without its blacklist stop since the 11/05 redeploy, and the promised-visit check that booked a wash a year late.",
-        "Labeled where each task came from so nothing reads as an order Noah never gave: 60 are his handoffs or were already on Tasha's pages, and 70 are items Claude picked out of his notes as work Tasha can take off his plate, marked as Claude's recommendation.",
-        "Kept all customer-facing work off the board (texts, calls, lead follow-up, deposits, install dates), since Sean, Noah, and Jenn own it.",
-        "Added a step to the sync that copies Noah's notes, so every sync now reads his new notes, adds each new handoff to the board with a priority, and checks for duplicates first. His notes become Tasha's to-do list the same day he writes them.",
-        "Built the board for phone and desktop: drag a task to change its priority, mark it done or drop it with an undo, and see what got finished this week. Tested every action on a copy before loading the real tasks, then read all 130 back to confirm the counts.",
-        "Reworked the board the same day into a full project view: a sidebar that filters by status, by who the task came from, and by each of the 48 projects with its open count, plus a list layout that shows all 130 tasks in rows by priority. One click now answers what is open on the call sheet or what is waiting on someone."
-      ],
-      "fixed": [],
-      "inProgress": [
-        "One task waits on a decision instead of being worked: Noah's 11/06 notes suggest an alarm for when Meta ads stop, which Tasha decided on 10/19 not to build. It sits under Waiting on the board."
-      ],
-      "notes": "The board is a private claude.ai page only Tasha can open. Task source files stay in her vault."
     }
   ],
   "sessionStats": {
-    "generated": "2026-11-25",
+    "generated": "2026-11-28",
     "window": "14 days",
     "note": "Per-ISO-week tallies of Tasha's Log, kept so the Shipped/Fixed charts and the shipping streak hold their history after entries older than 14 days are deleted. Generated by scripts/prune-sessions.mjs from sessions[] + sessions-archive.json. Do not hand-edit.",
     "weeks": [
@@ -1757,11 +1697,11 @@
       },
       {
         "weekOf": "2026-11-23",
-        "sessions": 4,
-        "shipped": 17,
-        "fixed": 0,
-        "inProgress": 10,
-        "outcomes": 27
+        "sessions": 9,
+        "shipped": 34,
+        "fixed": 2,
+        "inProgress": 16,
+        "outcomes": 52
       }
     ]
   },
