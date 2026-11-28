@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-28T16:38:05.794Z",
+  "updated": "2026-11-28T16:44:42.311Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1045,6 +1045,72 @@
   "sessions": [
     {
       "date": "2026-11-28",
+      "title": "Checked 3 AI memory add-ons used in everyday Claude sessions for data-protection risk and delivered findings with clean-up options",
+      "shipped": [
+        "Reviewed 3 AI memory add-ons from their code, without opening any stored data. These add-ons run in everyday Claude sessions, Dragon Auto work included, so knowing what they keep comes before any planned company use.",
+        "Wrote a findings note with options for Tasha, plus 3 reusable reference cards.",
+        "Built a repeatable way to check what an AI add-on records, where it stores it, and whether anything leaves the computer."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Clean-up options are with Tasha. Nothing has been switched off or deleted."
+      ],
+      "notes": [
+        "Actual: the code review found no active way for the memory add-ons now switched on to send data out. Past sending and live network activity were not independently checked. One add-on keeps a local activity record across all projects.",
+        "Potential: the same check applied to every AI tool before it touches company work."
+      ]
+    },
+    {
+      "date": "2026-11-28",
+      "title": "Wrote a step-by-step clean-up plan for the AI memory add-ons and found why a code editor reached the isolated research environment",
+      "shipped": [
+        "Wrote a step-by-step clean-up plan for 3 AI memory add-ons, with counts-only checks that never display stored data.",
+        "Found why a code editor connected to the isolated research environment, and drafted a 2-line fix and a test that uses made-up data only."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "The clean-up plan waits for Tasha. Nothing has been switched off, deleted, or changed by it, and whether any data was sent in the past is still unverified."
+      ],
+      "notes": [
+        "Why it matters: it shows where AI tools may hold company details and how to switch them off safely before planned company use.",
+        "Potential: a repeatable clean-up and isolation check for any AI tool before it touches company work."
+      ]
+    },
+    {
+      "date": "2026-11-28",
+      "title": "Mapped the AI coding platform's built-in coordination, model, and safety features and found one data-protection gap to close before company use",
+      "shipped": [
+        "Reviewed about 14 official documentation pages and existing test records to map what the AI platform already provides before adding any outside tools.",
+        "Explained why the same AI specialists run at different reasoning levels depending on how they are started, and designed a low-cost test for the one case still open. Consistent reasoning levels keep the AI team's cost and answer quality predictable.",
+        "Found a channel between separate AI sessions on the same computer that is on by default, and designed a safe test and a one-line fix. Closing it before any company access keeps Dragon Auto information inside approved boundaries."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "The fix and the open test are designed, not run. Nothing was changed."
+      ],
+      "notes": [
+        "Potential: automatic check-and-retry runs and per-step records could make AI-built changes easier to verify before they go live."
+      ]
+    },
+    {
+      "date": "2026-11-28",
+      "title": "Designed a fix that keeps AI sessions from messaging unrelated sessions and ranked 20 documented gaps to steer the next research stage",
+      "shipped": [
+        "Designed the smallest reliable fix that stops AI sessions from sending to or receiving from unrelated sessions on the same computer, while keeping the AI team's internal communication. Wrote a step-by-step test plan that uses only made-up data.",
+        "Consolidated about 95 findings from past audits and test records into 20 ranked gaps and 6 recurring patterns, and confirmed the study list of about 40 items.",
+        "Put checking that proposed changes are correct and safe at the top of the research order."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "The fix design and test plan are ready to test. Nothing was changed in any system."
+      ],
+      "notes": [
+        "Why it matters: it keeps company information from crossing between unrelated AI sessions before any company access is granted.",
+        "Potential: stronger, repeatable checks of AI-built changes and more accurate AI reports for decisions, once the fix is applied and company access is authorized later."
+      ]
+    },
+    {
+      "date": "2026-11-28",
       "title": "Closed the editor-connection gap in the isolated AI research environment and proved the fix with made-up test data",
       "shipped": [
         "Added 3 protection layers so a code editor can no longer connect to the isolated AI research environment. A company file open in an editor can no longer slip into the research.",
@@ -1714,11 +1780,11 @@
       },
       {
         "weekOf": "2026-11-23",
-        "sessions": 10,
-        "shipped": 37,
+        "sessions": 14,
+        "shipped": 48,
         "fixed": 2,
-        "inProgress": 17,
-        "outcomes": 56
+        "inProgress": 21,
+        "outcomes": 71
       }
     ]
   },
