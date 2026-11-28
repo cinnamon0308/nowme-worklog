@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-27T11:09:44.722Z",
+  "updated": "2026-11-28T12:54:26.173Z",
   "projects": [
     {
       "id": "night-shift",
@@ -1010,6 +1010,23 @@
     }
   ],
   "sessions": [
+    {
+      "date": "2026-11-28",
+      "title": "Read 2,821 Rockclear cards and found 180 leads in the wrong stage, so Sean's call list can drop 88 quiet or dead cards and get 16 live buyers back",
+      "shipped": [
+        "Read every Rockclear card in Sean's calling stages, Waiting, Re-Engage, and the two Lost stages (2,821 cards), then read the full history of the 479 that looked out of place: texts, emails, call recordings, staff notes, tasks, and Urable jobs. It ran on the GHL copy and used 361 GHL calls instead of thousands, so the lead sync that feeds the call sheet stayed safe.",
+        "Found 16 live buyers parked in Waiting or Re-Engage, where the call sheet cannot see them: one past customer wrote 'we'll do all 3 cars' on 11/27, another has a shop consult booked for 11/28, and several asked for a quote that is still owed. Found 8 more already talking with Sean but still filed as Awaiting.",
+        "Found 88 cards taking space in Sean's calling stages that should not: 75 went quiet after 3 or more chases or said 'not right now', 6 said a plain no (stop, sold the car, went elsewhere), and 7 are a paid booking, a non-car chat, duplicates, or leads who named a later date.",
+        "Caught a counting trap before it skewed the read: the 11/23 holiday email went out under Sean's login to about 1,045 people, so it looked like Sean had answered everyone. The check now treats any mass send as a blast, not a reply.",
+        "Put every card on one review page with the reason in plain words and a button to approve or leave each move, then re-read all 180 live in GHL: 0 had changed stage since the read."
+      ],
+      "fixed": [],
+      "inProgress": [
+        "Waiting on Tasha's pick for each of the 165 cards (move it or leave it). Then a dry run, a fresh live re-read, and the moves, stage only.",
+        "173 more leads never answered anything in 30+ days. They stay where they are for now: only 21 of them ever reached Sean's list."
+      ],
+      "notes": "Read-only. No GHL card, tag, task, or message was changed. Customer details stay in the local audit folder."
+    },
     {
       "date": "2026-11-26",
       "title": "Built a supervised AI team that checks its own work, so Dragon Auto automation jobs need less hand-holding and catch mistakes before they go live",
